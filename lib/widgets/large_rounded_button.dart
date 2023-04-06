@@ -5,7 +5,15 @@ class LargeRoundedButton extends StatelessWidget {
   final String buttonName;
   final Color buttonColor;
   final Color buttonTextColor;
-  const LargeRoundedButton({Key? key, required this.buttonName, required this.buttonColor, required this.buttonTextColor}) : super(key: key);
+  final Function onPressed;
+
+  const LargeRoundedButton({
+    Key? key,
+    required this.buttonName,
+    required this.buttonColor,
+    required this.buttonTextColor,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +22,7 @@ class LargeRoundedButton extends StatelessWidget {
       height: AppLayout.getHeight(70),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          onPrimary: buttonTextColor,
+          foregroundColor: buttonTextColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
           backgroundColor: buttonColor,
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
@@ -23,8 +31,8 @@ class LargeRoundedButton extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        onPressed: onPressed(),
         child: Text(buttonName),
-        onPressed: () {},
       ),
     );
   }

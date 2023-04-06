@@ -1,8 +1,9 @@
+import 'package:barber_center/services/constants.dart';
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/large_rounded_button.dart';
+import 'package:barber_center/widgets/welcome_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -64,25 +65,50 @@ class WelcomeScreen extends StatelessWidget {
                       //BUTTONS START HERE
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          LargeRoundedButton(
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(signupRoute);
+                              },
+                              child: WelcomeButton(buttonName: Strings.salonBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor)),
+                          Gap(AppLayout.getHeight(12)),
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed('/signup');
+                              },
+                              child: WelcomeButton(buttonName: Strings.customerBtn, buttonColor: Styles.brighttextColor, buttonTextColor: Styles.primaryColor)),
+                          Gap(AppLayout.getHeight(12)),
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed('/signup');
+                              },
+                              child: WelcomeButton(buttonName: Strings.barberBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor))
+                          /*LargeRoundedButton(
                             buttonName: Strings.salonBtn,
                             buttonColor: Styles.primaryColor,
                             buttonTextColor: Styles.brighttextColor,
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/signup');
+                            },
                           ),
                           Gap(AppLayout.getHeight(12)),
                           LargeRoundedButton(
                             buttonName: Strings.customerBtn,
                             buttonColor: Styles.brighttextColor,
                             buttonTextColor: Styles.primaryColor,
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/signup');
+                            },
                           ),
                           Gap(AppLayout.getHeight(12)),
                           LargeRoundedButton(
                             buttonName: Strings.barberBtn,
                             buttonColor: Styles.primaryColor,
                             buttonTextColor: Styles.brighttextColor,
-                          ),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/signup');
+                            },
+                          ),*/
                         ],
                       ),
                     ],
