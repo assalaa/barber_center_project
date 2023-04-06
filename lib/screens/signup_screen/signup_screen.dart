@@ -28,12 +28,12 @@ class SignUPScreen extends StatelessWidget {
               children: [
                 Gap(AppLayout.getHeight(30)),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Icon(Icons.arrow_back_ios),
+                  const Icon(Icons.arrow_back_ios),
                   Text(
                     Strings.signup,
                     style: Styles.headLineStyle3,
                   ),
-                  SizedBox(),
+                  const SizedBox(),
                 ]),
                 Gap(AppLayout.getHeight(30)),
                 Text(
@@ -58,12 +58,12 @@ class SignUPScreen extends StatelessWidget {
                         TextFormField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(18.0),
+                              borderRadius: BorderRadius.circular(18.0),
                               borderSide: BorderSide(color: Styles.greyColor),
                             ),
                             hintText: Strings.emailInput,
                             hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                            contentPadding: EdgeInsets.all(18.0),
+                            contentPadding: const EdgeInsets.all(18.0),
                             border: InputBorder.none,
                             filled: true,
                             fillColor: Styles.brighttextColor,
@@ -74,12 +74,12 @@ class SignUPScreen extends StatelessWidget {
                         TextFormField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(18.0),
+                              borderRadius: BorderRadius.circular(18.0),
                               borderSide: BorderSide(color: Styles.greyColor),
                             ),
                             hintText: Strings.usernameInput,
                             hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                            contentPadding: EdgeInsets.all(18.0),
+                            contentPadding: const EdgeInsets.all(18.0),
                             border: InputBorder.none,
                             filled: true,
                             fillColor: Styles.brighttextColor,
@@ -90,12 +90,12 @@ class SignUPScreen extends StatelessWidget {
                         TextFormField(
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(18.0),
+                              borderRadius: BorderRadius.circular(18.0),
                               borderSide: BorderSide(color: Styles.greyColor),
                             ),
                             hintText: Strings.passwordInput,
                             hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                            contentPadding: EdgeInsets.all(18.0),
+                            contentPadding: const EdgeInsets.all(18.0),
                             border: InputBorder.none,
                             filled: true,
                             fillColor: Styles.brighttextColor,
