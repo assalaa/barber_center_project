@@ -1,4 +1,5 @@
 import 'package:barber_center/screens/signup_screen/signup_screen_provider.dart';
+import 'package:barber_center/services/constants.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class SignUPScreen extends StatelessWidget {
       create: (context) => SignUPScreenProvider(),
       child: Consumer<SignUPScreenProvider>(builder: (context, provider, _) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Styles.backgroundColor,
           body: Container(
             padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
@@ -118,7 +120,11 @@ class SignUPScreen extends StatelessWidget {
                           ),
                         ),
                         Gap(AppLayout.getHeight(10)),
-                        LargeRoundedButton(buttonName: Strings.continueBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(homeRoute);
+                            },
+                            child: LargeRoundedButton(buttonName: Strings.continueBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor)),
                         Gap(AppLayout.getHeight(30)),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(120)),

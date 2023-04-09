@@ -7,6 +7,7 @@ class Strings {
   static const String barberBtn = "Barber";
   static const String customerBtn = "Customer";
   static const String continueBtn = "Continue";
+  static const String seeMoreOption = "See more";
 
   //WELCOME PAGE
   static const String welcome = 'Welcome to Barber Center';
@@ -22,4 +23,6 @@ class Strings {
   static const String addressInput = 'City';
   static const String redirectionToSingIn = "Already have an account?";
   static const String signIn = "Sing in";
+  //SECTIONS
+  static const String topBarbers = "Top Barbers";
 }

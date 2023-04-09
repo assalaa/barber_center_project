@@ -6,4 +6,7 @@ class SignUPScreenProvider with ChangeNotifier {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController address = TextEditingController();
+  bool loading = false;
+
+  save() async {}
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "260033735425",
+    "project_id": "barber-center-e296b",
+    "storage_bucket": "barber-center-e296b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260033735425:android:f92198c64d4fd30232c900",
+        "android_client_info": {
+          "package_name": "com.gteck.barber_center"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260033735425-l2kcdjjrp235su83us8uod0hp0ca8h8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBqVnKNk3NtMC0dN4SFt38HTahLYi3Lcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260033735425-l2kcdjjrp235su83us8uod0hp0ca8h8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
