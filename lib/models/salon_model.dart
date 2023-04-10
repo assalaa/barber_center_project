@@ -4,6 +4,7 @@ class SalonModel {
   final String id;
   String? salonName;
   String? salonEmail;
+  String? salonPassword;
   String? salonAddress;
   String? salonContact;
   List<String?> salonServices = [];
@@ -12,6 +13,7 @@ class SalonModel {
     required this.id,
     required this.salonName,
     required this.salonEmail,
+    required this.salonPassword,
     required this.salonAddress,
     required this.salonContact,
     required this.salonServices,
@@ -28,6 +30,7 @@ class SalonModel {
       salonAddress: map['salonAddress'],
       salonContact: map['salonContact'],
       salonServices: map['salonServices'],
+      salonPassword: '',
     );
   }
   String toSave() {
