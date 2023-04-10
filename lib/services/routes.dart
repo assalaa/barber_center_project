@@ -32,4 +32,14 @@ class Routes {
       );
     });
   }
+
+  static final navigator = GlobalKey<NavigatorState>();
+  static goTo(String route, {bool enableBack = false, args}) {
+    debugPrint('GO TO $route');
+    Navigator.of(Routes.navigator.currentContext!).pushNamedAndRemoveUntil(
+      route,
+      arguments: args,
+      (Route<dynamic> route) => enableBack,
+    );
+  }
 }
