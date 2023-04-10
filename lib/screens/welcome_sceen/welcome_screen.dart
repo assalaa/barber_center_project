@@ -3,7 +3,7 @@ import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/welcome_btn.dart';
+import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -70,19 +70,19 @@ class WelcomeScreen extends StatelessWidget {
                               onTap: () {
                                 Navigator.of(context).pushNamed(signupRoute);
                               },
-                              child: WelcomeButton(buttonName: Strings.salonBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor)),
+                              child: LargeRoundedButton(buttonName: Strings.salonBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor)),
                           Gap(AppLayout.getHeight(12)),
                           GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pushNamed('/signup');
                               },
-                              child: WelcomeButton(buttonName: Strings.customerBtn, buttonColor: Styles.brighttextColor, buttonTextColor: Styles.primaryColor)),
+                              child: LargeRoundedButton(buttonName: Strings.customerBtn, buttonColor: Styles.brighttextColor, buttonTextColor: Styles.primaryColor)),
                           Gap(AppLayout.getHeight(12)),
                           GestureDetector(
                               onTap: () {
                                 Navigator.of(context).pushNamed('/signup');
                               },
-                              child: WelcomeButton(buttonName: Strings.barberBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor))
+                              child: LargeRoundedButton(buttonName: Strings.barberBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor))
                           /*LargeRoundedButton(
                             buttonName: Strings.salonBtn,
                             buttonColor: Styles.primaryColor,

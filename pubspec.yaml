@@ -37,6 +37,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   get:
   gap: ^2.0.1
+  dependencies:
+  provider: ^6.0.5
+  flutter_svg_provider: ^1.0.3
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.0
+  cloud_firestore: ^4.5.0
+  firebase_database: ^10.1.0
+
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +71,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/icons/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

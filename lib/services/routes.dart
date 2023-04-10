@@ -1,3 +1,4 @@
+import 'package:barber_center/screens/home_screen/home_screen.dart';
 import 'package:barber_center/screens/signup_screen/signup_screen.dart';
 import 'package:barber_center/screens/welcome_sceen/welcome_screen.dart';
 import 'package:barber_center/services/constants.dart';
@@ -12,6 +13,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
       case signupRoute:
         return MaterialPageRoute(builder: (_) => const SignUPScreen());
+      case homeRoute:
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
       default:
         return _errorRoute();
     }
@@ -28,5 +31,15 @@ class Routes {
         ),
       );
     });
+  }
+
+  static final navigator = GlobalKey<NavigatorState>();
+  static goTo(String route, {bool enableBack = false, args}) {
+    debugPrint('GO TO $route');
+    Navigator.of(Routes.navigator.currentContext!).pushNamedAndRemoveUntil(
+      route,
+      arguments: args,
+      (Route<dynamic> route) => enableBack,
+    );
   }
 }
