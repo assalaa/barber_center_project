@@ -1,7 +1,11 @@
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/cards/featured_barbers.dart';
+import 'package:barber_center/widgets/cards/featured_salons.dart';
+import 'package:barber_center/widgets/cards/top_barbers.dart';
 import 'package:barber_center/widgets/section_header.dart';
+import 'package:barber_center/widgets/service_element.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
