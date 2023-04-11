@@ -1,8 +1,10 @@
+import 'database/db_auth.dart';
+import 'services/constants.dart';
+import 'services/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
-import 'services/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,12 +17,36 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blue),
+    const String errorMessage = "Something went wrong";
+    const String appTitle = "Barber Center";
+
+    return FutureBuilder(
+        future: DBAuth.initializeFirebase(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Text(errorMessage);
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MaterialApp(
+              theme: ThemeData(primarySwatch: Colors.blue),
+              onGenerateRoute: Routes.generateRoute,
+              debugShowCheckedModeBanner: false,
+              initialRoute: signupRoute,
+              title: appTitle,
+            );
+          }
+          return const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.orange));
+        });
+    /*MaterialApp(
       onGenerateRoute: Routes.generateRoute,
       debugShowCheckedModeBanner: false,
-      title: 'Barber Center',
-      initialRoute: '/',
-    );
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+
+      //home: const WelcomeScreen(),
+    );*/
   }
 }

@@ -1,4 +1,5 @@
 import 'package:barber_center/screens/home_screen/home_screen.dart';
+import 'package:barber_center/screens/signin_screen/sigin_screen.dart';
 import 'package:barber_center/screens/signup_screen/signup_screen.dart';
 import 'package:barber_center/screens/welcome_sceen/welcome_screen.dart';
 import 'package:barber_center/services/constants.dart';
@@ -13,6 +14,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
       case signupRoute:
         return MaterialPageRoute(builder: (_) => const SignUPScreen());
+      case signinRoute:
+        return MaterialPageRoute(builder: (_) => const SignInScreen());
       case homeRoute:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       default:
