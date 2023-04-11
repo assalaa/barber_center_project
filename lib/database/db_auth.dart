@@ -5,7 +5,7 @@ class DBAuth {
   static FirebaseDatabase? database;
   late DatabaseReference _ref;
 
-  DatabaseAuth() {
+  DBAuth() {
     if (database != null) {
       return;
     }
