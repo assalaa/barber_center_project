@@ -28,20 +28,24 @@ class _SignUPScreenState extends State<SignUPScreen> {
           backgroundColor: Styles.backgroundColor,
           body: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppLayout.getWidth(20),
+                  vertical: AppLayout.getHeight(32)),
               child: Center(
                   //HEADER
                   child: Column(
                 children: [
                   Gap(AppLayout.getHeight(30)),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    const Icon(Icons.arrow_back_ios),
-                    Text(
-                      Strings.signup,
-                      style: Styles.headLineStyle3,
-                    ),
-                    const SizedBox(),
-                  ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(Icons.arrow_back_ios),
+                        Text(
+                          Strings.signup,
+                          style: Styles.headLineStyle3,
+                        ),
+                        const SizedBox(),
+                      ]),
                   Gap(AppLayout.getHeight(30)),
                   Text(
                     Strings.welcome2,
@@ -76,7 +80,8 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.emailInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -100,7 +105,8 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.usernameInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -133,7 +139,8 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.passwordInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -157,7 +164,8 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.addressInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -165,15 +173,18 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
-                          GestureDetector(
-                              onTap: () {
-                                provider.save();
-                                // Navigator.of(context).pushNamed(homeRoute);
-                              },
-                              child: LargeRoundedButton(buttonName: Strings.continueBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor)),
+                          LargeRoundedButton(
+                            buttonName: Strings.continueBtn,
+                            buttonColor: Styles.primaryColor,
+                            buttonTextColor: Styles.brighttextColor,
+                            onTap: () {
+                              provider.save();
+                            },
+                          ),
                           Gap(AppLayout.getHeight(30)),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(120)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppLayout.getWidth(120)),
                             child: Row(
                               children: [
                                 Container(
@@ -206,16 +217,21 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           ),
                           Gap(AppLayout.getHeight(20)),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(30)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppLayout.getWidth(30)),
                             child: Row(
                               children: [
                                 Text(
                                   Strings.redirectionToSingIn,
-                                  style: Styles.headLineStyle4.copyWith(fontSize: 18),
+                                  style: Styles.headLineStyle4
+                                      .copyWith(fontSize: 18),
                                 ),
                                 Text(
                                   Strings.signup,
-                                  style: Styles.headLineStyle4.copyWith(fontWeight: FontWeight.bold, fontSize: 18, color: Styles.primaryColor),
+                                  style: Styles.headLineStyle4.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Styles.primaryColor),
                                 )
                               ],
                             ),
