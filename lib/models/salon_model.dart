@@ -19,7 +19,7 @@ class SalonModel {
     required this.salonServices,
   });
   Map<String, dynamic> toJson() {
-    return {'id': id, 'salonName': salonName, 'salonEmail': salonEmail, 'salonAddress': salonAddress, 'salonContact': salonContact, 'salonServices': salonServices};
+    return {'id': id, 'salonName': salonName, 'salonEmail': salonEmail, 'salonPassword': salonPassword, 'salonAddress': salonAddress, 'salonContact': salonContact, 'salonServices': salonServices};
   }
 
   factory SalonModel.fromJson(Map map) {
