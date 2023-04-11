@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
             const SectionHeader(sectionTitle: Strings.topBarbers),
             Gap(AppLayout.getHeight(20)),
             Container(
-              width: AppLayout.getWidth(300),
+              width: AppLayout.getWidth(350),
               height: AppLayout.getHeight(150),
               decoration: BoxDecoration(boxShadow: [BoxShadow(color: Styles.greyColor, spreadRadius: 0.5, blurRadius: 15, offset: const Offset(0, 10))], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brighttextColor),
               child: Padding(
@@ -111,7 +111,10 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Text(
                               "Open",
-                              style: Styles.headLineStyle3,
+                              style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Colors.green),
+                            ),
+                            SizedBox(
+                              width: AppLayout.getWidth(12),
                             ),
                             Text(
                               "Closes10pm",
