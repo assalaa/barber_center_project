@@ -1,13 +1,16 @@
-import 'package:barber_center/database/db_auth.dart';
-import 'package:barber_center/screens/signup_screen/signup_screen_provider.dart';
-import 'package:barber_center/services/constants.dart';
-import 'package:barber_center/utils/app_layout.dart';
-import 'package:barber_center/utils/app_strings.dart';
-import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/large_rounded_button.dart';
+import '../../helpers/input_formatters.dart';
+import '../../helpers/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+
+import '../../database/db_auth.dart';
+import '../../services/constants.dart';
+import '../../utils/app_layout.dart';
+import '../../utils/app_strings.dart';
+import '../../utils/app_styles.dart';
+import '../../widgets/large_rounded_button.dart';
+import 'signup_screen_provider.dart';
 
 class SignUPScreen extends StatefulWidget {
   const SignUPScreen({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class SignUPScreen extends StatefulWidget {
 }
 
 class _SignUPScreenState extends State<SignUPScreen> {
-  late String _email, _password;
+  late String _email, _password, _username, _phoneNumber;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignUPScreenProvider>(
@@ -28,20 +31,24 @@ class _SignUPScreenState extends State<SignUPScreen> {
           backgroundColor: Styles.backgroundColor,
           body: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppLayout.getWidth(20),
+                  vertical: AppLayout.getHeight(32)),
               child: Center(
                   //HEADER
                   child: Column(
                 children: [
                   Gap(AppLayout.getHeight(30)),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    const Icon(Icons.arrow_back_ios),
-                    Text(
-                      Strings.signup,
-                      style: Styles.headLineStyle3,
-                    ),
-                    const SizedBox(),
-                  ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Icon(Icons.arrow_back_ios),
+                        Text(
+                          Strings.signup,
+                          style: Styles.headLineStyle3,
+                        ),
+                        const SizedBox(),
+                      ]),
                   Gap(AppLayout.getHeight(30)),
                   Text(
                     Strings.welcome2,
@@ -63,25 +70,21 @@ class _SignUPScreenState extends State<SignUPScreen> {
                         children: [
                           //EMAIL
                           TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                _email = value.trim();
-                              });
-                            },
-                            validator: (value) {
-                              if (value!.length < 6) {
-                                return "user name is too short";
-                              } else if (value == "") {
-                                return "username can't be empty";
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _email = newValue.trim();
                               }
                             },
+                            validator: Validators.emailValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.emailInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -91,21 +94,21 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Username
                           TextFormField(
-                            validator: (value) {
-                              if (value == "") {
-                                return "Email can't be empty";
-                              } else if (!provider.regExp.hasMatch(value!)) {
-                                return "Email is invalid";
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _username = newValue.trim();
                               }
-                              return "";
                             },
+                            validator: Validators.usernameValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.usernameInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -115,20 +118,14 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Paasorwd
                           TextFormField(
-                            onChanged: (value) {
-                              setState(() {
-                                _password = value.trim();
-                              });
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _password = newValue.trim();
+                              }
                             },
                             obscureText: provider.obserText,
-                            validator: (value) {
-                              if (value == "") {
-                                return "Password can't be empty!";
-                              } else if (value!.length < 6) {
-                                "Password too short";
-                              }
-                              return "";
-                            },
+                            validator: Validators.passwordValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
                                 onTap: () {
@@ -136,14 +133,15 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                     provider.obserText = !provider.obserText;
                                   });
                                 },
-                                child: Icon(Icons.remove_red_eye),
+                                child: const Icon(Icons.remove_red_eye),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.passwordInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -153,21 +151,21 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Paasorwd
                           TextFormField(
-                            validator: (value) {
-                              if (value == "") {
-                                return "Phone can't be empty!";
-                              } else if (value!.length < 11) {
-                                "Invalid phone number";
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _phoneNumber = newValue.trim();
                               }
-                              return "";
                             },
+                            validator: Validators.phoneNumberValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.addressInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(
+                                  fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -175,33 +173,45 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
-                          GestureDetector(
-                              onTap: () {
+                          LargeRoundedButton(
+                            buttonName: Strings.continueBtn,
+                            buttonColor: Styles.primaryColor,
+                            buttonTextColor: Styles.brighttextColor,
+                            onTap: () {
+                              provider.formKey.currentState?.save();
+                              if (provider.formKey.currentState!.validate()) {
                                 DBAuth.signup(context, _email, _password);
                                 //provider.signup(context, provider.passwordController.text, provider.emailController.text);
                                 // provider.save();
                                 // Navigator.of(context).pushNamed(homeRoute);
-                              },
-                              child: LargeRoundedButton(buttonName: Strings.continueBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor)),
+                              }
+                            },
+                          ),
                           Gap(AppLayout.getHeight(30)),
 
                           Gap(AppLayout.getHeight(20)),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(30)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: AppLayout.getWidth(30)),
                             child: Row(
                               children: [
                                 Text(
                                   Strings.redirectionToSingIn,
-                                  style: Styles.headLineStyle4.copyWith(fontSize: 18),
+                                  style: Styles.headLineStyle4
+                                      .copyWith(fontSize: 18),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context).pushNamed(signinRoute);
+                                    Navigator.of(context)
+                                        .pushNamed(signinRoute);
                                   },
                                   // onTap: Routes.goTo(signinRoute),
                                   child: Text(
                                     Strings.signIn,
-                                    style: Styles.headLineStyle4.copyWith(fontWeight: FontWeight.bold, fontSize: 18, color: Styles.primaryColor),
+                                    style: Styles.headLineStyle4.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Styles.primaryColor),
                                   ),
                                 )
                               ],

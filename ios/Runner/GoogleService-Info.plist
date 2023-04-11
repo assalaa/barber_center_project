@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>867110457100-nc5lpd027ognb3k1is3chhfmk9bgerqo.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.867110457100-nc5lpd027ognb3k1is3chhfmk9bgerqo</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDRL2dmSXpIa2o1c8Ob17eqipSSntVVpB4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>867110457100</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.gteck.barberCenter</string>
+	<key>PROJECT_ID</key>
+	<string>barber-center-b294c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>barber-center-b294c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:867110457100:ios:a9b81aa3aec6a589a84329</string>
+</dict>
+</plist>

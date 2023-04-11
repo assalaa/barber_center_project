@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "260033735425",
-    "project_id": "barber-center-e296b",
-    "storage_bucket": "barber-center-e296b.appspot.com"
+    "project_number": "867110457100",
+    "project_id": "barber-center-b294c",
+    "storage_bucket": "barber-center-b294c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:260033735425:android:f92198c64d4fd30232c900",
+        "mobilesdk_app_id": "1:867110457100:android:41966208e1f7fefda84329",
         "android_client_info": {
           "package_name": "com.gteck.barber_center"
         }
       },
       "oauth_client": [
         {
-          "client_id": "260033735425-l2kcdjjrp235su83us8uod0hp0ca8h8q.apps.googleusercontent.com",
+          "client_id": "867110457100-qaks8vmgpki7gumr66hl11eccvcdield.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDBqVnKNk3NtMC0dN4SFt38HTahLYi3Lcg"
+          "current_key": "AIzaSyD9idSK11rtESqIor26uPGPvWdV-ChyXxI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "260033735425-l2kcdjjrp235su83us8uod0hp0ca8h8q.apps.googleusercontent.com",
+              "client_id": "867110457100-qaks8vmgpki7gumr66hl11eccvcdield.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "867110457100-nc5lpd027ognb3k1is3chhfmk9bgerqo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gteck.barberCenter"
+              }
             }
           ]
         }

@@ -9,10 +9,14 @@ class DBAuth {
     return firebaseApp;
   }
 
-  static void signup(BuildContext context, String email, String password) async {
+  static void signup(
+      BuildContext context, String email, String password) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    await auth.createUserWithEmailAndPassword(email: email, password: password).then((_) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+    await auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((_) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomeScreen()));
     });
   }
 }
