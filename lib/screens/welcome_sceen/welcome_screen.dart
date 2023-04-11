@@ -1,12 +1,13 @@
-import 'package:barber_center/services/constants.dart';
-import 'package:barber_center/utils/app_assets.dart';
-import 'package:barber_center/utils/app_layout.dart';
-import 'package:barber_center/utils/app_strings.dart';
-import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+
+import '../../services/constants.dart';
+import '../../utils/app_assets.dart';
+import '../../utils/app_layout.dart';
+import '../../utils/app_strings.dart';
+import '../../utils/app_styles.dart';
+import '../../widgets/large_rounded_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -14,10 +15,14 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /// Fix: Remove Stack
       body: Stack(
         children: [
           Column(
-            children: [Image.asset(height: Get.height, fit: BoxFit.cover, Assets.welcomeBg)],
+            children: [
+              Image.asset(
+                  height: Get.height, fit: BoxFit.cover, Assets.welcomeBg)
+            ],
           ),
           Container(
             width: AppLayout.getScreenWidth(),
@@ -25,7 +30,9 @@ class WelcomeScreen extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(18), vertical: AppLayout.getHeight(31)),
+            padding: EdgeInsets.symmetric(
+                horizontal: AppLayout.getWidth(18),
+                vertical: AppLayout.getHeight(31)),
             child: Column(
               children: [
                 Row(
@@ -43,12 +50,14 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(50)),
+                  padding:
+                      EdgeInsets.symmetric(vertical: AppLayout.getHeight(50)),
                   child: Column(
                     children: [
                       Text(
                         Strings.welcome,
-                        style: Styles.headLineStyle1.copyWith(color: Styles.brighttextColor),
+                        style: Styles.headLineStyle1
+                            .copyWith(color: Styles.brighttextColor),
                       ),
                       Gap(AppLayout.getHeight(5)),
                       Text(
@@ -59,30 +68,35 @@ class WelcomeScreen extends StatelessWidget {
                       Gap(AppLayout.getHeight(50)),
                       Text(
                         Strings.proceed,
-                        style: Styles.headLineStyle1.copyWith(color: Styles.brighttextColor),
+                        style: Styles.headLineStyle1
+                            .copyWith(color: Styles.brighttextColor),
                       ),
                       Gap(AppLayout.getHeight(20)),
                       //BUTTONS START HERE
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(signupRoute);
-                              },
-                              child: LargeRoundedButton(buttonName: Strings.salonBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor)),
+                          LargeRoundedButton(
+                              buttonName: Strings.salonBtn,
+                              buttonColor: Styles.primaryColor,
+                              buttonTextColor: Styles.brighttextColor,
+                              onTap: () =>
+                                  Navigator.of(context).pushNamed(signupRoute)),
                           Gap(AppLayout.getHeight(12)),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/signup');
-                              },
-                              child: LargeRoundedButton(buttonName: Strings.customerBtn, buttonColor: Styles.brighttextColor, buttonTextColor: Styles.primaryColor)),
+                          LargeRoundedButton(
+                              buttonName: Strings.customerBtn,
+                              buttonColor: Styles.brighttextColor,
+                              buttonTextColor: Styles.primaryColor,
+                              onTap: () =>
+                                  Navigator.of(context).pushNamed(signupRoute)),
                           Gap(AppLayout.getHeight(12)),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/signup');
-                              },
-                              child: LargeRoundedButton(buttonName: Strings.barberBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor))
+                          LargeRoundedButton(
+                              buttonName: Strings.barberBtn,
+                              buttonColor: Styles.primaryColor,
+                              buttonTextColor: Styles.brighttextColor,
+                              onTap: () =>
+                                  Navigator.of(context).pushNamed(signupRoute))
+
                           /*LargeRoundedButton(
                             buttonName: Strings.salonBtn,
                             buttonColor: Styles.primaryColor,
