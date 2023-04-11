@@ -1,7 +1,11 @@
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/cards/featured_barbers.dart';
+import 'package:barber_center/widgets/cards/featured_salons.dart';
+import 'package:barber_center/widgets/cards/top_barbers.dart';
 import 'package:barber_center/widgets/section_header.dart';
+import 'package:barber_center/widgets/service_element.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -67,70 +71,60 @@ class HomeScreen extends StatelessWidget {
                 ])
               ],
             ),
-            //TOP BARBERS SECTION STARTS HERE
-            Gap(AppLayout.getHeight(20)),
-            const SectionHeader(sectionTitle: Strings.topBarbers),
-            Gap(AppLayout.getHeight(20)),
-            //Card
-            Container(
-              width: AppLayout.getWidth(300),
-              height: AppLayout.getHeight(150),
-              decoration: BoxDecoration(boxShadow: [BoxShadow(color: Styles.greyColor, spreadRadius: 0.5, blurRadius: 15, offset: const Offset(0, 10))], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brighttextColor),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      width: AppLayout.getWidth(120),
-                      height: AppLayout.getHeight(120),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    Gap(AppLayout.getWidth(10)),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Barber's Name",
-                          style: Styles.headLineStyle3.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Location goes here",
-                          style: Styles.headLineStyle4.copyWith(fontSize: 17),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star_border,
-                              color: Styles.primaryColor,
-                            ),
-                            const Text(
-                              "4.2",
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Open",
-                              style: Styles.headLineStyle3,
-                            ),
-                            Text(
-                              "Closes10pm",
-                              style: Styles.headLineStyle3,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  Gap(AppLayout.getHeight(20)),
+                  const SectionHeader(sectionTitle: Strings.topBarbers),
+                  Gap(AppLayout.getHeight(20)),
+                  //Card
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(left: 10, bottom: 20),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: const [TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time"), TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time")]),
+                  ),
+                  const SectionHeader(sectionTitle: Strings.services),
+                  Gap(AppLayout.getHeight(20)),
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(left: 10, bottom: 20),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: const [
+                      ServiceElement(),
+                      ServiceElement(),
+                      ServiceElement(),
+                      ServiceElement(),
+                      ServiceElement(),
+                    ]),
+                  ),
+                  Gap(AppLayout.getHeight(20)),
+                  const SectionHeader(sectionTitle: Strings.featuredBarbers),
+                  Gap(AppLayout.getHeight(20)),
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(left: 10, bottom: 20),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: const [
+                      FeaturedBarber(),
+                      FeaturedBarber(),
+                      FeaturedBarber(),
+                    ]),
+                  ),
+                  Gap(AppLayout.getHeight(20)),
+                  const SectionHeader(sectionTitle: Strings.featuredSalons),
+                  Gap(AppLayout.getHeight(20)),
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.only(left: 10, bottom: 20),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(children: const [
+                      FeaturedSalons(),
+                      FeaturedSalons(),
+                      FeaturedSalons(),
+                    ]),
+                  ),
+                ],
               ),
-            )
+            ),
+            //TOP BARBERS SECTION STARTS HERE
           ],
         ),
       ),

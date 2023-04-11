@@ -1,4 +1,5 @@
 import 'package:barber_center/database/db_auth.dart';
+import 'package:barber_center/services/constants.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return MaterialApp(
               onGenerateRoute: Routes.generateRoute,
-              initialRoute: '/',
+              initialRoute: homeRoute,
               title: 'Flutter Firebase Authentication Tutorial',
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
