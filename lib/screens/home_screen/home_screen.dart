@@ -71,6 +71,7 @@ class HomeScreen extends StatelessWidget {
             Gap(AppLayout.getHeight(20)),
             const SectionHeader(sectionTitle: Strings.topBarbers),
             Gap(AppLayout.getHeight(20)),
+            //Card
             Container(
               width: AppLayout.getWidth(300),
               height: AppLayout.getHeight(150),
@@ -82,9 +83,14 @@ class HomeScreen extends StatelessWidget {
                     Container(
                       width: AppLayout.getWidth(120),
                       height: AppLayout.getHeight(120),
-                      decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
+                    Gap(AppLayout.getWidth(10)),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
