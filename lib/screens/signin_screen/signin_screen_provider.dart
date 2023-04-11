@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
-class SignUPScreenProvider with ChangeNotifier {
+class SignINScreenProvider with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
 
   bool obserText = true;
 

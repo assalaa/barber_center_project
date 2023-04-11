@@ -1,14 +1,16 @@
-import 'package:barber_center/screens/signup_screen/signup_screen_provider.dart';
-import 'package:barber_center/utils/app_layout.dart';
-import 'package:barber_center/widgets/large_rounded_button.dart';
+import '../../helpers/input_formatters.dart';
+import '../../helpers/validators.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/app_assets.dart';
+import '../../database/db_auth.dart';
+import '../../services/constants.dart';
+import '../../utils/app_layout.dart';
 import '../../utils/app_strings.dart';
 import '../../utils/app_styles.dart';
+import '../../widgets/large_rounded_button.dart';
+import 'signup_screen_provider.dart';
 
 class SignUPScreen extends StatefulWidget {
   const SignUPScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class SignUPScreen extends StatefulWidget {
 }
 
 class _SignUPScreenState extends State<SignUPScreen> {
+  late String _email, _password, _username, _phoneNumber;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignUPScreenProvider>(
@@ -67,13 +70,13 @@ class _SignUPScreenState extends State<SignUPScreen> {
                         children: [
                           //EMAIL
                           TextFormField(
-                            validator: (value) {
-                              if (value!.length < 6) {
-                                return "user name is too short";
-                              } else if (value == "") {
-                                return "username can't be empty";
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _email = newValue.trim();
                               }
                             },
+                            validator: Validators.emailValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
@@ -91,14 +94,13 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Username
                           TextFormField(
-                            validator: (value) {
-                              if (value == "") {
-                                return "Email can't be empty";
-                              } else if (!provider.regExp.hasMatch(value!)) {
-                                return "Email is invalid";
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _username = newValue.trim();
                               }
-                              return "";
                             },
+                            validator: Validators.usernameValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
@@ -116,15 +118,14 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Paasorwd
                           TextFormField(
-                            obscureText: provider.obserText,
-                            validator: (value) {
-                              if (value == "") {
-                                return "Password can't be empty!";
-                              } else if (value!.length < 6) {
-                                "Password too short";
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _password = newValue.trim();
                               }
-                              return "";
                             },
+                            obscureText: provider.obserText,
+                            validator: Validators.passwordValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
                                 onTap: () {
@@ -132,7 +133,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                     provider.obserText = !provider.obserText;
                                   });
                                 },
-                                child: Icon(Icons.remove_red_eye),
+                                child: const Icon(Icons.remove_red_eye),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
@@ -150,14 +151,13 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Paasorwd
                           TextFormField(
-                            validator: (value) {
-                              if (value == "") {
-                                return "Phone can't be empty!";
-                              } else if (value!.length < 11) {
-                                "Invalid phone number";
+                            onSaved: (newValue) {
+                              if (newValue != null) {
+                                _phoneNumber = newValue.trim();
                               }
-                              return "";
                             },
+                            validator: Validators.phoneNumberValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
@@ -178,43 +178,17 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             buttonColor: Styles.primaryColor,
                             buttonTextColor: Styles.brighttextColor,
                             onTap: () {
-                              provider.save();
+                              provider.formKey.currentState?.save();
+                              if (provider.formKey.currentState!.validate()) {
+                                DBAuth.signup(context, _email, _password);
+                                //provider.signup(context, provider.passwordController.text, provider.emailController.text);
+                                // provider.save();
+                                // Navigator.of(context).pushNamed(homeRoute);
+                              }
                             },
                           ),
                           Gap(AppLayout.getHeight(30)),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: AppLayout.getWidth(120)),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: AppLayout.getHeight(40),
-                                  height: AppLayout.getWidth(40),
-                                  decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        image: Svg(
-                                          Assets.gmailIcon,
-                                        ),
-                                      ),
-                                      color: Styles.greyColor.withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(100)),
-                                ),
-                                Gap(AppLayout.getWidth(30)),
-                                Container(
-                                  width: AppLayout.getHeight(40),
-                                  height: AppLayout.getWidth(40),
-                                  decoration: BoxDecoration(
-                                      image: const DecorationImage(
-                                        image: Svg(
-                                          Assets.facebookIcon,
-                                        ),
-                                      ),
-                                      color: Styles.greyColor.withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(100)),
-                                ),
-                              ],
-                            ),
-                          ),
+
                           Gap(AppLayout.getHeight(20)),
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -226,12 +200,19 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                   style: Styles.headLineStyle4
                                       .copyWith(fontSize: 18),
                                 ),
-                                Text(
-                                  Strings.signup,
-                                  style: Styles.headLineStyle4.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: Styles.primaryColor),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed(signinRoute);
+                                  },
+                                  // onTap: Routes.goTo(signinRoute),
+                                  child: Text(
+                                    Strings.signIn,
+                                    style: Styles.headLineStyle4.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        color: Styles.primaryColor),
+                                  ),
                                 )
                               ],
                             ),
