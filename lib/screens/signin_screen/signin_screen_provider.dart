@@ -8,20 +8,19 @@ class SignINScreenProvider with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool visiblePassword = true;
 
-  bool obserText = true;
-
-  obscurePass() {
-    obserText = !obserText;
+  void obscurePass() {
+    visiblePassword = !visiblePassword;
     notifyListeners();
   }
 
-  Future<void> signIn(BuildContext context) async {
-    formKey.currentState!.save();
+  Future<void> signIn(String kinkOfUser) async {
     if (formKey.currentState!.validate()) {
       await _dbAuth.signInWithEmailAndPassword(emailController.text, passwordController.text)?.then((value) {
-        if (value != null) {}
-        Routes.goTo(Routes.homeRoute);
+        if (value != null) {
+          Routes.goTo(Routes.homeRoute);
+        }
       });
     }
   }

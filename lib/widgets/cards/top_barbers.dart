@@ -25,7 +25,7 @@ class TopBarbers extends StatelessWidget {
           blurRadius: 7,
           offset: const Offset(0, 3), // changes position of shadow
         ),
-      ], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brighttextColor),
+      ], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brightTextColor),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

@@ -1,7 +1,7 @@
+import 'package:barber_center/utils/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'database/db_auth.dart';
 import 'firebase_options.dart';
 import 'services/routes.dart';
 
@@ -16,35 +16,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String errorMessage = "Something went wrong";
-    const String appTitle = "Barber Center";
-
-    return FutureBuilder(
-        future: DBAuth.initializeFirebase(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Text(errorMessage);
-          }
-          if (snapshot.connectionState == ConnectionState.done) {
-            return MaterialApp(
-              theme: ThemeData(primarySwatch: Colors.blue),
-              onGenerateRoute: Routes.generateRoute,
-              debugShowCheckedModeBanner: false,
-              initialRoute: Routes.welcomeRoute,
-              title: appTitle,
-            );
-          }
-          return const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.orange));
-        });
-    /*MaterialApp(
-      onGenerateRoute: Routes.generateRoute,
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+    return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          iconTheme: IconThemeData(color: Colors.black),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: const EdgeInsets.all(18.0),
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Styles.brightTextColor,
+          hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            borderSide: BorderSide(color: Styles.greyColor),
+          ),
+        ),
+        iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+          ),
+        ),
       ),
-
-      //home: const WelcomeScreen(),
-    );*/
+      onGenerateRoute: Routes.generateRoute,
+      navigatorKey: Routes.navigator,
+      initialRoute: Routes.splashRoute,
+      title: 'Flutter Demo',
+    );
   }
 }
