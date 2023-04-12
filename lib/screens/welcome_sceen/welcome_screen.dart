@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-import '../../services/constants.dart';
+import '../../services/routes.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_layout.dart';
 import '../../utils/app_strings.dart';
@@ -19,10 +19,7 @@ class WelcomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           Column(
-            children: [
-              Image.asset(
-                  height: Get.height, fit: BoxFit.cover, Assets.welcomeBg)
-            ],
+            children: [Image.asset(height: Get.height, fit: BoxFit.cover, Assets.welcomeBg)],
           ),
           Container(
             width: AppLayout.getScreenWidth(),
@@ -30,9 +27,7 @@ class WelcomeScreen extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: AppLayout.getWidth(18),
-                vertical: AppLayout.getHeight(31)),
+            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(18), vertical: AppLayout.getHeight(31)),
             child: Column(
               children: [
                 Row(
@@ -50,14 +45,12 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: AppLayout.getHeight(50)),
+                  padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(50)),
                   child: Column(
                     children: [
                       Text(
                         Strings.welcome,
-                        style: Styles.headLineStyle1
-                            .copyWith(color: Styles.brighttextColor),
+                        style: Styles.headLineStyle1.copyWith(color: Styles.brighttextColor),
                       ),
                       Gap(AppLayout.getHeight(5)),
                       Text(
@@ -68,34 +61,18 @@ class WelcomeScreen extends StatelessWidget {
                       Gap(AppLayout.getHeight(50)),
                       Text(
                         Strings.proceed,
-                        style: Styles.headLineStyle1
-                            .copyWith(color: Styles.brighttextColor),
+                        style: Styles.headLineStyle1.copyWith(color: Styles.brighttextColor),
                       ),
                       Gap(AppLayout.getHeight(20)),
                       //BUTTONS START HERE
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          LargeRoundedButton(
-                              buttonName: Strings.salonBtn,
-                              buttonColor: Styles.primaryColor,
-                              buttonTextColor: Styles.brighttextColor,
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed(signupRoute)),
+                          LargeRoundedButton(buttonName: Strings.salonBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor, onTap: () => Routes.goTo(Routes.signinRoute)),
                           Gap(AppLayout.getHeight(12)),
-                          LargeRoundedButton(
-                              buttonName: Strings.customerBtn,
-                              buttonColor: Styles.brighttextColor,
-                              buttonTextColor: Styles.primaryColor,
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed(signupRoute)),
+                          LargeRoundedButton(buttonName: Strings.customerBtn, buttonColor: Styles.brighttextColor, buttonTextColor: Styles.primaryColor, onTap: () => Routes.goTo(Routes.signupRoute)),
                           Gap(AppLayout.getHeight(12)),
-                          LargeRoundedButton(
-                              buttonName: Strings.barberBtn,
-                              buttonColor: Styles.primaryColor,
-                              buttonTextColor: Styles.brighttextColor,
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed(signupRoute))
+                          LargeRoundedButton(buttonName: Strings.barberBtn, buttonColor: Styles.primaryColor, buttonTextColor: Styles.brighttextColor, onTap: () => Routes.goTo(Routes.signinRoute)),
 
                           /*LargeRoundedButton(
                             buttonName: Strings.salonBtn,
