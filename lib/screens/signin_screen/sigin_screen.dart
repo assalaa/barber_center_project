@@ -1,10 +1,10 @@
+import 'package:barber_center/services/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/input_formatters.dart';
 import '../../helpers/validators.dart';
-import '../../services/constants.dart';
 import '../../utils/app_layout.dart';
 import '../../utils/app_strings.dart';
 import '../../utils/app_styles.dart';
@@ -24,24 +24,20 @@ class SignInScreen extends StatelessWidget {
           backgroundColor: Styles.backgroundColor,
           body: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: AppLayout.getWidth(20),
-                  vertical: AppLayout.getHeight(32)),
+              padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
               child: Center(
                   //HEADER
                   child: Column(
                 children: [
                   Gap(AppLayout.getHeight(30)),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Icon(Icons.arrow_back_ios),
-                        Text(
-                          Strings.signup,
-                          style: Styles.headLineStyle3,
-                        ),
-                        const SizedBox(),
-                      ]),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    const Icon(Icons.arrow_back_ios),
+                    Text(
+                      Strings.signup,
+                      style: Styles.headLineStyle3,
+                    ),
+                    const SizedBox(),
+                  ]),
                   Gap(AppLayout.getHeight(30)),
                   Text(
                     Strings.welcome2,
@@ -72,8 +68,7 @@ class SignInScreen extends StatelessWidget {
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.emailInput,
-                              hintStyle: TextStyle(
-                                  fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -100,8 +95,7 @@ class SignInScreen extends StatelessWidget {
                                 borderSide: BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.passwordInput,
-                              hintStyle: TextStyle(
-                                  fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -124,27 +118,21 @@ class SignInScreen extends StatelessWidget {
 
                           Gap(AppLayout.getHeight(20)),
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: AppLayout.getWidth(30)),
+                            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(30)),
                             child: Row(
                               children: [
                                 Text(
                                   Strings.redirectionToSingIn,
-                                  style: Styles.headLineStyle4
-                                      .copyWith(fontSize: 18),
+                                  style: Styles.headLineStyle4.copyWith(fontSize: 18),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.of(context)
-                                        .pushNamed(signinRoute);
+                                    Routes.goTo(Routes.signinRoute);
                                   },
                                   // onTap: Routes.goTo(signinRoute),
                                   child: Text(
                                     Strings.signup,
-                                    style: Styles.headLineStyle4.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                        color: Styles.primaryColor),
+                                    style: Styles.headLineStyle4.copyWith(fontWeight: FontWeight.bold, fontSize: 18, color: Styles.primaryColor),
                                   ),
                                 )
                               ],

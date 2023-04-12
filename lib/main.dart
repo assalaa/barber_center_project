@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'database/db_auth.dart';
 import 'firebase_options.dart';
-import 'services/constants.dart';
 import 'services/routes.dart';
 
 void main() async {
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(primarySwatch: Colors.blue),
               onGenerateRoute: Routes.generateRoute,
               debugShowCheckedModeBanner: false,
-              initialRoute: homeRoute,
+              initialRoute: Routes.welcomeRoute,
               title: appTitle,
             );
           }
