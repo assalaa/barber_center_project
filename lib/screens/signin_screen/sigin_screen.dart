@@ -1,18 +1,18 @@
+import 'package:barber_center/helpers/input_formatters.dart';
+import 'package:barber_center/helpers/validators.dart';
+import 'package:barber_center/screens/signin_screen/signin_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_strings.dart';
+import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/input_formatters.dart';
-import '../../helpers/validators.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_strings.dart';
-import '../../utils/app_styles.dart';
-import '../../widgets/large_rounded_button.dart';
-import 'signin_screen_provider.dart';
-
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  final String kindOfUser;
+  const SignInScreen({required this.kindOfUser, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,14 @@ class SignInScreen extends StatelessWidget {
       create: (context) => SignINScreenProvider(),
       child: Consumer<SignINScreenProvider>(builder: (context, provider, _) {
         return Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Styles.backgroundColor,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: Text(
+              Strings.signup,
+              style: Styles.headLineStyle3,
+            ),
+          ),
           body: SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
@@ -29,15 +35,6 @@ class SignInScreen extends StatelessWidget {
                   //HEADER
                   child: Column(
                 children: [
-                  Gap(AppLayout.getHeight(30)),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    const Icon(Icons.arrow_back_ios),
-                    Text(
-                      Strings.signup,
-                      style: Styles.headLineStyle3,
-                    ),
-                    const SizedBox(),
-                  ]),
                   Gap(AppLayout.getHeight(30)),
                   Text(
                     Strings.welcome2,
@@ -72,12 +69,12 @@ class SignInScreen extends StatelessWidget {
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
-                              fillColor: Styles.brighttextColor,
+                              fillColor: Styles.brightTextColor,
                             ),
                           ),
                           Gap(AppLayout.getHeight(20)),
 
-                          //Paasorwd
+                          //Password
                           TextFormField(
                             controller: provider.passwordController,
                             validator: Validators.passwordValidator,
@@ -99,17 +96,17 @@ class SignInScreen extends StatelessWidget {
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
-                              fillColor: Styles.brighttextColor,
+                              fillColor: Styles.brightTextColor,
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
-                          //Paasorwd
+                          //Password
 
                           Gap(AppLayout.getHeight(10)),
                           LargeRoundedButton(
                             buttonName: Strings.continueBtn,
                             buttonColor: Styles.primaryColor,
-                            buttonTextColor: Styles.brighttextColor,
+                            buttonTextColor: Styles.brightTextColor,
                             onTap: () async {
                               await provider.signIn(context);
                             },

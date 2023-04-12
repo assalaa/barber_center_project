@@ -1,12 +1,13 @@
 import 'package:barber_center/screens/home_screen/home_screen.dart';
 import 'package:barber_center/screens/signin_screen/sigin_screen.dart';
 import 'package:barber_center/screens/signup_screen/signup_screen.dart';
-import 'package:barber_center/screens/welcome_sceen/welcome_screen.dart';
+import 'package:barber_center/screens/splash_screen/splash_screen.dart';
+import 'package:barber_center/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/salon_screen/salon_details_screen.dart';
-
 class Routes {
+  //splash screen
+  static const String splashRoute = '/splash';
   static const String welcomeRoute = '/';
   static const String signupRoute = '/signup';
   static const String signinRoute = '/signin';
@@ -14,7 +15,7 @@ class Routes {
   static const String salonDetailsRoute = '/salon_details';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
-    //final args = settings.arguments;
+    final args = settings.arguments;
 
     switch (settings.name) {
       case welcomeRoute:
@@ -22,11 +23,13 @@ class Routes {
       case signupRoute:
         return MaterialPageRoute(builder: (_) => const SignUPScreen());
       case signinRoute:
-        return MaterialPageRoute(builder: (_) => const SignInScreen());
+        return MaterialPageRoute(builder: (_) => SignInScreen(kindOfUser: args as String));
       case homeRoute:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case salonDetailsRoute:
-        return MaterialPageRoute(builder: (_) => const SalonDetailsScreen());
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case splashRoute:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       default:
         return _errorRoute();
     }
@@ -46,12 +49,13 @@ class Routes {
   }
 
   static final navigator = GlobalKey<NavigatorState>();
-  static goTo(String route, {bool enableBack = false, args}) {
+
+  static void goTo(String route, {bool enableBack = false, args}) {
     debugPrint('GO TO $route');
     Navigator.of(Routes.navigator.currentContext!).pushNamedAndRemoveUntil(
       route,
       arguments: args,
-      (Route<dynamic> route) => enableBack,
+      (route) => enableBack,
     );
   }
 }
