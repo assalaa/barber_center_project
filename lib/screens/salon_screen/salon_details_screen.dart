@@ -1,11 +1,10 @@
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
-import '../../utils/app_strings.dart';
 
 class SalonDetailsScreen extends StatelessWidget {
   const SalonDetailsScreen({Key? key}) : super(key: key);
@@ -46,7 +45,7 @@ class SalonDetailsScreen extends StatelessWidget {
                           child: Center(
                             child: Icon(
                               Icons.arrow_back_ios,
-                              color: Styles.brighttextColor,
+                              color: Styles.brightTextColor,
                             ),
                           ),
                         ),
@@ -57,7 +56,7 @@ class SalonDetailsScreen extends StatelessWidget {
                           child: Center(
                             child: Icon(
                               Icons.favorite,
-                              color: Styles.brighttextColor,
+                              color: Styles.brightTextColor,
                             ),
                           ),
                         ),
@@ -83,7 +82,7 @@ class SalonDetailsScreen extends StatelessWidget {
                         Container(
                           child: Text(
                             "Salon Name goes here",
-                            style: Styles.textStyle.copyWith(fontSize: 24, color: Styles.darktextColor, fontWeight: FontWeight.bold),
+                            style: Styles.textStyle.copyWith(fontSize: 24, color: Styles.darkTextColor, fontWeight: FontWeight.bold),
                           ),
                         ),
                         Gap(AppLayout.getHeight(10)),
@@ -130,7 +129,7 @@ class SalonDetailsScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   "Opens at:",
-                                  style: Styles.headLineStyle2.copyWith(fontWeight: FontWeight.w500, fontSize: 20, color: Styles.darktextColor.withOpacity(0.7)),
+                                  style: Styles.headLineStyle2.copyWith(fontWeight: FontWeight.w500, fontSize: 20, color: Styles.darkTextColor.withOpacity(0.7)),
                                 ),
                                 Text(
                                   "Open",
@@ -144,7 +143,7 @@ class SalonDetailsScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   "Closes at:",
-                                  style: Styles.headLineStyle2.copyWith(fontWeight: FontWeight.w500, fontSize: 20, color: Styles.darktextColor.withOpacity(0.7)),
+                                  style: Styles.headLineStyle2.copyWith(fontWeight: FontWeight.w500, fontSize: 20, color: Styles.darkTextColor.withOpacity(0.7)),
                                 ),
                                 Text(
                                   "10PM",
@@ -156,7 +155,7 @@ class SalonDetailsScreen extends StatelessWidget {
                             LargeRoundedButton(
                               buttonName: Strings.bookingBtn,
                               buttonColor: Styles.primaryColor,
-                              buttonTextColor: Styles.brighttextColor,
+                              buttonTextColor: Styles.brightTextColor,
                               onTap: () {},
                             )
                           ],

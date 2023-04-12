@@ -82,22 +82,32 @@ class HomeScreen extends StatelessWidget {
                   SingleChildScrollView(
                     padding: const EdgeInsets.only(left: 10, bottom: 20),
                     scrollDirection: Axis.horizontal,
-                    child: Row(children: const [
-                      TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time"),
-                      TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time")
-                    ]),
+                    child: Row(children: const [TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time"), TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time")]),
                   ),
                   const SectionHeader(sectionTitle: Strings.services),
                   Gap(AppLayout.getHeight(20)),
                   SingleChildScrollView(
                     padding: const EdgeInsets.only(left: 10, bottom: 20),
                     scrollDirection: Axis.horizontal,
-                    child: Row(children: const [
-                      ServiceElement(),
-                      ServiceElement(),
-                      ServiceElement(),
-                      ServiceElement(),
-                      ServiceElement(),
+                    child: Row(children: [
+                      ServiceElement(
+                        serviceColor: Styles.pinkColor,
+                        serviceIcon: Icons.cut,
+                        serviceName: 'Hair cut',
+                        containerColor: Styles.pinkColor,
+                      ),
+                      ServiceElement(
+                        serviceColor: Styles.blueColor,
+                        serviceIcon: Icons.waves_sharp,
+                        serviceName: 'Hair wash',
+                        containerColor: Styles.blueColor,
+                      ),
+                      ServiceElement(
+                        serviceColor: Styles.orangeColor,
+                        serviceIcon: Icons.design_services,
+                        serviceName: 'Beauty',
+                        containerColor: Styles.orangeColor,
+                      ),
                     ]),
                   ),
                   Gap(AppLayout.getHeight(20)),
