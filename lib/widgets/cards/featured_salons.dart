@@ -21,7 +21,7 @@ class FeaturedSalons extends StatelessWidget {
               blurRadius: 7,
               offset: Offset(0, 3), // changes position of shadow
             ),
-          ], borderRadius: BorderRadius.circular(12), color: Styles.brighttextColor),
+          ], borderRadius: BorderRadius.circular(12), color: Styles.brightTextColor),
           child: Column(
             children: [
               Container(
@@ -45,7 +45,7 @@ class FeaturedSalons extends StatelessWidget {
                   children: [
                     Text(
                       "Salon name",
-                      style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Styles.darktextColor),
+                      style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Styles.darkTextColor),
                     ),
                     const Text(
                       "Salon location",
