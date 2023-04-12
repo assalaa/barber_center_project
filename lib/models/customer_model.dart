@@ -1,36 +1,51 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class CostumerModel {
-  late String uid;
-  late String name;
-  late String image;
-  late String emailAddress;
-  late String phoneNumber;
+  String? uid;
+  String? name;
+  String? image;
+  String? email;
+  String? phone;
 
   CostumerModel({
     required uid,
     required name,
     required image,
-    required emailAddress,
-    required phoneNumber,
+    required email,
+    required phone,
   });
+
+  factory CostumerModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return CostumerModel(
+      uid: data?['uid'],
+      name: data?['name'],
+      image: data?['image'],
+      email: data?['email'],
+      phone: data?['phone'],
+    );
+  }
 
   factory CostumerModel.fromJson(Map<String, dynamic> json) {
     return CostumerModel(
       uid: json['uid'],
       name: json['name'],
       image: json['image'],
-      emailAddress: json['emailAddress'],
-      phoneNumber: json['phoneNumber'],
+      email: json['email'],
+      phone: json['phone'],
     );
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['uid'] = uid;
-    data['name'] = name;
-    data['image'] = image;
-    data['emailAddress'] = emailAddress;
-    data['phoneNumber'] = phoneNumber;
-
-    return data;
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (uid != null) "uid": uid,
+      if (name != null) "name": name,
+      if (image != null) "image": image,
+      if (email != null) "email": email,
+      if (phone != null) "phone": phone,
+    };
   }
 }

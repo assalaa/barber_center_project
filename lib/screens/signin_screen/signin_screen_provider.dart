@@ -23,8 +23,9 @@ class SignINScreenProvider with ChangeNotifier {
           .signInWithEmailAndPassword(
               emailController.text, passwordController.text)
           ?.then((value) {
-        if (value != null) {}
-        Navigator.of(context).pushNamed(homeRoute);
+        if (value != null) {
+          Navigator.of(context).pushNamed(homeRoute);
+        }
       });
     }
   }
