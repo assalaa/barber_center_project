@@ -28,10 +28,13 @@ class SignUPScreenProvider with ChangeNotifier {
               emailController.text, passwordController.text)
           ?.then((user) async {
         if (user != null) {
-          await DBProfile()
-              .createFirestoreUser(user.uid, emailController.text,
-                  usernameController.text, phoneController.text)
-              .then((value) {
+          CustomerModel customerModel = CustomerModel(
+            uid: user.uid,
+            name: usernameController.text,
+            email: emailController.text,
+            phone: phoneController.text,
+          );
+          await DBProfile().createFirestoreUser(customerModel).then((value) {
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => const HomeScreen()));
           });

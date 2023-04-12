@@ -1,26 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class CostumerModel {
-  String? uid;
-  String? name;
+class CustomerModel {
+  final String uid;
+  String name;
   String? image;
-  String? email;
-  String? phone;
+  String email;
+  String phone;
 
-  CostumerModel({
-    required uid,
-    required name,
-    required image,
-    required email,
-    required phone,
+  CustomerModel({
+    required this.uid,
+    required this.name,
+    this.image,
+    required this.email,
+    required this.phone,
   });
 
-  factory CostumerModel.fromFirestore(
+  factory CustomerModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
     final data = snapshot.data();
-    return CostumerModel(
+    return CustomerModel(
       uid: data?['uid'],
       name: data?['name'],
       image: data?['image'],
@@ -29,8 +29,8 @@ class CostumerModel {
     );
   }
 
-  factory CostumerModel.fromJson(Map<String, dynamic> json) {
-    return CostumerModel(
+  factory CustomerModel.fromJson(Map<String, dynamic> json) {
+    return CustomerModel(
       uid: json['uid'],
       name: json['name'],
       image: json['image'],
@@ -41,11 +41,11 @@ class CostumerModel {
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (uid != null) "uid": uid,
-      if (name != null) "name": name,
-      if (image != null) "image": image,
-      if (email != null) "email": email,
-      if (phone != null) "phone": phone,
+      "uid": uid,
+      "name": name,
+      "image": image,
+      "email": email,
+      "phone": phone,
     };
   }
 }

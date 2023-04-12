@@ -1,3 +1,4 @@
+import 'package:barber_center/models/customer_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DBProfile {
@@ -5,16 +6,10 @@ class DBProfile {
 
   static const customersPath = "customers";
 
-  Future<dynamic> createFirestoreUser(
-      String uid, String email, String username, String phone) async {
-    var costumer = {
-      "uid": uid,
-      "name": username,
-      "image": "",
-      "email": email,
-      "phone": phone,
-    };
-
-    await firestore.collection(customersPath).doc(uid).set(costumer);
+  Future<dynamic> createFirestoreUser(CustomerModel customerModel) async {
+    await firestore
+        .collection(customersPath)
+        .doc(customerModel.uid)
+        .set(customerModel.toFirestore());
   }
 }
