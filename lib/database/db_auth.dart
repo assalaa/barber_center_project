@@ -26,7 +26,7 @@ class DBAuth {
     });
   }
 
-  Future<User?>? signInWithEmailAndPassword(String emailAddress, String password) async {
+  Future<User?> signInWithEmailAndPassword(String emailAddress, String password) async {
     try {
       final credential = await firebaseAuth.signInWithEmailAndPassword(email: emailAddress, password: password);
 
@@ -41,7 +41,7 @@ class DBAuth {
     }
   }
 
-  Future<User?>? registerWithEmailAndPassword(String emailAddress, String password) async {
+  Future<User?> registerWithEmailAndPassword(String emailAddress, String password) async {
     try {
       final credential = await firebaseAuth.createUserWithEmailAndPassword(email: emailAddress, password: password);
 

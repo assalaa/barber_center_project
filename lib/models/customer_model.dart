@@ -1,36 +1,39 @@
-class CostumerModel {
-  late String uid;
-  late String name;
-  late String image;
-  late String emailAddress;
-  late String phoneNumber;
+class UserModel {
+  final String uid;
+  final String kindOfUser;
+  String name;
+  String? image;
+  String email;
+  String phone;
 
-  CostumerModel({
-    required uid,
-    required name,
-    required image,
-    required emailAddress,
-    required phoneNumber,
+  UserModel({
+    required this.uid,
+    required this.kindOfUser,
+    required this.name,
+    required this.email,
+    required this.phone,
+    this.image,
   });
 
-  factory CostumerModel.fromJson(Map<String, dynamic> json) {
-    return CostumerModel(
-      uid: json['uid'],
-      name: json['name'],
-      image: json['image'],
-      emailAddress: json['emailAddress'],
-      phoneNumber: json['phoneNumber'],
+  factory UserModel.fromJson(Map map) {
+    return UserModel(
+      uid: map['uid'],
+      kindOfUser: map['kindOfUser'] ?? 'CUSTOMER',
+      name: map['name'],
+      image: map['image'],
+      email: map['email'],
+      phone: map['phone'],
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['uid'] = uid;
+    data['kindOfUser'] = kindOfUser;
     data['name'] = name;
     data['image'] = image;
-    data['emailAddress'] = emailAddress;
-    data['phoneNumber'] = phoneNumber;
-
+    data['email'] = email;
+    data['phone'] = phone;
     return data;
   }
 }

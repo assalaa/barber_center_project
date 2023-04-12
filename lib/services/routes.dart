@@ -1,6 +1,9 @@
+import 'package:barber_center/screens/admin/home_admin_screen/home_admin_screen.dart';
+import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
+import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
 import 'package:barber_center/screens/home_screen/home_screen.dart';
-import 'package:barber_center/screens/signin_screen/sigin_screen.dart';
-import 'package:barber_center/screens/signup_screen/signup_screen.dart';
+import 'package:barber_center/screens/login_screen/login_screen.dart';
+import 'package:barber_center/screens/salon_screen/salon_details_screen.dart';
 import 'package:barber_center/screens/splash_screen/splash_screen.dart';
 import 'package:barber_center/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +12,12 @@ class Routes {
   //splash screen
   static const String splashRoute = '/splash';
   static const String welcomeRoute = '/';
-  static const String signupRoute = '/signup';
-  static const String signinRoute = '/signin';
-  static const String homeRoute = '/home';
+  static const String createAccountRoute = '/create_account';
+  static const String loginRoute = '/login';
+  static const String homeCustomerRoute = '/home_customer';
+  static const String homeAdminRoute = '/home_admin';
+  static const String homeBarberRoute = '/home_barber';
+
   static const String salonDetailsRoute = '/salon_details';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
@@ -20,16 +26,20 @@ class Routes {
     switch (settings.name) {
       case welcomeRoute:
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
-      case signupRoute:
-        return MaterialPageRoute(builder: (_) => const SignUPScreen());
-      case signinRoute:
-        return MaterialPageRoute(builder: (_) => SignInScreen(kindOfUser: args as String));
-      case homeRoute:
+      case createAccountRoute:
+        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as String));
+      case loginRoute:
+        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as String));
+      case homeCustomerRoute:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case salonDetailsRoute:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return MaterialPageRoute(builder: (_) => const SalonDetailsScreen());
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case homeAdminRoute:
+        return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
+      case homeBarberRoute:
+        return MaterialPageRoute(builder: (_) => const HomeBarberScreen());
       default:
         return _errorRoute();
     }
