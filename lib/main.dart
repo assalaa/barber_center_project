@@ -1,10 +1,10 @@
-import 'database/db_auth.dart';
-import 'services/constants.dart';
-import 'services/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'database/db_auth.dart';
 import 'firebase_options.dart';
+import 'services/constants.dart';
+import 'services/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,12 +31,11 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(primarySwatch: Colors.blue),
               onGenerateRoute: Routes.generateRoute,
               debugShowCheckedModeBanner: false,
-              initialRoute: signupRoute,
+              initialRoute: homeRoute,
               title: appTitle,
             );
           }
-          return const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.orange));
+          return const CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.orange));
         });
     /*MaterialApp(
       onGenerateRoute: Routes.generateRoute,

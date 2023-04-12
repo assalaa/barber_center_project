@@ -25,4 +25,7 @@ class Strings {
   static const String signIn = "Sing in";
   //SECTIONS
   static const String topBarbers = "Top Barbers";
+  static const String services = "Services";
+  static const String featuredBarbers = "Featured barbers";
+  static const String featuredSalons = "Featured salons";
 }

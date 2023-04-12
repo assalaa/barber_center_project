@@ -8,8 +8,12 @@ class Styles {
   static Color backgroundColor = const Color(0xFFF7F7F7);
   static Color greyColor = const Color(0xFFA7A6AF);
   static Color darktextColor = const Color(0xFF000000);
+  static Color pinkColor = const Color(0xFFFA7172);
+  static Color blueColor = const Color(0xFF6F45F1);
+  static Color orangeColor = const Color(0xFFFA7C07);
+  static Color violetColor = const Color(0xFFB72DFE);
+  static Color greenColor = const Color(0xFF16D391);
   static Color brighttextColor = const Color(0xFFFFFFFF);
-  //static Color greytextColor = const Color(0xFFFFFFFF);
 
   //TEXT STYLES
   static TextStyle textStyle = TextStyle(fontSize: AppLayout.getHeight(16), color: brighttextColor, fontWeight: FontWeight.w500);

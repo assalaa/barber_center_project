@@ -5,6 +5,8 @@ import 'package:barber_center/screens/welcome_sceen/welcome_screen.dart';
 import 'package:barber_center/services/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/salon_screen/salon_details_screen.dart';
+
 class Routes {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     //final args = settings.arguments;
@@ -18,6 +20,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const SignInScreen());
       case homeRoute:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case salonDetailsRoute:
+        return MaterialPageRoute(builder: (_) => const SalonDetailsScreen());
       default:
         return _errorRoute();
     }
