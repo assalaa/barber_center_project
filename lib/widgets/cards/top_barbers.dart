@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../../utils/app_assets.dart';
 import '../../utils/app_layout.dart';
 import '../../utils/app_styles.dart';
 
@@ -17,7 +18,14 @@ class TopBarbers extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       width: AppLayout.getWidth(350),
       height: AppLayout.getHeight(150),
-      decoration: BoxDecoration(boxShadow: [BoxShadow(color: Styles.greyColor, spreadRadius: 0.5, blurRadius: 15, offset: const Offset(0, 10))], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brighttextColor),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: const Offset(0, 3), // changes position of shadow
+        ),
+      ], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brighttextColor),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -26,7 +34,10 @@ class TopBarbers extends StatelessWidget {
               width: AppLayout.getWidth(120),
               height: AppLayout.getHeight(120),
               decoration: BoxDecoration(
-                color: Colors.red,
+                image: const DecorationImage(
+                  image: AssetImage(Assets.welcomeBg),
+                  fit: BoxFit.fill,
+                ),
                 borderRadius: BorderRadius.circular(12),
               ),
             ),

@@ -125,67 +125,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             //TOP BARBERS SECTION STARTS HERE
-            //TOP BARBERS SECTION STARTS HERE
-            Gap(AppLayout.getHeight(20)),
-            const SectionHeader(sectionTitle: Strings.topBarbers),
-            Gap(AppLayout.getHeight(20)),
-            Container(
-              width: AppLayout.getWidth(350),
-              height: AppLayout.getHeight(150),
-              decoration: BoxDecoration(boxShadow: [BoxShadow(color: Styles.greyColor, spreadRadius: 0.5, blurRadius: 15, offset: const Offset(0, 10))], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brighttextColor),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Container(
-                      width: AppLayout.getWidth(120),
-                      height: AppLayout.getHeight(120),
-                      decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(12)),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Barber's Name",
-                          style: Styles.headLineStyle3.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Location goes here",
-                          style: Styles.headLineStyle4.copyWith(fontSize: 17),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star_border,
-                              color: Styles.primaryColor,
-                            ),
-                            const Text(
-                              "4.2",
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Open",
-                              style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Colors.green),
-                            ),
-                            SizedBox(
-                              width: AppLayout.getWidth(12),
-                            ),
-                            Text(
-                              "Closes10pm",
-                              style: Styles.headLineStyle3,
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),

@@ -11,9 +11,17 @@ class FeaturedSalons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       child: Container(
+          margin: EdgeInsets.all(8),
           width: AppLayout.getWidth(200),
           height: AppLayout.getHeight(230),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: Styles.brighttextColor),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ], borderRadius: BorderRadius.circular(12), color: Styles.brighttextColor),
           child: Column(
             children: [
               Container(
