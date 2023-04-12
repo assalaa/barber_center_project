@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-import '../../services/constants.dart';
+import '../../services/routes.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_layout.dart';
 import '../../utils/app_strings.dart';
@@ -80,23 +80,29 @@ class WelcomeScreen extends StatelessWidget {
                               buttonName: Strings.salonBtn,
                               buttonColor: Styles.primaryColor,
                               buttonTextColor: Styles.brighttextColor,
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed(signupRoute)),
+                              onTap: () => Routes.goTo(Routes.signinRoute)),
                           Gap(AppLayout.getHeight(12)),
                           LargeRoundedButton(
                               buttonName: Strings.customerBtn,
                               buttonColor: Styles.brighttextColor,
                               buttonTextColor: Styles.primaryColor,
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed(signupRoute)),
+                              onTap: () => Routes.goTo(Routes.signupRoute)),
                           Gap(AppLayout.getHeight(12)),
                           LargeRoundedButton(
                               buttonName: Strings.barberBtn,
                               buttonColor: Styles.primaryColor,
                               buttonTextColor: Styles.brighttextColor,
-                              onTap: () =>
-                                  Navigator.of(context).pushNamed(signupRoute))
-
+                              onTap: () => Routes.goTo(Routes.signinRoute)),
+                          GestureDetector(
+                            onTap: () {
+                              Routes.goTo(Routes.signupRoute);
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Colors.red,
+                            ),
+                          )
                           /*LargeRoundedButton(
                             buttonName: Strings.salonBtn,
                             buttonColor: Styles.primaryColor,

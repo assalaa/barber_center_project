@@ -1,7 +1,7 @@
 import 'package:barber_center/database/db_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../services/constants.dart';
+import '../../services/routes.dart';
 
 class SignINScreenProvider with ChangeNotifier {
   final DBAuth _dbAuth = DBAuth();
@@ -24,7 +24,7 @@ class SignINScreenProvider with ChangeNotifier {
               emailController.text, passwordController.text)
           ?.then((value) {
         if (value != null) {
-          Navigator.of(context).pushNamed(homeRoute);
+          Routes.goTo(Routes.homeRoute);
         }
       });
     }
