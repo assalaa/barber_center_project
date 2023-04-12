@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../database/db_auth.dart';
 import '../../services/constants.dart';
 import '../../utils/app_layout.dart';
 import '../../utils/app_strings.dart';
@@ -20,7 +19,6 @@ class SignUPScreen extends StatefulWidget {
 }
 
 class _SignUPScreenState extends State<SignUPScreen> {
-  late String _email, _password, _username, _phoneNumber;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SignUPScreenProvider>(
@@ -70,11 +68,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                         children: [
                           //EMAIL
                           TextFormField(
-                            onSaved: (newValue) {
-                              if (newValue != null) {
-                                _email = newValue.trim();
-                              }
-                            },
+                            controller: provider.emailController,
                             validator: Validators.emailValidator,
                             inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
@@ -94,11 +88,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Username
                           TextFormField(
-                            onSaved: (newValue) {
-                              if (newValue != null) {
-                                _username = newValue.trim();
-                              }
-                            },
+                            controller: provider.usernameController,
                             validator: Validators.usernameValidator,
                             inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
@@ -118,11 +108,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Paasorwd
                           TextFormField(
-                            onSaved: (newValue) {
-                              if (newValue != null) {
-                                _password = newValue.trim();
-                              }
-                            },
+                            controller: provider.passwordController,
                             obscureText: provider.obserText,
                             validator: Validators.passwordValidator,
                             inputFormatters: TextInputFormatters.denySpaces,
@@ -151,11 +137,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           //Paasorwd
                           TextFormField(
-                            onSaved: (newValue) {
-                              if (newValue != null) {
-                                _phoneNumber = newValue.trim();
-                              }
-                            },
+                            controller: provider.phoneController,
                             validator: Validators.phoneNumberValidator,
                             inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
@@ -177,14 +159,8 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             buttonName: Strings.continueBtn,
                             buttonColor: Styles.primaryColor,
                             buttonTextColor: Styles.brighttextColor,
-                            onTap: () {
-                              provider.formKey.currentState?.save();
-                              if (provider.formKey.currentState!.validate()) {
-                                DBAuth.signup(context, _email, _password);
-                                //provider.signup(context, provider.passwordController.text, provider.emailController.text);
-                                // provider.save();
-                                // Navigator.of(context).pushNamed(homeRoute);
-                              }
+                            onTap: () async {
+                              await provider.saveUser(context);
                             },
                           ),
                           Gap(AppLayout.getHeight(30)),
