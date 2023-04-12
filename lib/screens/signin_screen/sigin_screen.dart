@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/input_formatters.dart';
+import '../../helpers/validators.dart';
 import '../../services/constants.dart';
 import '../../utils/app_layout.dart';
 import '../../utils/app_strings.dart';
@@ -61,14 +63,9 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           //EMAIL
                           TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "username can't be empty";
-                              } else if (value.length < 6) {
-                                return "user name is too short";
-                              }
-                              return null;
-                            },
+                            controller: provider.emailController,
+                            validator: Validators.emailValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
@@ -87,6 +84,9 @@ class SignInScreen extends StatelessWidget {
 
                           //Paasorwd
                           TextFormField(
+                            controller: provider.passwordController,
+                            validator: Validators.passwordValidator,
+                            inputFormatters: TextInputFormatters.denySpaces,
                             obscureText: provider.obserText,
                             decoration: InputDecoration(
                               suffixIcon: GestureDetector(
@@ -116,8 +116,8 @@ class SignInScreen extends StatelessWidget {
                             buttonName: Strings.continueBtn,
                             buttonColor: Styles.primaryColor,
                             buttonTextColor: Styles.brighttextColor,
-                            onTap: () {
-                              Navigator.of(context).pushNamed(homeRoute);
+                            onTap: () async {
+                              await provider.signIn(context);
                             },
                           ),
                           Gap(AppLayout.getHeight(30)),
