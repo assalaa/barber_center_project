@@ -8,6 +8,7 @@ class Strings {
   static const String customerBtn = "Customer";
   static const String continueBtn = "Continue";
   static const String seeMoreOption = "See more";
+  static const String bookingBtn = "Book";
 
   //WELCOME PAGE
   static const String welcome = 'Welcome to Barber Center';
