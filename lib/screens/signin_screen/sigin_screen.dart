@@ -6,6 +6,7 @@ import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -31,11 +32,9 @@ class SignInScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
-              child: Center(
-                  //HEADER
-                  child: Column(
+              child: Column(
                 children: [
-                  Gap(AppLayout.getHeight(30)),
+                  Gap(AppLayout.getHeight(10)),
                   Text(
                     Strings.welcome2,
                     style: Styles.headLineStyle2.copyWith(fontSize: 30),
@@ -48,99 +47,75 @@ class SignInScreen extends StatelessWidget {
                   ),
                   Gap(AppLayout.getHeight(30)),
                   //SIGN UP FORM
-                  SingleChildScrollView(
-                    child: Form(
-                      key: provider.formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          //EMAIL
-                          TextFormField(
-                            controller: provider.emailController,
-                            validator: Validators.emailValidator,
-                            inputFormatters: TextInputFormatters.denySpaces,
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                borderSide: BorderSide(color: Styles.greyColor),
-                              ),
-                              hintText: Strings.emailInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                              contentPadding: const EdgeInsets.all(18.0),
-                              border: InputBorder.none,
-                              filled: true,
-                              fillColor: Styles.brightTextColor,
+                  Form(
+                    key: provider.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        //EMAIL
+                        TextFormField(
+                          controller: provider.emailController,
+                          validator: Validators.emailValidator,
+                          inputFormatters: TextInputFormatters.denySpaces,
+                          decoration: const InputDecoration(
+                            hintText: Strings.emailInput,
+                          ),
+                        ),
+                        Gap(AppLayout.getHeight(20)),
+
+                        //PASSWORD
+                        TextFormField(
+                          controller: provider.passwordController,
+                          validator: Validators.passwordValidator,
+                          inputFormatters: TextInputFormatters.denySpaces,
+                          obscureText: provider.visiblePassword,
+                          decoration: InputDecoration(
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                provider.obscurePass();
+                              },
+                              child: const Icon(Icons.remove_red_eye),
                             ),
+                            hintText: Strings.passwordInput,
                           ),
-                          Gap(AppLayout.getHeight(20)),
+                        ),
+                        Gap(AppLayout.getHeight(10)),
 
-                          //Password
-                          TextFormField(
-                            controller: provider.passwordController,
-                            validator: Validators.passwordValidator,
-                            inputFormatters: TextInputFormatters.denySpaces,
-                            obscureText: provider.obserText,
-                            decoration: InputDecoration(
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  provider.obscurePass();
-                                },
-                                child: const Icon(Icons.remove_red_eye),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                borderSide: BorderSide(color: Styles.greyColor),
-                              ),
-                              hintText: Strings.passwordInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                              contentPadding: const EdgeInsets.all(18.0),
-                              border: InputBorder.none,
-                              filled: true,
-                              fillColor: Styles.brightTextColor,
-                            ),
-                          ),
-                          Gap(AppLayout.getHeight(10)),
-                          //Password
+                        Gap(AppLayout.getHeight(10)),
+                        LargeRoundedButton(
+                          buttonName: Strings.continueBtn,
+                          buttonColor: Styles.primaryColor,
+                          buttonTextColor: Styles.brightTextColor,
+                          onTap: () async {
+                            await provider.signIn(kindOfUser);
+                          },
+                        ),
+                        Gap(AppLayout.getHeight(30)),
 
-                          Gap(AppLayout.getHeight(10)),
-                          LargeRoundedButton(
-                            buttonName: Strings.continueBtn,
-                            buttonColor: Styles.primaryColor,
-                            buttonTextColor: Styles.brightTextColor,
-                            onTap: () async {
-                              await provider.signIn(context);
-                            },
-                          ),
-                          Gap(AppLayout.getHeight(30)),
-
-                          Gap(AppLayout.getHeight(20)),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(30)),
-                            child: Row(
-                              children: [
-                                Text(
-                                  Strings.redirectionToSingIn,
-                                  style: Styles.headLineStyle4.copyWith(fontSize: 18),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
+                        Gap(AppLayout.getHeight(20)),
+                        //RICH TEXT
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: Strings.redirectionToSingIn,
+                            style: Styles.headLineStyle4.copyWith(fontSize: 18),
+                            children: [
+                              TextSpan(
+                                text: ' ${Strings.signIn}',
+                                style: Styles.headLineStyle4.copyWith(fontWeight: FontWeight.bold, fontSize: 18, color: Styles.primaryColor),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
                                     Routes.goTo(Routes.signinRoute);
                                   },
-                                  // onTap: Routes.goTo(signinRoute),
-                                  child: Text(
-                                    Strings.signup,
-                                    style: Styles.headLineStyle4.copyWith(fontWeight: FontWeight.bold, fontSize: 18, color: Styles.primaryColor),
-                                  ),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   )
                 ],
-              )),
+              ),
             ),
           ),
         );

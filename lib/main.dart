@@ -1,3 +1,4 @@
+import 'package:barber_center/utils/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,17 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           iconTheme: IconThemeData(color: Colors.black),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          contentPadding: const EdgeInsets.all(18.0),
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Styles.brightTextColor,
+          hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            borderSide: BorderSide(color: Styles.greyColor),
+          ),
         ),
         iconButtonTheme: IconButtonThemeData(
           style: ButtonStyle(
