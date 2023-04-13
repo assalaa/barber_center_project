@@ -34,10 +34,10 @@ class SignUPScreenProvider with ChangeNotifier {
             email: emailController.text,
             phone: phoneController.text,
           );
-          await DBProfile().createFirestoreUser(customerModel).then((value) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
-          });
+          // await DBProfile().createFirestoreUser(customerModel).then((value) {
+          //   Navigator.of(context).pushReplacement(
+          //       MaterialPageRoute(builder: (context) => const HomeScreen()));
+          // });
         }
       });
     }

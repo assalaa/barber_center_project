@@ -19,7 +19,7 @@ class SignINScreenProvider with ChangeNotifier {
     if (formKey.currentState!.validate()) {
       await _dbAuth.signInWithEmailAndPassword(emailController.text, passwordController.text)?.then((value) {
         if (value != null) {
-          Routes.goTo(Routes.homeRoute);
+          Routes.goTo(Routes.homeCustomerRoute);
         }
       });
     }

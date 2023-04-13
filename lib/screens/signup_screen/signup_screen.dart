@@ -168,7 +168,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Routes.goTo(Routes.signupRoute);
+                                    Routes.goTo(Routes.createAccountRoute);
                                   },
                                   // onTap: Routes.goTo(signinRoute),
                                   child: Text(
