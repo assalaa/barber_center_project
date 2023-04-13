@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_assets.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_styles.dart';
+import 'package:barber_center/utils/app_assets.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_styles.dart';
 
 class FeaturedSalons extends StatelessWidget {
   const FeaturedSalons({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class FeaturedSalons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       child: Container(
-          margin: EdgeInsets.all(8),
+          margin:const  EdgeInsets.all(8),
           width: AppLayout.getWidth(200),
           height: AppLayout.getHeight(230),
           decoration: BoxDecoration(boxShadow: [

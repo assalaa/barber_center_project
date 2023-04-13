@@ -1,5 +1,9 @@
 import 'package:barber_center/database/db_auth.dart';
+import 'package:barber_center/database/db_profile.dart';
+import 'package:barber_center/main.dart';
+import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -28,10 +32,24 @@ class _SplashScreenState extends State<SplashScreen> {
     await DBAuth().initializeFirebase();
   }
 
-  void checkNextScreen() {
+  Future<void> checkNextScreen() async {
     String nextRoute = Routes.welcomeRoute;
-    if (DBAuth().isUserLoggedIn) {
-      nextRoute = Routes.homeCustomerRoute;
+    final User? user = DBAuth().getCurrentUser();
+    if (user != null) {
+      final UserModel? userModel = await DatabaseUser().getUserByUid(user.uid);
+      debugPrint(userModel?.print());
+      if (userModel == null) {
+        nextRoute = Routes.welcomeRoute;
+      } else if (userModel.kindOfUser == KindOfUser.ADMIN) {
+        print('AI MAI ADMIN');
+        nextRoute = Routes.homeAdminRoute;
+      } else if (userModel.kindOfUser == KindOfUser.SALON) {
+        nextRoute = Routes.homeSalonRoute;
+      } else if (userModel.kindOfUser == KindOfUser.BARBER) {
+        nextRoute = Routes.homeBarberRoute;
+      } else if (userModel.kindOfUser == KindOfUser.CUSTOMER) {
+        nextRoute = Routes.homeCustomerRoute;
+      }
     }
     Routes.goTo(nextRoute);
   }

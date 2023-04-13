@@ -67,7 +67,6 @@ class SalonDetailsScreen extends StatelessWidget {
               ),
             ]),
             Expanded(
-                flex: 1,
                 child: Container(
                   width: AppLayout.getScreenWidth(),
                   height: AppLayout.getHeight(AppLayout.getScreenHeight() - 200),

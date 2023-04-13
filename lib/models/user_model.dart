@@ -8,6 +8,7 @@ class UserModel {
   String? image;
   String email;
   String city;
+  bool isAvailable;
 
   UserModel({
     required this.uid,
@@ -16,6 +17,7 @@ class UserModel {
     required this.name,
     required this.email,
     required this.city,
+    this.isAvailable = true,
     this.image,
   });
 
@@ -28,18 +30,20 @@ class UserModel {
       image: map['image'],
       email: map['email'],
       city: map['city'],
+      isAvailable: map['isAvailable'],
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['uid'] = uid;
-    data['kindOfUser'] = '$kindOfUser';
+    data['kindOfUser'] = setKindOfUser();
     data['createAt'] = createAt.toString();
     data['name'] = name;
     data['image'] = image;
     data['email'] = email;
     data['city'] = city;
+    data['isAvailable'] = isAvailable;
     return data;
   }
 
@@ -50,8 +54,28 @@ class UserModel {
       return KindOfUser.BARBER;
     } else if (kindOfUser == 'SALON') {
       return KindOfUser.SALON;
+    } else if (kindOfUser == 'ADMIN') {
+      return KindOfUser.ADMIN;
     } else {
       return KindOfUser.CUSTOMER;
     }
+  }
+
+  String setKindOfUser() {
+    if (kindOfUser == KindOfUser.CUSTOMER) {
+      return 'CUSTOMER';
+    } else if (kindOfUser == KindOfUser.BARBER) {
+      return 'BARBER';
+    } else if (kindOfUser == KindOfUser.SALON) {
+      return 'SALON';
+    } else if (kindOfUser == KindOfUser.ADMIN) {
+      return 'ADMIN';
+    } else {
+      return 'CUSTOMER';
+    }
+  }
+
+  String print() {
+    return 'uid: $uid, kindOfUser: ${setKindOfUser()}, createAt: $createAt, name: $name, image: $image, email: $email, city: $city, isAvailable: $isAvailable';
   }
 }
