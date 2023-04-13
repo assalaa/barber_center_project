@@ -85,11 +85,11 @@ class AddServicePage extends StatelessWidget {
             height: 130,
             width: 130,
             child: Material(
-              borderRadius: BorderRadius.all(Radius.circular(size)),
+              borderRadius: const BorderRadius.all(Radius.circular(size)),
               color: Colors.black38,
               child: InkWell(
                 onTap: () => selectImage(),
-                borderRadius: BorderRadius.all(Radius.circular(size)),
+                borderRadius: const BorderRadius.all(Radius.circular(size)),
                 child: const SizedBox(
                   height: 130,
                   width: 130,
@@ -111,7 +111,7 @@ class AddServicePage extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(size)),
+                borderRadius: const BorderRadius.all(Radius.circular(size)),
                 child: ImageFile(
                   imageSize: 130,
                   path: xFile.path,

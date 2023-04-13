@@ -7,7 +7,10 @@ class DatabaseUser {
   final String _path = 'users';
 
   Future<void> addUser(UserModel userModel) async {
-    await _firestore.collection(_path).doc(userModel.uid).set(userModel.toJson());
+    await _firestore
+        .collection(_path)
+        .doc(userModel.uid)
+        .set(userModel.toJson());
   }
 
   Future<List<UserModel>> getUser() async {
@@ -27,11 +30,15 @@ class DatabaseUser {
   }
 
   Future<void> updateUser(UserModel userModel) async {
-    await _firestore.collection(_path).doc(userModel.uid).update(userModel.toJson());
+    await _firestore
+        .collection(_path)
+        .doc(userModel.uid)
+        .update(userModel.toJson());
   }
 
-  Future<UserModel?> getUserByUid(String uid) async {
-    final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(uid).get();
+  Future<UserModel> getUserByUid(String uid) async {
+    final DocumentSnapshot snapshot =
+        await _firestore.collection(_path).doc(uid).get();
     final Map map = snapshot.data() as Map;
     final UserModel user = UserModel.fromJson(map);
     return user;

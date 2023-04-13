@@ -1,3 +1,4 @@
+import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -17,7 +18,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Styles.backgroundColor,
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(45), horizontal: AppLayout.getWidth(12)),
+        padding: EdgeInsets.symmetric(
+            vertical: AppLayout.getHeight(45),
+            horizontal: AppLayout.getWidth(12)),
         child: Column(
           children: [
             Row(
@@ -36,13 +39,14 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.search,
                           color: Styles.greyColor,
                         ),
                         Text(
-                          "Search barber or Salon...",
-                          style: Styles.textStyle.copyWith(color: Styles.greyColor),
+                          'Search barber or Salon...',
+                          style: Styles.textStyle
+                              .copyWith(color: Styles.greyColor),
                         )
                       ],
                     ),
@@ -50,13 +54,18 @@ class HomeScreen extends StatelessWidget {
                 ),
                 //NOTIFICATION ICON
                 Stack(children: [
-                  Container(
-                    width: AppLayout.getHeight(50),
-                    height: AppLayout.getWidth(50),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
-                    child: Icon(
-                      Icons.notifications_none_outlined,
-                      color: Colors.black.withOpacity(0.7),
+                  InkWell(
+                    onTap: () => Routes.goTo(Routes.profileRoute),
+                    child: Container(
+                      width: AppLayout.getHeight(50),
+                      height: AppLayout.getWidth(50),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Styles.greyColor.withOpacity(0.2)),
+                      child: Icon(
+                        Icons.notifications_none_outlined,
+                        color: Colors.black.withOpacity(0.7),
+                      ),
                     ),
                   ),
                   Positioned(
@@ -65,7 +74,9 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
                       width: AppLayout.getWidth(15),
                       height: AppLayout.getHeight(15),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.primaryColor),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Styles.primaryColor),
                     ),
                   )
                 ])
@@ -73,7 +84,6 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                scrollDirection: Axis.vertical,
                 children: [
                   Gap(AppLayout.getHeight(20)),
                   const SectionHeader(sectionTitle: Strings.topBarbers),
@@ -83,8 +93,16 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10, bottom: 20),
                     scrollDirection: Axis.horizontal,
                     child: Row(children: const [
-                      TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time"),
-                      TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time")
+                      TopBarbers(
+                          barberName: 'barberName',
+                          location: 'location',
+                          openCloseStatus: 'open',
+                          closureTime: 'Time'),
+                      TopBarbers(
+                          barberName: 'barberName',
+                          location: 'location',
+                          openCloseStatus: 'open',
+                          closureTime: 'Time')
                     ]),
                   ),
                   const SectionHeader(sectionTitle: Strings.services),

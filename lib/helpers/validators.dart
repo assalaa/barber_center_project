@@ -6,7 +6,7 @@ class Validators {
     if (value!.isEmpty) {
       return "E-mail can't be empty";
     } else if (!emailRegExp.hasMatch(value)) {
-      return "E-mail format is not valid";
+      return 'E-mail format is not valid';
     }
     return null;
   }
@@ -15,7 +15,7 @@ class Validators {
     if (value!.isEmpty) {
       return "Username can't be empty";
     } else if (value.length < 6) {
-      return "Username is too short";
+      return 'Username is too short';
     }
     return null;
   }
@@ -24,7 +24,7 @@ class Validators {
     if (value!.isEmpty) {
       return "Password can't be empty";
     } else if (value.length < 6) {
-      return "Password is too short";
+      return 'Password is too short';
     }
     return null;
   }
@@ -33,7 +33,7 @@ class Validators {
     if (value!.isEmpty) {
       return "Phone number can't be empty";
     } else if (value.length < 11) {
-      return "Phone number is too short";
+      return 'Phone number is too short';
     }
     return null;
   }
