@@ -2,17 +2,17 @@ import 'package:barber_center/utils/app_layout.dart';
 import 'package:flutter/material.dart';
 
 class Styles {
-  static Color primaryColor = const Color(0xFFFCB320);
-  static Color darkBlueColor = const Color(0xFF302D48);
-  static Color backgroundColor = const Color(0xFFF7F7F7);
-  static Color greyColor = const Color(0xFFA7A6AF);
-  static Color darkTextColor = const Color(0xFF000000);
-  static Color pinkColor = const Color(0xFFFA7172);
-  static Color blueColor = const Color(0xFF6F45F1);
-  static Color orangeColor = const Color(0xFFFA7C07);
-  static Color violetColor = const Color(0xFFB72DFE);
-  static Color greenColor = const Color(0xFF16D391);
-  static Color brightTextColor = const Color(0xFFFFFFFF);
+  static const Color primaryColor = Color(0xFFFCB320);
+  static const Color darkBlueColor = Color(0xFF302D48);
+  static const Color backgroundColor = Color(0xFFF7F7F7);
+  static const Color greyColor = Color(0xFFA7A6AF);
+  static const Color darkTextColor = Color(0xFF000000);
+  static const Color pinkColor = Color(0xFFFA7172);
+  static const Color blueColor = Color(0xFF6F45F1);
+  static const Color orangeColor = Color(0xFFFA7C07);
+  static const Color violetColor = Color(0xFFB72DFE);
+  static const Color greenColor = Color(0xFF16D391);
+  static const Color brightTextColor = Color(0xFFFFFFFF);
 
   //TEXT STYLES
   static TextStyle textStyle = TextStyle(fontSize: AppLayout.getHeight(16), color: brightTextColor, fontWeight: FontWeight.w500);
