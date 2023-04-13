@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-import '../../services/routes.dart';
-import '../../utils/app_assets.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_strings.dart';
-import '../../utils/app_styles.dart';
-import '../../widgets/large_rounded_button.dart';
+import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/app_assets.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_strings.dart';
+import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/large_rounded_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -56,8 +56,7 @@ class WelcomeScreen extends StatelessWidget {
                     children: [
                       Text(
                         Strings.welcome,
-                        style: Styles.headLineStyle1
-                            .copyWith(color: Styles.brighttextColor),
+                        style: Styles.headLineStyle1.copyWith(color: Styles.brightTextColor),
                       ),
                       Gap(AppLayout.getHeight(5)),
                       Text(
@@ -68,8 +67,7 @@ class WelcomeScreen extends StatelessWidget {
                       Gap(AppLayout.getHeight(50)),
                       Text(
                         Strings.proceed,
-                        style: Styles.headLineStyle1
-                            .copyWith(color: Styles.brighttextColor),
+                        style: Styles.headLineStyle1.copyWith(color: Styles.brightTextColor),
                       ),
                       Gap(AppLayout.getHeight(20)),
                       //BUTTONS START HERE
@@ -77,32 +75,26 @@ class WelcomeScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           LargeRoundedButton(
-                              buttonName: Strings.salonBtn,
-                              buttonColor: Styles.primaryColor,
-                              buttonTextColor: Styles.brighttextColor,
-                              onTap: () => Routes.goTo(Routes.signinRoute)),
+                            buttonName: Strings.salonBtn,
+                            buttonColor: Styles.primaryColor,
+                            buttonTextColor: Styles.brightTextColor,
+                            onTap: () => Routes.goTo(Routes.signinRoute, args: 'SALON', enableBack: true),
+                          ),
                           Gap(AppLayout.getHeight(12)),
                           LargeRoundedButton(
-                              buttonName: Strings.customerBtn,
-                              buttonColor: Styles.brighttextColor,
-                              buttonTextColor: Styles.primaryColor,
-                              onTap: () => Routes.goTo(Routes.signupRoute)),
+                            buttonName: Strings.customerBtn,
+                            buttonColor: Styles.brightTextColor,
+                            buttonTextColor: Styles.primaryColor,
+                            onTap: () => Routes.goTo(Routes.signupRoute, args: 'CUSTOMER', enableBack: true),
+                          ),
                           Gap(AppLayout.getHeight(12)),
                           LargeRoundedButton(
-                              buttonName: Strings.barberBtn,
-                              buttonColor: Styles.primaryColor,
-                              buttonTextColor: Styles.brighttextColor,
-                              onTap: () => Routes.goTo(Routes.signinRoute)),
-                          GestureDetector(
-                            onTap: () {
-                              Routes.goTo(Routes.signupRoute);
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              color: Colors.red,
-                            ),
-                          )
+                            buttonName: Strings.barberBtn,
+                            buttonColor: Styles.primaryColor,
+                            buttonTextColor: Styles.brightTextColor,
+                            onTap: () => Routes.goTo(Routes.signinRoute, args: 'BARBER', enableBack: true),
+                          ),
+
                           /*LargeRoundedButton(
                             buttonName: Strings.salonBtn,
                             buttonColor: Styles.primaryColor,

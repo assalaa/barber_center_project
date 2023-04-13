@@ -3,7 +3,7 @@ import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/models/customer_model.dart';
 import 'package:flutter/material.dart';
 
-import '../home_screen/home_screen.dart';
+import 'package:barber_center/screens/home_screen/home_screen.dart';
 
 class SignUPScreenProvider with ChangeNotifier {
   final DBAuth _dbAuth = DBAuth();
@@ -15,7 +15,7 @@ class SignUPScreenProvider with ChangeNotifier {
 
   bool obserText = true;
 
-  obscurePass() {
+  void obscurePass() {
     obserText = !obserText;
     notifyListeners();
   }
@@ -28,7 +28,7 @@ class SignUPScreenProvider with ChangeNotifier {
               emailController.text, passwordController.text)
           ?.then((user) async {
         if (user != null) {
-          CustomerModel customerModel = CustomerModel(
+          final CustomerModel customerModel = CustomerModel(
             uid: user.uid,
             name: usernameController.text,
             email: emailController.text,

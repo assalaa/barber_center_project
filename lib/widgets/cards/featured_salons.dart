@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_assets.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_styles.dart';
+import 'package:barber_center/utils/app_assets.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_styles.dart';
 
 class FeaturedSalons extends StatelessWidget {
   const FeaturedSalons({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class FeaturedSalons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       child: Container(
-          margin: EdgeInsets.all(8),
+          margin:const  EdgeInsets.all(8),
           width: AppLayout.getWidth(200),
           height: AppLayout.getHeight(230),
           decoration: BoxDecoration(boxShadow: [
@@ -21,7 +21,7 @@ class FeaturedSalons extends StatelessWidget {
               blurRadius: 7,
               offset: Offset(0, 3), // changes position of shadow
             ),
-          ], borderRadius: BorderRadius.circular(12), color: Styles.brighttextColor),
+          ], borderRadius: BorderRadius.circular(12), color: Styles.brightTextColor),
           child: Column(
             children: [
               Container(
@@ -45,7 +45,7 @@ class FeaturedSalons extends StatelessWidget {
                   children: [
                     Text(
                       "Salon name",
-                      style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Styles.darktextColor),
+                      style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Styles.darkTextColor),
                     ),
                     const Text(
                       "Salon location",

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/input_formatters.dart';
-import '../../helpers/validators.dart';
-import '../../services/routes.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_strings.dart';
-import '../../utils/app_styles.dart';
-import '../../widgets/large_rounded_button.dart';
-import 'signup_screen_provider.dart';
+import 'package:barber_center/helpers/input_formatters.dart';
+import 'package:barber_center/helpers/validators.dart';
+import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_strings.dart';
+import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/large_rounded_button.dart';
+import 'package:barber_center/screens/signup_screen/signup_screen_provider.dart';
 
 class SignUPScreen extends StatefulWidget {
   const SignUPScreen({Key? key}) : super(key: key);
@@ -77,7 +77,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
-                              fillColor: Styles.brighttextColor,
+                              fillColor: Styles.brightTextColor,
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
@@ -96,7 +96,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
-                              fillColor: Styles.brighttextColor,
+                              fillColor: Styles.brightTextColor,
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
@@ -124,7 +124,7 @@ class _SignUPScreenState extends State<SignUPScreen> {
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
-                              fillColor: Styles.brighttextColor,
+                              fillColor: Styles.brightTextColor,
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
@@ -143,14 +143,14 @@ class _SignUPScreenState extends State<SignUPScreen> {
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
-                              fillColor: Styles.brighttextColor,
+                              fillColor: Styles.brightTextColor,
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
                           LargeRoundedButton(
                             buttonName: Strings.continueBtn,
                             buttonColor: Styles.primaryColor,
-                            buttonTextColor: Styles.brighttextColor,
+                            buttonTextColor: Styles.brightTextColor,
                             onTap: () async {
                               await provider.saveUser(context);
                             },

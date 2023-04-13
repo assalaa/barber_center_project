@@ -16,17 +16,16 @@ class SalonDetailsScreen extends StatelessWidget {
               height: AppLayout.getHeight(200),
               color: Colors.pink,
               child: Container(
-                margin: EdgeInsets.only(top: 190),
+                margin: const EdgeInsets.only(top: 190),
                 height: AppLayout.getHeight(10),
                 decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(12)),
               ),
             ),
             Expanded(
-                flex: 1,
                 child: Container(
                   width: AppLayout.getScreenWidth(),
                   height: AppLayout.getHeight(AppLayout.getScreenHeight() - 200),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.green,
                   ),
                 )),

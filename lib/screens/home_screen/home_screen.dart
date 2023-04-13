@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                   width: AppLayout.getWidth(250),
                   height: AppLayout.getHeight(50),
                   decoration: BoxDecoration(
-                    color: Styles.brighttextColor,
+                    color: Styles.brightTextColor,
                     border: Border.all(color: Styles.greyColor),
                     borderRadius: BorderRadius.circular(AppLayout.getWidth(12)),
                   ),
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                           color: Styles.greyColor,
                         ),
                         Text(
-                          "Search barber or Salon...",
+                          'Search barber or Salon...',
                           style: Styles.textStyle.copyWith(color: Styles.greyColor),
                         )
                       ],
@@ -73,7 +73,6 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                scrollDirection: Axis.vertical,
                 children: [
                   Gap(AppLayout.getHeight(20)),
                   const SectionHeader(sectionTitle: Strings.topBarbers),
@@ -82,7 +81,10 @@ class HomeScreen extends StatelessWidget {
                   SingleChildScrollView(
                     padding: const EdgeInsets.only(left: 10, bottom: 20),
                     scrollDirection: Axis.horizontal,
-                    child: Row(children: const [TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time"), TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time")]),
+                    child: Row(children: const [
+                      TopBarbers(barberName: 'barberName', location: 'location', openCloseStatus: 'open', closureTime: 'Time'),
+                      TopBarbers(barberName: 'barberName', location: 'location', openCloseStatus: 'open', closureTime: 'Time')
+                    ]),
                   ),
                   const SectionHeader(sectionTitle: Strings.services),
                   Gap(AppLayout.getHeight(20)),

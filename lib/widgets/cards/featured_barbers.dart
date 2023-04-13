@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_assets.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_styles.dart';
+import 'package:barber_center/utils/app_assets.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_styles.dart';
 
 class FeaturedBarber extends StatelessWidget {
   const FeaturedBarber({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class FeaturedBarber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(color: Colors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(12)),
       child: Stack(children: [
         Container(
@@ -25,7 +25,7 @@ class FeaturedBarber extends StatelessWidget {
           decoration: BoxDecoration(color: Colors.black.withOpacity(0.4), borderRadius: BorderRadius.circular(12)),
         ),
         Text(
-          "Baeber name",
+          'Barber name',
           style: Styles.textStyle,
         )
       ]),
