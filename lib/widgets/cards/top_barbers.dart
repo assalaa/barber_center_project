@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../../utils/app_assets.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_styles.dart';
+import 'package:barber_center/utils/app_assets.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_styles.dart';
 
 class TopBarbers extends StatelessWidget {
   final String barberName;
   final String location;
   final String openCloseStatus;
   final String closureTime;
-  const TopBarbers({Key? key, required this.barberName, required this.location, required this.openCloseStatus, required this.closureTime}) : super(key: key);
+  const TopBarbers({
+    required this.barberName,
+    required this.location,
+    required this.openCloseStatus,
+    required this.closureTime,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +24,17 @@ class TopBarbers extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       width: AppLayout.getWidth(350),
       height: AppLayout.getHeight(150),
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 5,
-          blurRadius: 7,
-          offset: const Offset(0, 3), // changes position of shadow
-        ),
-      ], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brightTextColor),
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+          borderRadius: BorderRadius.circular(AppLayout.getHeight(12)),
+          color: Styles.brightTextColor),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -48,20 +57,21 @@ class TopBarbers extends StatelessWidget {
               children: [
                 Text(
                   barberName,
-                  style: Styles.headLineStyle3.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+                  style: Styles.headLineStyle3.copyWith(
+                      color: Colors.black, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   location,
                   style: Styles.headLineStyle4.copyWith(fontSize: 17),
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Icon(
                       Icons.star_border,
                       color: Styles.primaryColor,
                     ),
-                    const Text(
-                      "4.2",
+                    Text(
+                      '4.2',
                     )
                   ],
                 ),
@@ -70,7 +80,8 @@ class TopBarbers extends StatelessWidget {
                   children: [
                     Text(
                       openCloseStatus,
-                      style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Colors.green),
+                      style: Styles.headLineStyle3.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.green),
                     ),
                     SizedBox(width: AppLayout.getWidth(15)),
                     Text(

@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class CustomerProfileScreen extends StatelessWidget {
+  const CustomerProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,6 @@ class ProfilePicture extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 72,
-            backgroundColor: Colors.red,
             foregroundImage:
                 profileImage != null ? NetworkImage(profileImage ?? '') : null,
           ),

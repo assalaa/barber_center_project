@@ -94,8 +94,6 @@ class LoginScreen extends StatelessWidget {
                           LargeRoundedButton(
                             loading: provider.loading,
                             buttonName: Strings.continueBtn,
-                            buttonColor: Styles.primaryColor,
-                            buttonTextColor: Styles.brightTextColor,
                             onTap: () async {
                               await provider.login(kindOfUser);
                             },

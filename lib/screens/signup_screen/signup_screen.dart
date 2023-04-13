@@ -70,10 +70,10 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                borderSide: BorderSide(color: Styles.greyColor),
+                                borderSide: const BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.emailInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: const TextStyle(fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -89,10 +89,10 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                borderSide: BorderSide(color: Styles.greyColor),
+                                borderSide: const BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.usernameInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: const TextStyle(fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -117,10 +117,10 @@ class _SignUPScreenState extends State<SignUPScreen> {
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                borderSide: BorderSide(color: Styles.greyColor),
+                                borderSide: const BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.passwordInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: const TextStyle(fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -136,10 +136,10 @@ class _SignUPScreenState extends State<SignUPScreen> {
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(18.0),
-                                borderSide: BorderSide(color: Styles.greyColor),
+                                borderSide: const BorderSide(color: Styles.greyColor),
                               ),
                               hintText: Strings.addressInput,
-                              hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+                              hintStyle: const TextStyle(fontSize: 20.0, color: Styles.greyColor),
                               contentPadding: const EdgeInsets.all(18.0),
                               border: InputBorder.none,
                               filled: true,
@@ -149,8 +149,6 @@ class _SignUPScreenState extends State<SignUPScreen> {
                           Gap(AppLayout.getHeight(10)),
                           LargeRoundedButton(
                             buttonName: Strings.continueBtn,
-                            buttonColor: Styles.primaryColor,
-                            buttonTextColor: Styles.brightTextColor,
                             onTap: () async {
                               await provider.saveUser(context);
                             },
