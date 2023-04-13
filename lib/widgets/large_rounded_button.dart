@@ -1,6 +1,6 @@
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_styles.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../utils/app_layout.dart';
 
 class LargeRoundedButton extends StatelessWidget {
   final String buttonName;
@@ -10,9 +10,9 @@ class LargeRoundedButton extends StatelessWidget {
   final Function() onTap;
   const LargeRoundedButton({
     required this.buttonName,
-    required this.buttonColor,
-    required this.buttonTextColor,
     required this.onTap,
+    this.buttonColor = Styles.primaryColor,
+    this.buttonTextColor = Styles.brightTextColor,
     this.loading = false,
     Key? key,
   }) : super(key: key);

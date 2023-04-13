@@ -10,7 +10,7 @@ class DatabaseUser {
     await _firestore.collection(_path).doc(userModel.uid).set(userModel.toJson());
   }
 
-  Future<List<UserModel>> getUser(int limit, {UserModel? videoModel}) async {
+  Future<List<UserModel>> getUser() async {
     final List<UserModel> users = [];
 
     try {

@@ -10,8 +10,8 @@ class LoginController with ChangeNotifier {
   final DBAuth _dbAuth = DBAuth();
   final DatabaseUser _dbUser = DatabaseUser();
   final formKey = GlobalKey<FormState>();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
   bool visiblePassword = true;
   bool loading = false;
 
