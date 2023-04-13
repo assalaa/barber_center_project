@@ -1,17 +1,17 @@
+import 'package:barber_center/helpers/input_formatters.dart';
+import 'package:barber_center/helpers/validators.dart';
+import 'package:barber_center/main.dart';
+import 'package:barber_center/screens/create_account_screen/create_account_controller.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_strings.dart';
+import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/input_formatters.dart';
-import '../../helpers/validators.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_strings.dart';
-import '../../utils/app_styles.dart';
-import '../../widgets/large_rounded_button.dart';
-import 'create_account_controller.dart';
-
 class CreateAccountScreen extends StatefulWidget {
-  final String kindOfUser;
+  final KindOfUser kindOfUser;
   const CreateAccountScreen({required this.kindOfUser, Key? key}) : super(key: key);
 
   @override
@@ -26,8 +26,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       child: Consumer<CreateAccountController>(
         builder: (context, provider, _) {
           return Scaffold(
-            resizeToAvoidBottomInset: false,
             backgroundColor: Styles.backgroundColor,
+            appBar: AppBar(
+              backgroundColor: Styles.backgroundColor,
+              elevation: 0,
+            ),
             body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
@@ -35,15 +38,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   //HEADER
                   child: Column(
                     children: [
-                      Gap(AppLayout.getHeight(30)),
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                        const Icon(Icons.arrow_back_ios),
-                        Text(
-                          Strings.signup,
-                          style: Styles.headLineStyle3,
-                        ),
-                        const SizedBox(),
-                      ]),
                       Gap(AppLayout.getHeight(30)),
                       Text(
                         Strings.welcome2,
@@ -66,44 +60,32 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               //EMAIL
                               TextFormField(
                                 controller: provider.email,
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.next,
                                 validator: Validators.emailValidator,
                                 inputFormatters: TextInputFormatters.denySpaces,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    borderSide: BorderSide(color: Styles.greyColor),
-                                  ),
+                                decoration: const InputDecoration(
                                   hintText: Strings.emailInput,
-                                  hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                                  contentPadding: const EdgeInsets.all(18.0),
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Styles.brightTextColor,
                                 ),
                               ),
                               Gap(AppLayout.getHeight(10)),
                               //Username
                               TextFormField(
                                 controller: provider.name,
+                                keyboardType: TextInputType.name,
+                                textInputAction: TextInputAction.next,
                                 validator: Validators.usernameValidator,
                                 inputFormatters: TextInputFormatters.denySpaces,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    borderSide: BorderSide(color: Styles.greyColor),
-                                  ),
+                                decoration: const InputDecoration(
                                   hintText: Strings.usernameInput,
-                                  hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                                  contentPadding: const EdgeInsets.all(18.0),
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Styles.brightTextColor,
                                 ),
                               ),
                               Gap(AppLayout.getHeight(10)),
                               //Paasorwd
                               TextFormField(
                                 controller: provider.password,
+                                keyboardType: TextInputType.visiblePassword,
+                                textInputAction: TextInputAction.next,
                                 obscureText: provider.visiblePassword,
                                 validator: Validators.passwordValidator,
                                 inputFormatters: TextInputFormatters.denySpaces,
@@ -116,39 +98,26 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                     },
                                     child: const Icon(Icons.remove_red_eye),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    borderSide: BorderSide(color: Styles.greyColor),
-                                  ),
                                   hintText: Strings.passwordInput,
-                                  hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                                  contentPadding: const EdgeInsets.all(18.0),
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Styles.brightTextColor,
                                 ),
                               ),
                               Gap(AppLayout.getHeight(10)),
-                              //Paasorwd
+
+                              //CITY
                               TextFormField(
-                                controller: provider.phone,
-                                validator: Validators.phoneNumberValidator,
-                                inputFormatters: TextInputFormatters.denySpaces,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    borderSide: BorderSide(color: Styles.greyColor),
-                                  ),
+                                controller: provider.city,
+                                keyboardType: TextInputType.streetAddress,
+                                textInputAction: TextInputAction.done,
+                                onEditingComplete: () async {
+                                  await provider.saveUser(widget.kindOfUser);
+                                },
+                                decoration: const InputDecoration(
                                   hintText: Strings.addressInput,
-                                  hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
-                                  contentPadding: const EdgeInsets.all(18.0),
-                                  border: InputBorder.none,
-                                  filled: true,
-                                  fillColor: Styles.brightTextColor,
                                 ),
                               ),
                               Gap(AppLayout.getHeight(10)),
                               LargeRoundedButton(
+                                loading: provider.loading,
                                 buttonName: Strings.continueBtn,
                                 buttonColor: Styles.primaryColor,
                                 buttonTextColor: Styles.brightTextColor,

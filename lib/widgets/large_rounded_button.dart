@@ -6,13 +6,15 @@ class LargeRoundedButton extends StatelessWidget {
   final String buttonName;
   final Color buttonColor;
   final Color buttonTextColor;
+  final bool loading;
   final Function() onTap;
   const LargeRoundedButton({
-    Key? key,
     required this.buttonName,
     required this.buttonColor,
     required this.buttonTextColor,
     required this.onTap,
+    this.loading = false,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -29,12 +31,16 @@ class LargeRoundedButton extends StatelessWidget {
             color: buttonColor,
           ),
           child: Center(
-            child: Text(
-              buttonName,
-              style: TextStyle(
-                fontSize: 20,
-                color: buttonTextColor,
-                fontWeight: FontWeight.bold,
+            child: Visibility(
+              visible: !loading,
+              replacement: const CupertinoActivityIndicator(),
+              child: Text(
+                buttonName,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: buttonTextColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

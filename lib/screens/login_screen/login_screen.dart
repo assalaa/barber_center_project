@@ -1,5 +1,6 @@
 import 'package:barber_center/helpers/input_formatters.dart';
 import 'package:barber_center/helpers/validators.dart';
+import 'package:barber_center/main.dart';
 import 'package:barber_center/screens/login_screen/login_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
@@ -12,7 +13,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  final String kindOfUser;
+  final KindOfUser kindOfUser;
   const LoginScreen({required this.kindOfUser, Key? key}) : super(key: key);
 
   @override
@@ -91,6 +92,7 @@ class LoginScreen extends StatelessWidget {
 
                           Gap(AppLayout.getHeight(10)),
                           LargeRoundedButton(
+                            loading: provider.loading,
                             buttonName: Strings.continueBtn,
                             buttonColor: Styles.primaryColor,
                             buttonTextColor: Styles.brightTextColor,

@@ -1,5 +1,6 @@
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_profile.dart';
+import 'package:barber_center/main.dart';
 import 'package:barber_center/models/customer_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +20,7 @@ class LoginController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(String kinkOfUser) async {
+  Future<void> login(KindOfUser kinkOfUser) async {
     if (formKey.currentState!.validate() && !loading) {
       loading = true;
       notifyListeners();
@@ -28,6 +29,8 @@ class LoginController with ChangeNotifier {
         password.text,
       );
       if (user == null) {
+        loading = false;
+        notifyListeners();
         return;
       }
       final UserModel? userModel = await _dbUser.getUserByUid(user.uid);
@@ -41,12 +44,12 @@ class LoginController with ChangeNotifier {
     }
   }
 
-  void goToPageByKindOfUser(User user, String kinkOfUser) {
-    if (kinkOfUser == 'SALON') {
-      Routes.goTo(Routes.homeAdminRoute);
-    } else if (kinkOfUser == 'CUSTOMER') {
+  void goToPageByKindOfUser(User user, KindOfUser kinkOfUser) {
+    if (kinkOfUser == KindOfUser.SALON) {
+      Routes.goTo(Routes.homeSalonRoute);
+    } else if (kinkOfUser == KindOfUser.CUSTOMER) {
       Routes.goTo(Routes.homeCustomerRoute);
-    } else if (kinkOfUser == 'BARBER') {
+    } else if (kinkOfUser == KindOfUser.BARBER) {
       Routes.goTo(Routes.homeBarberRoute);
     }
   }

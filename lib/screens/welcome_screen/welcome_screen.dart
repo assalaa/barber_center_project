@@ -1,3 +1,4 @@
+import 'package:barber_center/main.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
@@ -73,21 +74,21 @@ class WelcomeScreen extends StatelessWidget {
                               buttonName: Strings.salonBtn,
                               buttonColor: Styles.primaryColor,
                               buttonTextColor: Styles.brightTextColor,
-                              onTap: () => Routes.goTo(Routes.loginRoute, args: 'SALON', enableBack: true),
+                              onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.SALON, enableBack: true),
                             ),
                             Gap(AppLayout.getHeight(12)),
                             LargeRoundedButton(
                               buttonName: Strings.customerBtn,
                               buttonColor: Styles.brightTextColor,
                               buttonTextColor: Styles.primaryColor,
-                              onTap: () => Routes.goTo(Routes.loginRoute, args: 'CUSTOMER', enableBack: true),
+                              onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.CUSTOMER, enableBack: true),
                             ),
                             Gap(AppLayout.getHeight(12)),
                             LargeRoundedButton(
                               buttonName: Strings.barberBtn,
                               buttonColor: Styles.primaryColor,
                               buttonTextColor: Styles.brightTextColor,
-                              onTap: () => Routes.goTo(Routes.loginRoute, args: 'BARBER', enableBack: true),
+                              onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.BARBER, enableBack: true),
                             ),
                           ],
                         ),

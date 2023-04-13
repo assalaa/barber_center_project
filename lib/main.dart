@@ -1,9 +1,10 @@
+import 'package:barber_center/firebase_options.dart';
+import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'firebase_options.dart';
-import 'services/routes.dart';
+enum KindOfUser { CUSTOMER, BARBER, SALON }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Styles.primaryColor,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
@@ -26,13 +27,23 @@ class MyApp extends StatelessWidget {
         ),
         inputDecorationTheme: InputDecorationTheme(
           contentPadding: const EdgeInsets.all(18.0),
-          border: InputBorder.none,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            borderSide: const BorderSide(color: Styles.greyColor),
+          ),
           filled: true,
           fillColor: Styles.brightTextColor,
-          hintStyle: TextStyle(fontSize: 20.0, color: Styles.greyColor),
+          hintStyle: const TextStyle(fontSize: 20.0, color: Styles.greyColor),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(18.0),
-            borderSide: BorderSide(color: Styles.greyColor),
+            borderSide: const BorderSide(color: Styles.greyColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            borderSide: const BorderSide(
+              color: Styles.primaryColor,
+              width: 2,
+            ),
           ),
         ),
         iconButtonTheme: IconButtonThemeData(
