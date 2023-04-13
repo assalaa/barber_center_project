@@ -1,4 +1,4 @@
-import 'package:barber_center/models/customer_model.dart';
+import 'package:barber_center/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

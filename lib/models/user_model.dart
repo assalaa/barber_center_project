@@ -1,6 +1,8 @@
+import 'package:barber_center/main.dart';
+
 class UserModel {
   final String uid;
-  final String kindOfUser;
+  final KindOfUser kindOfUser;
   final DateTime createAt;
   String name;
   String? image;
@@ -21,7 +23,7 @@ class UserModel {
     return UserModel(
       uid: map['uid'],
       createAt: DateTime.parse(map['createAt']),
-      kindOfUser: map['kindOfUser'] ?? 'CUSTOMER',
+      kindOfUser: getKindOfUser(map['kindOfUser']),
       name: map['name'],
       image: map['image'],
       email: map['email'],
@@ -32,12 +34,24 @@ class UserModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['uid'] = uid;
-    data['kindOfUser'] = kindOfUser;
+    data['kindOfUser'] = '$kindOfUser';
     data['createAt'] = createAt.toString();
     data['name'] = name;
     data['image'] = image;
     data['email'] = email;
     data['city'] = city;
     return data;
+  }
+
+  static KindOfUser getKindOfUser(String kindOfUser) {
+    if (kindOfUser == 'CUSTOMER') {
+      return KindOfUser.CUSTOMER;
+    } else if (kindOfUser == 'BARBER') {
+      return KindOfUser.BARBER;
+    } else if (kindOfUser == 'SALON') {
+      return KindOfUser.SALON;
+    } else {
+      return KindOfUser.CUSTOMER;
+    }
   }
 }
