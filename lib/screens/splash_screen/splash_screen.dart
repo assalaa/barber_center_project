@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkNextScreen() {
     String nextRoute = Routes.welcomeRoute;
     if (DBAuth().isUserLoggedIn) {
-      nextRoute = Routes.homeRoute;
+      nextRoute = Routes.homeCustomerRoute;
     }
     Routes.goTo(nextRoute);
   }
