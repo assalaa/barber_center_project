@@ -13,7 +13,7 @@ class DatabaseUser {
         .set(userModel.toJson());
   }
 
-  Future<List<UserModel>> getUsers(int limit, {UserModel? userModel}) async {
+  Future<List<UserModel>> getUser() async {
     final List<UserModel> users = [];
 
     try {

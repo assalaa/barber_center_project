@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.search,
                           color: Styles.greyColor,
                         ),

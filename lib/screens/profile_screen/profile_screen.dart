@@ -1,4 +1,3 @@
-import 'package:barber_center/models/customer_model.dart';
 import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/error_widget.dart';

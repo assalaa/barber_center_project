@@ -24,6 +24,16 @@ dependencies:
   cloud_firestore: ^4.4.3
   firebase_database: ^10.0.7
   fluttertoast: ^8.2.1
+  firebase_storage: ^11.0.9
+
+#image
+  photo_view: ^0.14.0
+  image_cropper: ^3.0.1
+  image_picker: ^0.8.6
+  cached_network_image: ^3.2.1
+  flutter_native_image: ^0.0.6+1
+  permission_handler: ^9.2.0
+
 
 
 
