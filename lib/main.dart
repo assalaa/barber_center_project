@@ -4,6 +4,7 @@ import 'package:barber_center/utils/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+// ignore: constant_identifier_names
 enum KindOfUser { CUSTOMER, BARBER, SALON, ADMIN }
 
 void main() async {

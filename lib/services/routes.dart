@@ -1,4 +1,4 @@
-import 'package:barber_center/screens/profile_screen/profile_screen.dart';
+import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
 import 'package:barber_center/screens/salon_screen/salon_details_screen.dart';
 import 'package:barber_center/main.dart';
 import 'package:barber_center/screens/admin/add_service/add_service_screen.dart';
@@ -26,7 +26,8 @@ class Routes {
   static const String homeAdminRoute = '/home_admin';
 
   static const String salonDetailsRoute = '/salon_details';
-  static const String profileRoute = '/profile';
+  static const String customerProfileRoute = '/profile_customer';
+  static const String saloonProfileRoute = '/profile_saloon';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -37,8 +38,10 @@ class Routes {
 
       case salonDetailsRoute:
         return MaterialPageRoute(builder: (_) => const SalonDetailsScreen());
-      case profileRoute:
-        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+      case customerProfileRoute:
+        return MaterialPageRoute(builder: (_) => const CustomerProfileScreen());
+      case saloonProfileRoute:
+        return MaterialPageRoute(builder: (_) => const CustomerProfileScreen());
       case createAccountRoute:
         return MaterialPageRoute(
             builder: (_) =>

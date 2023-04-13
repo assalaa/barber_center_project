@@ -36,9 +36,14 @@ class DatabaseUser {
         .update(userModel.toJson());
   }
 
-  Future<UserModel> getUserByUid(String uid) async {
+  Future<UserModel?> getUserByUid(String uid) async {
     final DocumentSnapshot snapshot =
         await _firestore.collection(_path).doc(uid).get();
+
+    if (snapshot.data() == null) {
+      return null;
+    }
+
     final Map map = snapshot.data() as Map;
     final UserModel user = UserModel.fromJson(map);
     return user;
