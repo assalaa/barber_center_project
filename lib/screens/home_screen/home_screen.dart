@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                 //NOTIFICATION ICON
                 Stack(children: [
                   InkWell(
-                    onTap: () => Routes.goTo(Routes.customerProfileRoute),
+                    onTap: () => Routes.goTo(Routes.saloonProfileRoute),
                     child: Container(
                       width: AppLayout.getHeight(50),
                       height: AppLayout.getWidth(50),

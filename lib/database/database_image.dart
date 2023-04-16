@@ -13,18 +13,21 @@ import 'package:permission_handler/permission_handler.dart';
 class DatabaseImage {
   Future<String> uploadImage(XFile image, String path) async {
     if (kDebugMode) {
-      path = 'test/$path';
+      path = 'images/$path';
     }
     final Random rnd = Random();
-    final String random = '${rnd.nextInt(20)}${rnd.nextInt(20)}${rnd.nextInt(20)}';
+    final String random =
+        '${rnd.nextInt(20)}${rnd.nextInt(20)}${rnd.nextInt(20)}';
     final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
     final String fileName = '$random${image.name}';
-    final Reference reference = firebaseStorage.ref().child(path).child(fileName);
+    final Reference reference =
+        firebaseStorage.ref().child(path).child(fileName);
     io.File? file;
     if (!kIsWeb) {
       file = await compressFile(io.File(image.path));
     }
-    final Uint8List bytes = kIsWeb ? await image.readAsBytes() : file!.readAsBytesSync();
+    final Uint8List bytes =
+        kIsWeb ? await image.readAsBytes() : file!.readAsBytesSync();
 
     final TaskSnapshot snapshot = await reference.putData(bytes);
     final String url = await snapshot.ref.getDownloadURL();
@@ -40,7 +43,8 @@ class DatabaseImage {
     return compressedFile;
   }
 
-  Future<XFile?> selectImage(ImageSource imageSource, BuildContext context) async {
+  Future<XFile?> selectImage(
+      ImageSource imageSource, BuildContext context) async {
     if (await checkPermission(imageSource)) {
       final XFile? image = await ImagePicker().pickImage(
         source: imageSource,
@@ -51,7 +55,8 @@ class DatabaseImage {
       // ignore: use_build_context_synchronously
       return cropImage(image, context);
     } else {
-      showMessageError('Permission not granted. Try Again with permission access');
+      showMessageError(
+          'Permission not granted. Try Again with permission access');
       return null;
     }
   }
@@ -61,7 +66,8 @@ class DatabaseImage {
       final List<XFile> images = await ImagePicker().pickMultiImage();
       return images;
     } else {
-      showMessageError('Permission not granted. Try Again with permission access');
+      showMessageError(
+          'Permission not granted. Try Again with permission access');
       return null;
     }
   }
@@ -70,17 +76,21 @@ class DatabaseImage {
     if (await checkPermission(ImageSource.gallery)) {
       return await ImagePicker().pickVideo(source: ImageSource.gallery);
     } else {
-      showMessageError('Permission not granted. Try Again with permission access');
+      showMessageError(
+          'Permission not granted. Try Again with permission access');
       return null;
     }
   }
 
   Future<String> uploadVideo(XFile video) async {
     final Random rnd = Random();
-    final String random = '${rnd.nextInt(20)}${rnd.nextInt(20)}${rnd.nextInt(20)}';
+    final String random =
+        '${rnd.nextInt(20)}${rnd.nextInt(20)}${rnd.nextInt(20)}';
     final String fileName = '$random${video.name}';
-    final Reference firebaseStorageRef = FirebaseStorage.instance.ref().child('videos/$fileName');
-    final UploadTask uploadTask = firebaseStorageRef.putFile(io.File(video.path));
+    final Reference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('videos/$fileName');
+    final UploadTask uploadTask =
+        firebaseStorageRef.putFile(io.File(video.path));
     final TaskSnapshot taskSnapshot = await uploadTask;
     final String url = await taskSnapshot.ref.getDownloadURL();
     return url;
