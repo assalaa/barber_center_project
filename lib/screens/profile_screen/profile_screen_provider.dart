@@ -70,7 +70,8 @@ class ProfileScreenProvider with ChangeNotifier {
   Future<List<String>?>? _fetchServiceIds(String uid) async {
     final UserModel? userModel = await _databaseUser.getUserByUid(uid);
 
-    return userModel?.services;
+    return null;
+    // userModel?.services;
   }
 
   Future<void> updatePhoto(BuildContext context) async {
