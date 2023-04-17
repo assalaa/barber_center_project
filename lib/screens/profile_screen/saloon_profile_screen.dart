@@ -41,8 +41,7 @@ class SaloonProfileScreen extends StatelessWidget {
                           children: [
                             LogoutButton(provider: provider),
                             const SizedBox(height: 32),
-                            ProfilePicture(
-                                profileImage: provider.userModel!.image),
+                            ProfilePicture(provider: provider),
                             const SizedBox(height: 22),
                             FullName(fullName: provider.userModel!.name),
                             const SizedBox(height: 10),

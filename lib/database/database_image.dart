@@ -13,7 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 class DatabaseImage {
   Future<String> uploadImage(XFile image, String path) async {
     if (kDebugMode) {
-      path = 'images/$path';
+      path = 'test/$path';
     }
     final Random rnd = Random();
     final String random =
