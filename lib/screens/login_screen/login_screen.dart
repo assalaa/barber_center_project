@@ -26,31 +26,18 @@ class LoginScreen extends StatelessWidget {
             appBar: AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
-                title: KindOfUser.CUSTOMER != ''
-                    ? Row(
-                        children: [
-                          Text(
-                            '${Strings.signIn}as',
-                            style: Styles.headLineStyle3,
-                          ),
-                          Text(
-                            Strings.asCustomer,
-                            style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
-                          ),
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          Text(
-                            '${Strings.signIn}as',
-                            style: Styles.headLineStyle3,
-                          ),
-                          Text(
-                            Strings.asSalon,
-                            style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
-                          ),
-                        ],
-                      )),
+                title: Row(
+                  children: [
+                    Text(
+                      '${Strings.signIn}as',
+                      style: Styles.headLineStyle3,
+                    ),
+                    Text(
+                      kindOfUser == KindOfUser.CUSTOMER ? Strings.asCustomer : Strings.asSalon,
+                      style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
+                    ),
+                  ],
+                )),
             body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
