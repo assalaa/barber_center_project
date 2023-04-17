@@ -92,6 +92,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 decoration: InputDecoration(
                                   suffixIcon: GestureDetector(
                                     onTap: () {
+                                      /**
+                                       * NEEDS TO BE CHANGED INSIDE THE PROVIDER*/
                                       setState(() {
                                         provider.visiblePassword = !provider.visiblePassword;
                                       });

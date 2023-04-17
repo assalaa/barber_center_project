@@ -33,7 +33,7 @@ class UserModel {
       email: map['email'],
       city: map['city'],
       isAvailable: map['isAvailable'],
-      services: getServices(map['services']),
+      services: map.containsKey('services') ? getServices(map['services']) : null,
     );
   }
 

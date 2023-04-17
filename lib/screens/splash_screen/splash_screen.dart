@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else if (userModel.kindOfUser == KindOfUser.BARBER) {
         nextRoute = Routes.homeBarberRoute;
       } else if (userModel.kindOfUser == KindOfUser.CUSTOMER) {
-        nextRoute = Routes.homeCustomerRoute;
+        nextRoute = Routes.navBarRoute;
       }
     }
     Routes.goTo(nextRoute);

@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class TopBarbers extends StatelessWidget {
   final String barberName;
@@ -20,79 +19,76 @@ class TopBarbers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      width: AppLayout.getWidth(350),
-      height: AppLayout.getHeight(150),
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-          borderRadius: BorderRadius.circular(AppLayout.getHeight(12)),
-          color: Styles.brightTextColor),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Container(
-              width: AppLayout.getWidth(120),
-              height: AppLayout.getHeight(120),
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage(Assets.welcomeBg),
-                  fit: BoxFit.fill,
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.all(8),
+        width: AppLayout.getWidth(350),
+        height: AppLayout.getHeight(150),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ], borderRadius: BorderRadius.circular(AppLayout.getHeight(12)), color: Styles.brightTextColor),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Container(
+                width: AppLayout.getWidth(120),
+                height: AppLayout.getHeight(120),
+                decoration: BoxDecoration(
+                  image: const DecorationImage(
+                    image: AssetImage(Assets.welcomeBg),
+                    fit: BoxFit.fill,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                borderRadius: BorderRadius.circular(12),
               ),
-            ),
-            Gap(AppLayout.getWidth(10)),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  barberName,
-                  style: Styles.headLineStyle3.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  location,
-                  style: Styles.headLineStyle4.copyWith(fontSize: 17),
-                ),
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.star_border,
-                      color: Styles.primaryColor,
-                    ),
-                    Text(
-                      '4.2',
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      openCloseStatus,
-                      style: Styles.headLineStyle3.copyWith(
-                          fontWeight: FontWeight.bold, color: Colors.green),
-                    ),
-                    SizedBox(width: AppLayout.getWidth(15)),
-                    Text(
-                      closureTime,
-                      style: Styles.headLineStyle3,
-                    ),
-                  ],
-                )
-              ],
-            )
-          ],
+              Gap(AppLayout.getWidth(10)),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    barberName,
+                    style: Styles.headLineStyle3.copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    location,
+                    style: Styles.headLineStyle4.copyWith(fontSize: 17),
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.star_border,
+                        color: Styles.primaryColor,
+                      ),
+                      Text(
+                        '4.2',
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        openCloseStatus,
+                        style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Colors.green),
+                      ),
+                      SizedBox(width: AppLayout.getWidth(15)),
+                      Text(
+                        closureTime,
+                        style: Styles.headLineStyle3,
+                      ),
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
