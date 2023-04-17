@@ -1,52 +1,60 @@
 import 'package:barber_center/database/db_auth.dart';
+import 'package:barber_center/database/db_salon_service.dart';
 import 'package:barber_center/database/db_services.dart';
+import 'package:barber_center/models/saloon_service_details_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
-
 import 'package:flutter/cupertino.dart';
 
 class AddServiceProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
+  final DatabaseSalonService _dbSalonService = DatabaseSalonService();
   final DatabaseService _dbService = DatabaseService();
   final DBAuth _dbAuth = DBAuth();
-
-  bool loading = false;
-
-  List<ServiceModel>? services;
-  ServiceModel? selectedService;
-
-  int price = 0;
-  int avgTime = 0;
+  late String userId;
+  bool loading = true;
+  List<ServiceModel> services = [];
+  late SalonServiceModel salonServiceModel;
+  int indexSelected = -1;
 
   AddServiceProvider() {
-    fetchServices();
-  }
+    userId = _dbAuth.getCurrentUser()!.uid;
+    getServices();
+    getSalonServices();
+    for (final ServiceModel element in services) {
+      salonServiceModel.services.add(ServiceDetailModel(
+        serviceId: element.id,
+        price: 0,
+        avgTime: 0,
+        createAt: DateTime.now(),
+      ));
+    }
 
-  Future<void> fetchServices() async {
-    loading = true;
-    notifyListeners();
-    services = await _dbService.getServices();
     loading = false;
     notifyListeners();
   }
 
-  void selectService(ServiceModel serviceModel) {
-    selectedService = serviceModel;
+  Future<void> getServices() async {
+    services = await _dbService.getServices();
+  }
+
+  void selectService(int index) {
+    indexSelected = index;
     notifyListeners();
   }
 
   dynamic setPrice(double value) {
-    price = value.toInt();
+    salonServiceModel.services[indexSelected].price = value.toInt();
     notifyListeners();
-    return price;
+    return value;
   }
 
   dynamic setTime(double value) {
-    avgTime = value.toInt();
+    salonServiceModel.services[indexSelected].avgTime = value.toInt();
     notifyListeners();
-    return avgTime;
+    return value;
   }
 
   Future<void> saveService() async {
@@ -54,21 +62,7 @@ class AddServiceProvider extends ChangeNotifier {
       loading = true;
       notifyListeners();
 
-      final String? userId = _dbAuth.getCurrentUser()?.uid;
-
-      if (userId == null) {
-        showMessageError('Service couldn\'t add. Try again later');
-        return;
-      }
-
-      final SaloonServiceModel saloonServiceModel = SaloonServiceModel(
-        serviceId: selectedService!.id,
-        price: price,
-        avgTime: avgTime,
-        createAt: DateTime.now(),
-      );
-
-      await _dbService.addService(userId, saloonServiceModel);
+      await _dbSalonService.updateService(salonServiceModel);
 
       showMessageSuccessful('Service is successfully added');
 
@@ -79,15 +73,19 @@ class AddServiceProvider extends ChangeNotifier {
   }
 
   bool checkVariables() {
-    if (selectedService == null) {
+    if (indexSelected == -1) {
       showMessageError('Please select a service');
-    } else if (price == 0) {
+    } else if (salonServiceModel.services[indexSelected].price == 0) {
       showMessageError('Please specify the price for service');
-    } else if (avgTime == 0) {
+    } else if (salonServiceModel.services[indexSelected].avgTime == 0) {
       showMessageError('Please specify the average time for service');
     } else {
       return true;
     }
     return false;
+  }
+
+  Future<void> getSalonServices() async {
+    salonServiceModel = await _dbSalonService.getServicesByUserId(userId);
   }
 }

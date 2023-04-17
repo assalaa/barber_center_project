@@ -1,27 +1,21 @@
-class SaloonServiceModel {
-  final String serviceId;
-  final int price;
-  final int avgTime;
-  final DateTime createAt;
+import 'package:barber_center/models/saloon_service_details_model.dart';
 
-  SaloonServiceModel({
-    required this.serviceId,
-    required this.price,
-    required this.avgTime,
-    required this.createAt,
+class SalonServiceModel {
+  final String userId;
+  List<ServiceDetailModel> services;
+
+  SalonServiceModel({
+    required this.userId,
+    required this.services,
   });
 
-  factory SaloonServiceModel.fromJson(Map json) => SaloonServiceModel(
-        serviceId: json['serviceId'],
-        price: json['price'],
-        avgTime: json['avgTime'],
-        createAt: DateTime.parse(json['createAt']),
+  factory SalonServiceModel.fromJson(Map json) => SalonServiceModel(
+        userId: json['userId'],
+        services: List<ServiceDetailModel>.from(json['services'].map((x) => ServiceDetailModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        'serviceId': serviceId,
-        'price': price,
-        'avgTime': avgTime,
-        'createAt': createAt.toString(),
+        'serviceId': userId,
+        'services': List<dynamic>.from(services.map((x) => x.toJson())),
       };
 }

@@ -1,27 +1,33 @@
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_employees.dart';
 import 'package:barber_center/database/db_profile.dart';
+import 'package:barber_center/database/db_salon_service.dart';
 import 'package:barber_center/database/db_services.dart';
 import 'package:barber_center/models/employee_model.dart';
+import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreenProvider with ChangeNotifier {
-  late final DBAuth _dbAuth = DBAuth();
-  late final DatabaseUser _databaseUser = DatabaseUser();
-  late final DatabaseEmployee _databaseEmployee = DatabaseEmployee();
-  late final DatabaseService _databaseService = DatabaseService();
-  UserModel? userModel;
-  List<EmployeeModel>? employees;
-  List<ServiceModel>? services;
-  bool loading = false;
+  final DBAuth _dbAuth = DBAuth();
+  final DatabaseUser _dbUser = DatabaseUser();
+  final DatabaseEmployee _dbEmployee = DatabaseEmployee();
+  final DatabaseService _dbService = DatabaseService();
+  final DatabaseSalonService _dbSalonService = DatabaseSalonService();
+
+  late UserModel userModel;
+  List<EmployeeModel> employees = [];
+  List<ServiceModel> services = [];
+  bool loading = true;
 
   ProfileScreenProvider() {
     fetchMyProfile();
     fetchEmployees();
     fetchServices();
+    loading = false;
+    notifyListeners();
   }
 
   void logout() {
@@ -29,42 +35,19 @@ class ProfileScreenProvider with ChangeNotifier {
   }
 
   Future<void> fetchMyProfile() async {
-    loading = true;
-    notifyListeners();
-    final String? uid = _dbAuth.getCurrentUser()?.uid;
-    userModel = uid != null ? await _databaseUser.getUserByUid(uid) : null;
-    loading = false;
-    notifyListeners();
+    final String uid = _dbAuth.getCurrentUser()!.uid;
+    userModel = (await _dbUser.getUserByUid(uid))!;
   }
 
   Future<void> fetchEmployees() async {
-    loading = true;
-    notifyListeners();
-    final String? uid = _dbAuth.getCurrentUser()?.uid;
-    employees = uid != null ? await _databaseEmployee.getEmployees(uid) : null;
-    loading = false;
-    notifyListeners();
+    employees = await _dbEmployee.getEmployees(userModel.uid);
   }
 
   Future<void> fetchServices() async {
-    loading = true;
-    notifyListeners();
-    final String? uid = _dbAuth.getCurrentUser()?.uid;
-    if (uid != null) {
-      final List<String>? serviceIds = await _fetchServiceIds(uid);
-      debugPrint(serviceIds.toString());
-      if (serviceIds != null) {
-        services = await _databaseService.getMultipleServicesByIds(serviceIds);
-      }
-    }
+    final SalonServiceModel salonServiceModel = await _dbSalonService.getServicesByUserId(userModel.uid);
 
-    loading = false;
-    notifyListeners();
-  }
-
-  Future<List<String>?>? _fetchServiceIds(String uid) async {
-    final UserModel? userModel = await _databaseUser.getUserByUid(uid);
-
-    return userModel?.services;
+    services = await _dbService.getServices();
+    //remove services where there is no in salonServiceModel
+    services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
   }
 }
