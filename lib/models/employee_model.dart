@@ -1,27 +1,33 @@
 class EmployeeModel {
-  final String id;
-  final String name;
-  final String image;
-  final DateTime createAt;
+  String id;
+  String name;
+  String image;
+  String employerUid;
+  DateTime createAt;
 
   EmployeeModel({
     required this.id,
     required this.name,
     required this.image,
+    required this.employerUid,
     required this.createAt,
   });
 
-  factory EmployeeModel.fromJson(Map json) => EmployeeModel(
-    id: json['id'],
-    name: json['name'],
-    image: json['image'],
-    createAt: DateTime.parse(json['createAt']),
-  );
+  factory EmployeeModel.fromJson(Map<String, dynamic> json) {
+    return EmployeeModel(
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      employerUid: json['employerUid'],
+      createAt: DateTime.parse(json['createAt']),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'image': image,
-    'createAt': createAt.toString(),
-  };
+        'id': id,
+        'name': name,
+        'image': image,
+        'employerUid': employerUid,
+        'createAt': createAt.toString(),
+      };
 }

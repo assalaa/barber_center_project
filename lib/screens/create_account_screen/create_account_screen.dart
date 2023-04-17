@@ -121,8 +121,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               LargeRoundedButton(
                                 loading: provider.loading,
                                 buttonName: Strings.continueBtn,
-                                buttonColor: Styles.primaryColor,
-                                buttonTextColor: Styles.brightTextColor,
                                 onTap: () async {
                                   await provider.saveUser(widget.kindOfUser);
                                 },

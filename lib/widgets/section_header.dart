@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class SectionHeader extends StatelessWidget {
   final String sectionTitle;
-  const SectionHeader({Key? key, required this.sectionTitle}) : super(key: key);
+  const SectionHeader({required this.sectionTitle, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

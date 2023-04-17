@@ -74,8 +74,6 @@ class WelcomeScreen extends StatelessWidget {
                           children: [
                             LargeRoundedButton(
                               buttonName: Strings.salonBtn,
-                              buttonColor: Styles.primaryColor,
-                              buttonTextColor: Styles.brightTextColor,
                               onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.SALON, enableBack: true),
                             ),
                             Gap(AppLayout.getHeight(12)),
@@ -88,8 +86,6 @@ class WelcomeScreen extends StatelessWidget {
                             Gap(AppLayout.getHeight(12)),
                             LargeRoundedButton(
                               buttonName: Strings.barberBtn,
-                              buttonColor: Styles.primaryColor,
-                              buttonTextColor: Styles.brightTextColor,
                               onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.BARBER, enableBack: true),
                             ),
                           ],
