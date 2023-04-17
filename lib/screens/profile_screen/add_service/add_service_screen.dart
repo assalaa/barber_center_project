@@ -84,7 +84,7 @@ class SelectTime extends StatelessWidget {
     const double maxTime = 120.0;
 
     const String title = 'Average Time: ';
-    final avgTime = provider.salonServiceModel.services[provider.indexSelected].avgTime;
+    final avgTime = provider.salonServiceModel.services[provider.indexSelected].avgTimeInMinutes;
     final String time = minutesToHours(avgTime);
 
     final double timeSliderValue = avgTime.toDouble();

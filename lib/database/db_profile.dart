@@ -7,10 +7,7 @@ class DatabaseUser {
   final String _path = 'users';
 
   Future<void> addUser(UserModel userModel) async {
-    await _firestore
-        .collection(_path)
-        .doc(userModel.uid)
-        .set(userModel.toJson());
+    await _firestore.collection(_path).doc(userModel.uid).set(userModel.toJson());
   }
 
   Future<List<UserModel>> getUser() async {
@@ -30,15 +27,11 @@ class DatabaseUser {
   }
 
   Future<void> updateUser(UserModel userModel) async {
-    await _firestore
-        .collection(_path)
-        .doc(userModel.uid)
-        .update(userModel.toJson());
+    await _firestore.collection(_path).doc(userModel.uid).update(userModel.toJson());
   }
 
   Future<UserModel?> getUserByUid(String uid) async {
-    final DocumentSnapshot snapshot =
-        await _firestore.collection(_path).doc(uid).get();
+    final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(uid).get();
 
     if (snapshot.data() == null) {
       return null;
@@ -47,5 +40,21 @@ class DatabaseUser {
     final Map map = snapshot.data() as Map;
     final UserModel user = UserModel.fromJson(map);
     return user;
+  }
+
+  Future<List<UserModel>> getSalons() async {
+    final List<UserModel> users = [];
+
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot;
+      querySnapshot = await _firestore.collection(_path).where('kindOfUser', isEqualTo: 'SALON').get();
+      for (final doc in querySnapshot.docs) {
+        users.add(UserModel.fromJson(doc.data()));
+      }
+    } catch (e) {
+      debugPrint('ERROR: $e');
+    }
+
+    return users;
   }
 }

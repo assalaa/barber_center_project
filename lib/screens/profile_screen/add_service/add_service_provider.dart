@@ -25,9 +25,10 @@ class AddServiceProvider extends ChangeNotifier {
     getSalonServices();
     for (final ServiceModel element in services) {
       salonServiceModel.services.add(ServiceDetailModel(
+        name: element.name,
         serviceId: element.id,
         price: 0,
-        avgTime: 0,
+        avgTimeInMinutes: 0,
         createAt: DateTime.now(),
       ));
     }
@@ -52,7 +53,7 @@ class AddServiceProvider extends ChangeNotifier {
   }
 
   dynamic setTime(double value) {
-    salonServiceModel.services[indexSelected].avgTime = value.toInt();
+    salonServiceModel.services[indexSelected].avgTimeInMinutes = value.toInt();
     notifyListeners();
     return value;
   }
@@ -77,7 +78,7 @@ class AddServiceProvider extends ChangeNotifier {
       showMessageError('Please select a service');
     } else if (salonServiceModel.services[indexSelected].price == 0) {
       showMessageError('Please specify the price for service');
-    } else if (salonServiceModel.services[indexSelected].avgTime == 0) {
+    } else if (salonServiceModel.services[indexSelected].avgTimeInMinutes == 0) {
       showMessageError('Please specify the average time for service');
     } else {
       return true;
