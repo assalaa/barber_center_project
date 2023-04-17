@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:barber_center/widgets/error_widget.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
@@ -28,34 +27,32 @@ class SaloonProfileScreen extends StatelessWidget {
               toolbarHeight: 0,
               systemOverlayStyle: SystemUiOverlayStyle.dark,
             ),
-            body: provider.loading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : provider.userModel == null
-                    ? const SnapshotErrorWidget()
-                    : Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LogoutButton(provider: provider),
-                            const SizedBox(height: 32),
-                            ProfilePicture(provider: provider),
-                            const SizedBox(height: 22),
-                            FullName(fullName: provider.userModel!.name),
-                            const SizedBox(height: 10),
-                            LocationInfo(location: provider.userModel!.city),
-                            const SizedBox(height: 60),
-                            const TabBarWidget(),
-                            const Gap(64),
-                            EmployeesAndServices(
-                              employees: provider.employees,
-                              services: provider.services,
-                            ),
-                          ],
-                        ),
-                      ),
+            body: Visibility(
+              visible: !provider.loading,
+              replacement: const Center(child: CircularProgressIndicator()),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LogoutButton(provider: provider),
+                    const SizedBox(height: 32),
+                    ProfilePicture(provider: provider),
+                    const SizedBox(height: 22),
+                    FullName(fullName: provider.userModel.name),
+                    const SizedBox(height: 10),
+                    LocationInfo(location: provider.userModel.city),
+                    const SizedBox(height: 60),
+                    const TabBarWidget(),
+                    const Gap(64),
+                    EmployeesAndServices(
+                      employees: provider.employees,
+                      services: provider.services,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         );
       }),

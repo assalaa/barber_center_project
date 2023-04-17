@@ -23,27 +23,25 @@ class CustomerProfileScreen extends StatelessWidget {
               toolbarHeight: 0,
               systemOverlayStyle: SystemUiOverlayStyle.dark,
             ),
-            body: provider.loading
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : provider.userModel == null
-                    ? const SnapshotErrorWidget()
-                    : Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            LogoutButton(provider: provider),
-                            const SizedBox(height: 32),
-                            ProfilePicture(provider: provider),
-                            const SizedBox(height: 22),
-                            FullName(fullName: provider.userModel!.name),
-                            const SizedBox(height: 60),
-                            const SettingButtons(),
-                          ],
-                        ),
-                      ),
+            body: Visibility(
+              visible: !provider.loading,
+              replacement: const Center(child: CircularProgressIndicator()),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LogoutButton(provider: provider),
+                    const SizedBox(height: 32),
+                    ProfilePicture(provider: provider),
+                    const SizedBox(height: 22),
+                    FullName(fullName: provider.userModel.name),
+                    const SizedBox(height: 60),
+                    const SettingButtons(),
+                  ],
+                ),
+              ),
+            ),
           );
         },
       ),
