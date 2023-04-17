@@ -47,6 +47,7 @@ class UserModel {
     return data;
   }
 
+
   static KindOfUser getKindOfUser(String kindOfUser) {
     if (kindOfUser == 'CUSTOMER') {
       return KindOfUser.CUSTOMER;

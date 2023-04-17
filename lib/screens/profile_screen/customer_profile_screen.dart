@@ -1,3 +1,4 @@
+import 'package:barber_center/widgets/profile/profile_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,6 @@ import 'package:barber_center/widgets/error_widget.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile_setting_button.dart';
-import 'package:barber_center/widgets/profile/profile_picture.dart';
 import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
 
 class CustomerProfileScreen extends StatelessWidget {
@@ -35,8 +35,7 @@ class CustomerProfileScreen extends StatelessWidget {
                         children: [
                           LogoutButton(provider: provider),
                           const SizedBox(height: 32),
-                          ProfilePicture(
-                              profileImage: provider.userModel!.image),
+                          ProfilePicture(provider: provider),
                           const SizedBox(height: 22),
                           FullName(fullName: provider.userModel!.name),
                           const SizedBox(height: 60),
