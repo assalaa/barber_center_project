@@ -3,12 +3,13 @@ import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/cards/featured_barbers.dart';
 import 'package:barber_center/widgets/cards/featured_salons.dart';
 import 'package:barber_center/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+
+import '../../utils/app_assets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -28,30 +29,9 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      //Search BAR
-                      Container(
-                        width: AppLayout.getWidth(250),
-                        height: AppLayout.getHeight(50),
-                        decoration: BoxDecoration(
-                          color: Styles.brightTextColor,
-                          border: Border.all(color: Styles.greyColor),
-                          borderRadius: BorderRadius.circular(AppLayout.getWidth(12)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.search,
-                                color: Styles.greyColor,
-                              ),
-                              Text(
-                                'Search barber or Salon...',
-                                style: Styles.textStyle.copyWith(color: Styles.greyColor),
-                              )
-                            ],
-                          ),
-                        ),
+                      Text(
+                        Strings.appName,
+                        style: Styles.headLineStyle1,
                       ),
                       //NOTIFICATION ICON
                       Stack(children: [
@@ -60,24 +40,18 @@ class HomeScreen extends StatelessWidget {
                           child: Container(
                             width: AppLayout.getHeight(50),
                             height: AppLayout.getWidth(50),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
+                            decoration: BoxDecoration(
+                              image: const DecorationImage(image: AssetImage(Assets.unnamedImage), fit: BoxFit.cover),
+                              borderRadius: BorderRadius.circular(100),
+                              color: Styles.greyColor.withOpacity(0.2),
+                            ),
                           ),
                         ),
-                        Positioned(
-                          left: 30,
-                          bottom: 35,
-                          child: Container(
-                            width: AppLayout.getWidth(15),
-                            height: AppLayout.getHeight(15),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.primaryColor),
-                          ),
-                        )
                       ])
                     ],
                   ),
-                  Expanded(
-                      child: SingleChildScrollView(
-                    child: Column(children: [
+                  SingleChildScrollView(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Gap(AppLayout.getHeight(20)),
                       SingleChildScrollView(
                         padding: const EdgeInsets.only(left: 20),
@@ -102,24 +76,7 @@ class HomeScreen extends StatelessWidget {
                                     )))
                                 .toList()),
                       ),
-                      Gap(AppLayout.getHeight(10)),
-                      const SectionHeader(sectionTitle: Strings.featuredBarbers),
-                      Gap(AppLayout.getHeight(10)),
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.only(left: 20),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                            children: provider.users
-                                .map((user) => Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: FeaturedBarber(
-                                        barberName: user.name,
-                                        barberImage: user.image,
-                                        barberLocation: user.city,
-                                      ),
-                                    ))
-                                .toList()),
-                      ),
+
                       //FEATURED SALONS
                       Gap(AppLayout.getHeight(10)),
                       const SectionHeader(sectionTitle: Strings.featuredSalons),
@@ -145,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                                 .toList()),
                       ),
                     ]),
-                  )),
+                  ),
                   //TOP BARBERS SECTION STARTS HERE
                 ],
               ),

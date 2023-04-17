@@ -9,10 +9,11 @@ class Strings {
   static const String continueBtn = 'Continue';
   static const String seeMoreOption = 'See more';
   static const String bookingBtn = 'Book';
+  static const String languageBtn = 'Language';
 
   //WELCOME PAGE
   static const String welcome = 'Welcome to Barber Center';
-  static const String welcomeSentence = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit,  eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+  static const String welcomeSentence = 'Thank you for using our app :)';
   static const String proceed = 'Continue as';
 
   //SIGNUP PAGE

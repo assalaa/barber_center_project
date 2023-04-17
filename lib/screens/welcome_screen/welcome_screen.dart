@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-
-
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
@@ -38,11 +36,7 @@ class WelcomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        Strings.skipBtn,
-                        style: Styles.textStyle,
-                      ),
-                      Text(
-                        Strings.adminBtn,
+                        Strings.languageBtn,
                         style: Styles.textStyle,
                       ),
                     ],
@@ -84,10 +78,6 @@ class WelcomeScreen extends StatelessWidget {
                               onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.CUSTOMER, enableBack: true),
                             ),
                             Gap(AppLayout.getHeight(12)),
-                            LargeRoundedButton(
-                              buttonName: Strings.barberBtn,
-                              onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.BARBER, enableBack: true),
-                            ),
                           ],
                         ),
                       ],
