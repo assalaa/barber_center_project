@@ -1,5 +1,4 @@
 import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
-import 'package:barber_center/widgets/error_widget.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
