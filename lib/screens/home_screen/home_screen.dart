@@ -1,5 +1,6 @@
 import 'package:barber_center/screens/home_screen/home_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -8,8 +9,6 @@ import 'package:barber_center/widgets/section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-
-import '../../utils/app_assets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -80,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                       //FEATURED SALONS
                       Gap(AppLayout.getHeight(10)),
                       const SectionHeader(sectionTitle: Strings.featuredSalons),
-                      Gap(AppLayout.getHeight(10)),
+                      Gap(AppLayout.getHeight(20)),
                       SingleChildScrollView(
                         padding: const EdgeInsets.only(left: 20),
                         scrollDirection: Axis.horizontal,
@@ -90,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: GestureDetector(
                                         onTap: () {
-                                          Routes.goTo(Routes.salonDetailsRoute);
+                                          Routes.goTo(Routes.salonDetailsRoute, args: user.uid);
                                         },
                                         child: FeaturedSalons(
                                           name: user.name,
