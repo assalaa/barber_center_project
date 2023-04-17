@@ -1,7 +1,10 @@
+import 'package:barber_center/screens/profile_screen/add_employee/add_employee_screen.dart';
+import 'package:barber_center/screens/profile_screen/add_service/add_service_screen.dart';
 import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
+import 'package:barber_center/screens/profile_screen/saloon_profile_screen.dart';
 import 'package:barber_center/screens/salon_screen/salon_details_screen.dart';
 import 'package:barber_center/main.dart';
-import 'package:barber_center/screens/admin/add_service/add_service_screen.dart';
+import 'package:barber_center/screens/admin/add_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
 import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
@@ -22,12 +25,17 @@ class Routes {
   static const String homeSalonRoute = '/home_salon';
   static const String homeBarberRoute = '/home_barber';
   //addServiceRoute
-  static const String addServiceRoute = '/add_service';
+  static const String createServiceRoute = '/create_service';
   static const String homeAdminRoute = '/home_admin';
 
   static const String salonDetailsRoute = '/salon_details';
+
+  // profile routes
   static const String customerProfileRoute = '/profile_customer';
   static const String saloonProfileRoute = '/profile_saloon';
+
+  static const String addEmployeeRoute = '/add_employee';
+  static const String addServiceRoute = '/add_service';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -41,7 +49,11 @@ class Routes {
       case customerProfileRoute:
         return MaterialPageRoute(builder: (_) => const CustomerProfileScreen());
       case saloonProfileRoute:
-        return MaterialPageRoute(builder: (_) => const CustomerProfileScreen());
+        return MaterialPageRoute(builder: (_) => const SaloonProfileScreen());
+      case addEmployeeRoute:
+        return MaterialPageRoute(builder: (_) => const AddEmployeePage());
+      case addServiceRoute:
+        return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
         return MaterialPageRoute(
             builder: (_) =>
@@ -61,8 +73,8 @@ class Routes {
       //ADMIN PAGES
       case homeAdminRoute:
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
-      case addServiceRoute:
-        return MaterialPageRoute(builder: (_) => const AddServicePage());
+      case createServiceRoute:
+        return MaterialPageRoute(builder: (_) => const CreateServicePage());
       default:
         return _errorRoute();
     }
@@ -90,5 +102,12 @@ class Routes {
       arguments: args,
       (route) => enableBack,
     );
+  }
+
+  static void back() {
+    debugPrint('GO TO BACK <-');
+    if (Navigator.canPop(Routes.navigator.currentContext!)) {
+      Navigator.pop(Routes.navigator.currentContext!);
+    }
   }
 }

@@ -1,10 +1,12 @@
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
-import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/error_widget.dart';
-import 'package:barber_center/widgets/profile_setting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:barber_center/widgets/error_widget.dart';
+import 'package:barber_center/widgets/profile/full_name.dart';
+import 'package:barber_center/widgets/profile/logout_button.dart';
+import 'package:barber_center/widgets/profile_setting_button.dart';
+import 'package:barber_center/widgets/profile/profile_picture.dart';
+import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
 
 class CustomerProfileScreen extends StatelessWidget {
   const CustomerProfileScreen({super.key});
@@ -74,88 +76,6 @@ class SettingButtons extends StatelessWidget {
           onTap: () {},
         ),
       ],
-    );
-  }
-}
-
-class FullName extends StatelessWidget {
-  const FullName({
-    required this.fullName,
-    super.key,
-  });
-
-  final String fullName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Text(fullName,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)));
-  }
-}
-
-class ProfilePicture extends StatelessWidget {
-  const ProfilePicture({
-    this.profileImage,
-    super.key,
-  });
-
-  final String? profileImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        children: [
-          CircleAvatar(
-            radius: 72,
-            foregroundImage:
-                profileImage != null ? NetworkImage(profileImage ?? '') : null,
-          ),
-          const Positioned(
-            bottom: 0,
-            right: 0,
-            child: CircleAvatar(
-              radius: 16,
-              backgroundColor: Styles.primaryColor,
-              child: Center(
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class LogoutButton extends StatelessWidget {
-  const LogoutButton({
-    required this.provider,
-    super.key,
-  });
-
-  final ProfileScreenProvider provider;
-
-  @override
-  Widget build(BuildContext context) {
-    const String logoutText = 'Logout';
-
-    return TextButton(
-      onPressed: () {
-        provider.logout();
-      },
-      child: const Text(
-        logoutText,
-        style: TextStyle(
-          color: Styles.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-      ),
     );
   }
 }

@@ -6,7 +6,7 @@ import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
-class AddServiceProvider extends ChangeNotifier {
+class CreateServiceProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final TextEditingController name = TextEditingController();
   final DatabaseImage _dbImage = DatabaseImage();
@@ -33,7 +33,7 @@ class AddServiceProvider extends ChangeNotifier {
     if (formKey.currentState!.validate()) {
       loading = true;
       notifyListeners();
-      final String photoUrl = await _dbImage.uploadImage(xFile!, 'photos/services/');
+      final String photoUrl = await _dbImage.uploadImage(xFile!, 'services/');
       final now = DateTime.now();
       final ServiceModel serviceModel = ServiceModel(
         id: dateToId(now),
@@ -41,7 +41,7 @@ class AddServiceProvider extends ChangeNotifier {
         image: photoUrl,
         createAt: now,
       );
-      await _dbService.addService(serviceModel);
+      await _dbService.createService(serviceModel);
       loading = false;
       notifyListeners();
       Routes.goTo(Routes.splashRoute);
