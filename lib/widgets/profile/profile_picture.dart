@@ -9,15 +9,14 @@ class ProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? profileImage = provider.userModel?.image;
+    final String? profileImage = provider.userModel.image;
 
     return Center(
       child: Stack(
         children: [
           CircleAvatar(
             radius: 72,
-            foregroundImage:
-                profileImage != null ? NetworkImage(profileImage) : null,
+            foregroundImage: profileImage != null ? NetworkImage(profileImage) : null,
           ),
           Positioned(
             bottom: 0,

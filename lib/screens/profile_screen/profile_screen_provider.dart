@@ -9,23 +9,21 @@ import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
-import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreenProvider with ChangeNotifier {
-
   final DBAuth _dbAuth = DBAuth();
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseEmployee _dbEmployee = DatabaseEmployee();
   final DatabaseService _dbService = DatabaseService();
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
+  final DatabaseImage _dbImage = DatabaseImage();
 
   late UserModel userModel;
   List<EmployeeModel> employees = [];
   List<ServiceModel> services = [];
   bool loading = true;
-
 
   ProfileScreenProvider() {
     fetchMyProfile();
@@ -51,10 +49,19 @@ class ProfileScreenProvider with ChangeNotifier {
   Future<void> fetchServices() async {
     final SalonServiceModel salonServiceModel = await _dbSalonService.getServicesByUserId(userModel.uid);
 
-
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
     services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
+  }
 
+  Future<void> updatePhoto(BuildContext context) async {
+    final XFile? imageFile = await _dbImage.selectImage(ImageSource.gallery, context);
+    if (imageFile == null) {
+      return;
+    }
+    final String image = await _dbImage.uploadImage(imageFile, 'images/user/');
+    userModel.image = image;
+    await _dbUser.updateUser(userModel);
+    Routes.goTo(Routes.splashRoute);
   }
 }
