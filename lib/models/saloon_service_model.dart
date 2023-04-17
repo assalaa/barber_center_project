@@ -9,10 +9,13 @@ class SalonServiceModel {
     required this.services,
   });
 
-  factory SalonServiceModel.fromJson(Map json) => SalonServiceModel(
-        userId: json['userId'],
-        services: List<ServiceDetailModel>.from(json['services'].map((x) => ServiceDetailModel.fromJson(x))),
-      );
+  factory SalonServiceModel.fromJson(Map json) {
+    print('SalonServiceModel.fromJson: $json');
+    return SalonServiceModel(
+      userId: json['userId'],
+      services: List<ServiceDetailModel>.from(json['services'].map((x) => ServiceDetailModel.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'serviceId': userId,

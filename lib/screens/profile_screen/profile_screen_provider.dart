@@ -26,11 +26,7 @@ class ProfileScreenProvider with ChangeNotifier {
   bool loading = true;
 
   ProfileScreenProvider() {
-    fetchMyProfile();
-    fetchEmployees();
-    fetchServices();
-    loading = false;
-    notifyListeners();
+    init();
   }
 
   void logout() {
@@ -63,5 +59,13 @@ class ProfileScreenProvider with ChangeNotifier {
     userModel.image = image;
     await _dbUser.updateUser(userModel);
     Routes.goTo(Routes.splashRoute);
+  }
+
+  Future<void> init() async {
+    await fetchMyProfile();
+    await fetchEmployees();
+    await fetchServices();
+    loading = false;
+    notifyListeners();
   }
 }
