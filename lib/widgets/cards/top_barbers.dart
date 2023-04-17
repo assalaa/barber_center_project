@@ -1,16 +1,21 @@
+import 'package:barber_center/utils/app_assets.dart';
+import 'package:barber_center/utils/app_layout.dart';
+import 'package:barber_center/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
-import '../../utils/app_assets.dart';
-import '../../utils/app_layout.dart';
-import '../../utils/app_styles.dart';
 
 class TopBarbers extends StatelessWidget {
   final String barberName;
   final String location;
   final String openCloseStatus;
   final String closureTime;
-  const TopBarbers({Key? key, required this.barberName, required this.location, required this.openCloseStatus, required this.closureTime}) : super(key: key);
+  const TopBarbers({
+    required this.barberName,
+    required this.location,
+    required this.openCloseStatus,
+    required this.closureTime,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,19 +1,18 @@
+import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
-import '../../utils/app_assets.dart';
 
 class FeaturedBarber extends StatelessWidget {
   final String barberName;
   final String? barberImage;
   final String barberLocation;
   const FeaturedBarber({
-    Key? key,
     required this.barberName,
     required this.barberImage,
     required this.barberLocation,
+    Key? key,
   }) : super(key: key);
 
   @override

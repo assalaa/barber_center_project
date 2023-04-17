@@ -10,7 +10,6 @@ class UserModel {
   String city;
   bool? isAvailable;
   final List<String>? services;
-  bool? isAvailable;
 
   UserModel({
     required this.uid,
@@ -34,7 +33,7 @@ class UserModel {
       email: map['email'],
       city: map['city'],
       isAvailable: map['isAvailable'],
-      services: getServices(map['services']),
+      services: map.containsKey('services') ? getServices(map['services']) : null,
     );
   }
 

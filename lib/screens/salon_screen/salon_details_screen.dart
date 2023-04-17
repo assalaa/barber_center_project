@@ -78,11 +78,9 @@ class SalonDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Text(
-                        'Salon Name goes here',
-                        style: Styles.textStyle.copyWith(fontSize: 24, color: Styles.darkTextColor, fontWeight: FontWeight.bold),
-                      ),
+                    Text(
+                      'Salon Name goes here',
+                      style: Styles.textStyle.copyWith(fontSize: 24, color: Styles.darkTextColor, fontWeight: FontWeight.bold),
                     ),
                     Gap(AppLayout.getHeight(10)),
                     Row(
@@ -93,11 +91,9 @@ class SalonDetailsScreen extends StatelessWidget {
                           size: 30,
                         ),
                         Gap(AppLayout.getWidth(5)),
-                        Container(
-                          child: Text(
-                            'Location Name goes here',
-                            style: Styles.textStyle.copyWith(fontSize: 20, color: Styles.greyColor, fontWeight: FontWeight.w400),
-                          ),
+                        Text(
+                          'Location Name goes here',
+                          style: Styles.textStyle.copyWith(fontSize: 20, color: Styles.greyColor, fontWeight: FontWeight.w400),
                         ),
                       ],
                     ),
@@ -153,8 +149,6 @@ class SalonDetailsScreen extends StatelessWidget {
                         Gap(AppLayout.getHeight(18)),
                         LargeRoundedButton(
                           buttonName: Strings.bookingBtn,
-                          buttonColor: Styles.primaryColor,
-                          buttonTextColor: Styles.brightTextColor,
                           onTap: () {},
                         )
                       ],

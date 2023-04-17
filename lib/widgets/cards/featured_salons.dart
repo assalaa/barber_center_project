@@ -6,7 +6,12 @@ class FeaturedSalons extends StatelessWidget {
   final String name;
   final String location;
   final String? image;
-  const FeaturedSalons({Key? key, required this.name, required this.location, required this.image}) : super(key: key);
+  const FeaturedSalons({
+    required this.name,
+    required this.location,
+    required this.image,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class FeaturedSalons extends StatelessWidget {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ], borderRadius: BorderRadius.circular(12), color: Styles.brightTextColor),
         child: Column(
@@ -56,7 +61,7 @@ class FeaturedSalons extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "open",
+                        'open',
                         style: Styles.textStyle.copyWith(color: Colors.green),
                       ),
                       Row(

@@ -1,10 +1,9 @@
 import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/home_screen/home_screen.dart';
-import 'package:barber_center/screens/profile_screen/profile_screen.dart';
+import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
+import 'package:barber_center/utils/app_styles.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
-
-import '../../utils/app_styles.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -15,7 +14,12 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _selectedIndex = 0;
-  static final List<Widget> _widgetOptions = <Widget>[const HomeScreen(), const BookingScreen(), const Text('data'), const ProfileScreen()];
+  static final List<Widget> _widgetOptions = <Widget>[
+    const HomeScreen(),
+    const BookingScreen(),
+    const Text('data'),
+    const CustomerProfileScreen(),
+  ];
 
   void onTappedItem(int index) {
     setState(() {

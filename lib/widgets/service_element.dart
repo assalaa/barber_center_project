@@ -7,9 +7,9 @@ class ServiceElement extends StatelessWidget {
   final String serviceImage;
   final String serviceName;
   const ServiceElement({
-    Key? key,
     required this.serviceName,
     required this.serviceImage,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -18,18 +18,16 @@ class ServiceElement extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             width: AppLayout.getWidth(70),
             height: AppLayout.getHeight(70),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
             ),
-            child: serviceImage != null
-                ? Image.network(
-                    serviceImage,
-                    fit: BoxFit.fill,
-                  )
-                : null,
+            child: Image.network(
+              serviceImage,
+              fit: BoxFit.fill,
+            ),
           ),
         ),
         Gap(AppLayout.getHeight(10)),
