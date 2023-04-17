@@ -8,7 +8,7 @@ class UserModel {
   String? image;
   String email;
   String city;
-  bool isAvailable;
+  bool? isAvailable;
 
   UserModel({
     required this.uid,

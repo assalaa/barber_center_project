@@ -1,16 +1,15 @@
 import 'package:barber_center/screens/home_screen/home_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
-import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/cards/featured_barbers.dart';
 import 'package:barber_center/widgets/cards/featured_salons.dart';
-import 'package:barber_center/widgets/cards/top_barbers.dart';
 import 'package:barber_center/widgets/section_header.dart';
-import 'package:barber_center/widgets/service_element.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+
+import '../../utils/app_strings.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -63,10 +62,6 @@ class HomeScreen extends StatelessWidget {
                             width: AppLayout.getHeight(50),
                             height: AppLayout.getWidth(50),
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
-                            child: Icon(
-                              Icons.notifications_none_outlined,
-                              color: Colors.black.withOpacity(0.7),
-                            ),
                           ),
                         ),
                         Positioned(
@@ -82,74 +77,76 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: provider.users.length,
-                      itemBuilder: (context, index) {
-                        Gap(AppLayout.getHeight(20));
-                        const SectionHeader(sectionTitle: Strings.topBarbers);
-                        Gap(AppLayout.getHeight(20));
-                        //Card
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.only(left: 10, bottom: 20),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(children: [TopBarbers(barberName: provider.users[index].name, location: 'location', openCloseStatus: 'open', closureTime: 'Time'), TopBarbers(barberName: 'barberName', location: 'location', openCloseStatus: 'open', closureTime: 'Time')]),
-                          //child: Row(children: const [TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time"), TopBarbers(barberName: "barberName", location: "location", openCloseStatus: "open", closureTime: "Time")]),
-                        );
-                        const SectionHeader(sectionTitle: Strings.services);
-                        Gap(AppLayout.getHeight(20));
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.only(left: 10, bottom: 20),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(children: const [
-                            ServiceElement(
-                              serviceColor: Styles.pinkColor,
-                              serviceIcon: Icons.cut,
-                              serviceName: 'Hair cut',
-                              containerColor: Styles.pinkColor,
-                            ),
-                            ServiceElement(
-                              serviceColor: Styles.blueColor,
-                              serviceIcon: Icons.waves_sharp,
-                              serviceName: 'Hair wash',
-                              containerColor: Styles.blueColor,
-                            ),
-                            ServiceElement(
-                              serviceColor: Styles.orangeColor,
-                              serviceIcon: Icons.design_services,
-                              serviceName: 'Beauty',
-                              containerColor: Styles.orangeColor,
-                            ),
-                          ]),
-                        );
-                        Gap(AppLayout.getHeight(20));
-                        const SectionHeader(sectionTitle: Strings.featuredBarbers);
-                        Gap(AppLayout.getHeight(20));
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.only(left: 10, bottom: 20),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(children: const [
-                            FeaturedBarber(),
-                            FeaturedBarber(),
-                            FeaturedBarber(),
-                          ]),
-                        );
-                        Gap(AppLayout.getHeight(20));
-                        const SectionHeader(sectionTitle: Strings.featuredSalons);
-                        Gap(AppLayout.getHeight(20));
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.only(left: 10, bottom: 20),
-                          scrollDirection: Axis.horizontal,
-                          child: Row(children: const [
-                            FeaturedSalons(),
-                            FeaturedSalons(),
-                            FeaturedSalons(),
-                          ]),
-                        );
-                        return null;
-                      },
-                    ),
-                  ),
+                      child: SingleChildScrollView(
+                    child: Column(children: [
+                      Gap(AppLayout.getHeight(20)),
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.only(left: 20),
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                            children: provider.services
+                                .map((user) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: AppLayout.getWidth(80),
+                                          height: AppLayout.getHeight(80),
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(image: NetworkImage(user.image), fit: BoxFit.cover),
+                                            borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                          ),
+                                        ),
+                                        Gap(AppLayout.getHeight(5)),
+                                        Text(user.name)
+                                      ],
+                                    )))
+                                .toList()),
+                      ),
+                      Gap(AppLayout.getHeight(10)),
+                      const SectionHeader(sectionTitle: Strings.featuredBarbers),
+                      Gap(AppLayout.getHeight(10)),
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.only(left: 20),
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                            children: provider.users
+                                .map((user) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: FeaturedBarber(
+                                        barberName: user.name,
+                                        barberImage: user.image,
+                                        barberLocation: user.city,
+                                      ),
+                                    ))
+                                .toList()),
+                      ),
+                      //FEATURED SALONS
+                      Gap(AppLayout.getHeight(10)),
+                      const SectionHeader(sectionTitle: Strings.featuredSalons),
+                      Gap(AppLayout.getHeight(10)),
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.only(left: 20),
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                            children: provider.users
+                                .map((user) => Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Routes.goTo(Routes.salonDetailsRoute);
+                                        },
+                                        child: FeaturedSalons(
+                                          name: user.name,
+                                          location: user.city,
+                                          image: user.image,
+                                        ),
+                                      ),
+                                    ))
+                                .toList()),
+                      ),
+                    ]),
+                  )),
                   //TOP BARBERS SECTION STARTS HERE
                 ],
               ),
