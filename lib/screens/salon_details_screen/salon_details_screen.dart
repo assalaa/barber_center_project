@@ -35,7 +35,7 @@ class SalonDetailsScreen extends StatelessWidget {
                     height: AppLayout.getHeight(300),
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                      image: AssetImage(
+                      image: NetworkImage(
                         provider.userModel.image!,
                       ),
                       fit: BoxFit.fill,
@@ -60,16 +60,16 @@ class SalonDetailsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: AppLayout.getHeight(50),
-                              height: AppLayout.getWidth(50),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.4)),
-                              child: Center(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Routes.back();
-                                  },
-                                  child: const Icon(
+                            GestureDetector(
+                              onTap: () {
+                                Routes.back();
+                              },
+                              child: Container(
+                                width: AppLayout.getHeight(50),
+                                height: AppLayout.getWidth(50),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.4)),
+                                child: const Center(
+                                  child: Icon(
                                     Icons.arrow_back_ios,
                                     color: Styles.brightTextColor,
                                   ),
