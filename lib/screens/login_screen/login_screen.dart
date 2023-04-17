@@ -116,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                               style: Styles.headLineStyle4.copyWith(fontSize: 18),
                               children: [
                                 TextSpan(
-                                  text: ' ${Strings.signup}',
+                                  text: ' ${Strings.signIn}',
                                   style: Styles.headLineStyle4.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
