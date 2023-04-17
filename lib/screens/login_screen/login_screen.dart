@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                 title: Row(
                   children: [
                     Text(
-                      '${Strings.signIn}as',
+                      '${Strings.signIn} as',
                       style: Styles.headLineStyle3,
                     ),
                     Text(
