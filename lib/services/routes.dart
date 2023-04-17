@@ -1,6 +1,7 @@
 import 'package:barber_center/main.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
+import 'package:barber_center/screens/all_salons/all_salons.dart';
 import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
 import 'package:barber_center/screens/first_page/first_page_customer/first_page_customer_user.dart';
@@ -36,6 +37,8 @@ class Routes {
 
   static const String addEmployeeRoute = '/add_employee';
   static const String addServiceRoute = '/add_service';
+  //Home page routes
+  static const String seeAllSalonsRoute = '/see_more_salons';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -55,12 +58,9 @@ class Routes {
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
-        return MaterialPageRoute(
-            builder: (_) =>
-                CreateAccountScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
-        return MaterialPageRoute(
-            builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case homeCustomerRoute:
@@ -69,6 +69,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const FirstPageSalonUser());
       case homeBarberRoute:
         return MaterialPageRoute(builder: (_) => const HomeBarberScreen());
+      case seeAllSalonsRoute:
+        return MaterialPageRoute(builder: (_) => const AllSalons());
 
       //ADMIN PAGES
       case homeAdminRoute:

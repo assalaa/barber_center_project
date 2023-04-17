@@ -100,7 +100,10 @@ class HomeCustomerScreen extends StatelessWidget {
                                 .toList()),
                       ),
                       Gap(AppLayout.getHeight(10)),
-                      const SectionHeader(sectionTitle: Strings.featuredBarbers),
+                      const SectionHeader(
+                        sectionTitle: Strings.featuredBarbers,
+                        sectionSeeMore: Strings.seeMoreOption,
+                      ),
                       Gap(AppLayout.getHeight(10)),
                       SingleChildScrollView(
                         padding: const EdgeInsets.only(left: 20),
@@ -119,7 +122,24 @@ class HomeCustomerScreen extends StatelessWidget {
                       ),
                       //FEATURED SALONS
                       Gap(AppLayout.getHeight(10)),
-                      const SectionHeader(sectionTitle: Strings.featuredSalons),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            Strings.featuredSalons,
+                            style: Styles.headLineStyle2,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Routes.goTo(Routes.seeAllSalonsRoute);
+                            },
+                            child: Text(
+                              Strings.seeMoreOption,
+                              style: Styles.headLineStyle4,
+                            ),
+                          )
+                        ],
+                      ),
                       Gap(AppLayout.getHeight(10)),
                       SingleChildScrollView(
                         padding: const EdgeInsets.only(left: 20),

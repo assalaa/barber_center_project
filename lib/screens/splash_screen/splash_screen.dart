@@ -5,6 +5,23 @@ import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../utils/app_assets.dart';
+import '../../utils/app_layout.dart';
+
+enum PageTransitionType {
+  fade,
+  rightToLeft,
+  leftToRight,
+  upToDown,
+  downToUp,
+  scale,
+  rotate,
+  size,
+  rightToLeftWithFade,
+  leftToRightWithFade,
+}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,7 +33,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(Duration.zero, () async {
+    Future.delayed(const Duration(milliseconds: 400), () async {
       await initFirebase();
       checkNextScreen();
     });
@@ -25,7 +42,30 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          children: [
+            Image.asset(
+              height: Get.height,
+              fit: BoxFit.cover,
+              Assets.welcomeBg,
+            ),
+            Container(
+              width: AppLayout.getScreenWidth(),
+              height: AppLayout.getScreenHeight(),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.7)),
+            ),
+            Center(
+              child: Image.asset(
+                Assets.splash,
+                height: 250,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> initFirebase() async {
