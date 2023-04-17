@@ -1,4 +1,3 @@
-import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -6,21 +5,16 @@ import 'package:flutter/material.dart';
 class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _path = 'service';
-  final String _usersPath = 'users';
 
   Future<void> createService(ServiceModel serviceModel) async {
-    await _firestore
-        .collection(_path)
-        .doc(serviceModel.id)
-        .set(serviceModel.toJson());
+    await _firestore.collection(_path).doc(serviceModel.id).set(serviceModel.toJson());
   }
 
   Future<List<ServiceModel>> getServices() async {
     final List<ServiceModel> services = [];
 
     try {
-      final QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firestore.collection(_path).get();
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore.collection(_path).get();
       for (final doc in querySnapshot.docs) {
         services.add(ServiceModel.fromJson(doc.data()));
       }
@@ -32,22 +26,17 @@ class DatabaseService {
   }
 
   Future<ServiceModel?> getServiceById(String id) async {
-    final DocumentSnapshot snapshot =
-        await _firestore.collection(_path).doc(id).get();
+    final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(id).get();
     final Map map = snapshot.data() as Map;
     final ServiceModel service = ServiceModel.fromJson(map);
     return service;
   }
 
-  Future<List<ServiceModel>> getMultipleServicesByIds(
-      List<String> serviceIds) async {
+  Future<List<ServiceModel>> getMultipleServicesByIds(List<String> serviceIds) async {
     final List<ServiceModel> services = [];
 
     try {
-      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
-          .collection(_path)
-          .where('id', whereIn: serviceIds)
-          .get();
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore.collection(_path).where('id', whereIn: serviceIds).get();
 
       for (final doc in querySnapshot.docs) {
         debugPrint(doc.id);
@@ -61,18 +50,6 @@ class DatabaseService {
   }
 
   Future<void> updateService(ServiceModel serviceModel) async {
-    await _firestore
-        .collection(_path)
-        .doc(serviceModel.id)
-        .update(serviceModel.toJson());
-  }
-
-  Future<void> addService(
-      String userId, SaloonServiceModel saloonServiceModel) async {
-    await _firestore.collection(_usersPath).doc(userId).update({
-      'services': FieldValue.arrayUnion(
-        [saloonServiceModel.toJson()],
-      )
-    });
+    await _firestore.collection(_path).doc(serviceModel.id).update(serviceModel.toJson());
   }
 }

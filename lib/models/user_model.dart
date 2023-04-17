@@ -9,7 +9,6 @@ class UserModel {
   String email;
   String city;
   bool? isAvailable;
-  final List<String>? services;
 
   UserModel({
     required this.uid,
@@ -20,7 +19,6 @@ class UserModel {
     required this.city,
     this.isAvailable = true,
     this.image,
-    this.services,
   });
 
   factory UserModel.fromJson(Map map) {
@@ -33,7 +31,6 @@ class UserModel {
       email: map['email'],
       city: map['city'],
       isAvailable: map['isAvailable'],
-      services: map.containsKey('services') ? getServices(map['services']) : null,
     );
   }
 
@@ -47,18 +44,9 @@ class UserModel {
     data['email'] = email;
     data['city'] = city;
     data['isAvailable'] = isAvailable;
-    data['services'] = services;
     return data;
   }
 
-  static List<String> getServices(List<dynamic> services) {
-    final List<String> serviceIds = [];
-
-    for (final Map<String, dynamic> service in services) {
-      serviceIds.add(service['serviceId']);
-    }
-    return serviceIds;
-  }
 
   static KindOfUser getKindOfUser(String kindOfUser) {
     if (kindOfUser == 'CUSTOMER') {
