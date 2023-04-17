@@ -1,4 +1,4 @@
-import 'package:barber_center/screens/admin/add_service/create_service_provider.dart';
+import 'package:barber_center/screens/admin/create_service/create_service_provider.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:barber_center/widgets/upload_and_show_image_widget.dart';
 import 'package:flutter/material.dart';
