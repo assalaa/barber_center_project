@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeCustomerScreen extends StatelessWidget {
+  const HomeCustomerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

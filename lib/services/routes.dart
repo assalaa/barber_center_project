@@ -4,7 +4,6 @@ import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
 import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/bottom_nav_bar/bottom_navigation_bar.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
-import 'package:barber_center/screens/home_screen/home_screen.dart';
 import 'package:barber_center/screens/login_screen/login_screen.dart';
 import 'package:barber_center/screens/profile_screen/add_employee/add_employee_screen.dart';
 import 'package:barber_center/screens/profile_screen/add_service/add_service_screen.dart';
@@ -19,7 +18,6 @@ import 'package:flutter/material.dart';
 class Routes {
   //splash screen
   static const String splashRoute = '/splash';
-  static const String navBarRoute = '/nav';
   static const String welcomeRoute = '/';
   static const String createAccountRoute = '/create_account';
   static const String loginRoute = '/login';
@@ -56,14 +54,15 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const AddEmployeePage());
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
-      case navBarRoute:
-        return MaterialPageRoute(builder: (_) => const BottomBar());
       case createAccountRoute:
-        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) =>
+                CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case homeCustomerRoute:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+        return MaterialPageRoute(builder: (_) => const FirstPageCustomerUser());
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case homeSalonRoute:

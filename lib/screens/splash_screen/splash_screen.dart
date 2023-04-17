@@ -41,14 +41,13 @@ class _SplashScreenState extends State<SplashScreen> {
       if (userModel == null) {
         nextRoute = Routes.welcomeRoute;
       } else if (userModel.kindOfUser == KindOfUser.ADMIN) {
-        debugPrint('AI MAI ADMIN');
         nextRoute = Routes.homeAdminRoute;
       } else if (userModel.kindOfUser == KindOfUser.SALON) {
         nextRoute = Routes.homeSalonRoute;
       } else if (userModel.kindOfUser == KindOfUser.BARBER) {
         nextRoute = Routes.homeBarberRoute;
       } else if (userModel.kindOfUser == KindOfUser.CUSTOMER) {
-        nextRoute = Routes.navBarRoute;
+        nextRoute = Routes.homeCustomerRoute;
       }
     }
     Routes.goTo(nextRoute);
