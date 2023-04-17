@@ -5,8 +5,8 @@ import 'package:barber_center/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenProvider with ChangeNotifier {
-  late final DatabaseUser _databaseUser = DatabaseUser();
-  late final DatabaseService _databaseService = DatabaseService();
+  final DatabaseUser _databaseUser = DatabaseUser();
+  final DatabaseService _databaseService = DatabaseService();
   late List<UserModel> users = [];
   late List<ServiceModel> services = [];
 

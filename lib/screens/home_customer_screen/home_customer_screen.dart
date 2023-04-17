@@ -22,9 +22,7 @@ class HomeCustomerScreen extends StatelessWidget {
           return Scaffold(
             backgroundColor: Styles.backgroundColor,
             body: Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: AppLayout.getHeight(45),
-                  horizontal: AppLayout.getWidth(12)),
+              padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(45), horizontal: AppLayout.getWidth(12)),
               child: Column(
                 children: [
                   Row(
@@ -37,8 +35,7 @@ class HomeCustomerScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Styles.brightTextColor,
                           border: Border.all(color: Styles.greyColor),
-                          borderRadius:
-                              BorderRadius.circular(AppLayout.getWidth(12)),
+                          borderRadius: BorderRadius.circular(AppLayout.getWidth(12)),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -50,8 +47,7 @@ class HomeCustomerScreen extends StatelessWidget {
                               ),
                               Text(
                                 'Search barber or Salon...',
-                                style: Styles.textStyle
-                                    .copyWith(color: Styles.greyColor),
+                                style: Styles.textStyle.copyWith(color: Styles.greyColor),
                               )
                             ],
                           ),
@@ -62,9 +58,7 @@ class HomeCustomerScreen extends StatelessWidget {
                         Container(
                           width: AppLayout.getHeight(50),
                           height: AppLayout.getWidth(50),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Styles.greyColor.withOpacity(0.2)),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
                         ),
                         Positioned(
                           left: 30,
@@ -72,9 +66,7 @@ class HomeCustomerScreen extends StatelessWidget {
                           child: Container(
                             width: AppLayout.getWidth(15),
                             height: AppLayout.getHeight(15),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Styles.primaryColor),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.primaryColor),
                           ),
                         )
                       ])
@@ -97,12 +89,8 @@ class HomeCustomerScreen extends StatelessWidget {
                                           width: AppLayout.getWidth(80),
                                           height: AppLayout.getHeight(80),
                                           decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(user.image),
-                                                fit: BoxFit.cover),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(50)),
+                                            image: DecorationImage(image: NetworkImage(user.image), fit: BoxFit.cover),
+                                            borderRadius: const BorderRadius.all(Radius.circular(50)),
                                           ),
                                         ),
                                         Gap(AppLayout.getHeight(5)),
@@ -112,8 +100,7 @@ class HomeCustomerScreen extends StatelessWidget {
                                 .toList()),
                       ),
                       Gap(AppLayout.getHeight(10)),
-                      const SectionHeader(
-                          sectionTitle: Strings.featuredBarbers),
+                      const SectionHeader(sectionTitle: Strings.featuredBarbers),
                       Gap(AppLayout.getHeight(10)),
                       SingleChildScrollView(
                         padding: const EdgeInsets.only(left: 20),
@@ -143,7 +130,7 @@ class HomeCustomerScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: GestureDetector(
                                         onTap: () {
-                                          Routes.goTo(Routes.salonDetailsRoute);
+                                          Routes.goTo(Routes.salonDetailsRoute, args: user.uid);
                                         },
                                         child: FeaturedSalons(
                                           name: user.name,

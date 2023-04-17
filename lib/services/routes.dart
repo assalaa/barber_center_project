@@ -45,7 +45,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
       case salonDetailsRoute:
-        return MaterialPageRoute(builder: (_) => const SalonDetailsScreen());
+        return MaterialPageRoute(builder: (_) => SalonDetailsScreen(uid: args as String));
       case customerProfileRoute:
         return MaterialPageRoute(builder: (_) => const CustomerProfileScreen());
       case saloonProfileRoute:
