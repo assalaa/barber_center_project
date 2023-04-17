@@ -1,15 +1,15 @@
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
+import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 class SaloonProfileScreen extends StatelessWidget {
   const SaloonProfileScreen({super.key});
@@ -18,44 +18,50 @@ class SaloonProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ProfileScreenProvider>(
       create: (context) => ProfileScreenProvider(),
-      child: Consumer<ProfileScreenProvider>(builder: (context, provider, _) {
-        return DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              toolbarHeight: 0,
-              systemOverlayStyle: SystemUiOverlayStyle.dark,
-            ),
-            body: Visibility(
-              visible: !provider.loading,
-              replacement: const Center(child: CircularProgressIndicator()),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LogoutButton(provider: provider),
-                    const SizedBox(height: 32),
-                    ProfilePicture(provider: provider),
-                    const SizedBox(height: 22),
-                    FullName(fullName: provider.userModel.name),
-                    const SizedBox(height: 10),
-                    LocationInfo(location: provider.userModel.city),
-                    const SizedBox(height: 60),
-                    const TabBarWidget(),
-                    const Gap(64),
-                    EmployeesAndServices(
-                      employees: provider.employees,
-                      services: provider.services,
+      child: Consumer<ProfileScreenProvider>(
+        builder: (context, provider, _) {
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                toolbarHeight: 0,
+                systemOverlayStyle: SystemUiOverlayStyle.dark,
+              ),
+              body: Column(
+                children: [
+                  if (provider.loading) ...[
+                    const Center(child: CircularProgressIndicator()),
+                  ] else ...[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          LogoutButton(provider: provider),
+                          const SizedBox(height: 32),
+                          ProfilePicture(provider: provider),
+                          const SizedBox(height: 22),
+                          FullName(fullName: provider.userModel.name),
+                          const SizedBox(height: 10),
+                          LocationInfo(location: provider.userModel.city),
+                          const SizedBox(height: 60),
+                          const TabBarWidget(),
+                          const Gap(64),
+                          EmployeesAndServices(
+                            employees: provider.employees,
+                            services: provider.services,
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ]
+                ],
               ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
@@ -91,8 +97,7 @@ class TabBarWidget extends StatelessWidget {
         labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         indicator: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16))),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
           color: Styles.primaryColor,
         ),
       ),
@@ -141,15 +146,13 @@ class ServiceSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final ServiceModel? serviceModel =
-            !addButton ? (services?[index - 1]) : null;
+        final ServiceModel? serviceModel = !addButton ? (services?[index - 1]) : null;
 
         if (serviceModel == null && !addButton) {
           return const SizedBox.shrink();
         }
 
-        final String text =
-            addButton ? 'Add Service' : serviceModel?.name ?? '';
+        final String text = addButton ? 'Add Service' : serviceModel?.name ?? '';
         final String? image = serviceModel?.image;
 
         return ListItem(
@@ -181,15 +184,13 @@ class EmployeeSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final EmployeeModel? employeeModel =
-            !addButton ? (employees?[index - 1]) : null;
+        final EmployeeModel? employeeModel = !addButton ? (employees?[index - 1]) : null;
 
         if (employeeModel == null && !addButton) {
           return const SizedBox.shrink();
         }
 
-        final String text =
-            addButton ? 'Add Employee' : employeeModel?.name ?? '';
+        final String text = addButton ? 'Add Employee' : employeeModel?.name ?? '';
         final String? image = employeeModel?.image;
 
         return ListItem(
@@ -233,10 +234,7 @@ class ListItem extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        image: image == null
-                            ? null
-                            : DecorationImage(
-                                image: NetworkImage(image!), fit: BoxFit.cover),
+                        image: image == null ? null : DecorationImage(image: NetworkImage(image!), fit: BoxFit.cover),
                       ),
                     ),
                   ),
@@ -272,8 +270,7 @@ class AddButton extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(16)),
             child: const Center(
               child: Icon(
                 Icons.add,
