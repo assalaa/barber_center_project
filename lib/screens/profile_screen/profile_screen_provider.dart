@@ -47,7 +47,7 @@ class ProfileScreenProvider with ChangeNotifier {
 
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
-    services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
+    //services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
   }
 
   Future<void> updatePhoto(BuildContext context) async {
