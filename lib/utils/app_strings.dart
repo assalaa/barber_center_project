@@ -15,6 +15,8 @@ class Strings {
   static const String welcome = 'Welcome to Barber Center';
   static const String welcomeSentence = 'Thank you for using our app :)';
   static const String proceed = 'Continue as';
+  static const String asCustomer = 'Customer';
+  static const String asSalon = 'Salon';
 
   //SIGNUP PAGE
   static const String signup = 'Sign up';

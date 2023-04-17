@@ -24,13 +24,33 @@ class LoginScreen extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: Text(
-                Strings.signup,
-                style: Styles.headLineStyle3,
-              ),
-            ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                title: KindOfUser.CUSTOMER != ''
+                    ? Row(
+                        children: [
+                          Text(
+                            '${Strings.signIn}as',
+                            style: Styles.headLineStyle3,
+                          ),
+                          Text(
+                            Strings.asCustomer,
+                            style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Text(
+                            '${Strings.signIn}as',
+                            style: Styles.headLineStyle3,
+                          ),
+                          Text(
+                            Strings.asSalon,
+                            style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
+                          ),
+                        ],
+                      )),
             body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
@@ -109,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                               style: Styles.headLineStyle4.copyWith(fontSize: 18),
                               children: [
                                 TextSpan(
-                                  text: ' ${Strings.signIn}',
+                                  text: ' ${Strings.signup}',
                                   style: Styles.headLineStyle4.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
