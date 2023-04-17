@@ -4,20 +4,20 @@ import 'package:flutter/foundation.dart';
 
 class SalonDetailsProvider with ChangeNotifier {
   final DatabaseUser _databaseUser = DatabaseUser();
-  UserModel? userModel;
+  late UserModel userModel;
   bool loading = true;
 
   SalonDetailsProvider(String uid) {
     init(uid);
   }
 
-  void init(String uid) {
-    getSalon(uid);
+  void init(String uid) async {
+    await getSalon(uid);
     loading = false;
     notifyListeners();
   }
 
   Future<void> getSalon(String uid) async {
-    userModel = await _databaseUser.getUserByUid(uid);
+    userModel = (await _databaseUser.getUserByUid(uid))!;
   }
 }

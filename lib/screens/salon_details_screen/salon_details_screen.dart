@@ -1,4 +1,4 @@
-import 'package:barber_center/screens/salon_screen/salon_details_provider.dart';
+import 'package:barber_center/screens/salon_details_screen/salon_details_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
@@ -21,16 +21,23 @@ class SalonDetailsScreen extends StatelessWidget {
       create: (context) => SalonDetailsProvider(uid),
       child: Consumer<SalonDetailsProvider>(builder: (context, provider, _) {
         return Scaffold(
-            backgroundColor: Styles.backgroundColor,
-            body: ListView(
-              children: [
+          backgroundColor: Styles.backgroundColor,
+          body: Column(
+            children: [
+              if (provider.loading) ...[
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
+              ] else ...[
                 Stack(children: [
                   Container(
                     width: AppLayout.getScreenWidth(),
                     height: AppLayout.getHeight(300),
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                      image: AssetImage(provider.userModel!.image ?? ''),
+                      image: AssetImage(
+                        provider.userModel.image!,
+                      ),
                       fit: BoxFit.fill,
                     )),
                     child: Container(
@@ -99,7 +106,7 @@ class SalonDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          provider.userModel!.name ?? '',
+                          provider.userModel.name,
                           style: Styles.textStyle.copyWith(fontSize: 24, color: Styles.darkTextColor, fontWeight: FontWeight.bold),
                         ),
                         Gap(AppLayout.getHeight(10)),
@@ -112,7 +119,7 @@ class SalonDetailsScreen extends StatelessWidget {
                             ),
                             Gap(AppLayout.getWidth(5)),
                             Text(
-                              provider.userModel!.city,
+                              provider.userModel.city,
                               style: Styles.textStyle.copyWith(fontSize: 20, color: Styles.greyColor, fontWeight: FontWeight.w400),
                             ),
                           ],
@@ -177,8 +184,10 @@ class SalonDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 )),
-              ],
-            ));
+              ]
+            ],
+          ),
+        );
       }),
     );
   }
