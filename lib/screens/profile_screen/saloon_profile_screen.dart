@@ -89,8 +89,8 @@ class TabBarWidget extends StatelessWidget {
       ),
       child: const TabBar(
         tabs: [
-          Tab(text: 'Employee'),
           Tab(text: 'Service'),
+          Tab(text: 'Employee'),
         ],
         unselectedLabelColor: Styles.primaryColor,
         labelColor: Colors.white,
@@ -120,8 +120,8 @@ class EmployeesAndServices extends StatelessWidget {
       height: 120,
       child: TabBarView(
         children: [
-          EmployeeSlider(employees: employees),
           ServiceSlider(services: services),
+          EmployeeSlider(employees: employees),
         ],
       ),
     );
