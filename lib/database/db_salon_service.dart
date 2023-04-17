@@ -11,7 +11,10 @@ class DatabaseSalonService {
 
   Future<SalonServiceModel> getServicesByUserId(String id) async {
     final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(id).get();
-    final Map map = snapshot.data() as Map;
+    final Map map = (snapshot.data() ?? {}) as Map;
+    if (map.isEmpty) {
+      return SalonServiceModel(userId: id, services: []);
+    }
     final SalonServiceModel salonServiceModel = SalonServiceModel.fromJson(map);
     return salonServiceModel;
   }

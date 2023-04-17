@@ -1,5 +1,4 @@
 import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
-import 'package:barber_center/widgets/error_widget.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
@@ -23,24 +22,28 @@ class CustomerProfileScreen extends StatelessWidget {
               toolbarHeight: 0,
               systemOverlayStyle: SystemUiOverlayStyle.dark,
             ),
-            body: Visibility(
-              visible: !provider.loading,
-              replacement: const Center(child: CircularProgressIndicator()),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LogoutButton(provider: provider),
-                    const SizedBox(height: 32),
-                    ProfilePicture(provider: provider),
-                    const SizedBox(height: 22),
-                    FullName(fullName: provider.userModel.name),
-                    const SizedBox(height: 60),
-                    const SettingButtons(),
-                  ],
-                ),
-              ),
+            body: Column(
+              children: [
+                if (provider.loading) ...[
+                  const Center(child: CircularProgressIndicator()),
+                ] else ...[
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LogoutButton(provider: provider),
+                        const SizedBox(height: 32),
+                        ProfilePicture(provider: provider),
+                        const SizedBox(height: 22),
+                        FullName(fullName: provider.userModel.name),
+                        const SizedBox(height: 60),
+                        const SettingButtons(),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
             ),
           );
         },
