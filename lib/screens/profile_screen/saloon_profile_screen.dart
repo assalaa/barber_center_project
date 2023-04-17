@@ -18,48 +18,50 @@ class SaloonProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ProfileScreenProvider>(
       create: (context) => ProfileScreenProvider(),
-      child: Consumer<ProfileScreenProvider>(builder: (context, provider, _) {
-        return DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              toolbarHeight: 0,
-              systemOverlayStyle: SystemUiOverlayStyle.dark,
-            ),
-            body: Column(
-              children: [
-                if (provider.loading) ...[
-                  const Center(child: CircularProgressIndicator()),
-                ] else ...[
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        LogoutButton(provider: provider),
-                        const SizedBox(height: 32),
-                        ProfilePicture(provider: provider),
-                        const SizedBox(height: 22),
-                        FullName(fullName: provider.userModel.name),
-                        const SizedBox(height: 10),
-                        LocationInfo(location: provider.userModel.city),
-                        const SizedBox(height: 60),
-                        const TabBarWidget(),
-                        const Gap(64),
-                        EmployeesAndServices(
-                          employees: provider.employees,
-                          services: provider.services,
-                        ),
-                      ],
+      child: Consumer<ProfileScreenProvider>(
+        builder: (context, provider, _) {
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                toolbarHeight: 0,
+                systemOverlayStyle: SystemUiOverlayStyle.dark,
+              ),
+              body: Column(
+                children: [
+                  if (provider.loading) ...[
+                    const Center(child: CircularProgressIndicator()),
+                  ] else ...[
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          LogoutButton(provider: provider),
+                          const SizedBox(height: 32),
+                          ProfilePicture(provider: provider),
+                          const SizedBox(height: 22),
+                          FullName(fullName: provider.userModel.name),
+                          const SizedBox(height: 10),
+                          LocationInfo(location: provider.userModel.city),
+                          const SizedBox(height: 60),
+                          const TabBarWidget(),
+                          const Gap(64),
+                          EmployeesAndServices(
+                            employees: provider.employees,
+                            services: provider.services,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ]
-              ],
+                  ]
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
