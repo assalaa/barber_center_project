@@ -2,15 +2,15 @@ import 'package:barber_center/main.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
 import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
-import 'package:barber_center/screens/bottom_nav_bar/bottom_navigation_bar.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
+import 'package:barber_center/screens/first_page/first_page_customer/first_page_customer_user.dart';
+import 'package:barber_center/screens/first_page/first_page_salon/first_page_salon_user.dart';
 import 'package:barber_center/screens/login_screen/login_screen.dart';
 import 'package:barber_center/screens/profile_screen/add_employee/add_employee_screen.dart';
 import 'package:barber_center/screens/profile_screen/add_service/add_service_screen.dart';
 import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
 import 'package:barber_center/screens/profile_screen/saloon_profile_screen.dart';
-import 'package:barber_center/screens/salon/home_salon_screen/home_salon_screen.dart';
-import 'package:barber_center/screens/salon_screen/salon_details_screen.dart';
+import 'package:barber_center/screens/salon_details_screen/salon_details_screen.dart';
 import 'package:barber_center/screens/splash_screen/splash_screen.dart';
 import 'package:barber_center/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -61,12 +61,12 @@ class Routes {
       case loginRoute:
         return MaterialPageRoute(
             builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
-      case homeCustomerRoute:
-        return MaterialPageRoute(builder: (_) => const FirstPageCustomerUser());
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case homeCustomerRoute:
+        return MaterialPageRoute(builder: (_) => const FirstPageCustomerUser());
       case homeSalonRoute:
-        return MaterialPageRoute(builder: (_) => const HomeSalonScreen());
+        return MaterialPageRoute(builder: (_) => const FirstPageSalonUser());
       case homeBarberRoute:
         return MaterialPageRoute(builder: (_) => const HomeBarberScreen());
 

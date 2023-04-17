@@ -1,5 +1,5 @@
 import 'package:barber_center/screens/booking_screen/booking_screen.dart';
-import 'package:barber_center/screens/home_screen/home_screen.dart';
+import 'package:barber_center/screens/home_customer_screen/home_customer_screen.dart';
 import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
