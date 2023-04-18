@@ -1,5 +1,6 @@
 import 'package:barber_center/screens/home_customer_screen/home_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -20,85 +21,107 @@ class HomeCustomerScreen extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             backgroundColor: Styles.backgroundColor,
-            body: Padding(
-              padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(45), horizontal: AppLayout.getWidth(12)),
+            appBar: AppBar(
+              elevation: 0,
+              toolbarHeight: 0,
+            ),
+            body: SingleChildScrollView(
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //Search BAR
-                      Text(
-                        "Barber Center",
-                        style: Styles.headLineStyle1,
-                      ),
-                      //NOTIFICATION ICON
-                      Stack(children: [
-                        Container(
-                          width: AppLayout.getHeight(50),
-                          height: AppLayout.getWidth(50),
-                          decoration: BoxDecoration(image: DecorationImage(image: NetworkImage("")), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
-                        ),
-                      ])
-                    ],
-                  ),
-                  Expanded(
-                      child: SingleChildScrollView(
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Gap(AppLayout.getHeight(20)),
-                      //SERVICES GOES HERE
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.only(left: 20),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                            children: provider.services
-                                .map((user) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: AppLayout.getWidth(80),
-                                          height: AppLayout.getHeight(80),
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(image: NetworkImage(user.image), fit: BoxFit.cover),
-                                            borderRadius: const BorderRadius.all(Radius.circular(50)),
-                                          ),
-                                        ),
-                                        Gap(AppLayout.getHeight(5)),
-                                        Text(user.name)
-                                      ],
-                                    )))
-                                .toList()),
-                      ),
-                      Gap(AppLayout.getHeight(10)),
+                  //SEARCH BAR AND NOTIFICATION ICON
+                  const SizedBox(height: 20),
 
-                      //FEATURED SALONS
-                      Gap(AppLayout.getHeight(10)),
-                      const SectionHeader(sectionTitle: Strings.featuredSalons),
-                      Gap(AppLayout.getHeight(10)),
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.only(left: 20),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                            children: provider.salons
-                                .map((user) => Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Routes.goTo(Routes.salonDetailsRoute, args: user.uid);
-                                        },
-                                        child: FeaturedSalons(
-                                          name: user.name,
-                                          location: user.city,
-                                          image: user.image,
-                                        ),
-                                      ),
-                                    ))
-                                .toList()),
-                      ),
-                    ]),
-                  )),
-                  //TOP BARBERS SECTION STARTS HERE
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        //SEARCH BAR
+                        Text(
+                          Strings.appName,
+                          style: Styles.headLineStyle1,
+                        ),
+
+                        //NOTIFICATION ICON
+                        Stack(
+                          children: [
+                            Container(
+                              width: AppLayout.getHeight(50),
+                              height: AppLayout.getWidth(50),
+                              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Assets.unnamedImage)), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  //SERVICES
+                  SizedBox(
+                    height: 120,
+                    width: double.infinity,
+                    child: ListView.builder(
+                      itemCount: provider.services.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final service = provider.services[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 24),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: AppLayout.getWidth(80),
+                                height: AppLayout.getHeight(80),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(image: NetworkImage(service.image), fit: BoxFit.cover),
+                                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                ),
+                              ),
+                              Gap(AppLayout.getHeight(5)),
+                              Text(service.name)
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Gap(AppLayout.getHeight(10)),
+
+                  //FEATURED SALONS
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: SectionHeader(sectionTitle: Strings.featuredSalons),
+                  ),
+                  Gap(AppLayout.getHeight(10)),
+                  SizedBox(
+                    height: 230 + 24 * 2,
+                    width: double.infinity,
+                    child: ListView.builder(
+                      itemCount: provider.salons.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final salon = provider.salons[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 24, top: 4, bottom: 4),
+                          child: GestureDetector(
+                            onTap: () {
+                              Routes.goTo(
+                                Routes.salonDetailsRoute,
+                                args: salon.uid,
+                                enableBack: true,
+                              );
+                            },
+                            child: FeaturedSalons(
+                              name: salon.name,
+                              location: salon.city,
+                              image: salon.image,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
             ),

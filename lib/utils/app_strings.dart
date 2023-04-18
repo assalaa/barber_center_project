@@ -1,5 +1,5 @@
 class Strings {
-  static const String appName = 'Barber Center';
+  static const String appName = 'Salounak';
   //BUTTONS
   static const String skipBtn = 'Skip';
   static const String adminBtn = 'Admin space';
@@ -33,18 +33,5 @@ class Strings {
   static const String featuredBarbers = 'Featured barbers';
   static const String featuredSalons = 'Featured salons';
 
-  static const List<String> meses2 = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novovembro',
-    'Dezembro'
-  ];
+  static const List<String> meses2 = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novovembro', 'Dezembro'];
 }
