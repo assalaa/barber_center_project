@@ -15,8 +15,6 @@ class _BottomBarState extends State<FirstPageSalonUser> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeSalonScreen(),
-    const Text('data'),
-    const Text('data'),
     const SaloonProfileScreen(),
   ];
 
@@ -40,11 +38,16 @@ class _BottomBarState extends State<FirstPageSalonUser> {
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Styles.greyColor,
         items: const [
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_home_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_book_formula_information_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_book_formula_compatibility_filled), label: 'Book'),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_premium_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_premium_filled), label: 'VIP'),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_person_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled), label: 'Profile'),
+            icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
+            activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
+            activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
+            label: 'Profile',
+          ),
         ],
       ),
     );

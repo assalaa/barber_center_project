@@ -1,9 +1,11 @@
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_booking.dart';
+import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/models/booking_model.dart';
 import 'package:barber_center/models/booking_time_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
+import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +15,7 @@ class BookingProvider extends ChangeNotifier {
   final SalonServiceModel salonService;
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseBooking _dbBooking = DatabaseBooking();
+  final DatabaseUser _dbUser = DatabaseUser();
 
   final SalonInformationModel salonInformationModel;
   List<BookingModel> bookings = [];
@@ -45,8 +48,7 @@ class BookingProvider extends ChangeNotifier {
         final String hour =
             '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
 
-        final String hour2 =
-            '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
+        final String hour2 = '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
 
         final int minutesUsed = booking.getDurationInMinutes();
         int card = minutesUsed ~/ 30;
@@ -85,8 +87,7 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
-    bookings = await _dbBooking.getBookingFromSalonInDay(
-        salonService.salonId, dateTime);
+    bookings = await _dbBooking.getBookingFromSalonInDay(salonService.salonId, dateTime);
     setBookingTimes();
     verifyStatus();
     notifyListeners();
@@ -101,9 +102,11 @@ class BookingProvider extends ChangeNotifier {
     notifyListeners();
     final now = DateTime.now();
     final User user = _dbAuth.getCurrentUser()!;
+    final UserModel userModel = (await _dbUser.getUserByUid(user.uid))!;
     final BookingModel bookingModel = BookingModel(
       id: dateToId(now),
-      salonName: salonService.services[0].name,
+      userName: userModel.name,
+      salonName: salonInformationModel.salonName,
       userId: user.uid,
       salonId: salonService.salonId,
       createAt: now,

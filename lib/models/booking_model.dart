@@ -6,6 +6,7 @@ class BookingModel {
   final String userId;
   final String salonId;
   final String salonName;
+  final String userName;
   final DateTime createAt;
   final DateTime date;
   final List<ServiceDetailModel> services;
@@ -14,6 +15,7 @@ class BookingModel {
     required this.id,
     required this.userId,
     required this.salonName,
+    required this.userName,
     required this.salonId,
     required this.createAt,
     required this.date,
@@ -24,6 +26,7 @@ class BookingModel {
     return BookingModel(
       id: json['id'],
       salonName: json['salonName'],
+      userName: json['userName'] ?? 'Ariel Gómez',
       userId: json['userId'],
       salonId: json['salonId'],
       createAt: json['createAt'].toDate().toLocal(),
@@ -37,6 +40,7 @@ class BookingModel {
         'id': id,
         'userId': userId,
         'salonName': salonName,
+        'userName': userName,
         'salonId': salonId,
         'createAt': Timestamp.fromDate(createAt.toUtc()),
         'date': Timestamp.fromDate(date.toUtc()),
@@ -57,6 +61,13 @@ class BookingModel {
       duration += element.avgTimeInMinutes;
     }
     return duration;
+  }
+
+  String intMinutesToStringHours() {
+    final int minutes = getDurationInMinutes();
+    final int hours = minutes ~/ 60;
+    final int minutesLeft = minutes % 60;
+    return '${hours.toString().padLeft(2, '0')}:${minutesLeft.toString().padLeft(2, '0')}';
   }
 
   String print() {

@@ -47,7 +47,6 @@ class _SplashScreenState extends State<SplashScreen> {
     final User? user = DatabaseAuth().getCurrentUser();
     if (user != null) {
       final UserModel? userModel = await DatabaseUser().getUserByUid(user.uid);
-      debugPrint(userModel?.print());
       if (userModel == null) {
         nextRoute = Routes.welcomeRoute;
       } else if (userModel.kindOfUser == KindOfUser.ADMIN) {
