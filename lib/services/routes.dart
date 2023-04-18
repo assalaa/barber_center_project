@@ -2,7 +2,6 @@ import 'package:barber_center/main.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
-import 'package:barber_center/screens/all_salons/all_salons_screen.dart';
 import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
@@ -74,8 +73,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
       case createServiceRoute:
         return MaterialPageRoute(builder: (_) => const CreateServicePage());
-      case allSalonsRoute:
-        return MaterialPageRoute(builder: (_) => const AllSalonsScreen());
+
       default:
         return _errorRoute();
     }
