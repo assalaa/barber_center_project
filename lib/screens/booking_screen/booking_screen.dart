@@ -39,9 +39,7 @@ class BookingScreen extends StatelessWidget {
                                 title: Text(
                                   'Horario 0$index:00',
                                   style: TextStyle(
-                                    color: provider.selectedHour == index
-                                        ? Colors.white
-                                        : Colors.black,
+                                    color: provider.selectedHour == index ? Colors.white : Colors.black,
                                   ),
                                 ),
                               ),
