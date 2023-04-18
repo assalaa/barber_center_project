@@ -19,49 +19,63 @@ class AddServiceProvider extends ChangeNotifier {
   late SalonServiceModel salonServiceModel;
   int indexSelected = -1;
 
+  int price = 0;
+  int avgTime = 0;
+  String buttonText = 'Save';
+
   AddServiceProvider() {
     userId = _dbAuth.getCurrentUser()!.uid;
     getServices();
     getSalonServices();
-    for (final ServiceModel element in services) {
-      salonServiceModel.services.add(ServiceDetailModel(
-        name: element.name,
-        serviceId: element.id,
-        price: 0,
-        avgTimeInMinutes: 0,
-        createAt: DateTime.now(),
-      ));
-    }
-
     loading = false;
     notifyListeners();
   }
 
   Future<void> getServices() async {
     services = await _dbService.getServices();
+    notifyListeners();
   }
 
   void selectService(int index) {
     indexSelected = index;
+    checkIfExist();
     notifyListeners();
   }
 
   dynamic setPrice(double value) {
-    salonServiceModel.services[indexSelected].price = value.toInt();
+    price = value.toInt();
     notifyListeners();
     return value;
   }
 
   dynamic setTime(double value) {
-    salonServiceModel.services[indexSelected].avgTimeInMinutes = value.toInt();
+    avgTime = value.toInt();
     notifyListeners();
     return value;
   }
+
+  bool get anyServiceSelected => indexSelected != -1;
 
   Future<void> saveService() async {
     if (checkVariables()) {
       loading = true;
       notifyListeners();
+
+      final ServiceModel serviceModel = services[indexSelected];
+
+      if (salonServiceModel.services.any((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id)) {
+        final int index = salonServiceModel.services.indexWhere((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id);
+        salonServiceModel.services[index].price = price;
+        salonServiceModel.services[index].avgTimeInMinutes = avgTime;
+      } else {
+        salonServiceModel.services.add(ServiceDetailModel(
+          serviceId: serviceModel.id,
+          price: price,
+          avgTimeInMinutes: avgTime,
+          createAt: DateTime.now(),
+          name: serviceModel.name,
+        ));
+      }
 
       await _dbSalonService.updateService(salonServiceModel);
 
@@ -76,9 +90,9 @@ class AddServiceProvider extends ChangeNotifier {
   bool checkVariables() {
     if (indexSelected == -1) {
       showMessageError('Please select a service');
-    } else if (salonServiceModel.services[indexSelected].price == 0) {
+    } else if (price == 0) {
       showMessageError('Please specify the price for service');
-    } else if (salonServiceModel.services[indexSelected].avgTimeInMinutes == 0) {
+    } else if (avgTime == 0) {
       showMessageError('Please specify the average time for service');
     } else {
       return true;
@@ -88,5 +102,21 @@ class AddServiceProvider extends ChangeNotifier {
 
   Future<void> getSalonServices() async {
     salonServiceModel = await _dbSalonService.getServicesByUserId(userId);
+  }
+
+  void checkIfExist() {
+    final bool serviceExist = salonServiceModel.services.any((element) => element.serviceId == services[indexSelected].id);
+
+    if (!serviceExist) {
+      price = 0;
+      avgTime = 0;
+      buttonText = 'Save';
+    } else {
+      final ServiceDetailModel serviceDetailModel = salonServiceModel.services.firstWhere((element) => element.serviceId == services[indexSelected].id);
+      price = serviceDetailModel.price;
+      avgTime = serviceDetailModel.avgTimeInMinutes;
+      buttonText = 'Update';
+    }
+    notifyListeners();
   }
 }

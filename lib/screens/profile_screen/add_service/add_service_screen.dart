@@ -1,3 +1,4 @@
+import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/screens/profile_screen/add_service/add_service_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
@@ -34,20 +35,31 @@ class AddServicePage extends StatelessWidget {
                   const Gap(48),
 
                   /// Price
-                  SelectTime(
-                    provider: provider,
-                    timer: false,
+                  SelectWidget(
+                    title: '${provider.anyServiceSelected ? provider.services[provider.indexSelected].name : 'Service'} Price: ${provider.price} EGP',
+                    value: provider.price,
+                    maxValue: 1000,
+                    divisions: 200,
+                    onChanged: provider.setPrice,
+                    visible: provider.anyServiceSelected,
                   ),
                   const Gap(32),
 
                   /// Avg. Time
-                  SelectTime(provider: provider, timer: true),
+                  SelectWidget(
+                    title: 'Average Time: ${minutesToHours(provider.avgTime)}',
+                    value: provider.avgTime,
+                    maxValue: 120,
+                    divisions: 24,
+                    onChanged: provider.setTime,
+                    visible: provider.anyServiceSelected,
+                  ),
                   const Gap(64),
 
                   /// Save Button
                   LargeRoundedButton(
                     loading: provider.loading,
-                    buttonName: 'Save',
+                    buttonName: provider.buttonText,
                     onTap: () async {
                       await provider.saveService();
                     },
@@ -62,34 +74,33 @@ class AddServicePage extends StatelessWidget {
   }
 }
 
-class SelectTime extends StatelessWidget {
-  final AddServiceProvider provider;
-  final bool timer;
+class SelectWidget extends StatelessWidget {
+  final String title;
+  final int value;
+  final double minValue;
+  final double maxValue;
+  final int divisions;
+  final Function(double) onChanged;
+  final bool visible;
 
-  const SelectTime({
-    required this.provider,
-    required this.timer,
+  const SelectWidget({
+    required this.title,
+    required this.value,
+    required this.maxValue,
+    required this.divisions,
+    required this.onChanged,
+    required this.visible,
+    this.minValue = 0,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (provider.indexSelected == -1) {
+    if (!visible) {
       return const SizedBox.shrink();
     }
 
-    const int divisions = 24;
-
-    const double minTime = 0.0;
-    const double maxTime = 120.0;
-
-    const String title = 'Average Time: ';
-    final avgTime = provider.salonServiceModel.services[provider.indexSelected].avgTimeInMinutes;
-    final String time = minutesToHours(avgTime);
-
-    final double timeSliderValue = avgTime.toDouble();
-
-    final Function(double) onTimeChange = provider.setTime;
+    final double sliderValue = value.toDouble();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -97,21 +108,22 @@ class SelectTime extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '$title$time',
+            title,
             style: const TextStyle(fontSize: 15),
           ),
           const Gap(10),
           SliderWidget(
-            maxValue: maxTime,
+            value: sliderValue,
+            minValue: minValue,
+            maxValue: maxValue,
             divisions: divisions,
-            value: timeSliderValue,
-            onChanged: onTimeChange,
+            onChanged: onChanged,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(minTime.floor().toString()),
-              Text(maxTime.floor().toString()),
+              Text(minValue.floor().toString()),
+              Text(maxValue.floor().toString()),
             ],
           ),
         ],
@@ -163,53 +175,54 @@ class AllServices extends StatelessWidget {
     if (provider.services.isEmpty) {
       return const SizedBox.shrink();
     }
-    return Container();
 
-    // return Wrap(
-    //   runSpacing: 8.0,
-    //   children: List.generate(provider.services.length, (index) {
-    //     final ServiceModel serviceModel = provider.services[index];
-    //
-    //     final bool isSelected = serviceModel == provider.selectedService;
-    //
-    //     return Padding(
-    //       padding: const EdgeInsets.all(4.0),
-    //       child: Semantics(
-    //         button: true,
-    //         child: GestureDetector(
-    //           onTap: () => provider.selectService(serviceModel),
-    //           child: SizedBox(
-    //             width: 72,
-    //             child: Column(
-    //               children: [
-    //                 Opacity(
-    //                   opacity: isSelected ? 1 : 0.4,
-    //                   child: CircleAvatar(
-    //                     radius: 32,
-    //                     backgroundImage: NetworkImage(
-    //                       serviceModel.image,
-    //                     ),
-    //                   ),
-    //                 ),
-    //                 const Gap(6),
-    //                 FittedBox(
-    //                   child: Text(
-    //                     serviceModel.name,
-    //                     textAlign: TextAlign.center,
-    //                     style: TextStyle(
-    //                       fontSize: 15,
-    //                       color: isSelected ? Colors.black : Styles.greyColor,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     );
-    //   }),
-    // );
+    return Wrap(
+      runSpacing: 8.0,
+      children: List.generate(provider.services.length, (index) {
+        final ServiceModel serviceModel = provider.services[index];
+
+        final int indexService = provider.services.indexOf(serviceModel);
+
+        final bool isSelected = indexService == provider.indexSelected;
+
+        return Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Semantics(
+            button: true,
+            child: GestureDetector(
+              onTap: () => provider.selectService(provider.services.indexOf(serviceModel)),
+              child: SizedBox(
+                width: 72,
+                child: Column(
+                  children: [
+                    Opacity(
+                      opacity: isSelected ? 1 : 0.4,
+                      child: CircleAvatar(
+                        radius: 32,
+                        backgroundImage: NetworkImage(
+                          serviceModel.image,
+                        ),
+                      ),
+                    ),
+                    const Gap(6),
+                    FittedBox(
+                      child: Text(
+                        serviceModel.name,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: isSelected ? Colors.black : Styles.greyColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
   }
 }
 

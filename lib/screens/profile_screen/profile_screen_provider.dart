@@ -9,6 +9,7 @@ import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -47,7 +48,7 @@ class ProfileScreenProvider with ChangeNotifier {
 
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
-    //services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
+    services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
   }
 
   Future<void> updatePhoto(BuildContext context) async {
@@ -58,7 +59,8 @@ class ProfileScreenProvider with ChangeNotifier {
     final String image = await _dbImage.uploadImage(imageFile, 'images/user/');
     userModel.image = image;
     await _dbUser.updateUser(userModel);
-    Routes.goTo(Routes.splashRoute);
+    notifyListeners();
+    showMessageSuccessful('Profile photo is successfully updated');
   }
 
   Future<void> init() async {
