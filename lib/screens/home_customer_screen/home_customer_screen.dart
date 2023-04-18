@@ -48,7 +48,11 @@ class HomeCustomerScreen extends StatelessWidget {
                             Container(
                               width: AppLayout.getHeight(50),
                               height: AppLayout.getWidth(50),
-                              decoration: BoxDecoration(image: DecorationImage(image: AssetImage(Assets.unnamedImage)), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
+                              decoration: BoxDecoration(
+                                  image: const DecorationImage(
+                                      image: AssetImage(Assets.unnamedImage)),
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Styles.greyColor.withOpacity(0.2)),
                             ),
                           ],
                         )
@@ -74,8 +78,11 @@ class HomeCustomerScreen extends StatelessWidget {
                                 width: AppLayout.getWidth(80),
                                 height: AppLayout.getHeight(80),
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(image: NetworkImage(service.image), fit: BoxFit.cover),
-                                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                  image: DecorationImage(
+                                      image: NetworkImage(service.image),
+                                      fit: BoxFit.cover),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(50)),
                                 ),
                               ),
                               Gap(AppLayout.getHeight(5)),
@@ -103,7 +110,8 @@ class HomeCustomerScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final salon = provider.salons[index];
                         return Padding(
-                          padding: const EdgeInsets.only(left: 24, top: 4, bottom: 4),
+                          padding: const EdgeInsets.only(
+                              left: 24, top: 4, bottom: 4),
                           child: GestureDetector(
                             onTap: () {
                               Routes.goTo(

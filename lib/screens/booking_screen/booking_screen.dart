@@ -1,11 +1,8 @@
 import 'package:barber_center/helpers/extensions.dart';
-import 'package:barber_center/models/booking_model.dart';
-import 'package:barber_center/models/booking_time_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
 import 'package:barber_center/utils/app_strings.dart';
-import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 import 'package:provider/provider.dart';
