@@ -24,11 +24,22 @@ class HomeSalonScreen extends StatelessWidget {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  CompleteProfileWidget(
-                    visible: true,
-                    onPressed: () =>
-                        Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
-                  ),
+                  if (provider.loading) ...[
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  ] else ...[
+                    if (!provider.isProfileCompleted) ...[
+                      CompleteProfileWidget(
+                        onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
+                      ),
+                    ],
+                    if (!provider.hasServices()) ...[
+                      CompleteProfileWidget(
+                        onPressed: () => Routes.goTo(Routes.addServiceRoute, enableBack: true),
+                      ),
+                    ],
+                  ]
                 ],
               ),
             ),
@@ -42,19 +53,13 @@ class HomeSalonScreen extends StatelessWidget {
 class CompleteProfileWidget extends StatelessWidget {
   const CompleteProfileWidget({
     required this.onPressed,
-    this.visible = false,
     super.key,
   });
 
-  final bool? visible;
   final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
-    if (visible != true) {
-      return const SizedBox.shrink();
-    }
-
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(

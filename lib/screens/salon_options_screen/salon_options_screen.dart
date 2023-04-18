@@ -9,14 +9,12 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class SalonOptionsScreen extends StatelessWidget {
-  const SalonOptionsScreen({required this.salonId, super.key});
-
-  final String salonId;
+  const SalonOptionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SalonOptionsProvider>(
-      create: (context) => SalonOptionsProvider(salonId),
+      create: (context) => SalonOptionsProvider(),
       child: Consumer<SalonOptionsProvider>(
         builder: (context, provider, _) {
           return Scaffold(
@@ -39,16 +37,14 @@ class SalonOptionsScreen extends StatelessWidget {
                   ),
                   const Gap(22),
                   SalonInfo(
-                    value:
-                        provider.salonInformationModel.openTime.toStringTime(),
+                    value: provider.salonInformationModel.openTime.toStringTime(),
                     title: 'What time do you open your salon?',
                     items: getHalfHourIntervals(),
                     onChanged: provider.updateOpenTime,
                   ),
                   const Gap(22),
                   SalonInfo(
-                    value:
-                        provider.salonInformationModel.closeTime.toStringTime(),
+                    value: provider.salonInformationModel.closeTime.toStringTime(),
                     title: 'What time do you close your salon?',
                     items: getHalfHourIntervals(),
                     onChanged: provider.updateCloseTime,

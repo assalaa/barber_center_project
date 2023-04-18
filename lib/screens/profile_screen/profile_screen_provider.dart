@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreenProvider with ChangeNotifier {
-  final DBAuth _dbAuth = DBAuth();
+  final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseEmployee _dbEmployee = DatabaseEmployee();
   final DatabaseService _dbService = DatabaseService();
@@ -44,11 +44,13 @@ class ProfileScreenProvider with ChangeNotifier {
   }
 
   Future<void> fetchServices() async {
-    final SalonServiceModel salonServiceModel = await _dbSalonService.getServicesByUserId(userModel.uid);
+    final SalonServiceModel salonServiceModel =
+        await _dbSalonService.getServicesByUserId(userModel.uid);
 
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
-    services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
+    services.removeWhere(
+        (element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
   }
 
   Future<void> updatePhoto(BuildContext context) async {

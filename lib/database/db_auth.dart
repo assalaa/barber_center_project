@@ -3,13 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class DBAuth {
+class DatabaseAuth {
   late FirebaseAuth firebaseAuth;
   Future<void> initializeFirebase() async {
     await Firebase.initializeApp();
   }
 
-  DBAuth() {
+  DatabaseAuth() {
     firebaseAuth = FirebaseAuth.instance;
   }
 
@@ -19,11 +19,10 @@ class DBAuth {
     return firebaseAuth.currentUser;
   }
 
-  Future<User?>? signInWithEmailAndPassword(
-      String emailAddress, String password) async {
+  Future<User?>? signInWithEmailAndPassword(String emailAddress, String password) async {
     try {
-      final credential = await firebaseAuth.signInWithEmailAndPassword(
-          email: emailAddress, password: password);
+      final credential =
+          await firebaseAuth.signInWithEmailAndPassword(email: emailAddress, password: password);
 
       return credential.user;
     } on FirebaseAuthException catch (e) {
@@ -40,8 +39,7 @@ class DBAuth {
     await firebaseAuth.signOut();
   }
 
-  Future<User?>? registerWithEmailAndPassword(
-      String emailAddress, String password) async {
+  Future<User?>? registerWithEmailAndPassword(String emailAddress, String password) async {
     try {
       final credential = await firebaseAuth.createUserWithEmailAndPassword(
           email: emailAddress, password: password);
@@ -51,13 +49,11 @@ class DBAuth {
       if (e.code == 'weak-password') {
         Fluttertoast.showToast(msg: 'The password provided is too weak');
       } else if (e.code == 'email-already-in-use') {
-        Fluttertoast.showToast(
-            msg: 'The account already exists for that email');
+        Fluttertoast.showToast(msg: 'The account already exists for that email');
       }
     } catch (e) {
       debugPrint(e.toString());
-      Fluttertoast.showToast(
-          msg: 'There was an error while registering. Try again later');
+      Fluttertoast.showToast(msg: 'There was an error while registering. Try again later');
     }
     return null;
   }
