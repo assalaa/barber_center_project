@@ -22,8 +22,8 @@ class BookingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getBookingsByDateTime(DateTime datetime) async {
-    await _dbBooking.getBookingFromSalonInDay(salonService.salonId, datetime);
+  Future<void> getBookingsByDateTime(DateTime dateTime) async {
+    await _dbBooking.getBookingFromSalonInDay(salonService.salonId, dateTime);
     notifyListeners();
   }
 
@@ -45,8 +45,8 @@ class BookingProvider extends ChangeNotifier {
     _dbBooking.creatingBooking(bookingModel);
   }
 
-  void onDatePressed(DateTime datetime) {
-    selectedDate = datetime;
+  void onDatePressed(DateTime dateTime) {
+    selectedDate = dateTime;
     getBookingsByDateTime(selectedDate);
   }
 

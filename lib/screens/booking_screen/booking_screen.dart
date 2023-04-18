@@ -32,7 +32,9 @@ class BookingScreen extends StatelessWidget {
                           return InkWell(
                             onTap: () => provider.onHourPressed(index),
                             child: Card(
-                              color: provider.selectedHour == index ? Colors.black : Colors.white,
+                              color: provider.selectedHour == index
+                                  ? Colors.black
+                                  : Colors.white,
                               child: ListTile(
                                 title: Text(
                                   'Horario 0$index:00',
@@ -51,7 +53,7 @@ class BookingScreen extends StatelessWidget {
                     //BUTTON SAVE
                     ElevatedButton(
                       onPressed: () => provider.save(),
-                      child: Text('Save'),
+                      child: const Text('Save'),
                     ),
                   ],
                 ),
@@ -66,8 +68,8 @@ class BookingScreen extends StatelessWidget {
       height: 114,
       minDate: DateTime.now(),
       maxDate: DateTime.now().add(const Duration(days: 60)),
-      onDatePressed: (datetime) {
-        controller.onDatePressed(datetime);
+      onDatePressed: (dateTime) {
+        controller.onDatePressed(dateTime);
       },
       monthViewBuilder: (date) => Padding(
         padding: const EdgeInsets.all(8.0),
