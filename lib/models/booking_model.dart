@@ -5,6 +5,7 @@ class BookingModel {
   final String id;
   final String userId;
   final String salonId;
+  final String salonName;
   final DateTime createAt;
   final DateTime date;
   final List<ServiceDetailModel> services;
@@ -12,6 +13,7 @@ class BookingModel {
   BookingModel({
     required this.id,
     required this.userId,
+    required this.salonName,
     required this.salonId,
     required this.createAt,
     required this.date,
@@ -21,6 +23,7 @@ class BookingModel {
   factory BookingModel.fromJson(Map json) {
     return BookingModel(
       id: json['id'],
+      salonName: json['salonName'],
       userId: json['userId'],
       salonId: json['salonId'],
       createAt: json['createAt'].toDate().toLocal(),
@@ -33,6 +36,7 @@ class BookingModel {
   Map<String, dynamic> toJson() => {
         'id': id,
         'userId': userId,
+        'salonName': salonName,
         'salonId': salonId,
         'createAt': Timestamp.fromDate(createAt.toUtc()),
         'date': Timestamp.fromDate(date.toUtc()),

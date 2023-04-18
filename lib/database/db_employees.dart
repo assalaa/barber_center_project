@@ -8,28 +8,15 @@ class DatabaseEmployee {
   final String _usersPath = 'users';
 
   Future<void> addEmployee(String userId, EmployeeModel employeeModel) async {
-    await _firestore
-        .collection(_path)
-        .doc(employeeModel.id)
-        .set(employeeModel.toJson());
-
-    await _linkEmployee(userId, employeeModel);
-  }
-
-  Future<void> _linkEmployee(String userId, EmployeeModel employeeModel) async {
-    await _firestore.collection(_usersPath).doc(userId).update({
-      'employees': FieldValue.arrayUnion([employeeModel.id])
-    });
+    await _firestore.collection(_path).doc(employeeModel.id).set(employeeModel.toJson());
   }
 
   Future<List<EmployeeModel>> getEmployees(String userId) async {
     final List<EmployeeModel> employees = [];
 
     try {
-      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
-          .collection(_path)
-          .where('employerUid', isEqualTo: userId)
-          .get();
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firestore.collection(_path).where('employerUid', isEqualTo: userId).get();
       for (final doc in querySnapshot.docs) {
         employees.add(EmployeeModel.fromJson(doc.data()));
       }

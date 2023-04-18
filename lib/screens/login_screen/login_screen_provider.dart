@@ -20,7 +20,7 @@ class LoginController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(KindOfUser kinkOfUser) async {
+  Future<void> login() async {
     if (formKey.currentState!.validate() && !loading) {
       loading = true;
       notifyListeners();
@@ -37,7 +37,7 @@ class LoginController with ChangeNotifier {
       if (userModel == null) {
         return;
       }
-      goToPageByKindOfUser(user, kinkOfUser);
+      goToPageByKindOfUser(user, userModel.kindOfUser);
 
       loading = false;
       notifyListeners();

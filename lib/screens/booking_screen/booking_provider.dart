@@ -21,7 +21,10 @@ class BookingProvider extends ChangeNotifier {
   DateTime selectedDate = DateTime.now();
   bool timeSelected = false;
 
-  BookingProvider(this.salonService, this.salonInformationModel) {
+  BookingProvider(
+    this.salonService,
+    this.salonInformationModel,
+  ) {
     _init();
   }
 
@@ -90,6 +93,7 @@ class BookingProvider extends ChangeNotifier {
     final User user = _dbAuth.getCurrentUser()!;
     final BookingModel bookingModel = BookingModel(
       id: dateToId(now),
+      salonName: salonService.services[0].name,
       userId: user.uid,
       salonId: salonService.salonId,
       createAt: now,

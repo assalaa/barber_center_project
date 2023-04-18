@@ -40,4 +40,34 @@ class DatabaseBooking {
 
     return booking;
   }
+
+  Future<List<BookingModel>> getBookingFromUserId(String userId) async {
+    final List<BookingModel> booking = [];
+    try {
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firestore.collection(_path).where('userId', isEqualTo: userId).get();
+      for (final doc in querySnapshot.docs) {
+        booking.add(BookingModel.fromJson(doc.data()));
+      }
+    } catch (e) {
+      debugPrint('ERROR: $e');
+    }
+
+    return booking;
+  }
+
+  Future<List<BookingModel>> getBookingFromSalonId(String salonId) async {
+    final List<BookingModel> booking = [];
+    try {
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firestore.collection(_path).where('salonId', isEqualTo: salonId).get();
+      for (final doc in querySnapshot.docs) {
+        booking.add(BookingModel.fromJson(doc.data()));
+      }
+    } catch (e) {
+      debugPrint('ERROR: $e');
+    }
+
+    return booking;
+  }
 }
