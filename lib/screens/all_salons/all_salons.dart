@@ -13,7 +13,7 @@ class AllSalons extends StatelessWidget {
         child: Consumer<AllSalonProvider>(builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
-              title: Text("All Salons"),
+              title: const Text('All Salons'),
               actions: [],
             ),
             body: GridView.builder(
@@ -28,7 +28,7 @@ class AllSalons extends StatelessWidget {
                       barberLocation: provider.users[index].city,
                     ),
                   )),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 1,
               ),

@@ -1,0 +1,18 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "the current language"
+  },
+  "welcome": "Welcome to Salounak",
+  "thanking": "Thank you for using our app :)",
+  "salon": "Salon",
+  "customer": "Customer",
+  "proceed": "Continue as",
+  "sign_in_as": "Sing in as",
+  "email": "Enter your Email",
+  "pass": "Enter your password",
+  "redirection_to_sig_up": "You don't have an account?",
+  "call_to_sig_up": "Sing up",
+  "continue_btn": "Continue"
+
+}

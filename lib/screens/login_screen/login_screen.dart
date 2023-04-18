@@ -4,11 +4,11 @@ import 'package:barber_center/main.dart';
 import 'package:barber_center/screens/login_screen/login_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
-import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -30,11 +30,11 @@ class LoginScreen extends StatelessWidget {
                     ? Row(
                         children: [
                           Text(
-                            '${Strings.signIn}as',
+                            AppLocalizations.of(context)!.sign_in_as,
                             style: Styles.headLineStyle3,
                           ),
                           Text(
-                            Strings.asCustomer,
+                            AppLocalizations.of(context)!.customer,
                             style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
                           ),
                         ],
@@ -42,11 +42,11 @@ class LoginScreen extends StatelessWidget {
                     : Row(
                         children: [
                           Text(
-                            '${Strings.signIn}as',
+                            AppLocalizations.of(context)!.sign_in_as,
                             style: Styles.headLineStyle3,
                           ),
                           Text(
-                            Strings.asSalon,
+                            AppLocalizations.of(context)!.salon,
                             style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
                           ),
                         ],
@@ -58,13 +58,13 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Gap(AppLayout.getHeight(10)),
                     Text(
-                      Strings.welcome2,
+                      AppLocalizations.of(context)!.welcome,
                       style: Styles.headLineStyle2.copyWith(fontSize: 30),
                     ),
                     Gap(AppLayout.getHeight(30)),
                     Text(
                       textAlign: TextAlign.center,
-                      Strings.welcomeSentence,
+                      AppLocalizations.of(context)!.thanking,
                       style: Styles.headLineStyle4.copyWith(fontSize: 18),
                     ),
                     Gap(AppLayout.getHeight(30)),
@@ -81,8 +81,8 @@ class LoginScreen extends StatelessWidget {
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.emailAddress,
                             inputFormatters: TextInputFormatters.denySpaces,
-                            decoration: const InputDecoration(
-                              hintText: Strings.emailInput,
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.email,
                             ),
                           ),
                           Gap(AppLayout.getHeight(20)),
@@ -105,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                                 },
                                 child: const Icon(Icons.remove_red_eye),
                               ),
-                              hintText: Strings.passwordInput,
+                              hintText: AppLocalizations.of(context)!.pass,
                             ),
                           ),
                           Gap(AppLayout.getHeight(10)),
@@ -113,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                           Gap(AppLayout.getHeight(10)),
                           LargeRoundedButton(
                             loading: provider.loading,
-                            buttonName: Strings.continueBtn,
+                            buttonName: AppLocalizations.of(context)!.continue_btn,
                             onTap: () async {
                               await provider.login(kindOfUser);
                             },
@@ -125,11 +125,11 @@ class LoginScreen extends StatelessWidget {
                           RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
-                              text: Strings.redirectionToSingIn,
+                              text: AppLocalizations.of(context)!.redirection_to_sig_up,
                               style: Styles.headLineStyle4.copyWith(fontSize: 18),
                               children: [
                                 TextSpan(
-                                  text: ' ${Strings.signup}',
+                                  text: AppLocalizations.of(context)!.call_to_sig_up,
                                   style: Styles.headLineStyle4.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
