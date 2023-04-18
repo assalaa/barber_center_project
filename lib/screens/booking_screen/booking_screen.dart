@@ -3,6 +3,7 @@ import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
 import 'package:barber_center/utils/app_strings.dart';
+import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 import 'package:provider/provider.dart';
@@ -114,14 +115,20 @@ class HoursList extends StatelessWidget {
               provider.selectedDate.minute == time?.minute;
 
           return InkWell(
-            onTap: () => provider.onTimePressed(time),
+            onTap: () {
+              if (provider.bookingTimes[index].available) {
+                provider.onTimePressed(time);
+              } else {
+                showMessageError('This time is not available');
+              }
+            },
             child: Card(
-              color: isSelected ? Colors.black : Colors.white,
+              color: getColor(isSelected, provider.bookingTimes[index].available),
               child: ListTile(
                 title: Text(
                   provider.bookingTimes[index].time,
                   style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.black,
+                    color: getColor(isSelected, provider.bookingTimes[index].available, text: true),
                   ),
                 ),
               ),
@@ -130,5 +137,15 @@ class HoursList extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Color getColor(bool isSelected, bool available, {bool text = false}) {
+    if (available == false) {
+      return text ? Colors.white : Colors.red;
+    }
+    if (text == false) {
+      return isSelected ? Colors.black : Colors.white;
+    }
+    return isSelected ? Colors.white : Colors.black;
   }
 }

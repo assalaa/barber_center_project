@@ -83,7 +83,7 @@ class LoginScreen extends StatelessWidget {
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.visiblePassword,
                             onEditingComplete: () async {
-                              await provider.login(kindOfUser);
+                              await provider.login();
                             },
                             inputFormatters: TextInputFormatters.denySpaces,
                             obscureText: provider.visiblePassword,
@@ -104,7 +104,7 @@ class LoginScreen extends StatelessWidget {
                             loading: provider.loading,
                             buttonName: Strings.continueBtn,
                             onTap: () async {
-                              await provider.login(kindOfUser);
+                              await provider.login();
                             },
                           ),
                           Gap(AppLayout.getHeight(30)),

@@ -36,10 +36,11 @@ class AddServicePage extends StatelessWidget {
 
                   /// Price
                   SelectWidget(
-                    title: '${provider.anyServiceSelected ? provider.services[provider.indexSelected].name : 'Service'} Price: ${provider.price} EGP',
+                    title:
+                        '${provider.anyServiceSelected ? provider.services[provider.indexSelected].name : 'Service'} Price: ${provider.price} EGP',
                     value: provider.price,
-                    maxValue: 1000,
-                    divisions: 200,
+                    maxValue: 300,
+                    divisions: 60,
                     onChanged: provider.setPrice,
                     visible: provider.anyServiceSelected,
                   ),
