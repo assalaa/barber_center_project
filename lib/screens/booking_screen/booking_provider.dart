@@ -35,9 +35,6 @@ class BookingProvider extends ChangeNotifier {
 
   void verifyStatus() {
     for (final booking in bookings) {
-      print('booking date: ${booking.date}');
-      print('duration:${booking.getDurationInMinutes()}');
-
       for (final element in bookingTimes) {
         final String hour =
             '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
