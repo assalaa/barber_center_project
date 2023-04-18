@@ -28,6 +28,7 @@ class Strings {
   static const String redirectionToSingIn = 'Already have an account?';
   static const String signIn = 'Sing in';
   //SECTIONS
+  
   static const String topBarbers = 'Top Barbers';
   static const String services = 'Services';
   static const String featuredBarbers = 'Featured barbers';
