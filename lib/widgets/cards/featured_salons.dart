@@ -1,3 +1,4 @@
+import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:flutter/material.dart';
@@ -34,20 +35,24 @@ class FeaturedSalons extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.all(8),
-            width: AppLayout.getWidth(170),
-            height: AppLayout.getHeight(120),
-            decoration: BoxDecoration(
-              image: image != null
-                  ? DecorationImage(
-                      image: NetworkImage(image!),
-                      fit: BoxFit.fill,
+              margin: const EdgeInsets.all(8),
+              width: AppLayout.getWidth(1800),
+              height: AppLayout.getHeight(120),
+              child: (image != null)
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        image!,
+                        fit: BoxFit.cover,
+                      ),
                     )
-                  : null,
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.green,
-            ),
-          ),
+                  : ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        Assets.welcomeBg,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
           Container(
             margin: const EdgeInsets.all(8),
             child: Column(
