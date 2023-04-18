@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Routes.generateRoute,
       navigatorKey: Routes.navigator,
       initialRoute: Routes.splashRoute,
-      title: 'Flutter Demo',
+      title: 'Salounak',
     );
   }
 }
