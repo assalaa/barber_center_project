@@ -36,6 +36,7 @@ class Routes {
   static const String addEmployeeRoute = '/add_employee';
   static const String addServiceRoute = '/add_service';
   static const String bookingRoute = '/booking';
+  static const String allSalonsRoute = '/all_salons';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -77,6 +78,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
       case createServiceRoute:
         return MaterialPageRoute(builder: (_) => const CreateServicePage());
+
       default:
         return _errorRoute();
     }
