@@ -35,14 +35,20 @@ class HomeSalonScreen extends StatelessWidget {
                       ),
                     )
                   ] else ...[
-                    if (!provider.isProfileCompleted) ...[
-                      CompleteProfileWidget(
-                        onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
-                      ),
-                    ],
                     if (!provider.hasServices()) ...[
                       CompleteProfileWidget(
-                        onPressed: () => Routes.goTo(Routes.addServiceRoute, enableBack: true),
+                        titleText: 'You haven\'t added services',
+                        buttonText: 'Add',
+                        onPressed: () => Routes.goTo(Routes.addServiceRoute,
+                            enableBack: true),
+                      ),
+                    ],
+                    if (!provider.isProfileCompleted) ...[
+                      CompleteProfileWidget(
+                        titleText: 'Your profile isn\'t completed',
+                        buttonText: 'Complete',
+                        onPressed: () => Routes.goTo(Routes.salonOptionsRoute,
+                            enableBack: true),
                       ),
                     ],
                     if (provider.bookings.isEmpty) ...[
@@ -72,7 +78,8 @@ class HomeSalonScreen extends StatelessWidget {
                               ),
                               elevation: 4,
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
+                                padding:
+                                    const EdgeInsets.fromLTRB(24, 12, 24, 12),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -103,7 +110,8 @@ class HomeSalonScreen extends StatelessWidget {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: booking.date.showDateAndTime(),
+                                            text:
+                                                booking.date.showDateAndTime(),
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
@@ -121,7 +129,8 @@ class HomeSalonScreen extends StatelessWidget {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: '\$${booking.getTotalPrice()}',
+                                            text:
+                                                '\$${booking.getTotalPrice()}',
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
@@ -140,7 +149,8 @@ class HomeSalonScreen extends StatelessWidget {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: minutesToHours(booking.getDurationInMinutes()),
+                                            text: minutesToHours(
+                                                booking.getDurationInMinutes()),
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
@@ -151,7 +161,9 @@ class HomeSalonScreen extends StatelessWidget {
                                     ),
                                     //LISTVIEW BUILDER SERVICES
                                     Text(
-                                      booking.services.length > 1 ? 'Services' : 'Service',
+                                      booking.services.length > 1
+                                          ? 'Services'
+                                          : 'Service',
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -195,10 +207,14 @@ class HomeSalonScreen extends StatelessWidget {
 class CompleteProfileWidget extends StatelessWidget {
   const CompleteProfileWidget({
     required this.onPressed,
+    required this.titleText,
+    required this.buttonText,
     super.key,
   });
 
   final Function() onPressed;
+  final String titleText;
+  final String buttonText;
 
   @override
   Widget build(BuildContext context) {
@@ -214,13 +230,18 @@ class CompleteProfileWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Your profile isn\'t completed',
-              style: TextStyle(fontSize: 16),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 6),
+                child: Text(
+                  titleText * 2,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: onPressed,
-              child: const Text('Complete'),
+              child: Text(buttonText),
             ),
           ],
         ),

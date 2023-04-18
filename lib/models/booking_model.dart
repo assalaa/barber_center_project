@@ -64,7 +64,7 @@ class BookingModel {
   }
 
   String intMinutesToStringHours() {
-    int minutes = getDurationInMinutes();
+    final int minutes = getDurationInMinutes();
     final int hours = minutes ~/ 60;
     final int minutesLeft = minutes % 60;
     return '${hours.toString().padLeft(2, '0')}:${minutesLeft.toString().padLeft(2, '0')}';

@@ -75,7 +75,7 @@ class TabBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 64),
+      margin: const EdgeInsets.symmetric(horizontal: 58),
       // padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),

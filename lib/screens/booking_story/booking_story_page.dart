@@ -15,7 +15,7 @@ class BookingStoryCustomerScreen extends StatelessWidget {
         builder: (context, provider, child) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Booking Story'),
+              title: const Text('Booking History'),
             ),
             body: SingleChildScrollView(
               child: Column(

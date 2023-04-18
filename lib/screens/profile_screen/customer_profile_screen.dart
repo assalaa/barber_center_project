@@ -65,7 +65,7 @@ class SettingButtons extends StatelessWidget {
     const String privacyText = 'Privacy settings';
     const IconData privacyIcon = Icons.privacy_tip_outlined;
 
-    const String bookingHistoryText = 'Booking history';
+    const String bookingHistoryText = 'Booking History';
     const IconData bookingHistoryIcon = Icons.history_toggle_off_rounded;
 
     return Column(
