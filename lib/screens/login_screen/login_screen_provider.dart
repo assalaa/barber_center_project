@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginController with ChangeNotifier {
-  final DBAuth _dbAuth = DBAuth();
+  final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseUser _dbUser = DatabaseUser();
   final formKey = GlobalKey<FormState>();
   final TextEditingController email = TextEditingController();

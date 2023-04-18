@@ -12,7 +12,7 @@ class AddServiceProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
   final DatabaseService _dbService = DatabaseService();
-  final DBAuth _dbAuth = DBAuth();
+  final DatabaseAuth _dbAuth = DatabaseAuth();
   late String userId;
   bool loading = true;
   List<ServiceModel> services = [];
@@ -63,8 +63,10 @@ class AddServiceProvider extends ChangeNotifier {
 
       final ServiceModel serviceModel = services[indexSelected];
 
-      if (salonServiceModel.services.any((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id)) {
-        final int index = salonServiceModel.services.indexWhere((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id);
+      if (salonServiceModel.services
+          .any((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id)) {
+        final int index = salonServiceModel.services
+            .indexWhere((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id);
         salonServiceModel.services[index].price = price;
         salonServiceModel.services[index].avgTimeInMinutes = avgTime;
       } else {
@@ -105,14 +107,16 @@ class AddServiceProvider extends ChangeNotifier {
   }
 
   void checkIfExist() {
-    final bool serviceExist = salonServiceModel.services.any((element) => element.serviceId == services[indexSelected].id);
+    final bool serviceExist = salonServiceModel.services
+        .any((element) => element.serviceId == services[indexSelected].id);
 
     if (!serviceExist) {
       price = 0;
       avgTime = 0;
       buttonText = 'Save';
     } else {
-      final ServiceDetailModel serviceDetailModel = salonServiceModel.services.firstWhere((element) => element.serviceId == services[indexSelected].id);
+      final ServiceDetailModel serviceDetailModel = salonServiceModel.services
+          .firstWhere((element) => element.serviceId == services[indexSelected].id);
       price = serviceDetailModel.price;
       avgTime = serviceDetailModel.avgTimeInMinutes;
       buttonText = 'Update';

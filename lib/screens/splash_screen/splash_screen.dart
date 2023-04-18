@@ -39,12 +39,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> initFirebase() async {
-    await DBAuth().initializeFirebase();
+    await DatabaseAuth().initializeFirebase();
   }
 
   Future<void> checkNextScreen() async {
     String nextRoute = Routes.welcomeRoute;
-    final User? user = DBAuth().getCurrentUser();
+    final User? user = DatabaseAuth().getCurrentUser();
     if (user != null) {
       final UserModel? userModel = await DatabaseUser().getUserByUid(user.uid);
       debugPrint(userModel?.print());

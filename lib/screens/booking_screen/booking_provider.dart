@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class BookingProvider extends ChangeNotifier {
   final SalonServiceModel salonService;
-  final DBAuth _dbAuth = DBAuth();
+  final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseBooking _dbBooking = DatabaseBooking();
   DateTime selectedDate = DateTime.now();
   int selectedHour = -1;
