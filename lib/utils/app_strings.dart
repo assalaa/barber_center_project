@@ -25,8 +25,9 @@ class Strings {
   static const String passwordInput = 'Enter your password';
   static const String usernameInput = 'Define a username';
   static const String addressInput = 'City';
-  static const String redirectionToSingIn = 'Already have an account?';
+  static const String redirectionToSingUp = 'Don\'t have an account?';
   static const String signIn = 'Sing in';
+  static const String signUp = 'Sing Up';
   //SECTIONS
   
   static const String topBarbers = 'Top Barbers';
