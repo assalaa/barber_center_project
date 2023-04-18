@@ -117,11 +117,11 @@ class LoginScreen extends StatelessWidget {
                           RichText(
                             textAlign: TextAlign.center,
                             text: TextSpan(
-                              text: Strings.redirectionToSingIn,
+                              text: Strings.redirectionToSingUp,
                               style: Styles.headLineStyle4.copyWith(fontSize: 18),
                               children: [
                                 TextSpan(
-                                  text: ' ${Strings.signIn}',
+                                  text: ' ${Strings.signUp}',
                                   style: Styles.headLineStyle4.copyWith(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,

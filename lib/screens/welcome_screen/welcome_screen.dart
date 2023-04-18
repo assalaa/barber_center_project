@@ -32,15 +32,15 @@ class WelcomeScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(18), vertical: AppLayout.getHeight(31)),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        Strings.languageBtn,
-                        style: Styles.textStyle,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       Strings.languageBtn,
+                  //       style: Styles.textStyle,
+                  //     ),
+                  //   ],
+                  // ),
                   const Spacer(),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(50)),
