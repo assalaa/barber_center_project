@@ -1,3 +1,5 @@
+import 'package:barber_center/helpers/extensions.dart';
+import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
 import 'package:barber_center/utils/app_strings.dart';
@@ -7,12 +9,17 @@ import 'package:provider/provider.dart';
 
 class BookingScreen extends StatelessWidget {
   final SalonServiceModel salonService;
-  const BookingScreen({required this.salonService, Key? key}) : super(key: key);
+  final SalonInformationModel salonInformation;
+  const BookingScreen({
+    required this.salonService,
+    required this.salonInformation,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookingProvider>(
-      create: (context) => BookingProvider(salonService),
+      create: (context) => BookingProvider(salonService, salonInformation),
       child: Consumer<BookingProvider>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -22,34 +29,16 @@ class BookingScreen extends StatelessWidget {
               body: SingleChildScrollView(
                 child: Column(
                   children: [
-                    calendar(provider),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 3,
-                      child: ListView.builder(
-                        itemCount: 10,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () => provider.onHourPressed(index),
-                            child: Card(
-                              color: provider.selectedHour == index ? Colors.black : Colors.white,
-                              child: ListTile(
-                                title: Text(
-                                  'Horario 0$index:00',
-                                  style: TextStyle(
-                                    color: provider.selectedHour == index ? Colors.white : Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    /// Calendar
+                    CalendarWidget(provider: provider),
+
+                    /// Hours List
+                    HoursList(provider: provider),
+
                     //BUTTON SAVE
                     ElevatedButton(
                       onPressed: () => provider.save(),
-                      child: Text('Save'),
+                      child: const Text('Save'),
                     ),
                   ],
                 ),
@@ -58,19 +47,28 @@ class BookingScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget calendar(BookingProvider controller) {
+class CalendarWidget extends StatelessWidget {
+  const CalendarWidget({
+    required this.provider,
+    super.key,
+  });
+
+  final BookingProvider provider;
+  @override
+  Widget build(BuildContext context) {
     return CalendarWeek(
-      height: 114,
+      height: 130,
       minDate: DateTime.now(),
       maxDate: DateTime.now().add(const Duration(days: 60)),
-      onDatePressed: (datetime) {
-        controller.onDatePressed(datetime);
+      onDatePressed: (dateTime) {
+        provider.onDatePressed(dateTime);
       },
       monthViewBuilder: (date) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text(
-          Strings.meses2[date.month - 1].toUpperCase(),
+          Strings.months[date.month - 1].toUpperCase(),
           style: const TextStyle(
             fontSize: 16,
             color: Colors.black,
@@ -89,21 +87,48 @@ class BookingScreen extends StatelessWidget {
       todayBackgroundColor: Colors.black.withOpacity(0.15),
       pressedDateBackgroundColor: Colors.black,
       backgroundColor: Colors.white.withOpacity(0),
-      dayOfWeek: const ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB', 'DOM'],
-      month: const [
-        'JANEIRO',
-        'FEVEREIRO',
-        'MARÇO',
-        'ABRIL',
-        'MAIO',
-        'JUNHO',
-        'JULHO',
-        'AGOSTO',
-        'SETEMBRO',
-        'OUTUBRO',
-        'NOVEMBRO',
-        'DEZEMBRO',
-      ],
+      month: Strings.months,
+    );
+  }
+}
+
+class HoursList extends StatelessWidget {
+  const HoursList({
+    required this.provider,
+    super.key,
+  });
+
+  final BookingProvider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 3,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: provider.bookingTimes.length,
+        itemBuilder: (context, index) {
+          final DateTime? time = provider.bookingTimes[index].time.toDateTime();
+
+          final bool isSelected = provider.selectedDate.hour == time?.hour &&
+              provider.selectedDate.minute == time?.minute;
+
+          return InkWell(
+            onTap: () => provider.onTimePressed(time),
+            child: Card(
+              color: isSelected ? Colors.black : Colors.white,
+              child: ListTile(
+                title: Text(
+                  provider.bookingTimes[index].time,
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
