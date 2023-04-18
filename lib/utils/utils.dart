@@ -34,3 +34,22 @@ String minutesToHours(int time, {int max = 120}) {
       (minutes > 0 ? '$minutes minutes' : '') +
       (time == max ? '+' : '');
 }
+
+List<String> getHalfHourIntervals() {
+  final List<String> intervals = [];
+  for (int i = 0; i < 48; i++) {
+    final int hour = i ~/ 2;
+    final int minute = (i % 2) * 30;
+    final String hourString = hour.toString().padLeft(2, '0');
+    final String minuteString = minute.toString().padLeft(2, '0');
+    final String timeString = '$hourString:$minuteString';
+    intervals.add(timeString);
+  }
+  return intervals;
+}
+
+String toStringTime(DateTime dateTime) {
+  final int hours = dateTime.hour;
+  final int minutes = dateTime.minute;
+  return '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes';
+}
