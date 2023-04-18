@@ -36,8 +36,7 @@ class AddServicePage extends StatelessWidget {
 
                   /// Price
                   SelectWidget(
-                    title:
-                        '${provider.anyServiceSelected ? provider.services[provider.indexSelected].name : 'Service'} Price: ${provider.price} EGP',
+                    title: '${provider.anyServiceSelected ? provider.services[provider.indexSelected].name : 'Service'} Price: ${provider.price} EGP',
                     value: provider.price,
                     maxValue: 1000,
                     divisions: 200,
@@ -191,8 +190,7 @@ class AllServices extends StatelessWidget {
           child: Semantics(
             button: true,
             child: GestureDetector(
-              onTap: () => provider
-                  .selectService(provider.services.indexOf(serviceModel)),
+              onTap: () => provider.selectService(provider.services.indexOf(serviceModel)),
               child: SizedBox(
                 width: 72,
                 child: Column(

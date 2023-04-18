@@ -3,6 +3,7 @@ class ServiceModel {
   final String name;
   final String image;
   final DateTime createAt;
+  bool isSelected = false;
 
   ServiceModel({
     required this.id,

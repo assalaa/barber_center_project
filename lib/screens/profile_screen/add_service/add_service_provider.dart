@@ -63,19 +63,17 @@ class AddServiceProvider extends ChangeNotifier {
 
       final ServiceModel serviceModel = services[indexSelected];
 
-      if (salonServiceModel.services.any((serviceDetailModel) =>
-          serviceDetailModel.serviceId == serviceModel.id)) {
-        final int index = salonServiceModel.services.indexWhere(
-            (serviceDetailModel) =>
-                serviceDetailModel.serviceId == serviceModel.id);
+      if (salonServiceModel.services.any((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id)) {
+        final int index = salonServiceModel.services.indexWhere((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id);
         salonServiceModel.services[index].price = price;
-        salonServiceModel.services[index].avgTime = avgTime;
+        salonServiceModel.services[index].avgTimeInMinutes = avgTime;
       } else {
         salonServiceModel.services.add(ServiceDetailModel(
           serviceId: serviceModel.id,
           price: price,
-          avgTime: avgTime,
+          avgTimeInMinutes: avgTime,
           createAt: DateTime.now(),
+          name: serviceModel.name,
         ));
       }
 
@@ -107,19 +105,16 @@ class AddServiceProvider extends ChangeNotifier {
   }
 
   void checkIfExist() {
-    final bool serviceExist = salonServiceModel.services
-        .any((element) => element.serviceId == services[indexSelected].id);
+    final bool serviceExist = salonServiceModel.services.any((element) => element.serviceId == services[indexSelected].id);
 
     if (!serviceExist) {
       price = 0;
       avgTime = 0;
       buttonText = 'Save';
     } else {
-      final ServiceDetailModel serviceDetailModel = salonServiceModel.services
-          .firstWhere(
-              (element) => element.serviceId == services[indexSelected].id);
+      final ServiceDetailModel serviceDetailModel = salonServiceModel.services.firstWhere((element) => element.serviceId == services[indexSelected].id);
       price = serviceDetailModel.price;
-      avgTime = serviceDetailModel.avgTime;
+      avgTime = serviceDetailModel.avgTimeInMinutes;
       buttonText = 'Update';
     }
     notifyListeners();

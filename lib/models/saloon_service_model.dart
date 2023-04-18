@@ -4,11 +4,24 @@ import 'package:flutter/material.dart';
 class SalonServiceModel {
   final String userId;
   List<ServiceDetailModel> services;
+  int durationInMin = 0;
+  double price = 0;
 
   SalonServiceModel({
     required this.userId,
     required this.services,
   });
+
+  void setPriceAndDuration() {
+    durationInMin = 0;
+    price = 0;
+    for (final service in services) {
+      if (service.selected) {
+        durationInMin += service.avgTimeInMinutes;
+        price += service.price;
+      }
+    }
+  }
 
   factory SalonServiceModel.fromJson(Map json) {
     debugPrint('SalonServiceModel.fromJson: $json');
