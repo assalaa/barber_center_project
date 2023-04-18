@@ -8,6 +8,7 @@ import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -87,16 +88,16 @@ class TabBarWidget extends StatelessWidget {
           )
         ],
       ),
-      child: const TabBar(
+      child: TabBar(
         tabs: [
-          Tab(text: 'Employee'),
-          Tab(text: 'Service'),
+          Tab(text: AppLocalizations.of(context)!.tab_employees),
+          Tab(text: AppLocalizations.of(context)!.tab_services),
         ],
         unselectedLabelColor: Styles.primaryColor,
         labelColor: Colors.white,
-        labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        indicator: ShapeDecoration(
+        labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        indicator: const ShapeDecoration(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
           color: Styles.primaryColor,
         ),
@@ -152,7 +153,7 @@ class ServiceSlider extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        final String text = addButton ? 'Add Service' : serviceModel?.name ?? '';
+        final String text = addButton ? AppLocalizations.of(context)!.add_service : serviceModel?.name ?? '';
         final String? image = serviceModel?.image;
 
         return ListItem(
@@ -190,7 +191,7 @@ class EmployeeSlider extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        final String text = addButton ? 'Add Employee' : employeeModel?.name ?? '';
+        final String text = addButton ? AppLocalizations.of(context)!.add_employees : employeeModel?.name ?? '';
         final String? image = employeeModel?.image;
 
         return ListItem(

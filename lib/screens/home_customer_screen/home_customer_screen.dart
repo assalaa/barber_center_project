@@ -1,12 +1,12 @@
 import 'package:barber_center/screens/home_customer_screen/home_screen_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
-import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/cards/featured_barbers.dart';
 import 'package:barber_center/widgets/cards/featured_salons.dart';
 import 'package:barber_center/widgets/section_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -100,9 +100,9 @@ class HomeCustomerScreen extends StatelessWidget {
                                 .toList()),
                       ),
                       Gap(AppLayout.getHeight(10)),
-                      const SectionHeader(
-                        sectionTitle: Strings.featuredBarbers,
-                        sectionSeeMore: Strings.seeMoreOption,
+                      SectionHeader(
+                        sectionTitle: AppLocalizations.of(context)!.featured_barbers,
+                        sectionSeeMore: AppLocalizations.of(context)!.see_more,
                       ),
                       Gap(AppLayout.getHeight(10)),
                       SingleChildScrollView(
@@ -126,7 +126,7 @@ class HomeCustomerScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            Strings.featuredSalons,
+                            AppLocalizations.of(context)!.featured_salons,
                             style: Styles.headLineStyle2,
                           ),
                           GestureDetector(
@@ -134,7 +134,7 @@ class HomeCustomerScreen extends StatelessWidget {
                               Routes.goTo(Routes.seeAllSalonsRoute);
                             },
                             child: Text(
-                              Strings.seeMoreOption,
+                              AppLocalizations.of(context)!.see_more,
                               style: Styles.headLineStyle4,
                             ),
                           )

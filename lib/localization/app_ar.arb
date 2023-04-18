@@ -10,6 +10,15 @@
   "pass": "أدخل كلمة السرٌ",
   "redirection_to_sig_up": "ليس لديك حساب؟",
   "call_to_sig_up": "إشترك",
-  "continue_btn": "تابع"
+  "continue_btn": "تابع",
+  "featured_barbers": "الحلاقين المشتركين",
+  "featured_salons": "الصالونات المشتركة",
+  "see_more": "خروج",
+  "settings": "الإعدادات",
+  "booking_history": "سجل الحجوزات",
+  "tab_services" :"الخدمات",
+  "tab_employees" :"الموظفين",
+  "add_employees" :"اضافة موظف",
+  "add_service" :"اضافة خدمة"
 
 }

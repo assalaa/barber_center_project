@@ -13,6 +13,16 @@
   "pass": "Enter your password",
   "redirection_to_sig_up": "You don't have an account?",
   "call_to_sig_up": "Sing up",
-  "continue_btn": "Continue"
+  "continue_btn": "Continue",
+  "featured_barbers": "Featured barbers",
+  "featured_salons": "Featured Salons",
+  "see_more": "See more",
+  "logout": "Logout",
+  "settings" :"Privacy settings",
+  "booking_history" :"Booking history",
+  "tab_services" :"Services",
+  "tab_employees" :"Employees",
+  "add_employees" :"Add Employee",
+  "add_service" :"Add Service"
 
 }

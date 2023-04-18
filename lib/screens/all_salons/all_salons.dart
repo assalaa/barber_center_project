@@ -17,15 +17,15 @@ class AllSalons extends StatelessWidget {
               actions: [],
             ),
             body: GridView.builder(
-              itemCount: provider.users.length,
+              itemCount: 1,
               itemBuilder: (context, index) => ListTile(
                   onTap: () {},
-                  title: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  title: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: FeaturedBarber(
-                      barberName: provider.users[index].name,
-                      barberImage: provider.users[index].image,
-                      barberLocation: provider.users[index].city,
+                      barberName: "",
+                      barberImage: "",
+                      barberLocation: "",
                     ),
                   )),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

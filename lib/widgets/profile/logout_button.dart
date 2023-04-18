@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
+import 'package:barber_center/utils/app_styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({
@@ -12,15 +13,15 @@ class LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String logoutText = 'Logout';
+    var logoutText = AppLocalizations.of(context)!.logout;
 
     return TextButton(
       onPressed: () {
         provider.logout();
       },
-      child: const Text(
+      child: Text(
         logoutText,
-        style: TextStyle(
+        style: const TextStyle(
           color: Styles.primaryColor,
           fontWeight: FontWeight.bold,
           fontSize: 16,
