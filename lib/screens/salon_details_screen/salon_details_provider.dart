@@ -10,8 +10,6 @@ class SalonDetailsProvider with ChangeNotifier {
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
   late UserModel salon;
   late SalonServiceModel salonService;
-  int durationInMin = 0;
-  double price = 0;
 
   bool loading = true;
 
@@ -61,18 +59,7 @@ class SalonDetailsProvider with ChangeNotifier {
   }
 
   bool hasItemSelected() {
-    setDurationItemsSelected();
+    salonService.setPriceAndDuration();
     return salonService.services.any((element) => element.selected);
-  }
-
-  void setDurationItemsSelected() {
-    durationInMin = 0;
-    price = 0;
-    for (final element in salonService.services) {
-      if (element.selected) {
-        durationInMin += element.avgTimeInMinutes;
-        price += element.price;
-      }
-    }
   }
 }

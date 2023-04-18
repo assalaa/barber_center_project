@@ -166,7 +166,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: '${provider.durationInMin} minutes',
+                                            text: '${provider.salonService.durationInMin} minutes',
                                             style: Styles.textStyle.copyWith(
                                               fontSize: 20,
                                               color: Styles.primaryColor,
@@ -175,7 +175,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                           ),
                                           const TextSpan(text: '\nPrice:'),
                                           TextSpan(
-                                            text: ' \$${provider.price}',
+                                            text: ' \$${provider.salonService.price}',
                                             style: Styles.textStyle.copyWith(
                                               fontSize: 20,
                                               color: Styles.primaryColor,
