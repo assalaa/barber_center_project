@@ -16,74 +16,57 @@ class FeaturedSalons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: AppLayout.getWidth(200),
-        height: AppLayout.getHeight(230),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
+      width: AppLayout.getWidth(200),
+      height: AppLayout.getHeight(230),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+        borderRadius: BorderRadius.circular(12),
+        color: Styles.brightTextColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: const EdgeInsets.all(8),
+            width: AppLayout.getWidth(170),
+            height: AppLayout.getHeight(120),
+            decoration: BoxDecoration(
+              image: image != null
+                  ? DecorationImage(
+                      image: NetworkImage(image!),
+                      fit: BoxFit.fill,
+                    )
+                  : null,
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.green,
             ),
-          ],
-          borderRadius: BorderRadius.circular(12),
-          color: Styles.brightTextColor,
-        ),
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(8),
-              width: AppLayout.getWidth(170),
-              height: AppLayout.getHeight(120),
-              decoration: BoxDecoration(
-                image: image != null
-                    ? DecorationImage(
-                        image: NetworkImage(image!),
-                        fit: BoxFit.fill,
-                      )
-                    : null,
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.green,
-              ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: Styles.headLineStyle3
+                      .copyWith(fontWeight: FontWeight.bold, color: Styles.darkTextColor),
+                ),
+                Text(
+                  location,
+                ),
+              ],
             ),
-            Container(
-              margin: const EdgeInsets.all(8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Styles.darkTextColor),
-                  ),
-                  Text(
-                    location,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'open',
-                        style: Styles.textStyle.copyWith(color: Colors.green),
-                      ),
-                      Row(
-                        children: const [
-                          Icon(
-                            Icons.star_border,
-                            color: Styles.primaryColor,
-                          ),
-                          Text(
-                            '4.2',
-                          )
-                        ],
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 }
