@@ -13,6 +13,7 @@ import 'package:barber_center/screens/profile_screen/add_service/add_service_scr
 import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
 import 'package:barber_center/screens/profile_screen/saloon_profile_screen.dart';
 import 'package:barber_center/screens/salon_details_screen/salon_details_screen.dart';
+import 'package:barber_center/screens/salon_options_screen/salon_options_screen.dart';
 import 'package:barber_center/screens/splash_screen/splash_screen.dart';
 import 'package:barber_center/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class Routes {
   static const String splashRoute = '/splash';
   static const String welcomeRoute = '/';
   static const String createAccountRoute = '/create_account';
+  static const String salonOptionsRoute = '/salon_options';
   static const String loginRoute = '/login';
   static const String homeCustomerRoute = '/home_customer';
   static const String homeSalonRoute = '/home_salon';
@@ -44,7 +46,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
       case salonDetailsRoute:
-        return MaterialPageRoute(builder: (_) => SalonDetailsScreen(uid: args as String));
+        return MaterialPageRoute(
+            builder: (_) => SalonDetailsScreen(uid: args as String));
       case customerProfileRoute:
         return MaterialPageRoute(builder: (_) => const CustomerProfileScreen());
       case saloonProfileRoute:
@@ -54,9 +57,15 @@ class Routes {
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
-        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) =>
+                CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+      case salonOptionsRoute:
+        return MaterialPageRoute(
+            builder: (_) => SalonOptionsScreen(salonId: args as String));
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case homeCustomerRoute:
@@ -66,7 +75,9 @@ class Routes {
       case homeBarberRoute:
         return MaterialPageRoute(builder: (_) => const HomeBarberScreen());
       case bookingRoute:
-        return MaterialPageRoute(builder: (_) => BookingScreen(salonService: args as SalonServiceModel));
+        return MaterialPageRoute(
+            builder: (_) =>
+                BookingScreen(salonService: args as SalonServiceModel));
       //ADMIN PAGES
       case homeAdminRoute:
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());

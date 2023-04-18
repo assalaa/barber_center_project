@@ -41,10 +41,7 @@ class MyApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(18.0),
-            borderSide: const BorderSide(
-              color: Styles.primaryColor,
-              width: 2,
-            ),
+            borderSide: const BorderSide(color: Styles.primaryColor, width: 2),
           ),
         ),
         iconButtonTheme: IconButtonThemeData(
