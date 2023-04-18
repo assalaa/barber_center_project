@@ -24,23 +24,25 @@ class LoginScreen extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                title: Row(
-                  children: [
-                    Text(
-                      '${Strings.signIn} as',
-                      style: Styles.headLineStyle3,
-                    ),
-                    Text(
-                      kindOfUser == KindOfUser.CUSTOMER ? Strings.asCustomer : Strings.asSalon,
-                      style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: RichText(
+                text: TextSpan(
+                  text: '${Strings.signIn} as ',
+                  style: Styles.headLineStyle1,
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: kindOfUser == KindOfUser.SALON ? Strings.asSalon : Strings.asCustomer,
+                      style: Styles.headLineStyle1.copyWith(color: Styles.primaryColor),
                     ),
                   ],
-                )),
+                ),
+              ),
+            ),
             body: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
                 child: Column(
                   children: [
                     Gap(AppLayout.getHeight(10)),
@@ -124,7 +126,8 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Routes.goTo(Routes.createAccountRoute, args: kindOfUser, enableBack: true);
+                                      Routes.goTo(Routes.createAccountRoute,
+                                          args: kindOfUser, enableBack: true);
                                     },
                                 )
                               ],
