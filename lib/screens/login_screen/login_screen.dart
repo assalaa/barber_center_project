@@ -24,13 +24,20 @@ class LoginScreen extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: Text(
-                Strings.signup,
-                style: Styles.headLineStyle3,
-              ),
-            ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                title: Row(
+                  children: [
+                    Text(
+                      '${Strings.signIn} as',
+                      style: Styles.headLineStyle3,
+                    ),
+                    Text(
+                      kindOfUser == KindOfUser.CUSTOMER ? Strings.asCustomer : Strings.asSalon,
+                      style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
+                    ),
+                  ],
+                )),
             body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
