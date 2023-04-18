@@ -10,15 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-class CreateAccountScreen extends StatefulWidget {
+class CreateAccountScreen extends StatelessWidget {
+  const CreateAccountScreen({required this.kindOfUser, super.key});
+
   final KindOfUser kindOfUser;
-  const CreateAccountScreen({required this.kindOfUser, Key? key}) : super(key: key);
 
-  @override
-  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
-}
-
-class _CreateAccountScreenState extends State<CreateAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<CreateAccountController>(
@@ -33,7 +29,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             ),
             body: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppLayout.getWidth(20),
+                    vertical: AppLayout.getHeight(32)),
                 child: Center(
                   //HEADER
                   child: Column(
@@ -91,13 +89,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 inputFormatters: TextInputFormatters.denySpaces,
                                 decoration: InputDecoration(
                                   suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      /**
-                                       * NEEDS TO BE CHANGED INSIDE THE PROVIDER*/
-                                      setState(() {
-                                        provider.visiblePassword = !provider.visiblePassword;
-                                      });
-                                    },
+                                    onTap: provider.obscurePass,
                                     child: const Icon(Icons.remove_red_eye),
                                   ),
                                   hintText: Strings.passwordInput,
@@ -111,7 +103,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 keyboardType: TextInputType.streetAddress,
                                 textInputAction: TextInputAction.done,
                                 onEditingComplete: () async {
-                                  await provider.saveUser(widget.kindOfUser);
+                                  await provider.saveUser(kindOfUser);
                                 },
                                 decoration: const InputDecoration(
                                   hintText: Strings.addressInput,
@@ -122,7 +114,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                 loading: provider.loading,
                                 buttonName: Strings.continueBtn,
                                 onTap: () async {
-                                  await provider.saveUser(widget.kindOfUser);
+                                  await provider.saveUser(kindOfUser);
                                 },
                               ),
                               Gap(AppLayout.getHeight(30)),
