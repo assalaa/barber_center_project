@@ -146,7 +146,10 @@ class HomeCustomerScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(8.0),
                                       child: GestureDetector(
                                         onTap: () {
-                                          Routes.goTo(Routes.salonDetailsRoute);
+                                          Routes.goTo(
+                                            Routes.salonDetailsRoute,
+                                            enableBack: true,
+                                          );
                                         },
                                         child: FeaturedSalons(
                                           name: user.name,
