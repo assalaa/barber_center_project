@@ -1,5 +1,4 @@
 import 'package:barber_center/models/saloon_service_details_model.dart';
-import 'package:flutter/material.dart';
 
 class SalonServiceModel {
   final String salonId;
@@ -24,7 +23,6 @@ class SalonServiceModel {
   }
 
   factory SalonServiceModel.fromJson(Map json) {
-    debugPrint('SalonServiceModel.fromJson: $json');
     return SalonServiceModel(
       salonId: json['userId'],
       services: List<ServiceDetailModel>.from(

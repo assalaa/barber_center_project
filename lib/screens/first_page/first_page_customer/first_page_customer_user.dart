@@ -1,3 +1,4 @@
+import 'package:barber_center/screens/booking_story/booking_story_page.dart';
 import 'package:barber_center/screens/home_customer_screen/home_customer_screen.dart';
 import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -15,7 +16,7 @@ class _BottomBarState extends State<FirstPageCustomerUser> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeCustomerScreen(),
-    const Text('data'),
+    const BookingStoryCustomerScreen(),
     const CustomerProfileScreen(),
   ];
 
