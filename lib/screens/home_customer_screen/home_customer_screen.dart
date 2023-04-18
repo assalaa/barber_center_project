@@ -80,7 +80,7 @@ class HomeCustomerScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 20),
                         scrollDirection: Axis.horizontal,
                         child: Row(
-                            children: provider.users
+                            children: provider.salons
                                 .map((user) => Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: GestureDetector(
