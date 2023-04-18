@@ -35,7 +35,6 @@ class Routes {
   static const String saloonProfileRoute = '/profile_saloon';
   static const String addEmployeeRoute = '/add_employee';
   static const String addServiceRoute = '/add_service';
-  //bookingScreen
   static const String bookingRoute = '/booking';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {

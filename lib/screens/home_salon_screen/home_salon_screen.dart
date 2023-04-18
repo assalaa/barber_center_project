@@ -34,6 +34,11 @@ class HomeSalonScreen extends StatelessWidget {
                         onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
                       ),
                     ],
+                    if (!provider.hasServices()) ...[
+                      CompleteProfileWidget(
+                        onPressed: () => Routes.goTo(Routes.addServiceRoute, enableBack: true),
+                      ),
+                    ],
                   ]
                 ],
               ),

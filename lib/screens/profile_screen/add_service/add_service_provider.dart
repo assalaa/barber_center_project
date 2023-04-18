@@ -83,7 +83,8 @@ class AddServiceProvider extends ChangeNotifier {
 
       showMessageSuccessful('Service is successfully added');
 
-      Routes.back();
+      Routes.goTo(Routes.splashRoute);
+
       loading = false;
       notifyListeners();
     }
