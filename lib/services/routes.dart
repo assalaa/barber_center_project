@@ -36,8 +36,8 @@ class Routes {
   static const String saloonProfileRoute = '/profile_saloon';
   static const String addEmployeeRoute = '/add_employee';
   static const String addServiceRoute = '/add_service';
-  //bookingScreen
   static const String bookingRoute = '/booking';
+  static const String allSalonsRoute = '/all_salons';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -47,8 +47,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
       case salonDetailsRoute:
-        return MaterialPageRoute(
-            builder: (_) => SalonDetailsScreen(uid: args as String));
+        return MaterialPageRoute(builder: (_) => SalonDetailsScreen(uid: args as String));
       case customerProfileRoute:
         return MaterialPageRoute(builder: (_) => const CustomerProfileScreen());
       case saloonProfileRoute:
@@ -59,14 +58,11 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
         return MaterialPageRoute(
-            builder: (_) =>
-                CreateAccountScreen(kindOfUser: args as KindOfUser));
+            builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
-        return MaterialPageRoute(
-            builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case salonOptionsRoute:
-        return MaterialPageRoute(
-            builder: (_) => SalonOptionsScreen(salonId: args as String));
+        return MaterialPageRoute(builder: (_) => const SalonOptionsScreen());
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case homeCustomerRoute:
@@ -86,6 +82,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
       case createServiceRoute:
         return MaterialPageRoute(builder: (_) => const CreateServicePage());
+
       default:
         return _errorRoute();
     }

@@ -9,10 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BookingProvider extends ChangeNotifier {
-  final DBAuth _dbAuth = DBAuth();
+  final SalonServiceModel salonService;
+  final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseBooking _dbBooking = DatabaseBooking();
 
-  final SalonServiceModel salonService;
   final SalonInformationModel salonInformationModel;
   List<BookingModel> bookings = [];
   List<BookingTimeModel> bookingTimes = [];

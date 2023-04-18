@@ -51,34 +51,28 @@ class SalonDetailsScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
-                                  width: AppLayout.getHeight(50),
-                                  height: AppLayout.getWidth(50),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      color: Styles.greyColor.withOpacity(0.4)),
-                                  child: Center(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Routes.back();
-                                      },
-                                      child: const Icon(
-                                        Icons.arrow_back_ios,
-                                        color: Styles.brightTextColor,
+                                Material(
+                                  color: Styles.greyColor.withOpacity(0.4),
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(100),
+                                    onTap: () {
+                                      Routes.back();
+                                    },
+                                    child: Container(
+                                      width: AppLayout.getHeight(50),
+                                      height: AppLayout.getWidth(50),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(100),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: AppLayout.getHeight(50),
-                                  height: AppLayout.getWidth(50),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      color: Styles.greyColor.withOpacity(0.4)),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.favorite,
-                                      color: Styles.brightTextColor,
+                                      child: const Padding(
+                                        padding: EdgeInsets.only(left: 8.0),
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          color: Styles.brightTextColor,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

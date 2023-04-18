@@ -1,5 +1,5 @@
 class Strings {
-  static const String appName = 'Barber Center';
+  static const String appName = 'Salounak';
   //BUTTONS
   static const String skipBtn = 'Skip';
   static const String adminBtn = 'Admin space';

@@ -16,7 +16,6 @@ class _BottomBarState extends State<FirstPageCustomerUser> {
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeCustomerScreen(),
     const Text('data'),
-    const Text('data'),
     const CustomerProfileScreen(),
   ];
 
@@ -40,10 +39,22 @@ class _BottomBarState extends State<FirstPageCustomerUser> {
         type: BottomNavigationBarType.fixed,
         unselectedItemColor: Styles.greyColor,
         items: const [
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_home_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_book_formula_information_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_book_formula_compatibility_filled), label: 'Book'),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_premium_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_premium_filled), label: 'VIP'),
-          BottomNavigationBarItem(icon: Icon(FluentSystemIcons.ic_fluent_person_regular), activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled), label: 'Profile'),
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
+              activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
+              label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_book_formula_information_regular),
+              activeIcon: Icon(FluentSystemIcons.ic_fluent_book_formula_compatibility_filled),
+              label: 'Book'),
+          // BottomNavigationBarItem(
+          //     icon: Icon(FluentSystemIcons.ic_fluent_premium_regular),
+          //     activeIcon: Icon(FluentSystemIcons.ic_fluent_premium_filled),
+          //     label: 'VIP'),
+          BottomNavigationBarItem(
+              icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
+              activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
+              label: 'Profile'),
         ],
       ),
     );
