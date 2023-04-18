@@ -3,13 +3,13 @@ description: A new Flutter project.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.1+2
 #flutter build appbundle
-  # arch -x86_64 pod install
-  # arch -x86_64 pod update
-  # flutter build apk --split-per-abi
-  # flutter pub run flutter_launcher_icons
-  # flutter build web
+# arch -x86_64 pod install
+# arch -x86_64 pod update
+# flutter build apk --split-per-abi
+# flutter pub run flutter_launcher_icons
+# flutter build web
 # firebase deploy
 
 environment:
