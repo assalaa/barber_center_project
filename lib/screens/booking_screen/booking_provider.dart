@@ -4,6 +4,7 @@ import 'package:barber_center/models/booking_model.dart';
 import 'package:barber_center/models/booking_time_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
+import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,36 +18,68 @@ class BookingProvider extends ChangeNotifier {
   List<BookingModel> bookings = [];
   List<BookingTimeModel> bookingTimes = [];
 
+  List<String> workingTimes = [];
+
   DateTime selectedDate = DateTime.now();
   bool timeSelected = false;
 
-  BookingProvider(this.salonService, this.salonInformationModel) {
+  bool loading = true;
+
+  BookingProvider(
+    this.salonService,
+    this.salonInformationModel,
+  ) {
     _init();
   }
 
   Future<void> _init() async {
+    setWorkingTimes();
     await getBookingsByDateTime(selectedDate);
+    loading = false;
     notifyListeners();
   }
 
   void verifyStatus() {
-    print('bookings of today: ');
     for (final booking in bookings) {
-      print('booking date: ' + booking.date.toString());
-      print('duration:' + booking.getDurationInMinutes().toString());
-      
+      for (final element in bookingTimes) {
+        final String hour =
+            '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
+
+        final String hour2 =
+            '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
+
+        final int minutesUsed = booking.getDurationInMinutes();
+        int card = minutesUsed ~/ 30;
+
+        if (minutesUsed % 30 == 0) {
+          card--;
+        }
+
+        if (hour2 == hour) {
+          if (card > 0) {
+            final int index = bookingTimes.indexOf(element);
+            for (int i = 0; i <= card; i++) {
+              bookingTimes[index + i].available = false;
+            }
+          }
+          element.available = false;
+        }
+      }
     }
   }
 
-  void calculateBookingTimes() {
+  void setWorkingTimes() {
     final DateTime openTime = salonInformationModel.openTime;
     final DateTime closeTime = salonInformationModel.closeTime;
 
-    final List<String> times = getHalfHourIntervals(openTime, closeTime);
+    workingTimes = getHalfHourIntervals(openTime, closeTime);
+    notifyListeners();
+  }
 
+  void setBookingTimes() {
     bookingTimes = List.generate(
-      times.length - 1,
-      (index) => BookingTimeModel(time: times[index], available: true),
+      workingTimes.length - 1,
+      (index) => BookingTimeModel(time: workingTimes[index], available: true),
     );
     notifyListeners();
   }
@@ -54,7 +87,7 @@ class BookingProvider extends ChangeNotifier {
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
     bookings = await _dbBooking.getBookingFromSalonInDay(
         salonService.salonId, dateTime);
-    calculateBookingTimes();
+    setBookingTimes();
     verifyStatus();
     notifyListeners();
   }
@@ -64,17 +97,26 @@ class BookingProvider extends ChangeNotifier {
       showMessageError('Please select time');
       return;
     }
+    loading = true;
+    notifyListeners();
     final now = DateTime.now();
     final User user = _dbAuth.getCurrentUser()!;
     final BookingModel bookingModel = BookingModel(
       id: dateToId(now),
+      salonName: salonService.services[0].name,
       userId: user.uid,
       salonId: salonService.salonId,
       createAt: now,
       date: selectedDate,
       services: salonService.services,
     );
-    _dbBooking.creatingBooking(bookingModel);
+    await _dbBooking.creatingBooking(bookingModel);
+    showMessageSuccessful('Booking successful');
+
+    loading = false;
+    notifyListeners();
+
+    Routes.goTo(Routes.splashRoute);
   }
 
   void onDatePressed(DateTime dateTime) {
@@ -92,7 +134,7 @@ class BookingProvider extends ChangeNotifier {
         millisecond: 0,
         microsecond: 0,
       );
-      debugPrint('selectedDate: $selectedDate');
+      // debugPrint('selectedDate: $selectedDate');
       notifyListeners();
     }
   }

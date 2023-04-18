@@ -10,7 +10,9 @@ class SalonOptionsProvider with ChangeNotifier {
   final DatabaseSalon _dbSalonInformation = DatabaseSalon();
   final DatabaseAuth _dbAuth = DatabaseAuth();
   late SalonInformationModel salonInformationModel;
-  TextEditingController tcAddress = TextEditingController();
+  final TextEditingController tcAddress = TextEditingController();
+  TextEditingController tcName = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   bool loading = false;
   late String userId;
 
@@ -21,6 +23,7 @@ class SalonOptionsProvider with ChangeNotifier {
     salonInformationModel = SalonInformationModel(
         salonId: userId,
         address: '',
+        salonName: '',
         chairs: 1,
         openTime: DateTime(now.year).copyWith(hour: 9),
         closeTime: DateTime(now.year).copyWith(hour: 17));
@@ -58,8 +61,8 @@ class SalonOptionsProvider with ChangeNotifier {
   }
 
   bool check() {
-    if (tcAddress.text.isEmpty) {
-      showMessageError('Please enter address');
+    if (!formKey.currentState!.validate()) {
+      showMessageError('Please fill all the fields');
     } else if (salonInformationModel.closeTime.isBefore(salonInformationModel.openTime)) {
       showMessageError('Closing time cannot be before than opening time');
     } else {
@@ -71,7 +74,7 @@ class SalonOptionsProvider with ChangeNotifier {
   Future<void> save() async {
     if (check()) {
       salonInformationModel.address = tcAddress.text;
-
+      salonInformationModel.salonName = tcName.text;
       await _dbSalonInformation.createSalonInfo(salonInformationModel);
       showMessageSuccessful('Saved');
 

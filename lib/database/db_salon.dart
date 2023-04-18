@@ -14,7 +14,7 @@ class DatabaseSalon {
 
   Future<bool> isProfileCompleted(String uid) async {
     final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(uid).get();
-    final Map map = snapshot.data() as Map;
+    final Map map = (snapshot.data() ?? {}) as Map;
     return map.isNotEmpty;
   }
 
