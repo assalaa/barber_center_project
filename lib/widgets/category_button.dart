@@ -16,7 +16,7 @@ class CategoryButton extends StatelessWidget {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         foregroundColor: Colors.black87,
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        padding: EdgeInsets.zero,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(100)),
         ),

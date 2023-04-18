@@ -34,7 +34,7 @@ class BookingModel {
     );
   }
 
-  Map toJson() => {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'userId': userId,
         'salonId': salonId,
