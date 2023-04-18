@@ -28,36 +28,37 @@ class SaloonProfileScreen extends StatelessWidget {
                 toolbarHeight: 0,
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
               ),
-              body: Column(
-                children: [
-                  if (provider.loading) ...[
-                    const Center(child: CircularProgressIndicator()),
-                  ] else ...[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          LogoutButton(provider: provider),
-                          const SizedBox(height: 32),
-                          ProfilePicture(provider: provider),
-                          const SizedBox(height: 22),
-                          FullName(fullName: provider.userModel.name),
-                          const SizedBox(height: 10),
-                          LocationInfo(location: provider.userModel.city),
-                          const SizedBox(height: 60),
-                          const TabBarWidget(),
-                          const Gap(64),
-                          EmployeesAndServices(
-                            employees: provider.employees,
-                            services: provider.services,
-                          ),
-                        ],
-                      ),
+              body: (() {
+                if (provider.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LogoutButton(provider: provider),
+                        const SizedBox(height: 32),
+                        ProfilePicture(provider: provider),
+                        const SizedBox(height: 22),
+                        FullName(fullName: provider.userModel.name),
+                        const SizedBox(height: 10),
+                        LocationInfo(location: provider.userModel.city),
+                        const SizedBox(height: 60),
+                        const TabBarWidget(),
+                        const Gap(64),
+                        EmployeesAndServices(
+                          employees: provider.employees,
+                          services: provider.services,
+                        ),
+                      ],
                     ),
-                  ]
-                ],
-              ),
+                  ),
+                ]);
+              }()),
             ),
           );
         },
@@ -89,15 +90,16 @@ class TabBarWidget extends StatelessWidget {
       ),
       child: const TabBar(
         tabs: [
-          Tab(text: 'Employee'),
           Tab(text: 'Service'),
+          Tab(text: 'Employee'),
         ],
         unselectedLabelColor: Styles.primaryColor,
         labelColor: Colors.white,
         labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
         indicator: ShapeDecoration(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16))),
           color: Styles.primaryColor,
         ),
       ),
@@ -120,8 +122,8 @@ class EmployeesAndServices extends StatelessWidget {
       height: 120,
       child: TabBarView(
         children: [
-          EmployeeSlider(employees: employees),
           ServiceSlider(services: services),
+          EmployeeSlider(employees: employees),
         ],
       ),
     );
@@ -146,13 +148,15 @@ class ServiceSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final ServiceModel? serviceModel = !addButton ? (services?[index - 1]) : null;
+        final ServiceModel? serviceModel =
+            !addButton ? (services?[index - 1]) : null;
 
         if (serviceModel == null && !addButton) {
           return const SizedBox.shrink();
         }
 
-        final String text = addButton ? 'Add Service' : serviceModel?.name ?? '';
+        final String text =
+            addButton ? 'Add Service' : serviceModel?.name ?? '';
         final String? image = serviceModel?.image;
 
         return ListItem(
@@ -184,13 +188,15 @@ class EmployeeSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final EmployeeModel? employeeModel = !addButton ? (employees?[index - 1]) : null;
+        final EmployeeModel? employeeModel =
+            !addButton ? (employees?[index - 1]) : null;
 
         if (employeeModel == null && !addButton) {
           return const SizedBox.shrink();
         }
 
-        final String text = addButton ? 'Add Employee' : employeeModel?.name ?? '';
+        final String text =
+            addButton ? 'Add Employee' : employeeModel?.name ?? '';
         final String? image = employeeModel?.image;
 
         return ListItem(
@@ -234,7 +240,10 @@ class ListItem extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        image: image == null ? null : DecorationImage(image: NetworkImage(image!), fit: BoxFit.cover),
+                        image: image == null
+                            ? null
+                            : DecorationImage(
+                                image: NetworkImage(image!), fit: BoxFit.cover),
                       ),
                     ),
                   ),
@@ -270,7 +279,8 @@ class AddButton extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(
-            decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(
+                color: Colors.grey, borderRadius: BorderRadius.circular(16)),
             child: const Center(
               child: Icon(
                 Icons.add,

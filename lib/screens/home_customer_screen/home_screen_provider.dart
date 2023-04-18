@@ -1,43 +1,36 @@
 import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/database/db_services.dart';
-import 'package:barber_center/main.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenProvider with ChangeNotifier {
-  final DatabaseUser _databaseUser = DatabaseUser();
-  final DatabaseService _databaseService = DatabaseService();
-  late List<UserModel> users = [];
+  final DatabaseUser _dbUsers = DatabaseUser();
+  final DatabaseService _dbServices = DatabaseService();
+  late List<UserModel> salons = [];
   late List<ServiceModel> services = [];
-  late KindOfUser kindOfUser;
-
-  bool loading = false;
+  bool loading = true;
 
   HomeScreenProvider() {
-    fetchSalons();
-    fetchServices();
+    init();
   }
 
-  Future<void> fetchSalons() async {
-    loading = true;
-    notifyListeners();
-    try {
-      if (kindOfUser == KindOfUser.SALON) {
-        users = await _databaseUser.getUser();
-      }
-    } catch (e) {
-      debugPrint(e.toString());
+  Future<void> getSalons() async {
+    salons = await _dbUsers.getSalons();
+    for (final UserModel element in salons) {
+      debugPrint(element.print());
     }
-
-    loading = false;
-    notifyListeners();
   }
 
-  Future<void> fetchServices() async {
-    loading = true;
-    notifyListeners();
-    services = await _databaseService.getServices();
+  Future<void> getServices() async {
+    services = await _dbServices.getServices();
+  }
+
+  Future<void> init() async {
+    await Future.wait([
+      getSalons(),
+      getServices(),
+    ]);
     loading = false;
     notifyListeners();
   }
