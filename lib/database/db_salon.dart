@@ -28,4 +28,13 @@ class DatabaseSalon {
       return salonInformationModel;
     });
   }
+
+  Future<List<SalonInformationModel>> getSalonsInformation() async {
+    final QuerySnapshot snapshot = await _firestore.collection(_path).get();
+    final List<SalonInformationModel> list = [];
+    for (final doc in snapshot.docs) {
+      list.add(SalonInformationModel.fromJson(doc.data() as Map));
+    }
+    return list;
+  }
 }

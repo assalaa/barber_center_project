@@ -33,4 +33,13 @@ class DatabaseSalonService {
       await ref.set(salonServiceModel.toJson());
     }
   }
+
+  Future<List<SalonServiceModel>> getAllSalonServices() async {
+    final QuerySnapshot snapshot = await _firestore.collection(_path).get();
+    final List<SalonServiceModel> list = [];
+    for (final doc in snapshot.docs) {
+      list.add(SalonServiceModel.fromJson(doc.data() as Map));
+    }
+    return list;
+  }
 }

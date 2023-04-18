@@ -16,7 +16,7 @@ class ServiceDetailModel {
 
   factory ServiceDetailModel.fromJson(Map json) => ServiceDetailModel(
         serviceId: json['serviceId'],
-        name: json['name'],
+        name: json['name'] ?? '',
         price: json['price'],
         avgTimeInMinutes: json['avgTime'],
         createAt: DateTime.parse(json['createAt']),

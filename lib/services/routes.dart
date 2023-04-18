@@ -61,7 +61,7 @@ class Routes {
       case loginRoute:
         return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case salonOptionsRoute:
-        return MaterialPageRoute(builder: (_) => SalonOptionsScreen());
+        return MaterialPageRoute(builder: (_) => const SalonOptionsScreen());
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case homeCustomerRoute:
