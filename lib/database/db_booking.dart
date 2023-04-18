@@ -1,5 +1,4 @@
 import 'package:barber_center/models/booking_model.dart';
-import 'package:barber_center/models/service_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -11,46 +10,37 @@ class DatabaseBooking {
     await _firestore.collection(_path).doc(bookingModel.id).set(bookingModel.toJson());
   }
 
-  Future<List<ServiceModel>> getServices() async {
-    final List<ServiceModel> services = [];
-
-    try {
-      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore.collection(_path).get();
-      for (final doc in querySnapshot.docs) {
-        services.add(ServiceModel.fromJson(doc.data()));
-      }
-    } catch (e) {
-      debugPrint('ERROR: $e');
-    }
-
-    return services;
-  }
-
-  Future<ServiceModel?> getServiceById(String id) async {
+  Future<BookingModel?> getBookingById(String id) async {
     final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(id).get();
     final Map map = snapshot.data() as Map;
-    final ServiceModel service = ServiceModel.fromJson(map);
-    return service;
+    final BookingModel bookingModel = BookingModel.fromJson(map);
+    return bookingModel;
   }
 
-  Future<List<ServiceModel>> getMultipleServicesByIds(List<String> serviceIds) async {
-    final List<ServiceModel> services = [];
+  Future<void> updateBooking(BookingModel bookingModel) async {
+    await _firestore.collection(_path).doc(bookingModel.id).update(bookingModel.toJson());
+  }
 
+  Future<List<BookingModel>> getBookingFromSalonInDay(String salonId, DateTime day) async {
+    final List<BookingModel> booking = [];
+    final DateTime start = DateTime(day.year, day.month, day.day, 0, 0, 0);
+    final DateTime end = DateTime(day.year, day.month, day.day, 23, 59, 59);
     try {
-      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore.collection(_path).where('id', whereIn: serviceIds).get();
-
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
+          .collection(_path)
+          .where('date', isLessThanOrEqualTo: end)
+          .where('date', isGreaterThanOrEqualTo: start)
+          .get();
       for (final doc in querySnapshot.docs) {
-        debugPrint(doc.id);
-        services.add(ServiceModel.fromJson(doc.data()));
+        booking.add(BookingModel.fromJson(doc.data()));
+      }
+      for (final element in booking) {
+        print(element.print());
       }
     } catch (e) {
       debugPrint('ERROR: $e');
     }
 
-    return services;
-  }
-
-  Future<void> updateService(ServiceModel serviceModel) async {
-    await _firestore.collection(_path).doc(serviceModel.id).update(serviceModel.toJson());
+    return booking;
   }
 }

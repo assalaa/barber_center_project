@@ -32,4 +32,19 @@ class Strings {
   static const String services = 'Services';
   static const String featuredBarbers = 'Featured barbers';
   static const String featuredSalons = 'Featured salons';
+
+  static const List<String> meses2 = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novovembro',
+    'Dezembro'
+  ];
 }

@@ -33,7 +33,7 @@ class SalonDetailsProvider with ChangeNotifier {
   Future<void> getSalonService(String uid) async {
     salonService = await _dbSalonService.getServicesByUserId(uid);
     salonService = SalonServiceModel(
-      userId: salonService.userId,
+      salonId: salonService.salonId,
       services: [
         ServiceDetailModel(
           serviceId: '1',
