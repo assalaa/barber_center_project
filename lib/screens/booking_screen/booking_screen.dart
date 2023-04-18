@@ -3,9 +3,12 @@ import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
 import 'package:barber_center/utils/app_strings.dart';
+import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
+import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class BookingScreen extends StatelessWidget {
@@ -27,24 +30,58 @@ class BookingScreen extends StatelessWidget {
               appBar: AppBar(
                 title: const Text('Booking'),
               ),
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    /// Calendar
-                    CalendarWidget(provider: provider),
-
-                    /// Hours List
-                    HoursList(provider: provider),
-
-                    //BUTTON SAVE
-                    ElevatedButton(
-                      onPressed: () => provider.save(),
-                      child: const Text('Save'),
+              body: Column(
+                children: [
+                  /// Calendar
+                  CalendarWidget(provider: provider),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          /// Hours List
+                          HoursList(provider: provider),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  //BUTTON SAVE
+
+                  SaveButton(
+                    onPressed: provider.save,
+                    loading: provider.loading,
+                  ),
+                  const Gap(16),
+                ],
               ));
         },
+      ),
+    );
+  }
+}
+
+class SaveButton extends StatelessWidget {
+  const SaveButton({
+    required this.onPressed,
+    required this.loading,
+    super.key,
+  });
+
+  final Function() onPressed;
+  final bool loading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          LargeRoundedButton(
+            buttonName: 'Save',
+            onTap: onPressed,
+            loading: loading,
+          ),
+        ],
       ),
     );
   }
@@ -60,7 +97,7 @@ class CalendarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CalendarWeek(
-      height: 130,
+      height: 120,
       minDate: DateTime.now(),
       maxDate: DateTime.now().add(const Duration(days: 60)),
       onDatePressed: (dateTime) {
@@ -104,33 +141,41 @@ class HoursList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 3,
+      width: MediaQuery.of(context).size.width / 1,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: provider.bookingTimes.length,
+        physics: const BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           final DateTime? time = provider.bookingTimes[index].time.toDateTime();
 
           final bool isSelected = provider.selectedDate.hour == time?.hour &&
               provider.selectedDate.minute == time?.minute;
 
+          final bool isAvailable = provider.bookingTimes[index].available;
+
           return InkWell(
             onTap: () {
-              if (provider.bookingTimes[index].available) {
+              if (isAvailable) {
                 provider.onTimePressed(time);
               } else {
                 showMessageError('This time is not available');
               }
             },
             child: Card(
-              color: getColor(isSelected, provider.bookingTimes[index].available),
+              color: getColor(isSelected, isAvailable),
               child: ListTile(
                 title: Text(
                   provider.bookingTimes[index].time,
                   style: TextStyle(
-                    color: getColor(isSelected, provider.bookingTimes[index].available, text: true),
+                    color: getColor(isSelected, isAvailable, text: true),
                   ),
                 ),
+                trailing: isSelected
+                    ? const Icon(Icons.done)
+                    : !isAvailable
+                        ? const Icon(Icons.calendar_month_outlined)
+                        : null,
               ),
             ),
           );
@@ -144,7 +189,7 @@ class HoursList extends StatelessWidget {
       return text ? Colors.white : Colors.red;
     }
     if (text == false) {
-      return isSelected ? Colors.black : Colors.white;
+      return isSelected ? Styles.primaryColor : Colors.white;
     }
     return isSelected ? Colors.white : Colors.black;
   }

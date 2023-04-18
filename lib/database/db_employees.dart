@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class DatabaseEmployee {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _path = 'employee';
-  final String _usersPath = 'users';
 
   Future<void> addEmployee(String userId, EmployeeModel employeeModel) async {
     await _firestore.collection(_path).doc(employeeModel.id).set(employeeModel.toJson());

@@ -18,8 +18,12 @@ class BookingProvider extends ChangeNotifier {
   List<BookingModel> bookings = [];
   List<BookingTimeModel> bookingTimes = [];
 
+  List<String> workingTimes = [];
+
   DateTime selectedDate = DateTime.now();
   bool timeSelected = false;
+
+  bool loading = true;
 
   BookingProvider(
     this.salonService,
@@ -29,7 +33,9 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<void> _init() async {
+    setWorkingTimes();
     await getBookingsByDateTime(selectedDate);
+    loading = false;
     notifyListeners();
   }
 
@@ -39,7 +45,8 @@ class BookingProvider extends ChangeNotifier {
         final String hour =
             '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
 
-        final String hour2 = '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
+        final String hour2 =
+            '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
 
         final int minutesUsed = booking.getDurationInMinutes();
         int card = minutesUsed ~/ 30;
@@ -61,22 +68,26 @@ class BookingProvider extends ChangeNotifier {
     }
   }
 
-  void calculateBookingTimes() {
+  void setWorkingTimes() {
     final DateTime openTime = salonInformationModel.openTime;
     final DateTime closeTime = salonInformationModel.closeTime;
 
-    final List<String> times = getHalfHourIntervals(openTime, closeTime);
+    workingTimes = getHalfHourIntervals(openTime, closeTime);
+    notifyListeners();
+  }
 
+  void setBookingTimes() {
     bookingTimes = List.generate(
-      times.length - 1,
-      (index) => BookingTimeModel(time: times[index], available: true),
+      workingTimes.length - 1,
+      (index) => BookingTimeModel(time: workingTimes[index], available: true),
     );
     notifyListeners();
   }
 
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
-    bookings = await _dbBooking.getBookingFromSalonInDay(salonService.salonId, dateTime);
-    calculateBookingTimes();
+    bookings = await _dbBooking.getBookingFromSalonInDay(
+        salonService.salonId, dateTime);
+    setBookingTimes();
     verifyStatus();
     notifyListeners();
   }
@@ -86,6 +97,8 @@ class BookingProvider extends ChangeNotifier {
       showMessageError('Please select time');
       return;
     }
+    loading = true;
+    notifyListeners();
     final now = DateTime.now();
     final User user = _dbAuth.getCurrentUser()!;
     final BookingModel bookingModel = BookingModel(
@@ -99,6 +112,10 @@ class BookingProvider extends ChangeNotifier {
     );
     await _dbBooking.creatingBooking(bookingModel);
     showMessageSuccessful('Booking successful');
+
+    loading = false;
+    notifyListeners();
+
     Routes.goTo(Routes.splashRoute);
   }
 

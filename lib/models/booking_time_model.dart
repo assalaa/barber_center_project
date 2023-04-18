@@ -6,6 +6,4 @@ class BookingTimeModel {
     required this.time,
     required this.available,
   });
-
-  
 }
