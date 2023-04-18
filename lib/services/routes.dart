@@ -1,4 +1,5 @@
 import 'package:barber_center/main.dart';
+import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
@@ -76,8 +77,10 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const HomeBarberScreen());
       case bookingRoute:
         return MaterialPageRoute(
-            builder: (_) =>
-                BookingScreen(salonService: args as SalonServiceModel));
+            builder: (_) => BookingScreen(
+                  salonService: (args as List)[0] as SalonServiceModel,
+                  salonInformation: (args)[1] as SalonInformationModel,
+                ));
       //ADMIN PAGES
       case homeAdminRoute:
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class SalonInformationModel {
@@ -23,9 +24,9 @@ class SalonInformationModel {
       salonId: json['salonId'],
       address: json['address'],
       chairs: json['chairs'],
-      openTime: json['openTime'],
-      closeTime: json['closeTime'],
-      employees: json['employees'],
+      openTime: json['openTime'].toDate().toLocal(),
+      closeTime: json['closeTime'].toDate().toLocal(),
+      employees: List<String>.from(json['employees']),
     );
   }
 
@@ -33,8 +34,8 @@ class SalonInformationModel {
         'salonId': salonId,
         'address': address,
         'chairs': chairs,
-        'openTime': openTime,
-        'closeTime': closeTime,
-        'employees': employees,
+        'openTime': Timestamp.fromDate(openTime.toUtc()),
+        'closeTime': Timestamp.fromDate(closeTime.toUtc()),
+        'employees': List<dynamic>.from(employees.map((e) => e)),
       };
 }

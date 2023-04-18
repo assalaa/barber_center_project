@@ -1,4 +1,4 @@
-import 'package:barber_center/database/db_salon_options.dart';
+import 'package:barber_center/database/db_salon_information.dart';
 import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/services/routes.dart';

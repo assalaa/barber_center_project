@@ -1,19 +1,26 @@
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_booking.dart';
 import 'package:barber_center/models/booking_model.dart';
+import 'package:barber_center/models/booking_time_model.dart';
+import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BookingProvider extends ChangeNotifier {
-  final SalonServiceModel salonService;
   final DBAuth _dbAuth = DBAuth();
   final DatabaseBooking _dbBooking = DatabaseBooking();
-  DateTime selectedDate = DateTime.now();
-  int selectedHour = -1;
 
-  BookingProvider(this.salonService) {
+  final SalonServiceModel salonService;
+  final SalonInformationModel salonInformationModel;
+  List<BookingModel> bookings = [];
+  List<BookingTimeModel> bookingTimes = [];
+
+  DateTime selectedDate = DateTime.now();
+  bool timeSelected = false;
+
+  BookingProvider(this.salonService, this.salonInformationModel) {
     _init();
   }
 
@@ -22,13 +29,38 @@ class BookingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void verifyStatus() {
+    print('bookings of today: ');
+    for (final booking in bookings) {
+      print('booking date: ' + booking.date.toString());
+      print('duration:' + booking.getDurationInMinutes().toString());
+      
+    }
+  }
+
+  void calculateBookingTimes() {
+    final DateTime openTime = salonInformationModel.openTime;
+    final DateTime closeTime = salonInformationModel.closeTime;
+
+    final List<String> times = getHalfHourIntervals(openTime, closeTime);
+
+    bookingTimes = List.generate(
+      times.length - 1,
+      (index) => BookingTimeModel(time: times[index], available: true),
+    );
+    notifyListeners();
+  }
+
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
-    await _dbBooking.getBookingFromSalonInDay(salonService.salonId, dateTime);
+    bookings = await _dbBooking.getBookingFromSalonInDay(
+        salonService.salonId, dateTime);
+    calculateBookingTimes();
+    verifyStatus();
     notifyListeners();
   }
 
   Future<void> save() async {
-    if (selectedHour == -1) {
+    if (!timeSelected) {
       showMessageError('Please select time');
       return;
     }
@@ -50,11 +82,18 @@ class BookingProvider extends ChangeNotifier {
     getBookingsByDateTime(selectedDate);
   }
 
-  void onHourPressed(int hour) {
-    selectedHour = hour;
-    selectedDate =
-        selectedDate.copyWith(hour: hour, minute: 0, second: 0, millisecond: 0, microsecond: 0);
-    debugPrint('selectedDate: $selectedDate');
-    notifyListeners();
+  void onTimePressed(DateTime? time) {
+    if (time != null) {
+      timeSelected = true;
+      selectedDate = selectedDate.copyWith(
+        hour: time.hour,
+        minute: time.minute,
+        second: 0,
+        millisecond: 0,
+        microsecond: 0,
+      );
+      debugPrint('selectedDate: $selectedDate');
+      notifyListeners();
+    }
   }
 }

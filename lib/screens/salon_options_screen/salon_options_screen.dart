@@ -34,7 +34,7 @@ class SalonOptionsScreen extends StatelessWidget {
                   SalonInfo(
                     value: provider.salonInformationModel.chairs.toString(),
                     title: 'How many chairs do you have in your salon?',
-                    items: const ['1', '2', '3', '4', '5'],
+                    items: const ['1'],
                     onChanged: provider.updateChairs,
                   ),
                   const Gap(22),

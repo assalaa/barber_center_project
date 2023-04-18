@@ -54,7 +54,9 @@ class SalonDetailsScreen extends StatelessWidget {
                                 Container(
                                   width: AppLayout.getHeight(50),
                                   height: AppLayout.getWidth(50),
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.4)),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: Styles.greyColor.withOpacity(0.4)),
                                   child: Center(
                                     child: GestureDetector(
                                       onTap: () {
@@ -70,7 +72,9 @@ class SalonDetailsScreen extends StatelessWidget {
                                 Container(
                                   width: AppLayout.getHeight(50),
                                   height: AppLayout.getWidth(50),
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.4)),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      color: Styles.greyColor.withOpacity(0.4)),
                                   child: const Center(
                                     child: Icon(
                                       Icons.favorite,
@@ -123,26 +127,33 @@ class SalonDetailsScreen extends StatelessWidget {
                                       Gap(AppLayout.getWidth(5)),
                                       Text(
                                         provider.salon.city,
-                                        style: Styles.textStyle.copyWith(fontSize: 20, color: Styles.greyColor, fontWeight: FontWeight.w400),
+                                        style: Styles.textStyle.copyWith(
+                                            fontSize: 20,
+                                            color: Styles.greyColor,
+                                            fontWeight: FontWeight.w400),
                                       ),
                                     ],
                                   ),
                                   const SizedBox(height: 24),
-                                  Text('Services', style: Styles.headLineStyle3),
+                                  Text('Services',
+                                      style: Styles.headLineStyle3),
                                   const SizedBox(height: 12),
                                   SizedBox(
                                     height: 55,
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
-                                      itemCount: provider.salonService.services.length,
+                                      itemCount:
+                                          provider.salonService.services.length,
                                       itemBuilder: (context, i) {
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: CategoryButton(
-                                            serviceModel: provider.salonService.services[i],
+                                            serviceModel: provider
+                                                .salonService.services[i],
                                             onTap: () {
                                               Future.delayed(
-                                                const Duration(milliseconds: 130),
+                                                const Duration(
+                                                    milliseconds: 130),
                                                 () {
                                                   provider.selectCategory(i);
                                                 },
@@ -166,7 +177,8 @@ class SalonDetailsScreen extends StatelessWidget {
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: '${provider.salonService.durationInMin} minutes',
+                                            text:
+                                                '${provider.salonService.durationInMin} minutes',
                                             style: Styles.textStyle.copyWith(
                                               fontSize: 20,
                                               color: Styles.primaryColor,
@@ -175,7 +187,8 @@ class SalonDetailsScreen extends StatelessWidget {
                                           ),
                                           const TextSpan(text: '\nPrice:'),
                                           TextSpan(
-                                            text: ' \$${provider.salonService.price}',
+                                            text:
+                                                ' \$${provider.salonService.price}',
                                             style: Styles.textStyle.copyWith(
                                               fontSize: 20,
                                               color: Styles.primaryColor,
@@ -193,11 +206,15 @@ class SalonDetailsScreen extends StatelessWidget {
                                       if (provider.hasItemSelected()) {
                                         Routes.goTo(
                                           Routes.bookingRoute,
-                                          args: provider.salonService,
+                                          args: [
+                                            provider.salonService,
+                                            provider.salonInformation,
+                                          ],
                                           enableBack: true,
                                         );
                                       } else {
-                                        showMessageError('Please select a service');
+                                        showMessageError(
+                                            'Please select a service');
                                       }
                                     },
                                   )

@@ -12,4 +12,14 @@ class DBSalonInformation {
         .doc(salonInformationModel.salonId)
         .set(salonInformationModel.toJson());
   }
+
+  Future<SalonInformationModel> getSalonInfoById(String uid) async {
+    final DocumentSnapshot snapshot =
+        await _firestore.collection(_path).doc(uid).get();
+
+    final Map map = snapshot.data() as Map;
+    final SalonInformationModel salonInformation =
+        SalonInformationModel.fromJson(map);
+    return salonInformation;
+  }
 }
