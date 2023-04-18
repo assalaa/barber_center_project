@@ -2,13 +2,13 @@ import 'package:barber_center/models/saloon_service_details_model.dart';
 import 'package:flutter/material.dart';
 
 class SalonServiceModel {
-  final String userId;
+  final String salonId;
   List<ServiceDetailModel> services;
   int durationInMin = 0;
   double price = 0;
 
   SalonServiceModel({
-    required this.userId,
+    required this.salonId,
     required this.services,
   });
 
@@ -26,14 +26,14 @@ class SalonServiceModel {
   factory SalonServiceModel.fromJson(Map json) {
     debugPrint('SalonServiceModel.fromJson: $json');
     return SalonServiceModel(
-      userId: json['userId'],
+      salonId: json['userId'],
       services: List<ServiceDetailModel>.from(
           json['services'].map((x) => ServiceDetailModel.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'userId': userId,
+        'userId': salonId,
         'services': List<dynamic>.from(services.map((x) => x.toJson())),
       };
 }

@@ -9,24 +9,22 @@ class DatabaseSalonService {
   Future<void> createService(SalonServiceModel salonServiceModel) async {
     await _firestore
         .collection(_path)
-        .doc(salonServiceModel.userId)
+        .doc(salonServiceModel.salonId)
         .set(salonServiceModel.toJson());
   }
 
   Future<SalonServiceModel> getServicesByUserId(String id) async {
-    final DocumentSnapshot snapshot =
-        await _firestore.collection(_path).doc(id).get();
+    final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(id).get();
     final Map map = (snapshot.data() ?? {}) as Map;
     if (map.isEmpty) {
-      return SalonServiceModel(userId: id, services: []);
+      return SalonServiceModel(salonId: id, services: []);
     }
     final SalonServiceModel salonServiceModel = SalonServiceModel.fromJson(map);
     return salonServiceModel;
   }
 
   Future<void> updateService(SalonServiceModel salonServiceModel) async {
-    final DocumentReference ref =
-        _firestore.collection(_path).doc(salonServiceModel.userId);
+    final DocumentReference ref = _firestore.collection(_path).doc(salonServiceModel.salonId);
 
     try {
       await ref.update(salonServiceModel.toJson());

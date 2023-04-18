@@ -37,6 +37,9 @@ dependencies:
   flutter_native_image: ^0.0.6+1
   permission_handler: ^9.2.0
 
+  #CALENDAR
+  flutter_calendar_week: ^3.0.0
+
 
 
 

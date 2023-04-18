@@ -1,4 +1,5 @@
 import 'package:barber_center/models/saloon_service_details_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BookingModel {
   final String id;
@@ -6,8 +7,6 @@ class BookingModel {
   final String salonId;
   final DateTime createAt;
   final DateTime date;
-  final int durationInMin;
-  final double price;
   final List<ServiceDetailModel> services;
 
   BookingModel({
@@ -16,8 +15,6 @@ class BookingModel {
     required this.salonId,
     required this.createAt,
     required this.date,
-    required this.durationInMin,
-    required this.price,
     required this.services,
   });
 
@@ -26,11 +23,10 @@ class BookingModel {
       id: json['id'],
       userId: json['userId'],
       salonId: json['salonId'],
-      createAt: DateTime.parse(json['createAt']),
-      date: DateTime.parse(json['date']),
-      durationInMin: json['durationInMin'],
-      price: json['price'],
-      services: List<ServiceDetailModel>.from(json['services'].map((x) => ServiceDetailModel.fromJson(x))),
+      createAt: json['createAt'].toDate().toLocal(),
+      date: json['date'].toDate().toLocal(),
+      services: List<ServiceDetailModel>.from(
+          json['services'].map((x) => ServiceDetailModel.fromJson(x))),
     );
   }
 
@@ -38,10 +34,28 @@ class BookingModel {
         'id': id,
         'userId': userId,
         'salonId': salonId,
-        'createAt': createAt.toIso8601String(),
-        'date': date.toIso8601String(),
-        'durationInMin': durationInMin,
-        'price': price,
+        'createAt': Timestamp.fromDate(createAt.toUtc()),
+        'date': Timestamp.fromDate(date.toUtc()),
         'services': List<dynamic>.from(services.map((x) => x.toJson())),
       };
+
+  double getTotalPrice() {
+    double price = 0;
+    for (final element in services) {
+      price += element.price;
+    }
+    return price;
+  }
+
+  int getDurationInMinutes() {
+    int duration = 0;
+    for (final element in services) {
+      duration += element.avgTimeInMinutes;
+    }
+    return duration;
+  }
+
+  String print() {
+    return 'id: $id, userId: $userId, salonId: $salonId, createAt: $createAt, date: $date, services: $services';
+  }
 }
