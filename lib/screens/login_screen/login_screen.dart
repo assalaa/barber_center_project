@@ -83,6 +83,8 @@ class LoginScreen extends StatelessWidget {
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.visiblePassword,
                             onEditingComplete: () async {
+                              //CLOSE KEYBOARD
+                              FocusScope.of(context).unfocus();
                               await provider.login();
                             },
                             inputFormatters: TextInputFormatters.denySpaces,
@@ -104,6 +106,7 @@ class LoginScreen extends StatelessWidget {
                             loading: provider.loading,
                             buttonName: Strings.continueBtn,
                             onTap: () async {
+                              FocusScope.of(context).unfocus();
                               await provider.login();
                             },
                           ),
