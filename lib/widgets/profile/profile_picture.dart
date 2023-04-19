@@ -1,22 +1,21 @@
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePicture extends StatelessWidget {
-  const ProfilePicture({required this.provider, super.key});
+  const ProfilePicture(
+      {required this.image, required this.updatePhoto, super.key});
 
-  final ProfileScreenProvider provider;
+  final String? image;
+  final Future<void> Function(BuildContext) updatePhoto;
 
   @override
   Widget build(BuildContext context) {
-    final String? profileImage = provider.userModel.image;
-
     return Center(
       child: Stack(
         children: [
           CircleAvatar(
             radius: 72,
-            foregroundImage: profileImage != null ? NetworkImage(profileImage) : null,
+            foregroundImage: image != null ? NetworkImage(image!) : null,
           ),
           Positioned(
             bottom: 0,
@@ -24,7 +23,7 @@ class ProfilePicture extends StatelessWidget {
             child: Semantics(
               button: true,
               child: GestureDetector(
-                onTap: () async => await provider.updatePhoto(context),
+                onTap: () => updatePhoto(context),
                 child: const CircleAvatar(
                   radius: 16,
                   backgroundColor: Styles.primaryColor,

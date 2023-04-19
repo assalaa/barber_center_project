@@ -13,7 +13,7 @@ import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileScreenProvider with ChangeNotifier {
+class ProfileSalonProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseEmployee _dbEmployee = DatabaseEmployee();
@@ -27,7 +27,7 @@ class ProfileScreenProvider with ChangeNotifier {
   List<ServiceModel> services = [];
   bool loading = true;
 
-  ProfileScreenProvider() {
+  ProfileSalonProvider() {
     init();
   }
 

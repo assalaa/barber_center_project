@@ -1,5 +1,5 @@
 import 'package:barber_center/models/service_model.dart';
-import 'package:barber_center/screens/profile_screen/add_service/add_service_provider.dart';
+import 'package:barber_center/screens/profile_salon_screen/add_service/add_service_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';

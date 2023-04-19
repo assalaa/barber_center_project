@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({
-    required this.provider,
+    required this.onPressed,
     super.key,
   });
 
-  final ProfileScreenProvider provider;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     const String logoutText = 'Logout';
 
     return TextButton(
-      onPressed: () {
-        provider.logout();
-      },
+      onPressed: onPressed,
       child: const Text(
         logoutText,
         style: TextStyle(

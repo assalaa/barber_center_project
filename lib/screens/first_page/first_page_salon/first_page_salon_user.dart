@@ -1,5 +1,5 @@
 import 'package:barber_center/screens/home_salon_screen/home_salon_screen.dart';
-import 'package:barber_center/screens/profile_screen/saloon_profile_screen.dart';
+import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';

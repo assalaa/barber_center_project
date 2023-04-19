@@ -1,6 +1,6 @@
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
+import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
@@ -16,9 +16,9 @@ class SaloonProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ProfileScreenProvider>(
-      create: (context) => ProfileScreenProvider(),
-      child: Consumer<ProfileScreenProvider>(
+    return ChangeNotifierProvider<ProfileSalonProvider>(
+      create: (context) => ProfileSalonProvider(),
+      child: Consumer<ProfileSalonProvider>(
         builder: (context, provider, _) {
           return DefaultTabController(
             length: 2,
@@ -40,9 +40,12 @@ class SaloonProfileScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LogoutButton(provider: provider),
+                        LogoutButton(onPressed: provider.logout),
                         const SizedBox(height: 32),
-                        ProfilePicture(provider: provider),
+                        ProfilePicture(
+                          image: provider.userModel.image,
+                          updatePhoto: provider.updatePhoto,
+                        ),
                         const SizedBox(height: 22),
                         FullName(fullName: provider.userModel.name),
                         const SizedBox(height: 10),
