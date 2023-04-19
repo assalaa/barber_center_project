@@ -29,36 +29,37 @@ class SaloonProfileScreen extends StatelessWidget {
                 toolbarHeight: 0,
                 systemOverlayStyle: SystemUiOverlayStyle.dark,
               ),
-              body: Column(
-                children: [
-                  if (provider.loading) ...[
-                    const Center(child: CircularProgressIndicator()),
-                  ] else ...[
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          LogoutButton(provider: provider),
-                          const SizedBox(height: 32),
-                          ProfilePicture(provider: provider),
-                          const SizedBox(height: 22),
-                          FullName(fullName: provider.userModel.name),
-                          const SizedBox(height: 10),
-                          LocationInfo(location: provider.userModel.city),
-                          const SizedBox(height: 60),
-                          const TabBarWidget(),
-                          const Gap(64),
-                          EmployeesAndServices(
-                            employees: provider.employees,
-                            services: provider.services,
-                          ),
-                        ],
-                      ),
+              body: (() {
+                if (provider.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LogoutButton(provider: provider),
+                        const SizedBox(height: 32),
+                        ProfilePicture(provider: provider),
+                        const SizedBox(height: 22),
+                        FullName(fullName: provider.userModel.name),
+                        const SizedBox(height: 10),
+                        LocationInfo(location: provider.userModel.city),
+                        const SizedBox(height: 60),
+                        const TabBarWidget(),
+                        const Gap(64),
+                        EmployeesAndServices(
+                          employees: provider.employees,
+                          services: provider.services,
+                        ),
+                      ],
                     ),
-                  ]
-                ],
-              ),
+                  ),
+                ]);
+              }()),
             ),
           );
         },
@@ -75,7 +76,7 @@ class TabBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 64),
+      margin: const EdgeInsets.symmetric(horizontal: 58),
       // padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -121,8 +122,8 @@ class EmployeesAndServices extends StatelessWidget {
       height: 120,
       child: TabBarView(
         children: [
-          EmployeeSlider(employees: employees),
           ServiceSlider(services: services),
+          EmployeeSlider(employees: employees),
         ],
       ),
     );
@@ -147,7 +148,8 @@ class ServiceSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final ServiceModel? serviceModel = !addButton ? (services?[index - 1]) : null;
+        final ServiceModel? serviceModel =
+            !addButton ? (services?[index - 1]) : null;
 
         if (serviceModel == null && !addButton) {
           return const SizedBox.shrink();
@@ -185,7 +187,8 @@ class EmployeeSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final EmployeeModel? employeeModel = !addButton ? (employees?[index - 1]) : null;
+        final EmployeeModel? employeeModel =
+            !addButton ? (employees?[index - 1]) : null;
 
         if (employeeModel == null && !addButton) {
           return const SizedBox.shrink();
@@ -235,7 +238,10 @@ class ListItem extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        image: image == null ? null : DecorationImage(image: NetworkImage(image!), fit: BoxFit.cover),
+                        image: image == null
+                            ? null
+                            : DecorationImage(
+                                image: NetworkImage(image!), fit: BoxFit.cover),
                       ),
                     ),
                   ),
@@ -271,7 +277,8 @@ class AddButton extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(
-            decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(
+                color: Colors.grey, borderRadius: BorderRadius.circular(16)),
             child: const Center(
               child: Icon(
                 Icons.add,

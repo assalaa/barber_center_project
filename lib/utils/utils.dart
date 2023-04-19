@@ -34,3 +34,42 @@ String minutesToHours(int time, {int max = 120}) {
       (minutes > 0 ? '$minutes minutes' : '') +
       (time == max ? '+' : '');
 }
+
+List<String> getHalfHourIntervals([DateTime? start, DateTime? end]) {
+  final List<String> intervals = [];
+  final int startHour = start?.hour ?? 0;
+  final int startMinute = start?.minute ?? 0;
+  final int endHour = end?.hour ?? 23;
+  final int endMinute = end?.minute ?? 59;
+
+  for (int i = startHour * 2 + (startMinute ~/ 30);
+      i <= endHour * 2 + (endMinute ~/ 30);
+      i++) {
+    final int hour = i ~/ 2;
+    final int minute = (i % 2) * 30;
+    final String hourString = hour.toString().padLeft(2, '0');
+    final String minuteString = minute.toString().padLeft(2, '0');
+    final String timeString = '$hourString:$minuteString';
+    intervals.add(timeString);
+  }
+  return intervals;
+}
+
+// List<String> getHalfHourIntervals({DateTime? startTime, DateTime? endTime}) {
+//   final List<String> intervals = [];
+//   for (int i = 0; i < 48; i++) {
+//     final int hour = i ~/ 2;
+//     final int minute = (i % 2) * 30;
+//     final String hourString = hour.toString().padLeft(2, '0');
+//     final String minuteString = minute.toString().padLeft(2, '0');
+//     final String timeString = '$hourString:$minuteString';
+//     intervals.add(timeString);
+//   }
+//   return intervals;
+// }
+
+String toStringTime(DateTime dateTime) {
+  final int hours = dateTime.hour;
+  final int minutes = dateTime.minute;
+  return '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes';
+}

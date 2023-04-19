@@ -23,11 +23,14 @@ class CustomerProfileScreen extends StatelessWidget {
               toolbarHeight: 0,
               systemOverlayStyle: SystemUiOverlayStyle.dark,
             ),
-            body: Column(
-              children: [
-                if (provider.loading) ...[
-                  const Center(child: CircularProgressIndicator()),
-                ] else ...[
+            body: (() {
+              if (provider.loading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return Column(
+                children: [
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(

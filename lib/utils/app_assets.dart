@@ -7,4 +7,5 @@ class Assets {
   static const String gmailIcon = '$icons/gmail-icon.svg';
   static const String facebookIcon = '$icons/facebook-option-svgrepo-com.svg';
   static const String unnamedImage = '$images/unnamed.png';
+  static const String icon = '$images/icon_bk.png';
 }

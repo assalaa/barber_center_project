@@ -1,4 +1,3 @@
-import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/home_salon_screen/home_salon_screen.dart';
 import 'package:barber_center/screens/profile_screen/saloon_profile_screen.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -16,8 +15,6 @@ class _BottomBarState extends State<FirstPageSalonUser> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeSalonScreen(),
-    const BookingScreen(),
-    const Text('data'),
     const SaloonProfileScreen(),
   ];
 
@@ -42,23 +39,15 @@ class _BottomBarState extends State<FirstPageSalonUser> {
         unselectedItemColor: Styles.greyColor,
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
-              label: 'Home'),
+            icon: Icon(FluentSystemIcons.ic_fluent_home_regular),
+            activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
+            label: 'Home',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(
-                  FluentSystemIcons.ic_fluent_book_formula_information_regular),
-              activeIcon: Icon(FluentSystemIcons
-                  .ic_fluent_book_formula_compatibility_filled),
-              label: 'Book'),
-          BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_premium_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_premium_filled),
-              label: 'VIP'),
-          BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
-              label: 'Profile'),
+            icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
+            activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
+            label: 'Profile',
+          ),
         ],
       ),
     );

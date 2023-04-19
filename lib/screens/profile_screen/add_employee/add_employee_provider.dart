@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 class AddEmployeeProvider with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   final TextEditingController name = TextEditingController();
-  final DBAuth _dbAuth = DBAuth();
+  final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseImage _dbImage = DatabaseImage();
   final DatabaseEmployee _dbEmployee = DatabaseEmployee();
   bool loading = false;
@@ -44,8 +44,7 @@ class AddEmployeeProvider with ChangeNotifier {
       notifyListeners();
       final now = DateTime.now();
       final String id = dateToId(now);
-      final String photoUrl =
-          await _dbImage.uploadImage(xFile!, 'employees/$id');
+      final String photoUrl = await _dbImage.uploadImage(xFile!, 'employees/$id');
       final EmployeeModel employeeModel = EmployeeModel(
         id: dateToId(now),
         name: name.text,

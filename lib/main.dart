@@ -23,9 +23,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        scaffoldBackgroundColor: Styles.backgroundColor,
         primaryColor: Styles.primaryColor,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
+          backgroundColor: Styles.backgroundColor,
           foregroundColor: Colors.black,
           iconTheme: IconThemeData(color: Colors.black),
         ),
@@ -44,10 +45,7 @@ class MyApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(18.0),
-            borderSide: const BorderSide(
-              color: Styles.primaryColor,
-              width: 2,
-            ),
+            borderSide: const BorderSide(color: Styles.primaryColor, width: 2),
           ),
         ),
         iconButtonTheme: IconButtonThemeData(
@@ -60,8 +58,8 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
       onGenerateRoute: Routes.generateRoute,
       navigatorKey: Routes.navigator,
-      initialRoute: Routes.welcomeRoute,
-      title: 'Flutter Demo',
+      initialRoute: Routes.splashRoute,
+      title: 'Salounak',
     );
   }
 }

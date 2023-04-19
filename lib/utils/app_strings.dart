@@ -1,5 +1,5 @@
 class Strings {
-  static const String appName = 'Barber Center';
+  static const String appName = 'Salounak';
   //BUTTONS
   static const String skipBtn = 'Skip';
   static const String adminBtn = 'Admin space';
@@ -25,11 +25,38 @@ class Strings {
   static const String passwordInput = 'Enter your password';
   static const String usernameInput = 'Define a username';
   static const String addressInput = 'City';
-  static const String redirectionToSingIn = 'Already have an account?';
+  static const String redirectionToSingUp = 'Don\'t have an account?';
   static const String signIn = 'Sing in';
+  static const String signUp = 'Sing Up';
   //SECTIONS
+  
   static const String topBarbers = 'Top Barbers';
   static const String services = 'Services';
   static const String featuredBarbers = 'Featured barbers';
   static const String featuredSalons = 'Featured salons';
+
+  static const List<String> months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  static const List<String> days = [
+    'MON',
+    'TUE',
+    'WED',
+    'THU',
+    'FRI',
+    'SAT',
+    'SUN'
+  ];
 }

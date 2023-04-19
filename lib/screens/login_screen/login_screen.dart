@@ -24,36 +24,25 @@ class LoginScreen extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                title: KindOfUser.CUSTOMER != ''
-                    ? Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.sign_in_as,
-                            style: Styles.headLineStyle3,
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.customer,
-                            style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
-                          ),
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.sign_in_as,
-                            style: Styles.headLineStyle3,
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!.salon,
-                            style: Styles.headLineStyle2.copyWith(color: Styles.primaryColor),
-                          ),
-                        ],
-                      )),
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.sign_in_as,
+                  style: Styles.headLineStyle1,
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: kindOfUser == KindOfUser.SALON ? AppLocalizations.of(context)!.salon : AppLocalizations.of(context)!.customer,
+                      style: Styles.headLineStyle1.copyWith(color: Styles.primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             body: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
                 child: Column(
                   children: [
                     Gap(AppLayout.getHeight(10)),
@@ -94,7 +83,9 @@ class LoginScreen extends StatelessWidget {
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.visiblePassword,
                             onEditingComplete: () async {
-                              await provider.login(kindOfUser);
+                              //CLOSE KEYBOARD
+                              FocusScope.of(context).unfocus();
+                              await provider.login();
                             },
                             inputFormatters: TextInputFormatters.denySpaces,
                             obscureText: provider.visiblePassword,
@@ -115,7 +106,8 @@ class LoginScreen extends StatelessWidget {
                             loading: provider.loading,
                             buttonName: AppLocalizations.of(context)!.continue_btn,
                             onTap: () async {
-                              await provider.login(kindOfUser);
+                              FocusScope.of(context).unfocus();
+                              await provider.login();
                             },
                           ),
                           Gap(AppLayout.getHeight(30)),
@@ -137,7 +129,8 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Routes.goTo(Routes.createAccountRoute, args: kindOfUser, enableBack: true);
+                                      Routes.goTo(Routes.createAccountRoute,
+                                          args: kindOfUser, enableBack: true);
                                     },
                                 )
                               ],
