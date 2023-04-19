@@ -55,19 +55,6 @@ List<String> getHalfHourIntervals([DateTime? start, DateTime? end]) {
   return intervals;
 }
 
-// List<String> getHalfHourIntervals({DateTime? startTime, DateTime? endTime}) {
-//   final List<String> intervals = [];
-//   for (int i = 0; i < 48; i++) {
-//     final int hour = i ~/ 2;
-//     final int minute = (i % 2) * 30;
-//     final String hourString = hour.toString().padLeft(2, '0');
-//     final String minuteString = minute.toString().padLeft(2, '0');
-//     final String timeString = '$hourString:$minuteString';
-//     intervals.add(timeString);
-//   }
-//   return intervals;
-// }
-
 String toStringTime(DateTime dateTime) {
   final int hours = dateTime.hour;
   final int minutes = dateTime.minute;

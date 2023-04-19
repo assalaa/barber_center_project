@@ -84,10 +84,9 @@ class AddServiceProvider extends ChangeNotifier {
 
       showMessageSuccessful('Service is successfully added');
 
-      Routes.back();
-
       loading = false;
       notifyListeners();
+      Routes.goTo(Routes.saloonProfileRoute);
     }
   }
 

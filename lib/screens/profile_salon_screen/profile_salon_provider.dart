@@ -10,6 +10,7 @@ import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
+import 'package:barber_center/widgets/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -54,30 +55,60 @@ class ProfileSalonProvider with ChangeNotifier {
         !salonServiceModel.services.any((e) => e.serviceId == element.id));
   }
 
-  Future<void> removeEmployee(String employeeId) async {
-    loading = true;
-    notifyListeners();
+  Future<void> removeEmployee(EmployeeModel employeeModel) async {
+    final bool? confirm = await Popup().show(
+      title: 'Remove Employee',
+      content:
+          'Are you sure you want to remove the employee \'${employeeModel.name}\' from your salon?',
+      actions: [
+        TextButton(
+          onPressed: () =>
+              Navigator.pop(Routes.navigator.currentContext!, true),
+          child: const Text('Remove'),
+        ),
+      ],
+    );
 
-    await _dbEmployee.deleteEmployee(employeeId);
-    employees.removeWhere((element) => element.id == employeeId);
-    showMessageSuccessful('Employee successfully removed');
+    if (confirm == true) {
+      loading = true;
+      notifyListeners();
 
-    loading = false;
-    notifyListeners();
+      await _dbEmployee.deleteEmployee(employeeModel.id);
+      employees.removeWhere((element) => element.id == employeeModel.id);
+      showMessageSuccessful('Employee successfully removed');
+
+      loading = false;
+      notifyListeners();
+    }
   }
 
-  Future<void> removeService(String serviceId) async {
-    loading = true;
-    notifyListeners();
+  Future<void> removeService(ServiceModel serviceModel) async {
+    final bool? confirm = await Popup().show(
+      title: 'Remove ${serviceModel.name}',
+      content:
+          'Are you sure you want to remove ${serviceModel.name} service from your salon?',
+      actions: [
+        TextButton(
+          onPressed: () =>
+              Navigator.pop(Routes.navigator.currentContext!, true),
+          child: const Text('Remove'),
+        ),
+      ],
+    );
 
-    salonServiceModel.services.removeWhere((element) => element.serviceId == serviceId);
-    services.removeWhere((element) => element.id == serviceId);
+    if (confirm == true) {
+      loading = true;
+      notifyListeners();
+      salonServiceModel.services
+          .removeWhere((element) => element.serviceId == serviceModel.id);
+      services.removeWhere((element) => element.id == serviceModel.id);
 
-     await _dbSalonService.updateService(salonServiceModel);
-    showMessageSuccessful('Service successfully removed');
+      await _dbSalonService.updateService(salonServiceModel);
+      showMessageSuccessful('Service successfully removed');
 
-    loading = false;
-    notifyListeners();
+      loading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> updatePhoto(BuildContext context) async {

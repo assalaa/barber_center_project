@@ -1,15 +1,15 @@
+import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
+import 'package:barber_center/widgets/profile/profile_picture.dart';
+import 'package:barber_center/widgets/profile/logout_button.dart';
+import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
-import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
-import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/profile/full_name.dart';
-import 'package:barber_center/widgets/profile/logout_button.dart';
-import 'package:barber_center/widgets/profile/profile_picture.dart';
+import 'package:barber_center/services/routes.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 
 class SaloonProfileScreen extends StatelessWidget {
   const SaloonProfileScreen({super.key});
@@ -142,7 +142,7 @@ class ServiceSlider extends StatelessWidget {
   });
 
   final List<ServiceModel>? services;
-  final Function(String) deleteFunction;
+  final Function(ServiceModel) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +167,7 @@ class ServiceSlider extends StatelessWidget {
             : null;
 
         final Function()? onDelete =
-            serviceModel != null ? () => deleteFunction(serviceModel.id) : null;
+            serviceModel != null ? () => deleteFunction(serviceModel) : null;
 
         return ListItem(
           text: text,
@@ -188,7 +188,7 @@ class EmployeeSlider extends StatelessWidget {
   });
 
   final List<EmployeeModel>? employees;
-  final Function(String) deleteFunction;
+  final Function(EmployeeModel) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +212,8 @@ class EmployeeSlider extends StatelessWidget {
             ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true)
             : null;
 
-        final Function()? onDelete = employeeModel != null
-            ? () => deleteFunction(employeeModel.id)
-            : null;
+        final Function()? onDelete =
+            employeeModel != null ? () => deleteFunction(employeeModel) : null;
 
         return ListItem(
           text: text,
