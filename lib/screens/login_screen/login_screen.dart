@@ -41,8 +41,7 @@ class LoginScreen extends StatelessWidget {
             ),
             body: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
+                padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20), vertical: AppLayout.getHeight(32)),
                 child: Column(
                   children: [
                     Gap(AppLayout.getHeight(10)),
@@ -129,8 +128,7 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      Routes.goTo(Routes.createAccountRoute,
-                                          args: kindOfUser, enableBack: true);
+                                      Routes.goTo(Routes.createAccountRoute, args: kindOfUser, enableBack: true);
                                     },
                                 )
                               ],

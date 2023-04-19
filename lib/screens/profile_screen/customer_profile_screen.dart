@@ -47,8 +47,8 @@ class CustomerProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-              ],
-            ),
+              );
+            }()),
           );
         },
       ),

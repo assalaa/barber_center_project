@@ -3,6 +3,7 @@
   "@language": {
     "description": "the current language"
   },
+  "appName": "Salounak",
   "welcome": "Welcome to Salounak",
   "thanking": "Thank you for using our app :)",
   "salon": "Salon",
@@ -23,6 +24,17 @@
   "tab_services" :"Services",
   "tab_employees" :"Employees",
   "add_employees" :"Add Employee",
-  "add_service" :"Add Service"
+  "add_service" :"Add Service",
+  "booking_duration" :"Duration",
+  "booking_salon" :"Salon",
+  "booking_date" :"Date",
+  "booking_price" :"Price",
+  "booking_service" :"Service",
+  "booking_services" :"Services",
+  "complete_profile": "Your profile isn't complete",
+  "complete_profile-btn": "Complete",
+  "complete_add-services" : "You haven't added services",
+  "add_btn" : "Add"
+
 
 }

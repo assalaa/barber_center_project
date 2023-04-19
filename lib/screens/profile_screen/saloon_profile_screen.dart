@@ -148,8 +148,7 @@ class ServiceSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final ServiceModel? serviceModel =
-            !addButton ? (services?[index - 1]) : null;
+        final ServiceModel? serviceModel = !addButton ? (services?[index - 1]) : null;
 
         if (serviceModel == null && !addButton) {
           return const SizedBox.shrink();
@@ -187,8 +186,7 @@ class EmployeeSlider extends StatelessWidget {
       itemBuilder: (context, index) {
         final bool addButton = index == 0;
 
-        final EmployeeModel? employeeModel =
-            !addButton ? (employees?[index - 1]) : null;
+        final EmployeeModel? employeeModel = !addButton ? (employees?[index - 1]) : null;
 
         if (employeeModel == null && !addButton) {
           return const SizedBox.shrink();
@@ -238,10 +236,7 @@ class ListItem extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        image: image == null
-                            ? null
-                            : DecorationImage(
-                                image: NetworkImage(image!), fit: BoxFit.cover),
+                        image: image == null ? null : DecorationImage(image: NetworkImage(image!), fit: BoxFit.cover),
                       ),
                     ),
                   ),
@@ -277,8 +272,7 @@ class AddButton extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(16)),
             child: const Center(
               child: Icon(
                 Icons.add,

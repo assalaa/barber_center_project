@@ -1,5 +1,6 @@
 {
   "language": " العربية",
+  "appName": "صالونك",
   "welcome": "مرحبا بك في صالونك",
   "thanking": "شكرا لك على استخدام التطبيقة :)",
   "salon": "صاحب صالون",
@@ -19,6 +20,16 @@
   "tab_services" :"الخدمات",
   "tab_employees" :"الموظفين",
   "add_employees" :"اضافة موظف",
-  "add_service" :"اضافة خدمة"
+  "add_service" :"اضافة خدمة",
+  "booking_duration" :"الفترة",
+  "booking_salon" :"الصالون",
+  "booking_date" :"الموعد",
+  "booking_price" :"السعر",
+  "booking_service" :"الخدمة",
+  "booking_services" :"الخدمات",
+  "complete_profile": "لم يكتمل ملفك الشخصي",
+  "complete_profile-btn": "أكمل",
+  "complete_add_services" : "لم تقم بإضافة الخدمات",
+  "add_btn" : "إضافة"
 
 }

@@ -57,8 +57,7 @@ class Routes {
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
-        return MaterialPageRoute(
-            builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
         return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case salonOptionsRoute:
