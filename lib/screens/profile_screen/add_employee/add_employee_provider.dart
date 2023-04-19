@@ -55,7 +55,7 @@ class AddEmployeeProvider with ChangeNotifier {
       await _dbEmployee.addEmployee(userId, employeeModel);
       loading = false;
       notifyListeners();
-      Routes.goTo(Routes.saloonProfileRoute);
+      Routes.back();
     }
   }
 

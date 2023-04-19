@@ -7,7 +7,6 @@ class SalonInformationModel {
   String address;
   DateTime openTime;
   DateTime closeTime;
-  List<String> employees;
 
   SalonInformationModel({
     required this.salonId,
@@ -16,7 +15,6 @@ class SalonInformationModel {
     required this.openTime,
     required this.closeTime,
     required this.address,
-    this.employees = const [],
   });
 
   factory SalonInformationModel.fromJson(Map json) {
@@ -27,7 +25,6 @@ class SalonInformationModel {
       salonName: json['salonName'],
       openTime: json['openTime'].toDate(),
       closeTime: json['closeTime'].toDate(),
-      employees: List<String>.from(json['employees'].map((x) => x)),
     );
   }
 
@@ -38,6 +35,5 @@ class SalonInformationModel {
         'salonName': salonName,
         'openTime': Timestamp.fromDate(openTime.toUtc()),
         'closeTime': Timestamp.fromDate(closeTime.toUtc()),
-        'employees': List<dynamic>.from(employees.map((x) => x)),
       };
 }

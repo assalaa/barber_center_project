@@ -22,6 +22,7 @@ class ProfileScreenProvider with ChangeNotifier {
   final DatabaseImage _dbImage = DatabaseImage();
 
   late UserModel userModel;
+  late SalonServiceModel salonServiceModel;
   List<EmployeeModel> employees = [];
   List<ServiceModel> services = [];
   bool loading = true;
@@ -44,17 +45,44 @@ class ProfileScreenProvider with ChangeNotifier {
   }
 
   Future<void> fetchServices() async {
-    final SalonServiceModel salonServiceModel =
+    salonServiceModel =
         await _dbSalonService.getServicesByUserId(userModel.uid);
 
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
-    services.removeWhere(
-        (element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
+    services.removeWhere((element) =>
+        !salonServiceModel.services.any((e) => e.serviceId == element.id));
+  }
+
+  Future<void> removeEmployee(String employeeId) async {
+    loading = true;
+    notifyListeners();
+
+    await _dbEmployee.deleteEmployee(employeeId);
+    employees.removeWhere((element) => element.id == employeeId);
+    showMessageSuccessful('Employee successfully removed');
+
+    loading = false;
+    notifyListeners();
+  }
+
+  Future<void> removeService(String serviceId) async {
+    loading = true;
+    notifyListeners();
+
+    salonServiceModel.services.removeWhere((element) => element.serviceId == serviceId);
+    services.removeWhere((element) => element.id == serviceId);
+
+     await _dbSalonService.updateService(salonServiceModel);
+    showMessageSuccessful('Service successfully removed');
+
+    loading = false;
+    notifyListeners();
   }
 
   Future<void> updatePhoto(BuildContext context) async {
-    final XFile? imageFile = await _dbImage.selectImage(ImageSource.gallery, context);
+    final XFile? imageFile =
+        await _dbImage.selectImage(ImageSource.gallery, context);
     if (imageFile == null) {
       return;
     }

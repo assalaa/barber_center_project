@@ -50,9 +50,17 @@ class SaloonProfileScreen extends StatelessWidget {
                         const SizedBox(height: 60),
                         const TabBarWidget(),
                         const Gap(64),
-                        EmployeesAndServices(
-                          employees: provider.employees,
-                          services: provider.services,
+                        TabViewWidget(
+                          children: [
+                            ServiceSlider(
+                              services: provider.services,
+                              deleteFunction: provider.removeService,
+                            ),
+                            EmployeeSlider(
+                              employees: provider.employees,
+                              deleteFunction: provider.removeEmployee,
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -76,7 +84,6 @@ class TabBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 58),
-      // padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
@@ -107,25 +114,19 @@ class TabBarWidget extends StatelessWidget {
   }
 }
 
-class EmployeesAndServices extends StatelessWidget {
-  const EmployeesAndServices({
-    this.employees,
-    this.services,
+class TabViewWidget extends StatelessWidget {
+  const TabViewWidget({
+    required this.children,
     super.key,
   });
-  final List<EmployeeModel>? employees;
-  final List<ServiceModel>? services;
+
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 120,
-      child: TabBarView(
-        children: [
-          ServiceSlider(services: services),
-          EmployeeSlider(employees: employees),
-        ],
-      ),
+      child: TabBarView(children: children),
     );
   }
 }
@@ -133,10 +134,12 @@ class EmployeesAndServices extends StatelessWidget {
 class ServiceSlider extends StatelessWidget {
   const ServiceSlider({
     required this.services,
+    required this.deleteFunction,
     super.key,
   });
 
   final List<ServiceModel>? services;
+  final Function(String) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -146,24 +149,28 @@ class ServiceSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final bool addButton = index == 0;
-
         final ServiceModel? serviceModel =
-            !addButton ? (services?[index - 1]) : null;
+            index != 0 ? (services?[index - 1]) : null;
 
-        if (serviceModel == null && !addButton) {
+        if (serviceModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
-        final String text =
-            addButton ? 'Add Service' : serviceModel?.name ?? '';
+        final String text = serviceModel?.name ?? 'Add Service';
         final String? image = serviceModel?.image;
+
+        final Function()? onTap = serviceModel == null
+            ? () => Routes.goTo(Routes.addServiceRoute, enableBack: true)
+            : null;
+
+        final Function()? onDelete =
+            serviceModel != null ? () => deleteFunction(serviceModel.id) : null;
 
         return ListItem(
           text: text,
           image: image,
-          addButton: addButton,
-          onTap: () => Routes.goTo(Routes.addServiceRoute, enableBack: true),
+          onTap: onTap,
+          onDelete: onDelete,
         );
       },
     );
@@ -173,10 +180,12 @@ class ServiceSlider extends StatelessWidget {
 class EmployeeSlider extends StatelessWidget {
   const EmployeeSlider({
     required this.employees,
+    required this.deleteFunction,
     super.key,
   });
 
   final List<EmployeeModel>? employees;
+  final Function(String) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -186,24 +195,29 @@ class EmployeeSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final bool addButton = index == 0;
-
         final EmployeeModel? employeeModel =
-            !addButton ? (employees?[index - 1]) : null;
+            index != 0 ? (employees?[index - 1]) : null;
 
-        if (employeeModel == null && !addButton) {
+        if (employeeModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
-        final String text =
-            addButton ? 'Add Employee' : employeeModel?.name ?? '';
+        final String text = employeeModel?.name ?? 'Add Employee';
         final String? image = employeeModel?.image;
+
+        final Function()? onTap = employeeModel == null
+            ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true)
+            : null;
+
+        final Function()? onDelete = employeeModel != null
+            ? () => deleteFunction(employeeModel.id)
+            : null;
 
         return ListItem(
           text: text,
           image: image,
-          addButton: addButton,
-          onTap: () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true),
+          onTap: onTap,
+          onDelete: onDelete,
         );
       },
     );
@@ -215,49 +229,73 @@ class ListItem extends StatelessWidget {
     required this.text,
     this.image,
     this.onTap,
-    this.addButton = false,
+    this.onDelete,
     super.key,
   });
 
   final String text;
   final String? image;
-  final bool addButton;
   final Function()? onTap;
+  final Function()? onDelete;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: AspectRatio(
-        aspectRatio: 1 / 1.6,
-        child: Column(
-          children: [
-            addButton
-                ? AddButton(onTap: onTap)
-                : AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        image: image == null
-                            ? null
-                            : DecorationImage(
-                                image: NetworkImage(image!), fit: BoxFit.cover),
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: AspectRatio(
+            aspectRatio: 1 / 1.6,
+            child: Column(
+              children: [
+                onTap != null
+                    ? AddButton(onTap: onTap)
+                    : AspectRatio(
+                        aspectRatio: 1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            image: image == null
+                                ? null
+                                : DecorationImage(
+                                    image: NetworkImage(image!),
+                                    fit: BoxFit.cover),
+                          ),
+                        ),
                       ),
-                    ),
+                const SizedBox(height: 4),
+                Flexible(
+                  child: Text(
+                    text,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
                   ),
-            const SizedBox(height: 4),
-            Flexible(
-              child: Text(
-                text,
-                maxLines: 2,
-                textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (onDelete != null) ...[
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Semantics(
+              button: true,
+              label: 'Delete',
+              enabled: true,
+              child: GestureDetector(
+                onTap: onDelete,
+                child: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 14,
+                  child: Icon(Icons.remove_circle_outline, color: Colors.red),
+                ),
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        ]
+      ],
     );
   }
 }
