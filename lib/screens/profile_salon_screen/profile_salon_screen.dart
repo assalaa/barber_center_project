@@ -1,25 +1,25 @@
+import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
+import 'package:barber_center/widgets/profile/profile_picture.dart';
+import 'package:barber_center/widgets/profile/logout_button.dart';
+import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
-import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/profile/full_name.dart';
-import 'package:barber_center/widgets/profile/logout_button.dart';
-import 'package:barber_center/widgets/profile/profile_picture.dart';
+import 'package:barber_center/services/routes.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 
 class SaloonProfileScreen extends StatelessWidget {
   const SaloonProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ProfileScreenProvider>(
-      create: (context) => ProfileScreenProvider(),
-      child: Consumer<ProfileScreenProvider>(
+    return ChangeNotifierProvider<ProfileSalonProvider>(
+      create: (context) => ProfileSalonProvider(),
+      child: Consumer<ProfileSalonProvider>(
         builder: (context, provider, _) {
           return DefaultTabController(
             length: 2,
@@ -41,9 +41,12 @@ class SaloonProfileScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LogoutButton(provider: provider),
+                        LogoutButton(onPressed: provider.logout),
                         const SizedBox(height: 32),
-                        ProfilePicture(provider: provider),
+                        ProfilePicture(
+                          image: provider.userModel.image,
+                          updatePhoto: provider.updatePhoto,
+                        ),
                         const SizedBox(height: 22),
                         FullName(fullName: provider.userModel.name),
                         const SizedBox(height: 10),
@@ -51,9 +54,17 @@ class SaloonProfileScreen extends StatelessWidget {
                         const SizedBox(height: 60),
                         const TabBarWidget(),
                         const Gap(64),
-                        EmployeesAndServices(
-                          employees: provider.employees,
-                          services: provider.services,
+                        TabViewWidget(
+                          children: [
+                            ServiceSlider(
+                              services: provider.services,
+                              deleteFunction: provider.removeService,
+                            ),
+                            EmployeeSlider(
+                              employees: provider.employees,
+                              deleteFunction: provider.removeEmployee,
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -107,25 +118,19 @@ class TabBarWidget extends StatelessWidget {
   }
 }
 
-class EmployeesAndServices extends StatelessWidget {
-  const EmployeesAndServices({
-    this.employees,
-    this.services,
+class TabViewWidget extends StatelessWidget {
+  const TabViewWidget({
+    required this.children,
     super.key,
   });
-  final List<EmployeeModel>? employees;
-  final List<ServiceModel>? services;
+
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 120,
-      child: TabBarView(
-        children: [
-          ServiceSlider(services: services),
-          EmployeeSlider(employees: employees),
-        ],
-      ),
+      child: TabBarView(children: children),
     );
   }
 }
@@ -133,10 +138,12 @@ class EmployeesAndServices extends StatelessWidget {
 class ServiceSlider extends StatelessWidget {
   const ServiceSlider({
     required this.services,
+    required this.deleteFunction,
     super.key,
   });
 
   final List<ServiceModel>? services;
+  final Function(ServiceModel) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -146,22 +153,28 @@ class ServiceSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final bool addButton = index == 0;
+        final ServiceModel? serviceModel =
+            index != 0 ? (services?[index - 1]) : null;
 
-        final ServiceModel? serviceModel = !addButton ? (services?[index - 1]) : null;
-
-        if (serviceModel == null && !addButton) {
+        if (serviceModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
-        final String text = addButton ? AppLocalizations.of(context)!.add_service : serviceModel?.name ?? '';
+        final String text = serviceModel?.name ?? AppLocalizations.of(context)!.add_service ;
         final String? image = serviceModel?.image;
+
+        final Function()? onTap = serviceModel == null
+            ? () => Routes.goTo(Routes.addServiceRoute, enableBack: true)
+            : null;
+
+        final Function()? onDelete =
+            serviceModel != null ? () => deleteFunction(serviceModel) : null;
 
         return ListItem(
           text: text,
           image: image,
-          addButton: addButton,
-          onTap: () => Routes.goTo(Routes.addServiceRoute, enableBack: true),
+          onTap: onTap,
+          onDelete: onDelete,
         );
       },
     );
@@ -171,10 +184,12 @@ class ServiceSlider extends StatelessWidget {
 class EmployeeSlider extends StatelessWidget {
   const EmployeeSlider({
     required this.employees,
+    required this.deleteFunction,
     super.key,
   });
 
   final List<EmployeeModel>? employees;
+  final Function(EmployeeModel) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -184,22 +199,28 @@ class EmployeeSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final bool addButton = index == 0;
+        final EmployeeModel? employeeModel =
+            index != 0 ? (employees?[index - 1]) : null;
 
-        final EmployeeModel? employeeModel = !addButton ? (employees?[index - 1]) : null;
-
-        if (employeeModel == null && !addButton) {
+        if (employeeModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
         final String text = addButton ? AppLocalizations.of(context)!.add_employees : employeeModel?.name ?? '';
         final String? image = employeeModel?.image;
 
+        final Function()? onTap = employeeModel == null
+            ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true)
+            : null;
+
+        final Function()? onDelete =
+            employeeModel != null ? () => deleteFunction(employeeModel) : null;
+
         return ListItem(
           text: text,
           image: image,
-          addButton: addButton,
-          onTap: () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true),
+          onTap: onTap,
+          onDelete: onDelete,
         );
       },
     );
@@ -211,46 +232,73 @@ class ListItem extends StatelessWidget {
     required this.text,
     this.image,
     this.onTap,
-    this.addButton = false,
+    this.onDelete,
     super.key,
   });
 
   final String text;
   final String? image;
-  final bool addButton;
   final Function()? onTap;
+  final Function()? onDelete;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: AspectRatio(
-        aspectRatio: 1 / 1.6,
-        child: Column(
-          children: [
-            addButton
-                ? AddButton(onTap: onTap)
-                : AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        image: image == null ? null : DecorationImage(image: NetworkImage(image!), fit: BoxFit.cover),
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: AspectRatio(
+            aspectRatio: 1 / 1.6,
+            child: Column(
+              children: [
+                onTap != null
+                    ? AddButton(onTap: onTap)
+                    : AspectRatio(
+                        aspectRatio: 1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            image: image == null
+                                ? null
+                                : DecorationImage(
+                                    image: NetworkImage(image!),
+                                    fit: BoxFit.cover),
+                          ),
+                        ),
                       ),
-                    ),
+                const SizedBox(height: 4),
+                Flexible(
+                  child: Text(
+                    text,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
                   ),
-            const SizedBox(height: 4),
-            Flexible(
-              child: Text(
-                text,
-                maxLines: 2,
-                textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (onDelete != null) ...[
+          Positioned(
+            right: 0,
+            top: 0,
+            child: Semantics(
+              button: true,
+              label: 'Delete',
+              enabled: true,
+              child: GestureDetector(
+                onTap: onDelete,
+                child: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 14,
+                  child: Icon(Icons.remove_circle_outline, color: Colors.red),
+                ),
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+        ]
+      ],
     );
   }
 }

@@ -10,10 +10,11 @@ import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
+import 'package:barber_center/widgets/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ProfileScreenProvider with ChangeNotifier {
+class ProfileSalonProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseEmployee _dbEmployee = DatabaseEmployee();
@@ -22,11 +23,12 @@ class ProfileScreenProvider with ChangeNotifier {
   final DatabaseImage _dbImage = DatabaseImage();
 
   late UserModel userModel;
+  late SalonServiceModel salonServiceModel;
   List<EmployeeModel> employees = [];
   List<ServiceModel> services = [];
   bool loading = true;
 
-  ProfileScreenProvider() {
+  ProfileSalonProvider() {
     init();
   }
 
@@ -44,17 +46,74 @@ class ProfileScreenProvider with ChangeNotifier {
   }
 
   Future<void> fetchServices() async {
-    final SalonServiceModel salonServiceModel =
+    salonServiceModel =
         await _dbSalonService.getServicesByUserId(userModel.uid);
 
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
-    services.removeWhere(
-        (element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
+    services.removeWhere((element) =>
+        !salonServiceModel.services.any((e) => e.serviceId == element.id));
+  }
+
+  Future<void> removeEmployee(EmployeeModel employeeModel) async {
+    final bool? confirm = await Popup().show(
+      title: 'Remove Employee',
+      content:
+          'Are you sure you want to remove the employee \'${employeeModel.name}\' from your salon?',
+      actions: [
+        TextButton(
+          onPressed: () =>
+              Navigator.pop(Routes.navigator.currentContext!, true),
+          child: const Text('Remove'),
+        ),
+      ],
+    );
+
+    if (confirm == true) {
+      loading = true;
+      notifyListeners();
+
+      await _dbEmployee.deleteEmployee(employeeModel.id);
+      employees.removeWhere((element) => element.id == employeeModel.id);
+      showMessageSuccessful('Employee successfully removed');
+
+      loading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> removeService(ServiceModel serviceModel) async {
+    final bool? confirm = await Popup().show(
+      title: 'Remove ${serviceModel.name}',
+      content:
+          'Are you sure you want to remove ${serviceModel.name} service from your salon?',
+      actions: [
+        TextButton(
+          onPressed: () =>
+              Navigator.pop(Routes.navigator.currentContext!, true),
+          child: const Text('Remove'),
+        ),
+      ],
+    );
+
+    if (confirm == true) {
+      loading = true;
+      notifyListeners();
+      salonServiceModel.services
+          .removeWhere((element) => element.serviceId == serviceModel.id);
+      services.removeWhere((element) => element.id == serviceModel.id);
+
+      await _dbSalonService.updateService(salonServiceModel);
+      showMessageSuccessful('Service successfully removed');
+
+      loading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> updatePhoto(BuildContext context) async {
-    final XFile? imageFile = await _dbImage.selectImage(ImageSource.gallery, context);
+    final XFile? imageFile =
+        await _dbImage.selectImage(ImageSource.gallery, context);
     if (imageFile == null) {
       return;
     }

@@ -1,6 +1,6 @@
 import 'package:barber_center/screens/booking_story/booking_story_page.dart';
 import 'package:barber_center/screens/home_customer_screen/home_customer_screen.dart';
-import 'package:barber_center/screens/profile_screen/customer_profile_screen.dart';
+import 'package:barber_center/screens/profile_customer_screen/profile_customer_screen.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class _BottomBarState extends State<FirstPageCustomerUser> {
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeCustomerScreen(),
     const BookingStoryCustomerScreen(),
-    const CustomerProfileScreen(),
+    const ProfileCustomerScreen(),
   ];
 
   void onTappedItem(int index) {
@@ -45,8 +45,10 @@ class _BottomBarState extends State<FirstPageCustomerUser> {
               activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
               label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(FluentSystemIcons.ic_fluent_book_formula_information_regular),
-              activeIcon: Icon(FluentSystemIcons.ic_fluent_book_formula_compatibility_filled),
+              icon: Icon(
+                  FluentSystemIcons.ic_fluent_book_formula_information_regular),
+              activeIcon: Icon(FluentSystemIcons
+                  .ic_fluent_book_formula_compatibility_filled),
               label: 'Book'),
           // BottomNavigationBarItem(
           //     icon: Icon(FluentSystemIcons.ic_fluent_premium_regular),

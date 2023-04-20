@@ -1,4 +1,4 @@
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
+import 'package:barber_center/screens/profile_customer_screen/profile_customer_provider.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
@@ -8,14 +8,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class CustomerProfileScreen extends StatelessWidget {
-  const CustomerProfileScreen({super.key});
+class ProfileCustomerScreen extends StatelessWidget {
+  const ProfileCustomerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ProfileScreenProvider>(
-      create: (context) => ProfileScreenProvider(),
-      child: Consumer<ProfileScreenProvider>(
+    return ChangeNotifierProvider<ProfileCustomerProvider>(
+      create: (context) => ProfileCustomerProvider(),
+      child: Consumer<ProfileCustomerProvider>(
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
@@ -36,9 +36,12 @@ class CustomerProfileScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LogoutButton(provider: provider),
+                        LogoutButton(onPressed: provider.logout),
                         const SizedBox(height: 32),
-                        ProfilePicture(provider: provider),
+                        ProfilePicture(
+                          image: provider.userModel.image,
+                          updatePhoto: provider.updatePhoto,
+                        ),
                         const SizedBox(height: 22),
                         FullName(fullName: provider.userModel.name),
                         const SizedBox(height: 60),

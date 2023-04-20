@@ -63,10 +63,11 @@ class AddServiceProvider extends ChangeNotifier {
 
       final ServiceModel serviceModel = services[indexSelected];
 
-      if (salonServiceModel.services
-          .any((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id)) {
-        final int index = salonServiceModel.services
-            .indexWhere((serviceDetailModel) => serviceDetailModel.serviceId == serviceModel.id);
+      if (salonServiceModel.services.any((serviceDetailModel) =>
+          serviceDetailModel.serviceId == serviceModel.id)) {
+        final int index = salonServiceModel.services.indexWhere(
+            (serviceDetailModel) =>
+                serviceDetailModel.serviceId == serviceModel.id);
         salonServiceModel.services[index].price = price;
         salonServiceModel.services[index].avgTimeInMinutes = avgTime;
       } else {
@@ -83,10 +84,9 @@ class AddServiceProvider extends ChangeNotifier {
 
       showMessageSuccessful('Service is successfully added');
 
-      Routes.goTo(Routes.splashRoute);
-
       loading = false;
       notifyListeners();
+      Routes.goTo(Routes.saloonProfileRoute);
     }
   }
 
@@ -117,7 +117,8 @@ class AddServiceProvider extends ChangeNotifier {
       buttonText = 'Save';
     } else {
       final ServiceDetailModel serviceDetailModel = salonServiceModel.services
-          .firstWhere((element) => element.serviceId == services[indexSelected].id);
+          .firstWhere(
+              (element) => element.serviceId == services[indexSelected].id);
       price = serviceDetailModel.price;
       avgTime = serviceDetailModel.avgTimeInMinutes;
       buttonText = 'Update';
