@@ -40,7 +40,13 @@ class SaloonProfileScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LogoutButton(onPressed: provider.logout),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            LogoutButton(onPressed: provider.logout),
+                            const EditButton(),
+                          ],
+                        ),
                         const SizedBox(height: 32),
                         ProfilePicture(
                           image: provider.userModel.image,
@@ -74,6 +80,21 @@ class SaloonProfileScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class EditButton extends StatelessWidget {
+  const EditButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
+      icon: const Icon(Icons.edit),
+      color: Styles.primaryColor,
     );
   }
 }

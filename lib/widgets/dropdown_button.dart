@@ -1,3 +1,4 @@
+import 'package:barber_center/utils/app_layout.dart';
 import 'package:flutter/material.dart';
 
 class DropdownWidget extends StatelessWidget {
@@ -16,6 +17,7 @@ class DropdownWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton(
       value: items.contains(value) ? value : null,
+      menuMaxHeight: AppLayout.getScreenHeight() / 3,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
       style: const TextStyle(color: Colors.deepPurple),
