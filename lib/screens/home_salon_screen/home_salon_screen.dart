@@ -4,6 +4,7 @@ import 'package:barber_center/screens/home_salon_screen/home_salon_provider.dart
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
+import 'package:barber_center/widgets/center_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,12 +30,7 @@ class HomeSalonScreen extends StatelessWidget {
               child: Column(
                 children: [
                   if (provider.loading) ...[
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height - 100,
-                      child: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
+                    const CenterLoading()
                   ] else ...[
                     if (!provider.hasServices()) ...[
                       CompleteProfileWidget(

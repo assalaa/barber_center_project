@@ -6,6 +6,7 @@ import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/category_button.dart';
+import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -29,9 +30,7 @@ class SalonDetailsScreen extends StatelessWidget {
             child: Column(
               children: [
                 if (provider.loading) ...[
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  )
+                  const CenterLoading()
                 ] else ...[
                   SizedBox(
                     height: MediaQuery.of(context).size.height,
