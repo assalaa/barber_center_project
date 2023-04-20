@@ -47,11 +47,7 @@ class HomeCustomerScreen extends StatelessWidget {
                             Container(
                               width: AppLayout.getHeight(50),
                               height: AppLayout.getWidth(50),
-                              decoration: BoxDecoration(
-                                  image:
-                                      const DecorationImage(image: AssetImage(Assets.unnamedImage)),
-                                  borderRadius: BorderRadius.circular(100),
-                                  color: Styles.greyColor.withOpacity(0.2)),
+                              decoration: BoxDecoration(image: const DecorationImage(image: AssetImage(Assets.unnamedImage)), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
                             ),
                           ],
                         )
@@ -77,8 +73,7 @@ class HomeCustomerScreen extends StatelessWidget {
                                 width: AppLayout.getWidth(80),
                                 height: AppLayout.getHeight(80),
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(service.image), fit: BoxFit.cover),
+                                  image: DecorationImage(image: NetworkImage(service.image), fit: BoxFit.cover),
                                   borderRadius: const BorderRadius.all(Radius.circular(50)),
                                 ),
                               ),
@@ -95,7 +90,10 @@ class HomeCustomerScreen extends StatelessWidget {
                   //FEATURED SALONS
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24),
-                    child: SectionHeader(sectionTitle: Strings.featuredSalons),
+                    child: SectionHeader(
+                      sectionTitle: Strings.featuredSalons,
+                      sectionSeeMore: '',
+                    ),
                   ),
                   Gap(AppLayout.getHeight(10)),
                   SizedBox(

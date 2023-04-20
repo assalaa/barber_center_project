@@ -1,0 +1,40 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "the current language"
+  },
+  "appName": "Salounak",
+  "welcome": "Welcome to Salounak",
+  "thanking": "Thank you for using our app :)",
+  "salon": "Salon",
+  "customer": "Customer",
+  "proceed": "Continue as",
+  "sign_in_as": "Sing in as",
+  "email": "Enter your Email",
+  "pass": "Enter your password",
+  "redirection_to_sig_up": "You don't have an account?",
+  "call_to_sig_up": "Sing up",
+  "continue_btn": "Continue",
+  "featured_barbers": "Featured barbers",
+  "featured_salons": "Featured Salons",
+  "see_more": "See more",
+  "logout": "Logout",
+  "settings" :"Privacy settings",
+  "booking_history" :"Booking history",
+  "tab_services" :"Services",
+  "tab_employees" :"Employees",
+  "add_employees" :"Add Employee",
+  "add_service" :"Add Service",
+  "booking_duration" :"Duration",
+  "booking_salon" :"Salon",
+  "booking_date" :"Date",
+  "booking_price" :"Price",
+  "booking_service" :"Service",
+  "booking_services" :"Services",
+  "complete_profile": "Your profile isn't complete",
+  "complete_profile_btn": "Complete",
+  "complete_add_services" : "You haven't added services",
+  "add_btn" : "Add"
+
+
+}

@@ -5,6 +5,7 @@ import 'package:barber_center/widgets/profile/profile_picture.dart';
 import 'package:barber_center/widgets/profile_setting_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class ProfileCustomerScreen extends StatelessWidget {
@@ -65,22 +66,20 @@ class SettingButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String privacyText = 'Privacy settings';
     const IconData privacyIcon = Icons.privacy_tip_outlined;
 
-    const String bookingHistoryText = 'Booking History';
     const IconData bookingHistoryIcon = Icons.history_toggle_off_rounded;
 
     return Column(
       children: [
         ProfileSettingButton(
           icon: privacyIcon,
-          text: privacyText,
+          text: AppLocalizations.of(context)!.settings,
           onTap: () {},
         ),
         ProfileSettingButton(
           icon: bookingHistoryIcon,
-          text: bookingHistoryText,
+          text: AppLocalizations.of(context)!.booking_history,
           onTap: () {},
         ),
       ],
