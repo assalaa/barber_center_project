@@ -1,4 +1,3 @@
-import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/main.dart';
 import 'package:barber_center/models/user_model.dart';
@@ -6,6 +5,7 @@ import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:barber_center/database/db_auth.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -30,9 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: const Color.fromRGBO(16, 15, 17, 1),
       body: Column(
         children: [
-          Expanded(
-            child: Image.asset(Assets.icon),
-          ),
+          Expanded(child: Image.asset(Assets.icon)),
         ],
       ),
     );

@@ -1,8 +1,11 @@
 import 'package:barber_center/firebase_options.dart';
+import 'package:barber_center/localization/L10n.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // ignore: constant_identifier_names
 enum KindOfUser { CUSTOMER, BARBER, SALON, ADMIN }
@@ -51,6 +54,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      supportedLocales: L10n.all,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       onGenerateRoute: Routes.generateRoute,
       navigatorKey: Routes.navigator,
       initialRoute: Routes.splashRoute,

@@ -1,11 +1,13 @@
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseSalon {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String _path = 'salon';
 
-  Future<void> createSalonInfo(SalonInformationModel salonInformationModel) async {
+  Future<void> createSalonInfo(
+      SalonInformationModel salonInformationModel) async {
     await _firestore
         .collection(_path)
         .doc(salonInformationModel.salonId)
@@ -13,7 +15,8 @@ class DatabaseSalon {
   }
 
   Future<bool> isProfileCompleted(String uid) async {
-    final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(uid).get();
+    final DocumentSnapshot snapshot =
+        await _firestore.collection(_path).doc(uid).get();
     final Map map = (snapshot.data() ?? {}) as Map;
     return map.isNotEmpty;
   }
@@ -24,9 +27,23 @@ class DatabaseSalon {
       if (map.isEmpty) {
         return null;
       }
-      final SalonInformationModel salonInformationModel = SalonInformationModel.fromJson(map);
+      final SalonInformationModel salonInformationModel =
+          SalonInformationModel.fromJson(map);
       return salonInformationModel;
     });
+  }
+
+  Future<void> updateSalonInformation(
+      SalonInformationModel salonInformationModel) async {
+    try {
+      await _firestore
+          .collection(_path)
+          .doc(salonInformationModel.salonId)
+          .update(salonInformationModel.toJson());
+    } catch (e) {
+      debugPrint('Error: $e');
+      await createSalonInfo(salonInformationModel);
+    }
   }
 
   Future<List<SalonInformationModel>> getSalonsInformation() async {

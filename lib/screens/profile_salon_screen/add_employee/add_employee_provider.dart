@@ -44,7 +44,8 @@ class AddEmployeeProvider with ChangeNotifier {
       notifyListeners();
       final now = DateTime.now();
       final String id = dateToId(now);
-      final String photoUrl = await _dbImage.uploadImage(xFile!, 'employees/$id');
+      final String photoUrl =
+          await _dbImage.uploadImage(xFile!, 'employees/$id');
       final EmployeeModel employeeModel = EmployeeModel(
         id: dateToId(now),
         name: name.text,
@@ -55,7 +56,7 @@ class AddEmployeeProvider with ChangeNotifier {
       await _dbEmployee.addEmployee(userId, employeeModel);
       loading = false;
       notifyListeners();
-      Routes.goTo(Routes.saloonProfileRoute);
+      Routes.goTo(Routes.homeSalonRoute);
     }
   }
 

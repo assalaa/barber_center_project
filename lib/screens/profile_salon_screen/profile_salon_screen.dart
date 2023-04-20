@@ -1,15 +1,16 @@
-import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
-import 'package:barber_center/widgets/profile/profile_picture.dart';
-import 'package:barber_center/widgets/profile/logout_button.dart';
-import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
-import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
 import 'package:barber_center/services/routes.dart';
-import 'package:provider/provider.dart';
+import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/profile/full_name.dart';
+import 'package:barber_center/widgets/profile/logout_button.dart';
+import 'package:barber_center/widgets/profile/profile_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 class SaloonProfileScreen extends StatelessWidget {
   const SaloonProfileScreen({super.key});
@@ -53,7 +54,10 @@ class SaloonProfileScreen extends StatelessWidget {
                           updatePhoto: provider.updatePhoto,
                         ),
                         const SizedBox(height: 22),
-                        FullName(fullName: provider.userModel.name),
+                        FullName(
+                          userName: provider.userModel.name,
+                          salonName: provider.salonInformationModel?.salonName,
+                        ),
                         const SizedBox(height: 10),
                         LocationInfo(location: provider.userModel.city),
                         const SizedBox(height: 60),
@@ -108,6 +112,7 @@ class TabBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 58),
+      // padding: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.white,
@@ -119,16 +124,16 @@ class TabBarWidget extends StatelessWidget {
           )
         ],
       ),
-      child: const TabBar(
+      child: TabBar(
         tabs: [
-          Tab(text: 'Service'),
-          Tab(text: 'Employee'),
+          Tab(text: AppLocalizations.of(context)!.tab_services),
+          Tab(text: AppLocalizations.of(context)!.tab_employees),
         ],
         unselectedLabelColor: Styles.primaryColor,
         labelColor: Colors.white,
-        labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        indicator: ShapeDecoration(
+        labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        indicator: const ShapeDecoration(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),
           color: Styles.primaryColor,
@@ -180,7 +185,8 @@ class ServiceSlider extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        final String text = serviceModel?.name ?? 'Add Service';
+        final String text =
+            serviceModel?.name ?? AppLocalizations.of(context)!.add_service;
         final String? image = serviceModel?.image;
 
         final Function()? onTap = serviceModel == null
@@ -226,7 +232,8 @@ class EmployeeSlider extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        final String text = employeeModel?.name ?? 'Add Employee';
+        final String text =
+            employeeModel?.name ?? AppLocalizations.of(context)!.add_employees;
         final String? image = employeeModel?.image;
 
         final Function()? onTap = employeeModel == null

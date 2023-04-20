@@ -6,6 +6,7 @@ import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class HomeSalonScreen extends StatelessWidget {
@@ -43,9 +44,17 @@ class HomeSalonScreen extends StatelessWidget {
                             enableBack: true),
                       ),
                     ],
+                    if (!provider.hasEmployees()) ...[
+                      CompleteProfileWidget(
+                        titleText: 'Your haven\'t added employees',
+                        buttonText: 'Add',
+                        onPressed: () => Routes.goTo(Routes.addEmployeeRoute,
+                            enableBack: true),
+                      ),
+                    ],
                     if (!provider.isProfileCompleted) ...[
                       CompleteProfileWidget(
-                        titleText: 'Your profile isn\'t completed',
+                        titleText: 'Your profile isn\'t complete',
                         buttonText: 'Complete',
                         onPressed: () => Routes.goTo(Routes.salonOptionsRoute,
                             enableBack: true),
@@ -85,7 +94,8 @@ class HomeSalonScreen extends StatelessWidget {
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                        text: 'Salon: ',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_salon} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -103,7 +113,8 @@ class HomeSalonScreen extends StatelessWidget {
                                     ),
                                     RichText(
                                       text: TextSpan(
-                                        text: 'Date: ',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_date} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -122,7 +133,8 @@ class HomeSalonScreen extends StatelessWidget {
                                     ),
                                     RichText(
                                       text: TextSpan(
-                                        text: 'Price: ',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_price} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -142,7 +154,8 @@ class HomeSalonScreen extends StatelessWidget {
                                     //RICHTXT DURATION
                                     RichText(
                                       text: TextSpan(
-                                        text: 'Duration: ',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_duration} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -162,8 +175,8 @@ class HomeSalonScreen extends StatelessWidget {
                                     //LISTVIEW BUILDER SERVICES
                                     Text(
                                       booking.services.length > 1
-                                          ? 'Services'
-                                          : 'Service',
+                                          ? '${AppLocalizations.of(context)!.booking_services} :'
+                                          : '${AppLocalizations.of(context)!.booking_service} :',
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -234,7 +247,7 @@ class CompleteProfileWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(right: 6),
                 child: Text(
-                  titleText * 2,
+                  titleText,
                   style: const TextStyle(fontSize: 16),
                 ),
               ),

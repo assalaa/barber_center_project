@@ -3,7 +3,12 @@ import 'package:flutter/cupertino.dart';
 
 class SectionHeader extends StatelessWidget {
   final String sectionTitle;
-  const SectionHeader({required this.sectionTitle, Key? key}) : super(key: key);
+  final String sectionSeeMore;
+  const SectionHeader({
+    required this.sectionTitle,
+    required this.sectionSeeMore,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +19,13 @@ class SectionHeader extends StatelessWidget {
           sectionTitle,
           style: Styles.headLineStyle2,
         ),
+        GestureDetector(
+          onTap: () {},
+          child: Text(
+            sectionSeeMore,
+            style: Styles.headLineStyle4,
+          ),
+        )
       ],
     );
   }
