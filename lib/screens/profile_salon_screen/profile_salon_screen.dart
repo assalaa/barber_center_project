@@ -1,16 +1,16 @@
-import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
-import 'package:barber_center/widgets/profile/profile_picture.dart';
-import 'package:barber_center/widgets/profile/logout_button.dart';
-import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
-import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
 import 'package:barber_center/services/routes.dart';
-import 'package:provider/provider.dart';
+import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/widgets/profile/full_name.dart';
+import 'package:barber_center/widgets/profile/logout_button.dart';
+import 'package:barber_center/widgets/profile/profile_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 class SaloonProfileScreen extends StatelessWidget {
   const SaloonProfileScreen({super.key});
@@ -153,22 +153,18 @@ class ServiceSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final ServiceModel? serviceModel =
-            index != 0 ? (services?[index - 1]) : null;
+        final ServiceModel? serviceModel = index != 0 ? (services?[index - 1]) : null;
 
         if (serviceModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
-        final String text = serviceModel?.name ?? AppLocalizations.of(context)!.add_service ;
+        final String text = serviceModel?.name ?? AppLocalizations.of(context)!.add_service;
         final String? image = serviceModel?.image;
 
-        final Function()? onTap = serviceModel == null
-            ? () => Routes.goTo(Routes.addServiceRoute, enableBack: true)
-            : null;
+        final Function()? onTap = serviceModel == null ? () => Routes.goTo(Routes.addServiceRoute, enableBack: true) : null;
 
-        final Function()? onDelete =
-            serviceModel != null ? () => deleteFunction(serviceModel) : null;
+        final Function()? onDelete = serviceModel != null ? () => deleteFunction(serviceModel) : null;
 
         return ListItem(
           text: text,
@@ -199,22 +195,18 @@ class EmployeeSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final EmployeeModel? employeeModel =
-            index != 0 ? (employees?[index - 1]) : null;
+        final EmployeeModel? employeeModel = index != 0 ? (employees?[index - 1]) : null;
 
         if (employeeModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
-        final String text = addButton ? AppLocalizations.of(context)!.add_employees : employeeModel?.name ?? '';
+        final String text = employeeModel?.name ?? AppLocalizations.of(context)!.add_employees;
         final String? image = employeeModel?.image;
 
-        final Function()? onTap = employeeModel == null
-            ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true)
-            : null;
+        final Function()? onTap = employeeModel == null ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true) : null;
 
-        final Function()? onDelete =
-            employeeModel != null ? () => deleteFunction(employeeModel) : null;
+        final Function()? onDelete = employeeModel != null ? () => deleteFunction(employeeModel) : null;
 
         return ListItem(
           text: text,
@@ -259,11 +251,7 @@ class ListItem extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(16),
-                            image: image == null
-                                ? null
-                                : DecorationImage(
-                                    image: NetworkImage(image!),
-                                    fit: BoxFit.cover),
+                            image: image == null ? null : DecorationImage(image: NetworkImage(image!), fit: BoxFit.cover),
                           ),
                         ),
                       ),

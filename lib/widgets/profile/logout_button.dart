@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/screens/profile_screen/profile_screen_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,7 +16,7 @@ class LogoutButton extends StatelessWidget {
 
     return TextButton(
       onPressed: onPressed,
-      child: const Text(
+      child: Text(
         logoutText,
         style: const TextStyle(
           color: Styles.primaryColor,

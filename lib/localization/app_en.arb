@@ -32,8 +32,8 @@
   "booking_service" :"Service",
   "booking_services" :"Services",
   "complete_profile": "Your profile isn't complete",
-  "complete_profile-btn": "Complete",
-  "complete_add-services" : "You haven't added services",
+  "complete_profile_btn": "Complete",
+  "complete_add_services" : "You haven't added services",
   "add_btn" : "Add"
 
 
