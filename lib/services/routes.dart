@@ -47,7 +47,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
       case salonDetailsRoute:
-        return MaterialPageRoute(builder: (_) => SalonDetailsScreen(uid: args as String));
+        return MaterialPageRoute(
+            builder: (_) => SalonDetailsScreen(uid: args as String));
       case customerProfileRoute:
         return MaterialPageRoute(builder: (_) => const ProfileCustomerScreen());
       case saloonProfileRoute:
@@ -57,9 +58,12 @@ class Routes {
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
-        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) =>
+                CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case salonOptionsRoute:
         return MaterialPageRoute(builder: (_) => const SalonOptionsScreen());
       case splashRoute:
@@ -111,10 +115,10 @@ class Routes {
     );
   }
 
-  static void back() {
-    debugPrint('GO TO BACK <-');
+  static void back({bool refresh = true}) {
+    debugPrint('GO BACK <-');
     if (Navigator.canPop(Routes.navigator.currentContext!)) {
-      Navigator.pop(Routes.navigator.currentContext!);
+      Navigator.pop(Routes.navigator.currentContext!, refresh);
     }
   }
 }

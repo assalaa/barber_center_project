@@ -55,7 +55,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
       supportedLocales: L10n.all,
-      localizationsDelegates: [AppLocalizations.delegate, GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       onGenerateRoute: Routes.generateRoute,
       navigatorKey: Routes.navigator,
       initialRoute: Routes.splashRoute,

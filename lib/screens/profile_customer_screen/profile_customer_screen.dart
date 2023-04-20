@@ -43,7 +43,7 @@ class ProfileCustomerScreen extends StatelessWidget {
                           updatePhoto: provider.updatePhoto,
                         ),
                         const SizedBox(height: 22),
-                        FullName(fullName: provider.userModel.name),
+                        FullName(userName: provider.userModel.name),
                         const SizedBox(height: 60),
                         const SettingButtons(),
                       ],

@@ -24,8 +24,6 @@ class BookingStoreCustomerProvider extends ChangeNotifier {
 
   Future<void> getBookings() async {
     bookings = await _dbBooking.getBookingFromUserId(user.uid);
-    notifyListeners();
-    print('bookongs ' + bookings.length.toString());
   }
 }
 

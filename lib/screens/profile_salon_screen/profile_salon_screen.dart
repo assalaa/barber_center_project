@@ -41,14 +41,23 @@ class SaloonProfileScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LogoutButton(onPressed: provider.logout),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            LogoutButton(onPressed: provider.logout),
+                            const EditButton(),
+                          ],
+                        ),
                         const SizedBox(height: 32),
                         ProfilePicture(
                           image: provider.userModel.image,
                           updatePhoto: provider.updatePhoto,
                         ),
                         const SizedBox(height: 22),
-                        FullName(fullName: provider.userModel.name),
+                        FullName(
+                          userName: provider.userModel.name,
+                          salonName: provider.salonInformationModel?.salonName,
+                        ),
                         const SizedBox(height: 10),
                         LocationInfo(location: provider.userModel.city),
                         const SizedBox(height: 60),
@@ -79,6 +88,21 @@ class SaloonProfileScreen extends StatelessWidget {
   }
 }
 
+class EditButton extends StatelessWidget {
+  const EditButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
+      icon: const Icon(Icons.edit),
+      color: Styles.primaryColor,
+    );
+  }
+}
+
 class TabBarWidget extends StatelessWidget {
   const TabBarWidget({
     super.key,
@@ -102,15 +126,16 @@ class TabBarWidget extends StatelessWidget {
       ),
       child: TabBar(
         tabs: [
-          Tab(text: AppLocalizations.of(context)!.tab_employees),
           Tab(text: AppLocalizations.of(context)!.tab_services),
+          Tab(text: AppLocalizations.of(context)!.tab_employees),
         ],
         unselectedLabelColor: Styles.primaryColor,
         labelColor: Colors.white,
         labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         indicator: const ShapeDecoration(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(16))),
           color: Styles.primaryColor,
         ),
       ),
@@ -153,18 +178,23 @@ class ServiceSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final ServiceModel? serviceModel = index != 0 ? (services?[index - 1]) : null;
+        final ServiceModel? serviceModel =
+            index != 0 ? (services?[index - 1]) : null;
 
         if (serviceModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
-        final String text = serviceModel?.name ?? AppLocalizations.of(context)!.add_service;
+        final String text =
+            serviceModel?.name ?? AppLocalizations.of(context)!.add_service;
         final String? image = serviceModel?.image;
 
-        final Function()? onTap = serviceModel == null ? () => Routes.goTo(Routes.addServiceRoute, enableBack: true) : null;
+        final Function()? onTap = serviceModel == null
+            ? () => Routes.goTo(Routes.addServiceRoute, enableBack: true)
+            : null;
 
-        final Function()? onDelete = serviceModel != null ? () => deleteFunction(serviceModel) : null;
+        final Function()? onDelete =
+            serviceModel != null ? () => deleteFunction(serviceModel) : null;
 
         return ListItem(
           text: text,
@@ -195,18 +225,23 @@ class EmployeeSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final EmployeeModel? employeeModel = index != 0 ? (employees?[index - 1]) : null;
+        final EmployeeModel? employeeModel =
+            index != 0 ? (employees?[index - 1]) : null;
 
         if (employeeModel == null && index != 0) {
           return const SizedBox.shrink();
         }
 
-        final String text = employeeModel?.name ?? AppLocalizations.of(context)!.add_employees;
+        final String text =
+            employeeModel?.name ?? AppLocalizations.of(context)!.add_employees;
         final String? image = employeeModel?.image;
 
-        final Function()? onTap = employeeModel == null ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true) : null;
+        final Function()? onTap = employeeModel == null
+            ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true)
+            : null;
 
-        final Function()? onDelete = employeeModel != null ? () => deleteFunction(employeeModel) : null;
+        final Function()? onDelete =
+            employeeModel != null ? () => deleteFunction(employeeModel) : null;
 
         return ListItem(
           text: text,
@@ -251,7 +286,11 @@ class ListItem extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(16),
-                            image: image == null ? null : DecorationImage(image: NetworkImage(image!), fit: BoxFit.cover),
+                            image: image == null
+                                ? null
+                                : DecorationImage(
+                                    image: NetworkImage(image!),
+                                    fit: BoxFit.cover),
                           ),
                         ),
                       ),
@@ -308,7 +347,8 @@ class AddButton extends StatelessWidget {
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(
-            decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.circular(16)),
+            decoration: BoxDecoration(
+                color: Colors.grey, borderRadius: BorderRadius.circular(16)),
             child: const Center(
               child: Icon(
                 Icons.add,

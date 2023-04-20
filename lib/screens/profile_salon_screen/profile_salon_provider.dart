@@ -2,9 +2,11 @@ import 'package:barber_center/database/database_image.dart';
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_employees.dart';
 import 'package:barber_center/database/db_profile.dart';
+import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/database/db_salon_service.dart';
 import 'package:barber_center/database/db_services.dart';
 import 'package:barber_center/models/employee_model.dart';
+import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
@@ -19,16 +21,21 @@ class ProfileSalonProvider with ChangeNotifier {
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseEmployee _dbEmployee = DatabaseEmployee();
   final DatabaseService _dbService = DatabaseService();
+  final DatabaseSalon _dbSalon = DatabaseSalon();
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
   final DatabaseImage _dbImage = DatabaseImage();
 
   late UserModel userModel;
+  late SalonInformationModel? salonInformationModel;
   late SalonServiceModel salonServiceModel;
   List<EmployeeModel> employees = [];
   List<ServiceModel> services = [];
   bool loading = true;
+  late String uid;
 
   ProfileSalonProvider() {
+    uid = _dbAuth.getCurrentUser()!.uid;
+
     init();
   }
 
@@ -37,17 +44,19 @@ class ProfileSalonProvider with ChangeNotifier {
   }
 
   Future<void> fetchMyProfile() async {
-    final String uid = _dbAuth.getCurrentUser()!.uid;
     userModel = (await _dbUser.getUserByUid(uid))!;
   }
 
+  Future<void> fetchSalonInformation() async {
+    salonInformationModel = await _dbSalon.getSalonInformation(uid);
+  }
+
   Future<void> fetchEmployees() async {
-    employees = await _dbEmployee.getEmployees(userModel.uid);
+    employees = await _dbEmployee.getEmployees(uid);
   }
 
   Future<void> fetchServices() async {
-    salonServiceModel =
-        await _dbSalonService.getServicesByUserId(userModel.uid);
+    salonServiceModel = await _dbSalonService.getServicesByUserId(uid);
 
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
@@ -125,9 +134,13 @@ class ProfileSalonProvider with ChangeNotifier {
   }
 
   Future<void> init() async {
-    await fetchMyProfile();
-    await fetchEmployees();
-    await fetchServices();
+    await Future.wait([
+      fetchMyProfile(),
+      fetchSalonInformation(),
+      fetchEmployees(),
+      fetchServices(),
+    ]);
+
     loading = false;
     notifyListeners();
   }

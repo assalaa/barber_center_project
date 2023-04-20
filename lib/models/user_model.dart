@@ -8,7 +8,6 @@ class UserModel {
   String? image;
   String email;
   String city;
-  bool? isAvailable;
 
   UserModel({
     required this.uid,
@@ -17,7 +16,6 @@ class UserModel {
     required this.name,
     required this.email,
     required this.city,
-    this.isAvailable = true,
     this.image,
   });
 
@@ -30,7 +28,6 @@ class UserModel {
       image: map['image'],
       email: map['email'],
       city: map['city'],
-      isAvailable: map['isAvailable'],
     );
   }
 
@@ -43,7 +40,6 @@ class UserModel {
     data['image'] = image;
     data['email'] = email;
     data['city'] = city;
-    data['isAvailable'] = isAvailable;
     return data;
   }
 
@@ -77,6 +73,6 @@ class UserModel {
   }
 
   String print() {
-    return 'uid: $uid, kindOfUser: ${setKindOfUser()}, createAt: $createAt, name: $name, image: $image, email: $email, city: $city, isAvailable: $isAvailable';
+    return 'uid: $uid, kindOfUser: ${setKindOfUser()}, createAt: $createAt, name: $name, image: $image, email: $email, city: $city';
   }
 }

@@ -86,7 +86,7 @@ class AddServiceProvider extends ChangeNotifier {
 
       loading = false;
       notifyListeners();
-      Routes.goTo(Routes.saloonProfileRoute);
+      Routes.goTo(Routes.homeSalonRoute);
     }
   }
 

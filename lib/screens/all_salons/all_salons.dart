@@ -14,7 +14,7 @@ class AllSalons extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: const Text('All Salons'),
-              actions: [],
+              actions: const [],
             ),
             body: GridView.builder(
               itemCount: 1,
@@ -23,15 +23,13 @@ class AllSalons extends StatelessWidget {
                   title: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: FeaturedBarber(
-                      barberName: "",
-                      barberImage: "",
-                      barberLocation: "",
+                      barberName: '',
+                      barberImage: '',
+                      barberLocation: '',
                     ),
                   )),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-              ),
+                  crossAxisCount: 2),
             ),
           );
         }));
