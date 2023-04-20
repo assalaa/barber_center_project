@@ -34,7 +34,10 @@
   "complete_profile": "Your profile isn't complete",
   "complete_profile_btn": "Complete",
   "complete_add_services" : "You haven't added services",
-  "add_btn" : "Add"
+  "add_btn" : "Add",
+  "error_msg_booking_screen": "This time is not available",
+  "no_booking": "You have no bookings",
+  "your_bookings": "Your bookings"
 
 
 }

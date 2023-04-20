@@ -8,6 +8,7 @@ import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -149,8 +150,7 @@ class HoursList extends StatelessWidget {
         itemBuilder: (context, index) {
           final DateTime? time = provider.bookingTimes[index].time.toDateTime();
 
-          final bool isSelected = provider.selectedDate.hour == time?.hour &&
-              provider.selectedDate.minute == time?.minute;
+          final bool isSelected = provider.selectedDate.hour == time?.hour && provider.selectedDate.minute == time?.minute;
 
           final bool isAvailable = provider.bookingTimes[index].available;
 
@@ -159,7 +159,7 @@ class HoursList extends StatelessWidget {
               if (isAvailable) {
                 provider.onTimePressed(time);
               } else {
-                showMessageError('This time is not available');
+                showMessageError(AppLocalizations.of(context)!.error_msg_booking_screen);
               }
             },
             child: Card(
