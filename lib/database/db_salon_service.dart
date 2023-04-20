@@ -14,7 +14,8 @@ class DatabaseSalonService {
   }
 
   Future<SalonServiceModel> getServicesByUserId(String id) async {
-    final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(id).get();
+    final DocumentSnapshot snapshot =
+        await _firestore.collection(_path).doc(id).get();
     final Map map = (snapshot.data() ?? {}) as Map;
     if (map.isEmpty) {
       return SalonServiceModel(salonId: id, services: []);
@@ -24,7 +25,8 @@ class DatabaseSalonService {
   }
 
   Future<void> updateService(SalonServiceModel salonServiceModel) async {
-    final DocumentReference ref = _firestore.collection(_path).doc(salonServiceModel.salonId);
+    final DocumentReference ref =
+        _firestore.collection(_path).doc(salonServiceModel.salonId);
 
     try {
       await ref.update(salonServiceModel.toJson());
