@@ -12,7 +12,7 @@ class LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var logoutText = AppLocalizations.of(context)!.logout;
+    final logoutText = AppLocalizations.of(context)!.logout;
 
     return TextButton(
       onPressed: onPressed,

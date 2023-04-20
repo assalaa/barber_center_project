@@ -1,6 +1,8 @@
+import 'package:barber_center/database/db_employees.dart';
 import 'package:barber_center/database/db_profile.dart';
-import 'package:barber_center/database/db_salon_information.dart';
+import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/database/db_salon_service.dart';
+import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/user_model.dart';
@@ -9,10 +11,12 @@ import 'package:flutter/foundation.dart';
 class SalonDetailsProvider with ChangeNotifier {
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
-  final DBSalonInformation _dbSalonInformation = DBSalonInformation();
+  final DatabaseSalon _databaseSalon = DatabaseSalon();
+  final DatabaseEmployee _dbEmployee = DatabaseEmployee();
   late UserModel salon;
   late SalonServiceModel salonService;
-  late SalonInformationModel salonInformation;
+  late SalonInformationModel? salonInformation;
+  late List<EmployeeModel> employees = [];
 
   bool loading = true;
 
@@ -25,6 +29,7 @@ class SalonDetailsProvider with ChangeNotifier {
       getSalon(uid),
       getSalonService(uid),
       getSalonInformation(uid),
+      getEmployees(uid),
     ]);
     loading = false;
     notifyListeners();
@@ -39,7 +44,12 @@ class SalonDetailsProvider with ChangeNotifier {
   }
 
   Future<void> getSalonInformation(String uid) async {
-    salonInformation = await _dbSalonInformation.getSalonInfoById(uid);
+    salonInformation = await _databaseSalon.getSalonInformation(uid);
+    notifyListeners();
+  }
+
+  Future<void> getEmployees(String uid) async {
+    employees = await _dbEmployee.getEmployees(uid);
     notifyListeners();
   }
 
@@ -51,5 +61,9 @@ class SalonDetailsProvider with ChangeNotifier {
   bool hasItemSelected() {
     salonService.setPriceAndDuration();
     return salonService.services.any((element) => element.selected);
+  }
+
+  bool canBook() {
+    return salonInformation != null && employees.isNotEmpty;
   }
 }

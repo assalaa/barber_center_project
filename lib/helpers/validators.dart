@@ -31,7 +31,7 @@ class Validators {
 
   static String? phoneNumberValidator(String? value) {
     if (value!.isEmpty) {
-      return "Phone number can't be empty";
+      return 'Please enter your phone number';
     } else if (value.length < 11) {
       return 'Phone number is too short';
     }

@@ -4,36 +4,36 @@ import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
+import 'package:barber_center/widgets/popup.dart';
 import 'package:flutter/material.dart';
 
 class SalonOptionsProvider with ChangeNotifier {
-  final DatabaseSalon _dbSalonInformation = DatabaseSalon();
   final DatabaseAuth _dbAuth = DatabaseAuth();
+  final DatabaseSalon _dbSalon = DatabaseSalon();
   late SalonInformationModel salonInformationModel;
+
   final TextEditingController tcAddress = TextEditingController();
-  TextEditingController tcName = TextEditingController();
+  final TextEditingController tcName = TextEditingController();
+  final TextEditingController tcPhone = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
-  bool loading = false;
-  late String userId;
+  bool loading = true;
 
   SalonOptionsProvider() {
-    final DateTime now = DateTime(DateTime.now().year);
-    userId = _dbAuth.getCurrentUser()!.uid;
-
-    salonInformationModel = SalonInformationModel(
-        salonId: userId,
-        address: '',
-        salonName: '',
-        chairs: 1,
-        openTime: DateTime(now.year).copyWith(hour: 9),
-        closeTime: DateTime(now.year).copyWith(hour: 17));
+    init();
   }
 
-  void updateChairs(String? value) {
-    if (value != null) {
-      salonInformationModel.chairs = int.parse(value);
-      notifyListeners();
-    }
+  Future<void> init() async {
+    final String userId = _dbAuth.getCurrentUser()!.uid;
+
+    salonInformationModel = (await _dbSalon.getSalonInformation(userId)) ??
+        SalonInformationModel.emptySalon(userId);
+    tcName.text = salonInformationModel.salonName;
+    tcAddress.text = salonInformationModel.address;
+    tcPhone.text = salonInformationModel.phone;
+
+    loading = false;
+    notifyListeners();
   }
 
   void updateOpenTime(String? value) {
@@ -41,8 +41,8 @@ class SalonOptionsProvider with ChangeNotifier {
       final DateTime? newDate = value.toDateTime();
 
       if (newDate != null) {
-        salonInformationModel.openTime =
-            salonInformationModel.openTime.copyWith(hour: newDate.hour, minute: newDate.minute);
+        salonInformationModel.openTime = salonInformationModel.openTime
+            .copyWith(hour: newDate.hour, minute: newDate.minute);
         notifyListeners();
       }
     }
@@ -53,17 +53,44 @@ class SalonOptionsProvider with ChangeNotifier {
       final DateTime? newDate = value.toDateTime();
 
       if (newDate != null) {
-        salonInformationModel.closeTime =
-            salonInformationModel.openTime.copyWith(hour: newDate.hour, minute: newDate.minute);
+        salonInformationModel.closeTime = salonInformationModel.openTime
+            .copyWith(hour: newDate.hour, minute: newDate.minute);
         notifyListeners();
       }
+    }
+  }
+
+  Future<void> changeAvailability(bool? value) async {
+    if (value != null) {
+      if (value == false) {
+        final bool areYouSure = await Popup().show(
+              title: 'Are you Sure?',
+              content:
+                  'If you close bookings customers won\'t be able to see your salon.',
+              actions: [
+                TextButton(
+                  onPressed: () =>
+                      Navigator.pop(Routes.navigator.currentContext!, true),
+                  child: const Text('Continue'),
+                )
+              ],
+            ) ??
+            false;
+        if (areYouSure) {
+          salonInformationModel.isAvailable = value;
+        }
+      } else {
+        salonInformationModel.isAvailable = value;
+      }
+      notifyListeners();
     }
   }
 
   bool check() {
     if (!formKey.currentState!.validate()) {
       showMessageError('Please fill all the fields');
-    } else if (salonInformationModel.closeTime.isBefore(salonInformationModel.openTime)) {
+    } else if (salonInformationModel.closeTime
+        .isBefore(salonInformationModel.openTime)) {
       showMessageError('Closing time cannot be before than opening time');
     } else {
       return true;
@@ -73,9 +100,11 @@ class SalonOptionsProvider with ChangeNotifier {
 
   Future<void> save() async {
     if (check()) {
-      salonInformationModel.address = tcAddress.text;
       salonInformationModel.salonName = tcName.text;
-      await _dbSalonInformation.createSalonInfo(salonInformationModel);
+      salonInformationModel.address = tcAddress.text;
+      salonInformationModel.phone = tcPhone.text;
+
+      await _dbSalon.updateSalonInformation(salonInformationModel);
       showMessageSuccessful('Saved');
 
       Routes.goTo(Routes.splashRoute);

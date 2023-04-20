@@ -40,14 +40,24 @@ class HomeSalonScreen extends StatelessWidget {
                       CompleteProfileWidget(
                         titleText: 'You haven\'t added services',
                         buttonText: 'Add',
-                        onPressed: () => Routes.goTo(Routes.addServiceRoute, enableBack: true),
+                        onPressed: () => Routes.goTo(Routes.addServiceRoute,
+                            enableBack: true),
+                      ),
+                    ],
+                    if (!provider.hasEmployees()) ...[
+                      CompleteProfileWidget(
+                        titleText: 'Your haven\'t added employees',
+                        buttonText: 'Add',
+                        onPressed: () => Routes.goTo(Routes.addEmployeeRoute,
+                            enableBack: true),
                       ),
                     ],
                     if (!provider.isProfileCompleted) ...[
                       CompleteProfileWidget(
-                        titleText: "Your profile isn\'t complete",
+                        titleText: 'Your profile isn\'t complete',
                         buttonText: 'Complete',
-                        onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
+                        onPressed: () => Routes.goTo(Routes.salonOptionsRoute,
+                            enableBack: true),
                       ),
                     ],
                     if (provider.bookings.isEmpty) ...[
@@ -77,13 +87,15 @@ class HomeSalonScreen extends StatelessWidget {
                               ),
                               elevation: 4,
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
+                                padding:
+                                    const EdgeInsets.fromLTRB(24, 12, 24, 12),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                        text: '${AppLocalizations.of(context)!.booking_salon} :',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_salon} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -101,14 +113,16 @@ class HomeSalonScreen extends StatelessWidget {
                                     ),
                                     RichText(
                                       text: TextSpan(
-                                        text: '${AppLocalizations.of(context)!.booking_date} :',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_date} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: booking.date.showDateAndTime(),
+                                            text:
+                                                booking.date.showDateAndTime(),
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
@@ -119,14 +133,16 @@ class HomeSalonScreen extends StatelessWidget {
                                     ),
                                     RichText(
                                       text: TextSpan(
-                                        text: '${AppLocalizations.of(context)!.booking_price} :',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_price} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: '\$${booking.getTotalPrice()}',
+                                            text:
+                                                '\$${booking.getTotalPrice()}',
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
@@ -138,14 +154,16 @@ class HomeSalonScreen extends StatelessWidget {
                                     //RICHTXT DURATION
                                     RichText(
                                       text: TextSpan(
-                                        text: '${AppLocalizations.of(context)!.booking_duration} :',
+                                        text:
+                                            '${AppLocalizations.of(context)!.booking_duration} :',
                                         style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: minutesToHours(booking.getDurationInMinutes()),
+                                            text: minutesToHours(
+                                                booking.getDurationInMinutes()),
                                             style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.normal,
@@ -156,7 +174,9 @@ class HomeSalonScreen extends StatelessWidget {
                                     ),
                                     //LISTVIEW BUILDER SERVICES
                                     Text(
-                                      booking.services.length > 1 ? '${AppLocalizations.of(context)!.booking_services} :' : '${AppLocalizations.of(context)!.booking_service} :',
+                                      booking.services.length > 1
+                                          ? '${AppLocalizations.of(context)!.booking_services} :'
+                                          : '${AppLocalizations.of(context)!.booking_service} :',
                                       style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -227,7 +247,7 @@ class CompleteProfileWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(right: 6),
                 child: Text(
-                  titleText * 2,
+                  titleText,
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
