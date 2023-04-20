@@ -37,7 +37,10 @@
   "add_btn" : "Add",
   "error_msg_booking_screen": "This time is not available",
   "no_booking": "You have no bookings",
-  "your_bookings": "Your bookings"
+  "your_bookings": "Your bookings",
+  "morning_time": "AM",
+  "opens_at": "Opens at",
+  "closes_at": "Closes at"
 
 
 }

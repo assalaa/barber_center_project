@@ -33,6 +33,10 @@
   "add_btn" : "إضافة",
   "error_msg_booking_screen": "هذا الوقت غير متوفر",
   "no_booking": "ليس لديك حجوزات",
-  "your_bookings": "حجوزاتك"
+  "your_bookings": "حجوزاتك",
+  "open_time": "صباحا",
+  "close_time": "مساء",
+  "opens_at": "يفتح في",
+  "closes_at": "يغلق في"
 
 }

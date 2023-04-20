@@ -2,11 +2,11 @@ import 'package:barber_center/screens/home_customer_screen/home_screen_provider.
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
-import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/cards/featured_salons.dart';
 import 'package:barber_center/widgets/section_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +37,7 @@ class HomeCustomerScreen extends StatelessWidget {
                       children: [
                         //SEARCH BAR
                         Text(
-                          Strings.appName,
+                          AppLocalizations.of(context)!.appName,
                           style: Styles.headLineStyle1,
                         ),
 
@@ -88,10 +88,10 @@ class HomeCustomerScreen extends StatelessWidget {
                   Gap(AppLayout.getHeight(10)),
 
                   //FEATURED SALONS
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: SectionHeader(
-                      sectionTitle: Strings.featuredSalons,
+                      sectionTitle: AppLocalizations.of(context)!.featured_salons,
                       sectionSeeMore: '',
                     ),
                   ),
@@ -104,6 +104,7 @@ class HomeCustomerScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         final salon = provider.salons[index];
+                        final salonInfo = provider.salonsInformation[index];
                         return Padding(
                           padding: const EdgeInsets.only(left: 24, top: 4, bottom: 4),
                           child: GestureDetector(
@@ -118,6 +119,7 @@ class HomeCustomerScreen extends StatelessWidget {
                               name: salon.name,
                               location: salon.city,
                               image: salon.image,
+                              timeOpen: salonInfo.openTime.hour,
                             ),
                           ),
                         );
