@@ -30,6 +30,9 @@
   "complete_profile": "لم يكتمل ملفك الشخصي",
   "complete_profile_btn": "أكمل",
   "complete_add_services" : "لم تقم بإضافة الخدمات",
-  "add_btn" : "إضافة"
+  "add_btn" : "إضافة",
+  "error_msg_booking_screen": "هذا الوقت غير متوفر",
+  "no_booking": "ليس لديك حجوزات",
+  "your_bookings": "حجوزاتك"
 
 }
