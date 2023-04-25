@@ -7,8 +7,8 @@ class BookingModel {
   final String salonId;
   final String salonName;
   final String userName;
-  final String employeeId;
-  final String employeeName;
+  final String? employeeId;
+  final String? employeeName;
   final DateTime createAt;
   final DateTime date;
   final List<ServiceDetailModel> services;
@@ -37,8 +37,7 @@ class BookingModel {
       employeeName: json['employeeName'],
       createAt: json['createAt'].toDate().toLocal(),
       date: json['date'].toDate().toLocal(),
-      services: List<ServiceDetailModel>.from(
-          json['services'].map((x) => ServiceDetailModel.fromJson(x))),
+      services: List<ServiceDetailModel>.from(json['services'].map((x) => ServiceDetailModel.fromJson(x))),
     );
   }
 

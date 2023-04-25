@@ -62,19 +62,16 @@ class SalonDetailsScreen extends StatelessWidget {
 
                             //ICONS BACK AND FAVORITE
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 24),
+                              padding: const EdgeInsets.symmetric(horizontal: 24),
                               child: SafeArea(
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Material(
                                       color: Styles.greyColor.withOpacity(0.4),
                                       borderRadius: BorderRadius.circular(100),
                                       child: InkWell(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
+                                        borderRadius: BorderRadius.circular(100),
                                         onTap: () {
                                           Routes.back();
                                         },
@@ -83,8 +80,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                           height: AppLayout.getWidth(50),
                                           alignment: Alignment.center,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           child: const Padding(
                                             padding: EdgeInsets.only(left: 8.0),
@@ -120,8 +116,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                     vertical: AppLayout.getWidth(12),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         provider.salon.name,
@@ -142,37 +137,28 @@ class SalonDetailsScreen extends StatelessWidget {
                                           Gap(AppLayout.getWidth(5)),
                                           Text(
                                             provider.salon.city,
-                                            style: Styles.textStyle.copyWith(
-                                                fontSize: 20,
-                                                color: Styles.greyColor,
-                                                fontWeight: FontWeight.w400),
+                                            style: Styles.textStyle.copyWith(fontSize: 20, color: Styles.greyColor, fontWeight: FontWeight.w400),
                                           ),
                                         ],
                                       ),
                                       const SizedBox(height: 24),
-                                      Text('Services',
-                                          style: Styles.headLineStyle3),
+                                      Text('Services', style: Styles.headLineStyle3),
                                       const SizedBox(height: 12),
                                       SizedBox(
                                         height: 55,
                                         child: ListView.builder(
                                           scrollDirection: Axis.horizontal,
-                                          itemCount: provider
-                                              .salonService.services.length,
+                                          itemCount: provider.salonService.services.length,
                                           itemBuilder: (context, i) {
                                             return Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
+                                              padding: const EdgeInsets.all(8.0),
                                               child: CategoryButton(
-                                                serviceModel: provider
-                                                    .salonService.services[i],
+                                                serviceModel: provider.salonService.services[i],
                                                 onTap: () {
                                                   Future.delayed(
-                                                    const Duration(
-                                                        milliseconds: 130),
+                                                    const Duration(milliseconds: 130),
                                                     () {
-                                                      provider
-                                                          .selectCategory(i);
+                                                      provider.selectCategory(i);
                                                     },
                                                   );
                                                 },
@@ -194,10 +180,8 @@ class SalonDetailsScreen extends StatelessWidget {
                                             ),
                                             children: [
                                               TextSpan(
-                                                text:
-                                                    '${provider.salonService.durationInMin} minutes',
-                                                style:
-                                                    Styles.textStyle.copyWith(
+                                                text: '${provider.salonService.durationInMin} minutes',
+                                                style: Styles.textStyle.copyWith(
                                                   fontSize: 20,
                                                   color: Styles.primaryColor,
                                                   fontWeight: FontWeight.w400,
@@ -205,10 +189,8 @@ class SalonDetailsScreen extends StatelessWidget {
                                               ),
                                               const TextSpan(text: '\nPrice:'),
                                               TextSpan(
-                                                text:
-                                                    ' \$${provider.salonService.price}',
-                                                style:
-                                                    Styles.textStyle.copyWith(
+                                                text: ' \$${provider.salonService.price}',
+                                                style: Styles.textStyle.copyWith(
                                                   fontSize: 20,
                                                   color: Styles.primaryColor,
                                                   fontWeight: FontWeight.w400,
@@ -219,8 +201,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                         ),
                                       ),
                                       const SizedBox(height: 24),
-                                      Text('Barbers',
-                                          style: Styles.headLineStyle3),
+                                      Text('Barbers', style: Styles.headLineStyle3),
                                       const SizedBox(height: 12),
                                       Visibility(
                                         visible: provider.hasItemSelected(),
@@ -228,27 +209,19 @@ class SalonDetailsScreen extends StatelessWidget {
                                           height: 120,
                                           child: ListView.builder(
                                             scrollDirection: Axis.horizontal,
-                                            itemCount:
-                                                provider.employees.length,
+                                            itemCount: provider.employees.length,
                                             itemBuilder: (context, index) {
-                                              final EmployeeModel
-                                                  employeeModel =
-                                                  provider.employees[index];
+                                              final EmployeeModel employeeModel = provider.employees[index];
                                               return ServiceElement(
                                                 name: employeeModel.name,
                                                 image: employeeModel.image,
-                                                isSelected:
-                                                    provider.selectedEmployee ==
-                                                        employeeModel,
-                                                onTap: () =>
-                                                    provider.selectEmployee(
-                                                        employeeModel),
+                                                isSelected: provider.selectedEmployee == employeeModel,
+                                                onTap: () => provider.selectEmployee(employeeModel),
                                               );
                                             },
                                           ),
                                         ),
                                       ),
-                                      const Spacer(),
                                       Visibility(
                                         visible: provider.canBook(),
                                         child: LargeRoundedButton(
@@ -265,8 +238,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                                 enableBack: true,
                                               );
                                             } else {
-                                              showMessageError(
-                                                  'Please select a service');
+                                              showMessageError('Please select a service');
                                             }
                                           },
                                         ),
