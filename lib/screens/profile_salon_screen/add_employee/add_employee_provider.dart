@@ -52,6 +52,7 @@ class AddEmployeeProvider with ChangeNotifier {
         image: photoUrl,
         employerUid: userId,
         createAt: now,
+        servicesIds: [],
       );
       await _dbEmployee.addEmployee(userId, employeeModel);
       loading = false;

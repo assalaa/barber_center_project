@@ -4,6 +4,7 @@ class EmployeeModel {
   String image;
   String employerUid;
   DateTime createAt;
+  List<String> servicesIds;
 
   EmployeeModel({
     required this.id,
@@ -11,6 +12,7 @@ class EmployeeModel {
     required this.image,
     required this.employerUid,
     required this.createAt,
+    required this.servicesIds,
   });
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class EmployeeModel {
       image: json['image'],
       employerUid: json['employerUid'],
       createAt: DateTime.parse(json['createAt']),
+      servicesIds: List<String>.from(json['services'] ?? []),
     );
   }
 
@@ -29,5 +32,6 @@ class EmployeeModel {
         'image': image,
         'employerUid': employerUid,
         'createAt': createAt.toString(),
+        'services': servicesIds,
       };
 }
