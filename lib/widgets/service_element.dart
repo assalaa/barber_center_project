@@ -1,41 +1,75 @@
-import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class ServiceElement extends StatelessWidget {
-  final String serviceImage;
-  final String serviceName;
   const ServiceElement({
-    required this.serviceName,
-    required this.serviceImage,
+    required this.name,
+    required this.image,
+    required this.isSelected,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
+  final String name;
+  final String? image;
+  final bool isSelected;
+  final Function()? onTap;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            width: AppLayout.getWidth(70),
-            height: AppLayout.getHeight(70),
+    return InkWell(
+      onTap: onTap,
+      splashColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      borderRadius: BorderRadius.circular(8),
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(5),
+            width: 100,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
+              color: isSelected ? Colors.grey.shade400 : Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(8),
             ),
-            child: Image.network(
-              serviceImage,
-              fit: BoxFit.fill,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CircleAvatar(
+                  radius: 32,
+                  backgroundImage: image != null ? NetworkImage(image!) : null,
+                ),
+                const SizedBox(height: 6),
+                FittedBox(
+                  child: Text(
+                    name,
+                    style: Styles.textStyle
+                        .copyWith(color: Colors.black, fontSize: 14),
+                  ),
+                )
+              ],
             ),
           ),
-        ),
-        Gap(AppLayout.getHeight(10)),
-        Text(
-          serviceName,
-          style: Styles.textStyle.copyWith(color: Styles.greyColor),
-        )
-      ],
+          isSelected
+              ? const Positioned(
+                  top: 0,
+                  right: 0,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.green,
+                    radius: 12,
+                    child: Padding(
+                      padding: EdgeInsets.all(2),
+                      child: FittedBox(
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ))
+              : const SizedBox.shrink(),
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:barber_center/main.dart';
+import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
@@ -79,6 +80,7 @@ class Routes {
             builder: (_) => BookingScreen(
                   salonService: (args as List)[0] as SalonServiceModel,
                   salonInformation: (args)[1] as SalonInformationModel,
+                  employeeModel: (args)[2] as EmployeeModel,
                 ));
       //ADMIN PAGES
       case homeAdminRoute:
