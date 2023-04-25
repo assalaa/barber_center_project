@@ -18,6 +18,11 @@ class HomeScreenProvider with ChangeNotifier {
   List<SalonServiceModel> salonsServices = [];
   List<SalonInformationModel> salonsInformation = [];
   bool loading = true;
+  late Locale locale;
+  void setLocale(Locale value) {
+    locale = value;
+    notifyListeners();
+  }
 
   HomeScreenProvider() {
     init();
@@ -39,11 +44,9 @@ class HomeScreenProvider with ChangeNotifier {
       getSalonsInformation(),
     ]);
     //remove salon where there is no services with same salonId
-    salons.removeWhere((element) =>
-        salonsServices.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) => salonsServices.indexWhere((e) => e.salonId == element.uid) == -1);
     //remove salon where there is no salonsInformation with same salonId
-    salons.removeWhere((element) =>
-        salonsInformation.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) => salonsInformation.indexWhere((e) => e.salonId == element.uid) == -1);
 
     loading = false;
     notifyListeners();
