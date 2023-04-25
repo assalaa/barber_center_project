@@ -42,48 +42,47 @@ class BookingScreen extends StatelessWidget {
               body: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          height: 120,
-                          child: ServiceElement(
-                            name: employeeModel.name,
-                            image: employeeModel.image,
-                            isSelected: true,
-                            onTap: null,
+                        CircleAvatar(
+                          backgroundColor: Colors.black,
+                          radius: 36,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(provider.employeeModel.image),
+                            radius: 34,
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        const Icon(Icons.arrow_forward),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: SizedBox(
-                            height: 120,
-                            width: double.infinity,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: provider.salonService.services.length,
-                              itemBuilder: (context, index) {
-                                final ServiceDetailModel serviceDetailModel =
-                                    provider.salonService.services[index];
-                                final ServiceModel? serviceModel =
-                                    provider.services.firstWhereOrNull((element) =>
-                                        element.id ==
-                                        serviceDetailModel.serviceId);
-                                return ServiceElement(
-                                  name: serviceDetailModel.name,
-                                  image: serviceModel?.image,
-                                  isSelected: true,
-                                  onTap: null,
-                                );
-                              },
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              employeeModel.name,
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
+                            const SizedBox(height: 12),
+                            Text(
+                              salonService.services
+                                  .map((e) => e.name)
+                                  .toList()
+                                  .join(','),
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
+                  Divider(),
 
                   /// Calendar
                   CalendarWidget(provider: provider),

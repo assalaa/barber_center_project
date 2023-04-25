@@ -55,6 +55,10 @@ class BookingProvider extends ChangeNotifier {
     services = await _dbService.getServices();
   }
 
+  // String printServices() {
+  //   salonService.services.map((e) => e.name).toList();
+  // }
+
   void verifyStatus() {
     for (final booking in bookings) {
       for (final element in bookingTimes) {

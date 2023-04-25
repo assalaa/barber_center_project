@@ -6,6 +6,8 @@ import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/dropdown_button.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
+import 'package:barber_center/widgets/popup.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
@@ -66,6 +68,45 @@ class SalonOptionsScreen extends StatelessWidget {
                               validatorText: 'Please enter your phone number',
                               textInputType: TextInputType.phone,
                               validator: Validators.phoneNumberValidator,
+                            ),
+                            const Gap(32),
+                            InkWell(
+                              onTap: () => Popup().show(
+                                  title: 'Location',
+                                  content: 'NOW!',
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {},
+                                        child: const Text(
+                                            'ofc man no problem dude'))
+                                  ]),
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(
+                                      Icons.location_on_sharp,
+                                      color: Colors.white,
+                                      size: 32,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'Enter Location',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                             const Gap(32),
                             SalonInfo(

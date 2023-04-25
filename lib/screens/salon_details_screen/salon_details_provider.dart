@@ -17,7 +17,7 @@ class SalonDetailsProvider with ChangeNotifier {
   late SalonServiceModel salonService;
   late SalonInformationModel? salonInformation;
   late List<EmployeeModel> employees = [];
-  late EmployeeModel selectedEmployee;
+  EmployeeModel? selectedEmployee;
 
   bool loading = true;
 
@@ -32,7 +32,6 @@ class SalonDetailsProvider with ChangeNotifier {
       _getSalonInformation(uid),
       _getEmployees(uid),
     ]);
-    selectEmployee(employees.first);
 
     loading = false;
     notifyListeners();
@@ -69,6 +68,10 @@ class SalonDetailsProvider with ChangeNotifier {
   bool hasItemSelected() {
     salonService.setPriceAndDuration();
     return salonService.services.any((element) => element.selected);
+  }
+
+  bool hasEmployeeSelected() {
+    return selectedEmployee != null;
   }
 
   bool canBook() {
