@@ -120,6 +120,7 @@ class HomeCustomerScreen extends StatelessWidget {
                               location: salon.city,
                               image: salon.image,
                               timeOpen: salonInfo.openTime.hour,
+                              timeClose: salonInfo.closeTime.hour,
                             ),
                           ),
                         );

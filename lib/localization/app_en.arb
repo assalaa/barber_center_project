@@ -39,6 +39,7 @@
   "no_booking": "You have no bookings",
   "your_bookings": "Your bookings",
   "morning_time": "AM",
+  "evening_time": "PM",
   "opens_at": "Opens at",
   "closes_at": "Closes at"
 
