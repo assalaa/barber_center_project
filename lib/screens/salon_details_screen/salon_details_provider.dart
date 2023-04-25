@@ -17,6 +17,7 @@ class SalonDetailsProvider with ChangeNotifier {
   late SalonServiceModel salonService;
   late SalonInformationModel? salonInformation;
   late List<EmployeeModel> employees = [];
+  late EmployeeModel selectedEmployee;
 
   bool loading = true;
 
@@ -26,30 +27,37 @@ class SalonDetailsProvider with ChangeNotifier {
 
   Future<void> init(String uid) async {
     await Future.wait([
-      getSalon(uid),
-      getSalonService(uid),
-      getSalonInformation(uid),
-      getEmployees(uid),
+      _getSalon(uid),
+      _getSalonService(uid),
+      _getSalonInformation(uid),
+      _getEmployees(uid),
     ]);
+    selectEmployee(employees.first);
+
     loading = false;
     notifyListeners();
   }
 
-  Future<void> getSalon(String uid) async {
+  Future<void> _getSalon(String uid) async {
     salon = (await _dbUser.getUserByUid(uid))!;
   }
 
-  Future<void> getSalonService(String uid) async {
+  Future<void> _getSalonService(String uid) async {
     salonService = await _dbSalonService.getServicesByUserId(uid);
   }
 
-  Future<void> getSalonInformation(String uid) async {
+  Future<void> _getSalonInformation(String uid) async {
     salonInformation = await _databaseSalon.getSalonInformation(uid);
     notifyListeners();
   }
 
-  Future<void> getEmployees(String uid) async {
+  Future<void> _getEmployees(String uid) async {
     employees = await _dbEmployee.getEmployees(uid);
+    notifyListeners();
+  }
+
+  void selectEmployee(EmployeeModel employeeModel) {
+    selectedEmployee = employeeModel;
     notifyListeners();
   }
 

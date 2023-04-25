@@ -1,30 +1,38 @@
 import 'package:barber_center/helpers/extensions.dart';
+import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
+import 'package:barber_center/models/saloon_service_details_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
+import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
+import 'package:barber_center/widgets/service_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class BookingScreen extends StatelessWidget {
   final SalonServiceModel salonService;
   final SalonInformationModel salonInformation;
+  final EmployeeModel employeeModel;
   const BookingScreen({
     required this.salonService,
     required this.salonInformation,
+    required this.employeeModel,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookingProvider>(
-      create: (context) => BookingProvider(salonService, salonInformation),
+      create: (context) =>
+          BookingProvider(salonService, salonInformation, employeeModel),
       child: Consumer<BookingProvider>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -33,6 +41,50 @@ class BookingScreen extends StatelessWidget {
               ),
               body: Column(
                 children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          height: 120,
+                          child: ServiceElement(
+                            name: employeeModel.name,
+                            image: employeeModel.image,
+                            isSelected: true,
+                            onTap: null,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        const Icon(Icons.arrow_forward),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: SizedBox(
+                            height: 120,
+                            width: double.infinity,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: provider.salonService.services.length,
+                              itemBuilder: (context, index) {
+                                final ServiceDetailModel serviceDetailModel =
+                                    provider.salonService.services[index];
+                                final ServiceModel? serviceModel =
+                                    provider.services.firstWhereOrNull((element) =>
+                                        element.id ==
+                                        serviceDetailModel.serviceId);
+                                return ServiceElement(
+                                  name: serviceDetailModel.name,
+                                  image: serviceModel?.image,
+                                  isSelected: true,
+                                  onTap: null,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                   /// Calendar
                   CalendarWidget(provider: provider),
                   Expanded(
@@ -150,7 +202,8 @@ class HoursList extends StatelessWidget {
         itemBuilder: (context, index) {
           final DateTime? time = provider.bookingTimes[index].time.toDateTime();
 
-          final bool isSelected = provider.selectedDate.hour == time?.hour && provider.selectedDate.minute == time?.minute;
+          final bool isSelected = provider.selectedDate.hour == time?.hour &&
+              provider.selectedDate.minute == time?.minute;
 
           final bool isAvailable = provider.bookingTimes[index].available;
 
@@ -159,7 +212,8 @@ class HoursList extends StatelessWidget {
               if (isAvailable) {
                 provider.onTimePressed(time);
               } else {
-                showMessageError(AppLocalizations.of(context)!.error_msg_booking_screen);
+                showMessageError(
+                    AppLocalizations.of(context)!.error_msg_booking_screen);
               }
             },
             child: Card(

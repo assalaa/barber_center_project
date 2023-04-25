@@ -1,10 +1,13 @@
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_booking.dart';
 import 'package:barber_center/database/db_profile.dart';
+import 'package:barber_center/database/db_services.dart';
 import 'package:barber_center/models/booking_model.dart';
 import 'package:barber_center/models/booking_time_model.dart';
+import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
+import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
@@ -12,16 +15,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class BookingProvider extends ChangeNotifier {
-  final SalonServiceModel salonService;
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseBooking _dbBooking = DatabaseBooking();
   final DatabaseUser _dbUser = DatabaseUser();
+  final DatabaseService _dbService = DatabaseService();
 
+  final SalonServiceModel salonService;
   final SalonInformationModel salonInformationModel;
+  final EmployeeModel employeeModel;
+
   List<BookingModel> bookings = [];
   List<BookingTimeModel> bookingTimes = [];
-
   List<String> workingTimes = [];
+
+  List<ServiceModel> services = [];
 
   DateTime selectedDate = DateTime.now();
   bool timeSelected = false;
@@ -31,6 +38,7 @@ class BookingProvider extends ChangeNotifier {
   BookingProvider(
     this.salonService,
     this.salonInformationModel,
+    this.employeeModel,
   ) {
     _init();
   }
@@ -38,8 +46,13 @@ class BookingProvider extends ChangeNotifier {
   Future<void> _init() async {
     setWorkingTimes();
     await getBookingsByDateTime(selectedDate);
+    await getServices();
     loading = false;
     notifyListeners();
+  }
+
+  Future<void> getServices() async {
+    services = await _dbService.getServices();
   }
 
   void verifyStatus() {
@@ -48,7 +61,8 @@ class BookingProvider extends ChangeNotifier {
         final String hour =
             '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
 
-        final String hour2 = '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
+        final String hour2 =
+            '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
 
         final int minutesUsed = booking.getDurationInMinutes();
         int card = minutesUsed ~/ 30;
@@ -87,7 +101,8 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
-    bookings = await _dbBooking.getBookingFromSalonInDay(salonService.salonId, dateTime);
+    bookings = await _dbBooking.getBookingFromSalonInDay(
+        salonService.salonId, dateTime);
     setBookingTimes();
     verifyStatus();
     notifyListeners();
@@ -109,6 +124,8 @@ class BookingProvider extends ChangeNotifier {
       salonName: salonInformationModel.salonName,
       userId: user.uid,
       salonId: salonService.salonId,
+      employeeId: employeeModel.id,
+      employeeName: employeeModel.name,
       createAt: now,
       date: selectedDate,
       services: salonService.services,

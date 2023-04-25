@@ -236,9 +236,9 @@ class EmployeeSlider extends StatelessWidget {
             employeeModel?.name ?? AppLocalizations.of(context)!.add_employees;
         final String? image = employeeModel?.image;
 
-        final Function()? onTap = employeeModel == null
+        final Function() onTap = employeeModel == null
             ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true)
-            : null;
+            : () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true);
 
         final Function()? onDelete =
             employeeModel != null ? () => deleteFunction(employeeModel) : null;
@@ -278,19 +278,22 @@ class ListItem extends StatelessWidget {
             aspectRatio: 1 / 1.6,
             child: Column(
               children: [
-                onTap != null
+                onDelete == null
                     ? AddButton(onTap: onTap)
-                    : AspectRatio(
-                        aspectRatio: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            image: image == null
-                                ? null
-                                : DecorationImage(
-                                    image: NetworkImage(image!),
-                                    fit: BoxFit.cover),
+                    : InkWell(
+                        onTap: null, // onTap,
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              image: image == null
+                                  ? null
+                                  : DecorationImage(
+                                      image: NetworkImage(image!),
+                                      fit: BoxFit.cover),
+                            ),
                           ),
                         ),
                       ),
