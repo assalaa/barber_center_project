@@ -53,8 +53,6 @@ class ProfileSalonProvider with ChangeNotifier {
 
   Future<void> fetchEmployees() async {
     employees = await _dbEmployee.getEmployees(uid);
-
-    print(employees.first.servicesIds);
   }
 
   Future<void> fetchServices() async {

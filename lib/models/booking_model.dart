@@ -7,6 +7,8 @@ class BookingModel {
   final String salonId;
   final String salonName;
   final String userName;
+  final String employeeId;
+  final String employeeName;
   final DateTime createAt;
   final DateTime date;
   final List<ServiceDetailModel> services;
@@ -17,6 +19,8 @@ class BookingModel {
     required this.salonName,
     required this.userName,
     required this.salonId,
+    required this.employeeId,
+    required this.employeeName,
     required this.createAt,
     required this.date,
     required this.services,
@@ -29,6 +33,8 @@ class BookingModel {
       userName: json['userName'] ?? 'Ariel Gómez',
       userId: json['userId'],
       salonId: json['salonId'],
+      employeeId: json['employeeId'],
+      employeeName: json['employeeName'],
       createAt: json['createAt'].toDate().toLocal(),
       date: json['date'].toDate().toLocal(),
       services: List<ServiceDetailModel>.from(
@@ -42,6 +48,8 @@ class BookingModel {
         'salonName': salonName,
         'userName': userName,
         'salonId': salonId,
+        'employeeId': employeeId,
+        'employeeName': employeeName,
         'createAt': Timestamp.fromDate(createAt.toUtc()),
         'date': Timestamp.fromDate(date.toUtc()),
         'services': List<dynamic>.from(services.map((x) => x.toJson())),
