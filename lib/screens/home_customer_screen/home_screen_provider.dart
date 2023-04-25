@@ -44,14 +44,11 @@ class HomeScreenProvider with ChangeNotifier {
       getSalonsInformation(),
     ]);
     //remove salon where there is no services with same salonId
-    salons.removeWhere((element) =>
-        salonsServices.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) => salonsServices.indexWhere((e) => e.salonId == element.uid) == -1);
     //remove salon where there is no salonsInformation with same salonId
-    salons.removeWhere((element) =>
-        salonsInformation.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) => salonsInformation.indexWhere((e) => e.salonId == element.uid) == -1);
     //remove salon where there is no employees with same salonId
-    salons.removeWhere((element) =>
-        salonEmployees.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) => salonEmployees.indexWhere((e) => e.salonId == element.uid) == -1);
 
     loading = false;
     notifyListeners();
