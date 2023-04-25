@@ -24,8 +24,10 @@ class BookingStoryCustomerScreen extends StatelessWidget {
               toolbarHeight: 0,
             ),
             body: SingleChildScrollView(
+              physics: const ScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Gap(AppLayout.getHeight(10)),
                   Padding(
@@ -54,10 +56,13 @@ class BookingStoryCustomerScreen extends StatelessWidget {
                     )
                   ] else ...[
                     ListView.builder(
-                      itemCount: provider.bookings.length,
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
+                      itemCount: provider.bookings.length * 2,
                       itemBuilder: (context, index) {
-                        final BookingModel booking = provider.bookings[index];
+                        final BookingModel booking =
+                            provider.bookings[(index / 2).floor()];
+
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
                           child: Card(
