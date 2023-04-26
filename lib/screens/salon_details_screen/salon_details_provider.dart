@@ -62,7 +62,20 @@ class SalonDetailsProvider with ChangeNotifier {
 
   void selectCategory(int i) {
     salonService.services[i].selected = !salonService.services[i].selected;
+
+    if (salonService.services[i].selected) {
+      checkEmployee(salonService.services[i].serviceId);
+    }
+
     notifyListeners();
+  }
+
+  void checkEmployee(String serviceId) {
+    if (selectedEmployee != null) {
+      if (!selectedEmployee!.servicesIds.contains(serviceId)) {
+        selectedEmployee = null;
+      }
+    }
   }
 
   bool hasItemSelected() {

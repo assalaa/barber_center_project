@@ -118,7 +118,7 @@ class FeaturedSalons extends StatelessWidget {
                         ),
                         Gap(AppLayout.getHeight(4)),
                         Text(
-                          ' ${timeClose.toString()} ${AppLocalizations.of(context)!.morning_time}',
+                          ' $timeClose ${AppLocalizations.of(context)!.morning_time}',
                           style: Styles.textStyle.copyWith(
                               color: Styles.orangeColor,
                               fontWeight: FontWeight.bold,

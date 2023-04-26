@@ -1,4 +1,5 @@
 import 'package:barber_center/helpers/extensions.dart';
+import 'package:barber_center/models/booking_time_model.dart';
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
@@ -37,61 +38,18 @@ class BookingScreen extends StatelessWidget {
               ),
               body: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.black,
-                          radius: 36,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(provider.employeeModel.image),
-                            radius: 34,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              employeeModel.name,
-                              style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              salonService.services
-                                  .map((e) => e.name)
-                                  .toList()
-                                  .join(','),
-                              style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  BarberInfo(
+                    employeeModel: employeeModel,
+                    salonService: salonService,
                   ),
                   const Divider(),
 
                   /// Calendar
                   CalendarWidget(provider: provider),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          /// Hours List
-                          HoursList(provider: provider),
-                        ],
-                      ),
-                    ),
-                  ),
+
+                  /// Hours List
+                  HoursList(provider: provider),
+
                   //BUTTON SAVE
 
                   SaveButton(
@@ -102,6 +60,65 @@ class BookingScreen extends StatelessWidget {
                 ],
               ));
         },
+      ),
+    );
+  }
+}
+
+class BarberInfo extends StatelessWidget {
+  const BarberInfo({
+    required this.employeeModel,
+    required this.salonService,
+    super.key,
+  });
+
+  final EmployeeModel employeeModel;
+  final SalonServiceModel salonService;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.black,
+            radius: 36,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(employeeModel.image),
+              radius: 34,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 4),
+                Text(
+                  employeeModel.name,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  salonService.services
+                      .where((element) => element.selected)
+                      .map((e) => e.name)
+                      .toList()
+                      .join(', '),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -147,7 +164,7 @@ class CalendarWidget extends StatelessWidget {
     return CalendarWeek(
       height: 120,
       minDate: DateTime.now(),
-      maxDate: DateTime.now().add(const Duration(days: 60)),
+      maxDate: DateTime.now().add(const Duration(days: 6)),
       onDatePressed: (dateTime) {
         provider.onDatePressed(dateTime);
       },
@@ -188,58 +205,92 @@ class HoursList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 1,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: provider.bookingTimes.length,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          final DateTime? time = provider.bookingTimes[index].time.toDateTime();
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 1,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: provider.bookingTimes.length,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final BookingTimeModel bookingTime =
+                      provider.bookingTimes[index];
 
-          final bool isSelected = provider.selectedDate.hour == time?.hour &&
-              provider.selectedDate.minute == time?.minute;
+                  final DateTime? time = bookingTime.time.toDateTime();
 
-          final bool isAvailable = provider.bookingTimes[index].available;
+                  final bool isSelected =
+                      provider.selectedDate.hour == time?.hour &&
+                          provider.selectedDate.minute == time?.minute;
 
-          return InkWell(
-            onTap: () {
-              if (isAvailable) {
-                provider.onTimePressed(time);
-              } else {
-                showMessageError(
-                    AppLocalizations.of(context)!.error_msg_booking_screen);
-              }
-            },
-            child: Card(
-              color: getColor(isSelected, isAvailable),
-              child: ListTile(
-                title: Text(
-                  provider.bookingTimes[index].time,
-                  style: TextStyle(
-                    color: getColor(isSelected, isAvailable, text: true),
-                  ),
-                ),
-                trailing: isSelected
-                    ? const Icon(Icons.done)
-                    : !isAvailable
-                        ? const Icon(Icons.calendar_month_outlined)
-                        : null,
+                  final bool isAvailable = bookingTime.available;
+
+                  final bool durationFits = bookingTime.durationFits;
+
+                  return InkWell(
+                    onTap: () {
+                      if (isAvailable) {
+                        if (!durationFits) {
+                          showMessageError(
+                              'Duration of the services you chose doesn\'t fit in this time interval');
+                        } else {
+                          provider.onTimePressed(time);
+                        }
+                      } else {
+                        showMessageError(AppLocalizations.of(context)!
+                            .error_msg_booking_screen);
+                      }
+                    },
+                    child: Card(
+                      color: getColor(isSelected, isAvailable, durationFits),
+                      child: ListTile(
+                        title: Text(
+                          provider.bookingTimes[index].time,
+                          style: TextStyle(
+                            color: getColor(
+                                isSelected, isAvailable, durationFits,
+                                text: true),
+                          ),
+                        ),
+                        trailing:
+                            getIcon(isSelected, isAvailable, durationFits),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
 
-  Color getColor(bool isSelected, bool available, {bool text = false}) {
-    if (available == false) {
-      return text ? Colors.white : Colors.red;
+  Icon? getIcon(bool isSelected, bool available, bool durationFits) {
+    if (isSelected) {
+      return const Icon(Icons.done);
+    } else if (!available) {
+      return const Icon(Icons.calendar_month_outlined);
+    } else if (!durationFits) {
+      return const Icon(
+        Icons.timer_off_sharp,
+      );
     }
-    if (text == false) {
-      return isSelected ? Styles.primaryColor : Colors.white;
+    return null;
+  }
+
+  Color getColor(bool isSelected, bool available, bool durationFits,
+      {bool text = false}) {
+    if (available) {
+      if (isSelected) {
+        return text ? Colors.white : Styles.primaryColor;
+      } else if (!durationFits) {
+        return text ? Colors.white : Colors.grey;
+      }
+      return text ? Colors.black : Colors.white;
     }
-    return isSelected ? Colors.white : Colors.black;
+    return text ? Colors.white : Colors.red;
   }
 }

@@ -27,7 +27,6 @@ class BookingStoryCustomerScreen extends StatelessWidget {
               physics: const ScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Gap(AppLayout.getHeight(10)),
                   Padding(
