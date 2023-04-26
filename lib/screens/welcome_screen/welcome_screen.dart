@@ -1,4 +1,6 @@
 import 'package:barber_center/main.dart';
+import 'package:barber_center/models/language.dart';
+import 'package:barber_center/services/language_constants.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
@@ -35,10 +37,36 @@ class WelcomeScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.language,
-                        style: Styles.textStyle,
-                      ),
+                      DropdownButton(
+                          hint: Text(
+                            AppLocalizations.of(context)!.change_language,
+                            style: TextStyle(color: Styles.brightTextColor),
+                          ),
+                          items: Language.languageList()
+                              .map<DropdownMenuItem<Language>>(
+                                (e) => DropdownMenuItem<Language>(
+                                  value: e,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Text(
+                                        e.flag,
+                                        style: const TextStyle(fontSize: 30),
+                                      ),
+                                      Text(e.name)
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (
+                            Language? language,
+                          ) async {
+                            if (language != null) {
+                              Locale _locale = await setLocale(language.languageCode);
+                              MyApp.setLocale(context, _locale);
+                            }
+                          }),
                     ],
                   ),
                   const Spacer(),
@@ -51,6 +79,11 @@ class WelcomeScreen extends StatelessWidget {
                           style: Styles.headLineStyle1.copyWith(color: Styles.brightTextColor),
                         ),
                         Gap(AppLayout.getHeight(5)),
+                        Image.asset(
+                          height: 150,
+                          width: 150,
+                          Assets.logoNameArabicBright,
+                        ),
                         Text(
                           textAlign: TextAlign.center,
                           AppLocalizations.of(context)!.thanking,

@@ -1,7 +1,7 @@
 {
   "language": " العربية",
   "appName": "صالونك",
-  "welcome": "مرحبا بك في صالونك",
+  "welcome": "مرحبا بك على",
   "thanking": "شكرا لك على استخدام التطبيقة :)",
   "salon": "صاحب صالون",
   "customer": "زبون",
@@ -37,6 +37,7 @@
   "morning_time": "صباحا",
   "evening_time": "مساء",
   "opens_at": "يفتح في",
-  "closes_at": "يغلق في"
+  "closes_at": "يغلق في",
+  "change_language": "اختر لغة"
 
 }
