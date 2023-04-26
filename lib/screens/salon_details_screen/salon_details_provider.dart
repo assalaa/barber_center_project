@@ -17,7 +17,7 @@ class SalonDetailsProvider with ChangeNotifier {
   late SalonServiceModel salonService;
   late SalonInformationModel? salonInformation;
   late List<EmployeeModel> employees = [];
-  late EmployeeModel selectedEmployee;
+  EmployeeModel? selectedEmployee;
 
   bool loading = true;
 
@@ -32,7 +32,6 @@ class SalonDetailsProvider with ChangeNotifier {
       _getSalonInformation(uid),
       _getEmployees(uid),
     ]);
-    selectEmployee(employees.first);
 
     loading = false;
     notifyListeners();
@@ -63,12 +62,29 @@ class SalonDetailsProvider with ChangeNotifier {
 
   void selectCategory(int i) {
     salonService.services[i].selected = !salonService.services[i].selected;
+
+    if (salonService.services[i].selected) {
+      checkEmployee(salonService.services[i].serviceId);
+    }
+
     notifyListeners();
+  }
+
+  void checkEmployee(String serviceId) {
+    if (selectedEmployee != null) {
+      if (!selectedEmployee!.servicesIds.contains(serviceId)) {
+        selectedEmployee = null;
+      }
+    }
   }
 
   bool hasItemSelected() {
     salonService.setPriceAndDuration();
     return salonService.services.any((element) => element.selected);
+  }
+
+  bool hasEmployeeSelected() {
+    return selectedEmployee != null;
   }
 
   bool canBook() {

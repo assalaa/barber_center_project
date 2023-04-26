@@ -22,6 +22,9 @@ class SalonServiceModel {
     }
   }
 
+  List<ServiceDetailModel> get selectedServices =>
+      services.where((element) => element.selected).toList();
+
   factory SalonServiceModel.fromJson(Map json) {
     return SalonServiceModel(
       salonId: json['userId'],

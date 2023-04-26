@@ -55,7 +55,7 @@ class ServiceElement extends StatelessWidget {
                   top: 0,
                   right: 0,
                   child: CircleAvatar(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Styles.primaryColor,
                     radius: 12,
                     child: Padding(
                       padding: EdgeInsets.all(2),
