@@ -9,7 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/app_assets.dart';
+import 'package:barber_center/utils/app_assets.dart';
 
 class HomeCustomerScreen extends StatelessWidget {
   const HomeCustomerScreen({Key? key}) : super(key: key);

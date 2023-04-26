@@ -16,9 +16,9 @@ class FeaturedSalons extends StatelessWidget {
     required this.name,
     required this.location,
     required this.image,
-    Key? key,
     required this.timeOpen,
     required this.timeClose,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -68,7 +68,8 @@ class FeaturedSalons extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Styles.darkTextColor),
+                  style: Styles.headLineStyle3.copyWith(
+                      fontWeight: FontWeight.bold, color: Styles.darkTextColor),
                 ),
                 Gap(AppLayout.getHeight(5)),
                 Row(
@@ -98,8 +99,11 @@ class FeaturedSalons extends StatelessWidget {
                         ),
                         Gap(AppLayout.getHeight(4)),
                         Text(
-                          ' ${timeOpen.toString()} ${AppLocalizations.of(context)!.morning_time}',
-                          style: Styles.textStyle.copyWith(color: Styles.greenColor, fontWeight: FontWeight.bold, fontSize: 18),
+                          ' $timeOpen ${AppLocalizations.of(context)!.morning_time}',
+                          style: Styles.textStyle.copyWith(
+                              color: Styles.greenColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
                         )
                       ],
                     ),
@@ -114,8 +118,11 @@ class FeaturedSalons extends StatelessWidget {
                         ),
                         Gap(AppLayout.getHeight(4)),
                         Text(
-                          ' ${timeClose.toString()} ${AppLocalizations.of(context)!.morning_time}',
-                          style: Styles.textStyle.copyWith(color: Styles.orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
+                          ' $timeClose ${AppLocalizations.of(context)!.morning_time}',
+                          style: Styles.textStyle.copyWith(
+                              color: Styles.orangeColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
                         )
                       ],
                     ),

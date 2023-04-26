@@ -4,11 +4,13 @@ class FullName extends StatelessWidget {
   const FullName({
     required this.userName,
     this.salonName,
+    this.center = true,
     super.key,
   });
 
   final String userName;
   final String? salonName;
+  final bool center;
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +19,25 @@ class FullName extends StatelessWidget {
 
     const TextStyle salonStyle =
         TextStyle(fontSize: 18, fontWeight: FontWeight.normal);
-    return Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      mainAxisAlignment:
+          center ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
-        salonName != null
-            ? Text(salonName!,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
-            : const SizedBox.shrink(),
-        Text(userName, style: salonName == null ? customerStyle : salonStyle),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment:
+              center ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+          children: [
+            salonName != null
+                ? Text(salonName!,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold))
+                : const SizedBox.shrink(),
+            Text(userName,
+                style: salonName == null ? customerStyle : salonStyle),
+          ],
+        ),
       ],
-    ));
+    );
   }
 }

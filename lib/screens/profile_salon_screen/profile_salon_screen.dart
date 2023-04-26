@@ -280,20 +280,17 @@ class ListItem extends StatelessWidget {
               children: [
                 onDelete == null
                     ? AddButton(onTap: onTap)
-                    : InkWell(
-                        onTap: null, // onTap,
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              image: image == null
-                                  ? null
-                                  : DecorationImage(
-                                      image: NetworkImage(image!),
-                                      fit: BoxFit.cover),
-                            ),
+                    : AspectRatio(
+                        aspectRatio: 1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            image: image == null
+                                ? null
+                                : DecorationImage(
+                                    image: NetworkImage(image!),
+                                    fit: BoxFit.cover),
                           ),
                         ),
                       ),
@@ -369,10 +366,12 @@ class AddButton extends StatelessWidget {
 class LocationInfo extends StatelessWidget {
   const LocationInfo({
     this.location,
+    this.center = true,
     super.key,
   });
 
   final String? location;
+  final bool center;
 
   @override
   Widget build(BuildContext context) {
@@ -383,7 +382,8 @@ class LocationInfo extends StatelessWidget {
     const IconData locationIcon = Icons.location_on;
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment:
+          center ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
         const Icon(
           locationIcon,

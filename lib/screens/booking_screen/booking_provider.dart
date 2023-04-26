@@ -55,6 +55,10 @@ class BookingProvider extends ChangeNotifier {
     services = await _dbService.getServices();
   }
 
+  // String printServices() {
+  //   salonService.services.map((e) => e.name).toList();
+  // }
+
   void verifyStatus() {
     for (final booking in bookings) {
       for (final element in bookingTimes) {
@@ -75,10 +79,48 @@ class BookingProvider extends ChangeNotifier {
           if (card > 0) {
             final int index = bookingTimes.indexOf(element);
             for (int i = 0; i <= card; i++) {
-              bookingTimes[index + i].available = false;
+              if (index + i < bookingTimes.length) {
+                bookingTimes[index + i].available = false;
+              }
             }
           }
           element.available = false;
+        }
+      }
+    }
+
+    final List<BookingTimeModel> availableBookingTimes =
+        bookingTimes.where((element) => element.available).toList();
+
+    final int serviceDuration = salonService.durationInMin;
+
+    int cardNeeded = serviceDuration ~/ 30 + 1;
+
+    if (serviceDuration % 30 == 0) {
+      cardNeeded--;
+    }
+
+    for (final bookingTime in availableBookingTimes) {
+      final int bookingTimeIndex = bookingTimes.indexOf(bookingTime);
+
+      bool durationFits = true;
+
+      if (bookingTimes.length - 1 < bookingTimeIndex + cardNeeded - 1) {
+        durationFits = false;
+      } else {
+        durationFits = List<BookingTimeModel>.generate(cardNeeded - 1,
+                (index) => bookingTimes[bookingTimeIndex + index + 1])
+            .every((element) => element.available);
+      }
+
+      if (!durationFits) {
+        for (var i = 0; i < cardNeeded; i++) {
+          if (bookingTimeIndex + i < bookingTimes.length) {
+            if (!bookingTimes[bookingTimeIndex + i].available) {
+              break;
+            }
+            bookingTimes[bookingTimeIndex + i].durationFits = false;
+          }
         }
       }
     }
@@ -118,6 +160,7 @@ class BookingProvider extends ChangeNotifier {
     final now = DateTime.now();
     final User user = _dbAuth.getCurrentUser()!;
     final UserModel userModel = (await _dbUser.getUserByUid(user.uid))!;
+
     final BookingModel bookingModel = BookingModel(
       id: dateToId(now),
       userName: userModel.name,
@@ -128,7 +171,7 @@ class BookingProvider extends ChangeNotifier {
       employeeName: employeeModel.name,
       createAt: now,
       date: selectedDate,
-      services: salonService.services,
+      services: salonService.selectedServices,
     );
     await _dbBooking.creatingBooking(bookingModel);
     showMessageSuccessful('Booking successful');
@@ -141,6 +184,7 @@ class BookingProvider extends ChangeNotifier {
 
   void onDatePressed(DateTime dateTime) {
     selectedDate = dateTime;
+    timeSelected = false;
     getBookingsByDateTime(selectedDate);
   }
 
