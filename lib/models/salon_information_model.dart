@@ -8,7 +8,7 @@ class SalonInformationModel {
   DateTime openTime;
   DateTime closeTime;
   bool isAvailable;
-
+  
   SalonInformationModel({
     required this.salonId,
     required this.salonName,

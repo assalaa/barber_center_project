@@ -1,20 +1,16 @@
 import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
-import 'package:barber_center/models/saloon_service_details_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
-import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
-import 'package:barber_center/widgets/service_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_week/flutter_calendar_week.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class BookingScreen extends StatelessWidget {
@@ -82,7 +78,7 @@ class BookingScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
 
                   /// Calendar
                   CalendarWidget(provider: provider),

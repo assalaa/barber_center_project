@@ -7,7 +7,6 @@ import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/dropdown_button.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:barber_center/widgets/popup.dart';
-import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
