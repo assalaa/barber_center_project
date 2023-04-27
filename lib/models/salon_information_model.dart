@@ -1,3 +1,4 @@
+import 'package:barber_center/models/location_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SalonInformationModel {
@@ -8,7 +9,8 @@ class SalonInformationModel {
   DateTime openTime;
   DateTime closeTime;
   bool isAvailable;
-  
+  LocationModel? location;
+
   SalonInformationModel({
     required this.salonId,
     required this.salonName,
@@ -17,6 +19,7 @@ class SalonInformationModel {
     required this.openTime,
     required this.closeTime,
     required this.isAvailable,
+    this.location,
   });
 
   factory SalonInformationModel.fromJson(Map json) {
@@ -28,6 +31,9 @@ class SalonInformationModel {
       openTime: json['openTime'].toDate(),
       closeTime: json['closeTime'].toDate(),
       isAvailable: json['isAvailable'] ?? true,
+      location: json.containsKey('location')
+          ? LocationModel.fromJson(json['location'])
+          : null,
     );
   }
 
@@ -39,6 +45,7 @@ class SalonInformationModel {
         'openTime': Timestamp.fromDate(openTime.toUtc()),
         'closeTime': Timestamp.fromDate(closeTime.toUtc()),
         'isAvailable': isAvailable,
+        'location': location?.toJson(),
       };
 
   static SalonInformationModel emptySalon(String salonId) =>
