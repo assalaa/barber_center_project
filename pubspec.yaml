@@ -38,6 +38,8 @@ dependencies:
     sdk: flutter
   intl: ^0.17.0
   animated_splash_screen: ^1.3.0
+  shared_preferences: ^2.1.0
+
 
 #image
   photo_view: ^0.14.0
@@ -67,6 +69,19 @@ dev_dependencies:
 
 flutter:
 
+  fonts:
+    - family: decotype
+      fonts:
+        - asset: assets/fonts/decotype-thuluth-ii.ttf
+
+    - family: DancingScript
+      fonts:
+        - asset: assets/fonts/DancingScript-VariableFont_wght.ttf
+
+
+
+
+
 
   uses-material-design: true
   generate: true
@@ -76,9 +91,13 @@ flutter:
     - assets/icons/
 
 
+
+
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/icon_bk.png"
   image_path_ios: "assets/images/icon_bk.png"
   remove_alpha_ios: true
+
+
