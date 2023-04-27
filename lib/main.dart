@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       onGenerateRoute: Routes.generateRoute,
       navigatorKey: Routes.navigator,
-      initialRoute: Routes.splashRoute,
+      initialRoute: Routes.welcomeRoute,
       title: 'El-Mezayen',
     );
   }

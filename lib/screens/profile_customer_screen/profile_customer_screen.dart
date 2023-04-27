@@ -8,6 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+import '../../main.dart';
+import '../../models/language.dart';
+import '../../services/language_constants.dart';
+import '../../utils/app_styles.dart';
+
 class ProfileCustomerScreen extends StatelessWidget {
   const ProfileCustomerScreen({super.key});
 
@@ -36,7 +41,42 @@ class ProfileCustomerScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LogoutButton(onPressed: provider.logout),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            LogoutButton(onPressed: provider.logout),
+                            DropdownButton(
+                                hint: Text(
+                                  AppLocalizations.of(context)!.change_language,
+                                  style: TextStyle(color: Styles.primaryColor),
+                                ),
+                                items: Language.languageList()
+                                    .map<DropdownMenuItem<Language>>(
+                                      (e) => DropdownMenuItem<Language>(
+                                        value: e,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: <Widget>[
+                                            Text(
+                                              e.flag,
+                                              style: const TextStyle(fontSize: 30),
+                                            ),
+                                            Text(e.name)
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (
+                                  Language? language,
+                                ) async {
+                                  if (language != null) {
+                                    Locale _locale = await setLocale(language.languageCode);
+                                    MyApp.setLocale(context, _locale);
+                                  }
+                                }),
+                          ],
+                        ),
                         const SizedBox(height: 32),
                         ProfilePicture(
                           image: provider.userModel.image,

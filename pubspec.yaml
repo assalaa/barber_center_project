@@ -69,6 +69,18 @@ dev_dependencies:
 
 flutter:
 
+  fonts:
+    - family: decotype
+      fonts:
+        - asset: assets/fonts/decotype-thuluth-ii.ttf
+
+    - family: DancingScript
+      fonts:
+        - asset: assets/fonts/DancingScript-VariableFont_wght.ttf
+
+
+
+
 
 
   uses-material-design: true
@@ -88,14 +100,4 @@ flutter_icons:
   image_path_ios: "assets/images/icon_bk.png"
   remove_alpha_ios: true
 
-
-  fonts:
-     - family: Inspiration
-       fonts:
-         - asset: fonts/Inspiration-Regular.ttf
-           style: italic
-     - family: DancingScript
-       fonts:
-         - asset: fonts/DancingScript-VariableFont_wght.ttf
-           weight: 700
 
