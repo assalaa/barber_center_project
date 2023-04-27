@@ -70,6 +70,7 @@ dev_dependencies:
 flutter:
 
 
+
   uses-material-design: true
   generate: true
 
@@ -78,9 +79,23 @@ flutter:
     - assets/icons/
 
 
+
+
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/icon_bk.png"
   image_path_ios: "assets/images/icon_bk.png"
   remove_alpha_ios: true
+
+
+  fonts:
+     - family: Inspiration
+       fonts:
+         - asset: fonts/Inspiration-Regular.ttf
+           style: italic
+     - family: DancingScript
+       fonts:
+         - asset: fonts/DancingScript-VariableFont_wght.ttf
+           weight: 700
+

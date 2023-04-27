@@ -10,8 +10,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import 'package:barber_center/utils/app_assets.dart';
-
 class HomeCustomerScreen extends StatelessWidget {
   const HomeCustomerScreen({Key? key}) : super(key: key);
 
@@ -39,10 +37,9 @@ class HomeCustomerScreen extends StatelessWidget {
                       children: [
                         //SEARCH BAR
 
-                        Image.asset(
-                          Assets.logoNameEnglishDark,
-                          width: 150,
-                          height: 150,
+                        const Text(
+                          'Data goes here',
+                          style: TextStyle(color: Colors.black, fontFamily: 'Inspiration', fontSize: 25),
                         ),
 
                         //NOTIFICATION ICON
