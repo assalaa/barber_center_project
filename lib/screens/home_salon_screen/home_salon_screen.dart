@@ -1,17 +1,16 @@
+import 'package:barber_center/models/booking_model.dart';
 import 'package:barber_center/screens/booking_story/booking_story_provider.dart';
 import 'package:barber_center/screens/home_salon_screen/home_salon_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
+import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-
-import '../../models/booking_model.dart';
-import '../../utils/utils.dart';
 
 class HomeSalonScreen extends StatelessWidget {
   const HomeSalonScreen({Key? key}) : super(key: key);

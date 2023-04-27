@@ -98,10 +98,10 @@ class SalonDetailsScreen extends StatelessWidget {
 
                       //BODY
                       Positioned(
-                        top: 280,
+                        top: AppLayout.getHeight(250),
                         child: Container(
                           width: AppLayout.getScreenWidth(),
-                          height: 900, // AppLayout.getScreenHeight(),
+                          height: AppLayout.getHeight(900), // AppLayout.getScreenHeight(),
                           decoration: const BoxDecoration(
                             color: Styles.backgroundColor,
                             borderRadius: BorderRadius.only(
@@ -121,15 +121,12 @@ class SalonDetailsScreen extends StatelessWidget {
                                 children: [
                                   FullName(
                                     userName: provider.salon.name,
-                                    salonName:
-                                        provider.salonInformation?.salonName,
+                                    salonName: provider.salonInformation?.salonName,
                                     center: false,
                                   ),
                                   Gap(AppLayout.getHeight(8)),
                                   LocationInfo(
-                                    location:
-                                        provider.salonInformation?.address ??
-                                            provider.salon.city,
+                                    location: provider.salonInformation?.address ?? provider.salon.city,
                                     center: false,
                                   ),
                                   const SizedBox(height: 16),
@@ -318,12 +315,7 @@ class Barbers extends StatelessWidget {
               itemBuilder: (context, index) {
                 final EmployeeModel employeeModel = provider.employees[index];
 
-                final bool showEmployee = provider.salonService.services.every(
-                    (element) =>
-                        (element.selected &&
-                            employeeModel.servicesIds
-                                .contains(element.serviceId)) ||
-                        (!element.selected));
+                final bool showEmployee = provider.salonService.services.every((element) => (element.selected && employeeModel.servicesIds.contains(element.serviceId)) || (!element.selected));
 
                 if (showEmployee) {
                   return ServiceElement(
