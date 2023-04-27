@@ -3,7 +3,6 @@ import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 
 class LocationProvider with ChangeNotifier {
   final formKey = GlobalKey<FormState>();

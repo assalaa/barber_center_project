@@ -44,7 +44,7 @@ class FeaturedSalons extends StatelessWidget {
           Container(
               margin: const EdgeInsets.all(8),
               width: AppLayout.getWidth(230),
-              height: AppLayout.getHeight(150),
+              height: AppLayout.getHeight(140),
               child: (image != null)
                   ? ClipRRect(
                       borderRadius: BorderRadius.circular(12),
@@ -68,8 +68,7 @@ class FeaturedSalons extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: Styles.headLineStyle3.copyWith(
-                      fontWeight: FontWeight.bold, color: Styles.darkTextColor),
+                  style: Styles.headLineStyle3.copyWith(fontWeight: FontWeight.bold, color: Styles.darkTextColor),
                 ),
                 Gap(AppLayout.getHeight(5)),
                 Row(
@@ -100,10 +99,7 @@ class FeaturedSalons extends StatelessWidget {
                         Gap(AppLayout.getHeight(4)),
                         Text(
                           ' $timeOpen ${AppLocalizations.of(context)!.morning_time}',
-                          style: Styles.textStyle.copyWith(
-                              color: Styles.greenColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                          style: Styles.textStyle.copyWith(color: Styles.greenColor, fontWeight: FontWeight.bold, fontSize: 18),
                         )
                       ],
                     ),
@@ -119,10 +115,7 @@ class FeaturedSalons extends StatelessWidget {
                         Gap(AppLayout.getHeight(4)),
                         Text(
                           ' $timeClose ${AppLocalizations.of(context)!.morning_time}',
-                          style: Styles.textStyle.copyWith(
-                              color: Styles.orangeColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
+                          style: Styles.textStyle.copyWith(color: Styles.orangeColor, fontWeight: FontWeight.bold, fontSize: 18),
                         )
                       ],
                     ),

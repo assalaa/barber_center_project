@@ -4,7 +4,7 @@
     "description": "the current language"
   },
   "appName": "Salounak",
-  "welcome": "Welcome to Salounak",
+  "welcome": "Welcome to ",
   "thanking": "Thank you for using our app :)",
   "salon": "Salon",
   "customer": "Customer",
@@ -41,5 +41,8 @@
   "morning_time": "AM",
   "evening_time": "PM",
   "opens_at": "Opens at",
-  "closes_at": "Closes at"
+  "closes_at": "Closes at",
+  "change_language": "Choose a language"
+
+
 }
