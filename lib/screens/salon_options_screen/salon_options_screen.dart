@@ -1,10 +1,12 @@
 import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/helpers/validators.dart';
 import 'package:barber_center/screens/salon_options_screen/salon_options_provider.dart';
+import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/dropdown_button.dart';
+import 'package:barber_center/widgets/labeled_text_field.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,7 +71,9 @@ class SalonOptionsScreen extends StatelessWidget {
                             ),
                             const Gap(32),
                             InkWell(
-                              onTap: () => provider.updateLocation(),
+                              onTap: () => Routes.goTo(Routes.locationRoute,
+                                  args: provider.salonInformationModel,
+                                  enableBack: true),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 4),
@@ -92,7 +96,7 @@ class SalonOptionsScreen extends StatelessWidget {
                                                 ?.getAddress ??
                                             'Enter Location',
                                         style: const TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 16,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -144,51 +148,6 @@ class SalonOptionsScreen extends StatelessWidget {
     );
   }
 }
-
-class LabeledTextField extends StatelessWidget {
-  const LabeledTextField({
-    required this.controller,
-    required this.title,
-    required this.hintText,
-    required this.validatorText,
-    this.textInputType = TextInputType.name,
-    this.validator,
-    super.key,
-  });
-
-  final String title;
-  final String hintText;
-  final String validatorText;
-  final TextEditingController controller;
-  final TextInputType textInputType;
-  final String? Function(String?)? validator;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: textInputType,
-      textInputAction: TextInputAction.next,
-      inputFormatters: textInputType == TextInputType.phone
-          ? [FilteringTextInputFormatter.digitsOnly]
-          : null,
-      validator: validator ??
-          (value) {
-            if (value!.isEmpty) {
-              return validatorText;
-            }
-            return null;
-          },
-      decoration: InputDecoration(
-        label: Text(title),
-        hintText: hintText,
-        hintStyle: const TextStyle(fontSize: 16),
-        labelStyle: const TextStyle(color: Colors.black),
-      ),
-    );
-  }
-}
-
 class SalonInfo extends StatelessWidget {
   const SalonInfo({
     required this.title,
