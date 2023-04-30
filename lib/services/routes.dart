@@ -117,10 +117,10 @@ class Routes {
     );
   }
 
-  static void back({bool refresh = true}) {
-    debugPrint('GO BACK <-');
+  static void back({bool returnDialog = false}) {
+    debugPrint('GO BACK <- ${returnDialog ? 'return $returnDialog' : ''}');
     if (Navigator.canPop(Routes.navigator.currentContext!)) {
-      Navigator.pop(Routes.navigator.currentContext!, refresh);
+      Navigator.pop(Routes.navigator.currentContext!, returnDialog);
     }
   }
 }

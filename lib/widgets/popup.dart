@@ -2,7 +2,22 @@ import 'package:barber_center/services/routes.dart';
 import 'package:flutter/material.dart';
 
 class Popup {
-  Future<bool?> show({
+  static Future<bool?> askLocation() async {
+    return await show(
+      title: 'Allow location',
+      content:
+          'So we can show you on the map and customers will find your salon easy',
+      actions: [
+        TextButton(
+            onPressed: () {
+              Routes.back(returnDialog: true);
+            },
+            child: const Text('Okay'))
+      ],
+    );
+  }
+
+  static Future<bool?> show({
     required String title,
     required List<Widget> actions,
     String content = '',
@@ -38,7 +53,7 @@ class CancelButton extends StatelessWidget {
     return TextButton(
       child: const Text('Cancel'),
       onPressed: () {
-        Navigator.of(context).pop(false);
+        Routes.back();
       },
     );
   }

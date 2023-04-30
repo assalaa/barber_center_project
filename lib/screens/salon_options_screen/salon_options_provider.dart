@@ -1,11 +1,16 @@
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/helpers/extensions.dart';
+import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
+import 'package:barber_center/services/location_service.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/popup.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class SalonOptionsProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
@@ -36,6 +41,33 @@ class SalonOptionsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateLocation() async {
+    final bool locationAllowed = (await Popup.askLocation()) ?? false;
+
+    if (locationAllowed) {
+      try {
+        final Position currentPosition =
+            await LocationService.getCurrentPosition();
+        debugPrint('$currentPosition');
+
+        final Placemark? placemark =
+            await LocationService.getPlacemarkFromLatLng(currentPosition);
+        debugPrint(placemark?.toJson().toString());
+
+        salonInformationModel.location = LocationModel(
+          geoPoint:
+              GeoPoint(currentPosition.latitude, currentPosition.longitude),
+          placemark: placemark,
+        );
+        notifyListeners();
+
+        await _dbSalon.updateSalonInformation(salonInformationModel);
+      } catch (e) {
+        debugPrint('$e');
+      }
+    }
+  }
+
   void updateOpenTime(String? value) {
     if (value != null) {
       final DateTime? newDate = value.toDateTime();
@@ -63,7 +95,7 @@ class SalonOptionsProvider with ChangeNotifier {
   Future<void> changeAvailability(bool? value) async {
     if (value != null) {
       if (value == false) {
-        final bool areYouSure = await Popup().show(
+        final bool areYouSure = await Popup.show(
               title: 'Are you Sure?',
               content:
                   'If you close bookings customers won\'t be able to see your salon.',
