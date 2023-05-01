@@ -37,4 +37,11 @@ class Validators {
     }
     return null;
   }
+
+  static String? cannotBeEmptyValidator(String? value) {
+    if (value!.trim().isEmpty) {
+      return 'This field cannot be empty';
+    }
+    return null;
+  }
 }

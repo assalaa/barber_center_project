@@ -29,11 +29,19 @@ class Strings {
   static const String signIn = 'Sing in';
   static const String signUp = 'Sing Up';
   //SECTIONS
-  
+
   static const String topBarbers = 'Top Barbers';
   static const String services = 'Services';
   static const String featuredBarbers = 'Featured barbers';
   static const String featuredSalons = 'Featured salons';
+
+  /// LOCATION SERVICE ERRORs
+  static const String locationServiceDisabled =
+      'Location services are disabled. Location services are disabled. Please enable location services on your device.';
+  static const String locationPermissionDenied =
+      'Location permissions are denied';
+  static const String locationPermissionDeniedForever =
+      'Location permissions are permanently denied. To continue, allow location permissions in the app settings. ';
 
   static const List<String> months = [
     'January',

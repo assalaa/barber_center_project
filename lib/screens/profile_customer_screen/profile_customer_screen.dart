@@ -1,4 +1,5 @@
 import 'package:barber_center/screens/profile_customer_screen/profile_customer_provider.dart';
+import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
@@ -8,10 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../../main.dart';
-import '../../models/language.dart';
-import '../../services/language_constants.dart';
-import '../../utils/app_styles.dart';
+import 'package:barber_center/main.dart';
+import 'package:barber_center/models/language.dart';
+import 'package:barber_center/services/language_constants.dart';
+import 'package:barber_center/utils/app_styles.dart';
 
 class ProfileCustomerScreen extends StatelessWidget {
   const ProfileCustomerScreen({super.key});
@@ -48,18 +49,21 @@ class ProfileCustomerScreen extends StatelessWidget {
                             DropdownButton(
                                 hint: Text(
                                   AppLocalizations.of(context)!.change_language,
-                                  style: TextStyle(color: Styles.primaryColor),
+                                  style: const TextStyle(
+                                      color: Styles.primaryColor),
                                 ),
                                 items: Language.languageList()
                                     .map<DropdownMenuItem<Language>>(
                                       (e) => DropdownMenuItem<Language>(
                                         value: e,
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
                                           children: <Widget>[
                                             Text(
                                               e.flag,
-                                              style: const TextStyle(fontSize: 30),
+                                              style:
+                                                  const TextStyle(fontSize: 30),
                                             ),
                                             Text(e.name)
                                           ],
@@ -71,8 +75,11 @@ class ProfileCustomerScreen extends StatelessWidget {
                                   Language? language,
                                 ) async {
                                   if (language != null) {
-                                    Locale _locale = await setLocale(language.languageCode);
-                                    MyApp.setLocale(context, _locale);
+                                    final Locale locale =
+                                        await setLocale(language.languageCode);
+                                    MyApp.setLocale(
+                                        Routes.navigator.currentContext!,
+                                        locale);
                                   }
                                 }),
                           ],

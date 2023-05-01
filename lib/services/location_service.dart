@@ -1,17 +1,18 @@
+import 'package:barber_center/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationService {
-  static Future<Placemark?> getPlacemarkFromLatLng(Position position) async {
+  static Future<Placemark?> getPlacemarkFromLatLng(
+      double latitude, double longitude) async {
     Placemark? place;
 
-    await placemarkFromCoordinates(position.latitude, position.longitude,
-            localeIdentifier: 'US')
+    await placemarkFromCoordinates(latitude, longitude, localeIdentifier: 'US')
         .then((placemarks) {
       place = placemarks[0];
     }).catchError((e) {
-      debugPrint(e);
+      debugPrint(e.toString());
     });
     return place;
   }
@@ -29,33 +30,29 @@ class LocationService {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // TODO(assala): Show a popup tells users to 'enable the location services of DEVICE'
-      return Future.error('Location services are disabled.');
+      return Future.error(const LocationServiceDisabledException());
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // TODO(assala): user doesn't give their location on purpose. We can tell: 'we couldnt have your location'
-
-        return Future.error('Location permissions are denied');
+        return Future.error(
+            const PermissionDeniedException(Strings.locationPermissionDenied));
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // TODO(assala): show a popup that tells click here to open location settings and allow the location for this APP
-
-      await Geolocator.openLocationSettings();
-
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(const PermissionDeniedException(
+          Strings.locationPermissionDeniedForever));
     }
 
     return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
   }
-
+  static Future<void> openLocationSettings() async {
+    await Geolocator.openLocationSettings();
+  }
   static double calculateDistance(
       Position startPosition, Position endPosition) {
     return Geolocator.distanceBetween(startPosition.latitude,

@@ -39,7 +39,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void didChangeDependencies() {
     myLocale = Localizations.localeOf(context);
-    print('my locale ${myLocale}');
     super.didChangeDependencies();
   }
 
@@ -60,7 +59,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(18), vertical: AppLayout.getHeight(31)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppLayout.getWidth(18),
+                  vertical: AppLayout.getHeight(31)),
               child: Column(
                 children: [
                   Row(
@@ -69,14 +70,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       DropdownButton(
                           hint: Text(
                             AppLocalizations.of(context)!.change_language,
-                            style: TextStyle(color: Styles.brightTextColor),
+                            style:
+                                const TextStyle(color: Styles.brightTextColor),
                           ),
                           items: Language.languageList()
                               .map<DropdownMenuItem<Language>>(
                                 (e) => DropdownMenuItem<Language>(
                                   value: e,
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       Text(
                                         e.flag,
@@ -92,20 +95,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             Language? language,
                           ) async {
                             if (language != null) {
-                              Locale _locale = await setLocale(language.languageCode);
-                              MyApp.setLocale(context, _locale);
+                              final Locale locale =
+                                  await setLocale(language.languageCode);
+                              MyApp.setLocale(
+                                  Routes.navigator.currentContext!, locale);
                             }
                           }),
                     ],
                   ),
                   const Spacer(),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: AppLayout.getHeight(50)),
+                    padding:
+                        EdgeInsets.symmetric(vertical: AppLayout.getHeight(50)),
                     child: Column(
                       children: [
                         Text(
                           AppLocalizations.of(context)!.welcome,
-                          style: Styles.headLineStyle1.copyWith(color: Styles.brightTextColor),
+                          style: Styles.headLineStyle1
+                              .copyWith(color: Styles.brightTextColor),
                         ),
                         Gap(AppLayout.getHeight(5)),
                         (myLocale == const Locale(ENGLISH, ''))
@@ -127,7 +134,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Gap(AppLayout.getHeight(50)),
                         Text(
                           AppLocalizations.of(context)!.proceed,
-                          style: Styles.headLineStyle1.copyWith(color: Styles.brightTextColor),
+                          style: Styles.headLineStyle1
+                              .copyWith(color: Styles.brightTextColor),
                         ),
                         Gap(AppLayout.getHeight(20)),
                         //BUTTONS START HERE
@@ -136,14 +144,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           children: [
                             LargeRoundedButton(
                               buttonName: AppLocalizations.of(context)!.salon,
-                              onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.SALON, enableBack: true),
+                              onTap: () => Routes.goTo(Routes.loginRoute,
+                                  args: KindOfUser.SALON, enableBack: true),
                             ),
                             Gap(AppLayout.getHeight(12)),
                             LargeRoundedButton(
-                              buttonName: AppLocalizations.of(context)!.customer,
+                              buttonName:
+                                  AppLocalizations.of(context)!.customer,
                               buttonColor: Styles.brightTextColor,
                               buttonTextColor: Styles.primaryColor,
-                              onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.CUSTOMER, enableBack: true),
+                              onTap: () => Routes.goTo(Routes.loginRoute,
+                                  args: KindOfUser.CUSTOMER, enableBack: true),
                             ),
                             Gap(AppLayout.getHeight(12)),
                           ],

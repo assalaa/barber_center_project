@@ -8,7 +8,7 @@ class LocationModel {
 
   LocationModel({
     required this.geoPoint,
-    required this.placemark,
+    this.placemark,
   });
 
   factory LocationModel.fromJson(Map json) => LocationModel(

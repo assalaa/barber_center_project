@@ -10,8 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/booking_model.dart';
-import '../../utils/utils.dart';
+import 'package:barber_center/models/booking_model.dart';
+import 'package:barber_center/utils/utils.dart';
 
 class HomeSalonScreen extends StatelessWidget {
   const HomeSalonScreen({Key? key}) : super(key: key);
