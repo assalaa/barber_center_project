@@ -96,8 +96,7 @@ class SalonOptionsProvider with ChangeNotifier {
   Future<void> changeAvailability(bool? value) async {
     if (value != null) {
       if (value == false) {
-        final bool closeBookings = await Popup.closeMyBookings();
-        if (closeBookings) {
+        if (await Popup.closeMyBookings()) {
           salonInformationModel.isAvailable = value;
         }
       } else {

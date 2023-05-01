@@ -50,11 +50,9 @@ class LocationService {
     return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
   }
-
   static Future<void> openLocationSettings() async {
     await Geolocator.openLocationSettings();
   }
-
   static double calculateDistance(
       Position startPosition, Position endPosition) {
     return Geolocator.distanceBetween(startPosition.latitude,
