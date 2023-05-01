@@ -135,8 +135,8 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                               },
                               child: FeaturedSalons(
                                 name: salon.name,
-                                location: salon.city,
                                 image: salon.image,
+                                location: salonInfo.location?.getAddress ?? salonInfo.address,
                                 timeOpen: salonInfo.openTime.hour,
                                 timeClose: salonInfo.closeTime.hour,
                               ),

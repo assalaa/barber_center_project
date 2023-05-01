@@ -126,7 +126,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                   ),
                                   Gap(AppLayout.getHeight(8)),
                                   LocationInfo(
-                                    location: provider.salonInformation?.address ?? provider.salon.city,
+                                    location: provider.salonInformation?.location?.getAddress ?? provider.salonInformation?.address,
                                     center: false,
                                   ),
                                   const SizedBox(height: 16),

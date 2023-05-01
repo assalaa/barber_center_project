@@ -60,9 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           SafeArea(
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: AppLayout.getWidth(18),
-                  vertical: AppLayout.getHeight(31)),
+              padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(18), vertical: AppLayout.getHeight(31)),
               child: Column(
                 children: [
                   Row(
@@ -71,8 +69,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       DropdownButton(
                           hint: Text(
                             AppLocalizations.of(context)!.change_language,
-                            style:
-                                const TextStyle(color: Styles.brightTextColor),
+                            style: const TextStyle(color: Styles.brightTextColor),
                           ),
                           items: Language.languageList()
                               .map<DropdownMenuItem<Language>>(
