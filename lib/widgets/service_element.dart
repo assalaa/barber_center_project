@@ -29,7 +29,8 @@ class ServiceElement extends StatelessWidget {
             width: 100,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-              color: isSelected ? Colors.grey.shade400 : Colors.grey.shade300,
+              boxShadow: isSelected ? [BoxShadow(color: Colors.grey.shade500, blurRadius: 12, offset: Offset(0, 6))] : [BoxShadow(color: Colors.grey.shade300, blurRadius: 12, offset: Offset(0, 6))],
+              color: isSelected ? Styles.darkBlueColor : Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
@@ -43,8 +44,7 @@ class ServiceElement extends StatelessWidget {
                 FittedBox(
                   child: Text(
                     name,
-                    style: Styles.textStyle
-                        .copyWith(color: Colors.black, fontSize: 14),
+                    style: isSelected ? Styles.textStyle.copyWith(color: Colors.white, fontSize: 14) : Styles.textStyle.copyWith(color: Colors.black, fontSize: 14),
                   ),
                 )
               ],

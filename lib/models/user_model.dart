@@ -7,7 +7,6 @@ class UserModel {
   String name;
   String? image;
   String email;
-  String city;
 
   UserModel({
     required this.uid,
@@ -15,7 +14,6 @@ class UserModel {
     required this.kindOfUser,
     required this.name,
     required this.email,
-    required this.city,
     this.image,
   });
 
@@ -27,7 +25,6 @@ class UserModel {
       name: map['name'],
       image: map['image'],
       email: map['email'],
-      city: map['city'],
     );
   }
 
@@ -39,10 +36,8 @@ class UserModel {
     data['name'] = name;
     data['image'] = image;
     data['email'] = email;
-    data['city'] = city;
     return data;
   }
-
 
   static KindOfUser getKindOfUser(String kindOfUser) {
     if (kindOfUser == 'CUSTOMER') {
@@ -73,6 +68,6 @@ class UserModel {
   }
 
   String print() {
-    return 'uid: $uid, kindOfUser: ${setKindOfUser()}, createAt: $createAt, name: $name, image: $image, email: $email, city: $city';
+    return 'uid: $uid, kindOfUser: ${setKindOfUser()}, createAt: $createAt, name: $name, image: $image, email: $email';
   }
 }

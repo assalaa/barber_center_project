@@ -36,7 +36,6 @@ class CreateAccountController with ChangeNotifier {
         email: email.text,
         createAt: DateTime.now(),
         name: name.text,
-        city: city.text,
         uid: user.uid,
         kindOfUser: kindOfUser,
       );
