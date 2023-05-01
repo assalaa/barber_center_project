@@ -16,7 +16,6 @@ class SalonOptionsProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseSalon _dbSalon = DatabaseSalon();
   late SalonInformationModel salonInformationModel;
-
   final TextEditingController tcAddress = TextEditingController();
   final TextEditingController tcName = TextEditingController();
   final TextEditingController tcPhone = TextEditingController();
@@ -31,8 +30,7 @@ class SalonOptionsProvider with ChangeNotifier {
   Future<void> init() async {
     final String userId = _dbAuth.getCurrentUser()!.uid;
 
-    salonInformationModel = (await _dbSalon.getSalonInformation(userId)) ??
-        SalonInformationModel.emptySalon(userId);
+    salonInformationModel = (await _dbSalon.getSalonInformation(userId)) ?? SalonInformationModel.emptySalon(userId);
     tcName.text = salonInformationModel.salonName;
     tcAddress.text = salonInformationModel.address;
     tcPhone.text = salonInformationModel.phone;
@@ -46,17 +44,14 @@ class SalonOptionsProvider with ChangeNotifier {
 
     if (locationAllowed) {
       try {
-        final Position currentPosition =
-            await LocationService.getCurrentPosition();
+        final Position currentPosition = await LocationService.getCurrentPosition();
         debugPrint('$currentPosition');
 
-        final Placemark? placemark =
-            await LocationService.getPlacemarkFromLatLng(currentPosition);
+        final Placemark? placemark = await LocationService.getPlacemarkFromLatLng(currentPosition);
         debugPrint(placemark?.toJson().toString());
 
         salonInformationModel.location = LocationModel(
-          geoPoint:
-              GeoPoint(currentPosition.latitude, currentPosition.longitude),
+          geoPoint: GeoPoint(currentPosition.latitude, currentPosition.longitude),
           placemark: placemark,
         );
         notifyListeners();
@@ -73,8 +68,7 @@ class SalonOptionsProvider with ChangeNotifier {
       final DateTime? newDate = value.toDateTime();
 
       if (newDate != null) {
-        salonInformationModel.openTime = salonInformationModel.openTime
-            .copyWith(hour: newDate.hour, minute: newDate.minute);
+        salonInformationModel.openTime = salonInformationModel.openTime.copyWith(hour: newDate.hour, minute: newDate.minute);
         notifyListeners();
       }
     }
@@ -85,8 +79,7 @@ class SalonOptionsProvider with ChangeNotifier {
       final DateTime? newDate = value.toDateTime();
 
       if (newDate != null) {
-        salonInformationModel.closeTime = salonInformationModel.openTime
-            .copyWith(hour: newDate.hour, minute: newDate.minute);
+        salonInformationModel.closeTime = salonInformationModel.openTime.copyWith(hour: newDate.hour, minute: newDate.minute);
         notifyListeners();
       }
     }
@@ -97,12 +90,10 @@ class SalonOptionsProvider with ChangeNotifier {
       if (value == false) {
         final bool areYouSure = await Popup.show(
               title: 'Are you Sure?',
-              content:
-                  'If you close bookings customers won\'t be able to see your salon.',
+              content: 'If you close bookings customers won\'t be able to see your salon.',
               actions: [
                 TextButton(
-                  onPressed: () =>
-                      Navigator.pop(Routes.navigator.currentContext!, true),
+                  onPressed: () => Navigator.pop(Routes.navigator.currentContext!, true),
                   child: const Text('Continue'),
                 )
               ],
@@ -121,8 +112,7 @@ class SalonOptionsProvider with ChangeNotifier {
   bool check() {
     if (!formKey.currentState!.validate()) {
       showMessageError('Please fill all the fields');
-    } else if (salonInformationModel.closeTime
-        .isBefore(salonInformationModel.openTime)) {
+    } else if (salonInformationModel.closeTime.isBefore(salonInformationModel.openTime)) {
       showMessageError('Closing time cannot be before than opening time');
     } else {
       return true;

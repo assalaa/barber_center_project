@@ -21,25 +21,12 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  // String currentCode = 'ar';
-  // @override
-  // Future<String> getLanguageCode() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   final String? languageCode = prefs.getString(LAGUAGE_CODE);
-  //   currentCode = languageCode!;
-  //   return currentCode;
-  // }
-  //
-  // void initState() {
-  //   getLanguageCode();
-  //   super.initState();
-  // }
   //TODO: change didChangeDepencies to provider
   Locale? myLocale;
   @override
   void didChangeDependencies() {
     myLocale = Localizations.localeOf(context);
-    print('my locale ${myLocale}');
+
     super.didChangeDependencies();
   }
 
