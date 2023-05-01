@@ -51,7 +51,8 @@ class SalonOptionsProvider with ChangeNotifier {
         debugPrint('$currentPosition');
 
         final Placemark? placemark =
-            await LocationService.getPlacemarkFromLatLng(currentPosition);
+            await LocationService.getPlacemarkFromLatLng(
+                currentPosition.latitude, currentPosition.longitude);
         debugPrint(placemark?.toJson().toString());
 
         salonInformationModel.location = LocationModel(
@@ -95,20 +96,8 @@ class SalonOptionsProvider with ChangeNotifier {
   Future<void> changeAvailability(bool? value) async {
     if (value != null) {
       if (value == false) {
-        final bool areYouSure = await Popup.show(
-              title: 'Are you Sure?',
-              content:
-                  'If you close bookings customers won\'t be able to see your salon.',
-              actions: [
-                TextButton(
-                  onPressed: () =>
-                      Navigator.pop(Routes.navigator.currentContext!, true),
-                  child: const Text('Continue'),
-                )
-              ],
-            ) ??
-            false;
-        if (areYouSure) {
+        final bool closeBookings = await Popup.closeMyBookings();
+        if (closeBookings) {
           salonInformationModel.isAvailable = value;
         }
       } else {

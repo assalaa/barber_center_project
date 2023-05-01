@@ -53,20 +53,20 @@ class SalonOptionsScreen extends StatelessWidget {
                             ),
                             const Gap(32),
                             LabeledTextField(
-                              controller: provider.tcAddress,
-                              title: 'Salon\'s address',
-                              hintText: 'Cleopatra eve. 4/20, Alexandria',
-                              validatorText: 'Please enter your address',
-                              textInputType: TextInputType.streetAddress,
-                            ),
-                            const Gap(32),
-                            LabeledTextField(
                               controller: provider.tcPhone,
                               title: 'Salon\'s phone number',
                               hintText: '0020 0000 0000',
                               validatorText: 'Please enter your phone number',
                               textInputType: TextInputType.phone,
                               validator: Validators.phoneNumberValidator,
+                            ),
+                            const Gap(32),
+                            LabeledTextField(
+                              controller: provider.tcAddress,
+                              title: 'Salon\'s address',
+                              hintText: 'Cleopatra eve. 4/20, Alexandria',
+                              validatorText: 'Please enter your address',
+                              textInputType: TextInputType.streetAddress,
                             ),
                             const Gap(32),
                             InkWell(
@@ -147,6 +147,7 @@ class SalonOptionsScreen extends StatelessWidget {
     );
   }
 }
+
 class SalonInfo extends StatelessWidget {
   const SalonInfo({
     required this.title,

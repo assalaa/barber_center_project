@@ -59,7 +59,10 @@ class SaloonProfileScreen extends StatelessWidget {
                           salonName: provider.salonInformationModel?.salonName,
                         ),
                         const SizedBox(height: 10),
-                        LocationInfo(location: provider.userModel.city),
+                        LocationInfo(
+                            location: provider.salonInformationModel?.location
+                                    ?.getAddress ??
+                                provider.salonInformationModel?.address),
                         const SizedBox(height: 60),
                         const TabBarWidget(),
                         const Gap(64),
@@ -381,20 +384,29 @@ class LocationInfo extends StatelessWidget {
 
     const IconData locationIcon = Icons.location_on;
 
-    return Row(
-      mainAxisAlignment:
-          center ? MainAxisAlignment.center : MainAxisAlignment.start,
-      children: [
-        const Icon(
-          locationIcon,
-          color: Styles.primaryColor,
-        ),
-        const SizedBox(width: 6),
-        Text(
-          location!,
-          style: const TextStyle(fontSize: 18, color: Styles.greyColor),
-        ),
-      ],
+    return Padding(
+      padding:
+          center ? const EdgeInsets.symmetric(horizontal: 64) : EdgeInsets.zero,
+      child: Row(
+        mainAxisAlignment:
+            center ? MainAxisAlignment.center : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(
+            locationIcon,
+            color: Styles.primaryColor,
+            size: 28,
+          ),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              location!,
+              // textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 18, color: Styles.greyColor),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

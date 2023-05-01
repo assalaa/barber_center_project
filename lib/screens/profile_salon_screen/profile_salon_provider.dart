@@ -65,20 +65,7 @@ class ProfileSalonProvider with ChangeNotifier {
   }
 
   Future<void> removeEmployee(EmployeeModel employeeModel) async {
-    final bool? confirm = await Popup.show(
-      title: 'Remove Employee',
-      content:
-          'Are you sure you want to remove the employee \'${employeeModel.name}\' from your salon?',
-      actions: [
-        TextButton(
-          onPressed: () =>
-              Navigator.pop(Routes.navigator.currentContext!, true),
-          child: const Text('Remove'),
-        ),
-      ],
-    );
-
-    if (confirm == true) {
+    if (await Popup.removeEmployee(employeeModel.name)) {
       loading = true;
       notifyListeners();
 
@@ -92,20 +79,7 @@ class ProfileSalonProvider with ChangeNotifier {
   }
 
   Future<void> removeService(ServiceModel serviceModel) async {
-    final bool? confirm = await Popup.show(
-      title: 'Remove ${serviceModel.name}',
-      content:
-          'Are you sure you want to remove ${serviceModel.name} service from your salon?',
-      actions: [
-        TextButton(
-          onPressed: () =>
-              Navigator.pop(Routes.navigator.currentContext!, true),
-          child: const Text('Remove'),
-        ),
-      ],
-    );
-
-    if (confirm == true) {
+    if (await Popup.removeService(serviceModel.name)) {
       loading = true;
       notifyListeners();
       salonServiceModel.services

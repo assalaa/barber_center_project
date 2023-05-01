@@ -5,6 +5,7 @@ import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/labeled_text_field.dart';
+import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,9 +37,29 @@ class LocationScreen extends StatelessWidget {
               child: Form(
                 key: provider.formKey,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (provider.loading) ...[
                       const CenterLoading(bottomMargin: 200)
+                    ] else if (!provider.haveLocation) ...[
+                      const Center(
+                        child: Text(
+                          'We need your location permission to tell your clients exactly where your salon is',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      LargeRoundedButton(
+                        buttonName: 'Allow Location',
+                        onTap: () async {
+                          await provider.getLocation();
+                        },
+                      ),
+                      const SizedBox(height: 32),
                     ] else ...[
                       InkWell(
                         onTap: () => provider.changeShowMap(true),
@@ -58,23 +79,15 @@ class LocationScreen extends StatelessWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
                             vertical: 22,
-                            horizontal: 12,
+                            horizontal: 16,
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(32),
                             color: Colors.white,
                           ),
                           child: provider.showMap
-                              ? ConfirmAddressSection(
-                                  onPressed: () =>
-                                      provider.changeShowMap(false),
-                                  address: salonInformationModel
-                                      .location?.getAddress,
-                                )
-                              : ChangeAddressField(
-                                  salonInformationModel: salonInformationModel,
-                                  provider: provider,
-                                ),
+                              ? ConfirmAddressSection(provider: provider)
+                              : ChangeAddressField(provider: provider),
                         ),
                       ),
                     ],
@@ -91,40 +104,42 @@ class LocationScreen extends StatelessWidget {
 
 class ConfirmAddressSection extends StatelessWidget {
   const ConfirmAddressSection({
-    required this.onPressed,
-    required this.address,
+    required this.provider,
     super.key,
   });
 
-  final String? address;
-  final Function() onPressed;
+  final LocationProvider provider;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Text(
-          address ?? '',
+          provider.locationModel?.getAddress ?? '',
           style: const TextStyle(fontSize: 18),
         ),
         const Spacer(),
         SizedBox(
           width: double.infinity,
-          child: ElevatedButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: 12,
+          child: Visibility(
+            visible: !provider.loading,
+            replacement: const CupertinoActivityIndicator(),
+            child: ElevatedButton(
+              onPressed: () => provider.changeShowMap(false),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)),
               ),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32)),
-            ),
-            child: const Text(
-              'Choose this location',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
+              child: const Text(
+                'Choose this location',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -137,12 +152,10 @@ class ConfirmAddressSection extends StatelessWidget {
 
 class ChangeAddressField extends StatelessWidget {
   const ChangeAddressField({
-    required this.salonInformationModel,
     required this.provider,
     super.key,
   });
 
-  final SalonInformationModel salonInformationModel;
   final LocationProvider provider;
 
   @override
@@ -153,12 +166,14 @@ class ChangeAddressField extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                salonInformationModel.location?.getAddress ?? '',
-                style: const TextStyle(fontSize: 16),
+                provider.locationModel?.getAddress ?? '',
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 22),
+              const Divider(),
               Expanded(
                 child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   child: WidgetPacker(
                     children: [
                       LabeledTextField(
@@ -169,47 +184,40 @@ class ChangeAddressField extends StatelessWidget {
                         validator: Validators.cannotBeEmptyValidator,
                       ),
                       LabeledTextField(
-                        enabled: false,
-                        controller: provider.countryCode,
-                        title: 'Country Code',
-                        hintText: 'EG',
-                        validator: Validators.cannotBeEmptyValidator,
-                      ),
-                      LabeledTextField(
                         controller: provider.administrativeArea,
                         title: 'Administrative Area',
                         hintText: 'Administrative Area',
                         validator: Validators.cannotBeEmptyValidator,
-                      ),
-                      LabeledTextField(
-                        controller: provider.subAdministrativeArea,
-                        title: 'Sub Administrative Area',
-                        hintText: 'Sub Administrative Area',
-                        validator: Validators.cannotBeEmptyValidator,
+                        onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
                         controller: provider.locality,
                         title: 'Locality',
                         hintText: 'Alexandria',
                         validator: Validators.cannotBeEmptyValidator,
+                        onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
                         controller: provider.subLocality,
                         title: 'Sub Locality',
                         hintText: 'Sub Locality',
                         validator: Validators.cannotBeEmptyValidator,
+                        onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
-                        controller: provider.thoroughfare,
-                        title: 'Thoroughfare',
-                        hintText: 'Thoroughfare',
+                        controller: provider.street,
+                        title: 'Street',
+                        hintText: 'Street',
                         validator: Validators.cannotBeEmptyValidator,
+                        onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
-                        controller: provider.subThoroughfare,
-                        title: 'Sub Thoroughfare',
-                        hintText: 'Sub Thoroughfare',
+                        controller: provider.postalCode,
+                        title: 'Postal Code',
+                        hintText: 'Postal Code',
                         validator: Validators.cannotBeEmptyValidator,
+                        textInputType: TextInputType.number,
+                        onChanged: provider.updatePlacemark,
                       ),
                     ],
                   ),
