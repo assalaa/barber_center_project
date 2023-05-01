@@ -1,7 +1,7 @@
 class BarberModel {
   final String barberId;
   String barberName;
-  String image;
+  String? image;
   String salonId;
   String phone;
   bool homeService;

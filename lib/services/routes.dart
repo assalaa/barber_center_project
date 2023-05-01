@@ -4,7 +4,7 @@ import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
-import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
+import 'package:barber_center/screens/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
 import 'package:barber_center/screens/first_page/first_page_customer/first_page_customer_user.dart';
