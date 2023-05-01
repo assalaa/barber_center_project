@@ -26,7 +26,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void didChangeDependencies() {
     myLocale = Localizations.localeOf(context);
-
     super.didChangeDependencies();
   }
 
@@ -56,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       DropdownButton(
                           hint: Text(
                             AppLocalizations.of(context)!.change_language,
-                            style: TextStyle(color: Styles.brightTextColor),
+                            style: const TextStyle(color: Styles.brightTextColor),
                           ),
                           items: Language.languageList()
                               .map<DropdownMenuItem<Language>>(
@@ -96,16 +95,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         Gap(AppLayout.getHeight(5)),
                         (myLocale == const Locale(ENGLISH, ''))
-                            ? Image.asset(
-                                height: 200,
-                                width: 200,
-                                Assets.logoNameEnglishBright,
+                            ? const Text(
+                                'El-Mezayen',
+                                style: TextStyle(fontFamily: 'DancingScript', color: Styles.brightTextColor, fontSize: 52),
                               )
-                            : Image.asset(
-                                height: 150,
-                                width: 150,
-                                Assets.logoNameArabicBright,
+                            : const Text(
+                                'المزين',
+                                style: TextStyle(fontFamily: 'decotype', color: Styles.brightTextColor, fontSize: 52),
                               ),
+                        Gap(AppLayout.getHeight(10)),
                         Text(
                           textAlign: TextAlign.center,
                           AppLocalizations.of(context)!.thanking,
@@ -131,6 +129,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               buttonColor: Styles.brightTextColor,
                               buttonTextColor: Styles.primaryColor,
                               onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.CUSTOMER, enableBack: true),
+                            ),
+                            Gap(AppLayout.getHeight(12)),
+                            LargeRoundedButton(
+                              buttonName: AppLocalizations.of(context)!.barber,
+                              buttonColor: Styles.primaryColor,
+                              buttonTextColor: Styles.brightTextColor,
+                              onTap: () => Routes.goTo(Routes.loginRoute, args: KindOfUser.BARBER, enableBack: true),
                             ),
                             Gap(AppLayout.getHeight(12)),
                           ],
