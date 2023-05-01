@@ -9,6 +9,7 @@ import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
 import 'package:barber_center/screens/first_page/first_page_customer/first_page_customer_user.dart';
 import 'package:barber_center/screens/first_page/first_page_salon/first_page_salon_user.dart';
+import 'package:barber_center/screens/location_screen/location_screen.dart';
 import 'package:barber_center/screens/login_screen/login_screen.dart';
 import 'package:barber_center/screens/profile_customer_screen/profile_customer_screen.dart';
 import 'package:barber_center/screens/profile_salon_screen/add_employee/add_employee_screen.dart';
@@ -39,6 +40,7 @@ class Routes {
   static const String addServiceRoute = '/add_service';
   static const String bookingRoute = '/booking';
   static const String allSalonsRoute = '/all_salons';
+  static const String locationRoute = '/location';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -87,6 +89,11 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const HomeAdminScreen());
       case createServiceRoute:
         return MaterialPageRoute(builder: (_) => const CreateServicePage());
+      // Location
+      case locationRoute:
+        return MaterialPageRoute(
+            builder: (_) => LocationScreen(
+                salonInformationModel: args as SalonInformationModel));
 
       default:
         return _errorRoute();

@@ -63,7 +63,7 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                               Container(
                                 width: AppLayout.getHeight(50),
                                 height: AppLayout.getWidth(50),
-                                decoration: BoxDecoration(image: DecorationImage(image: AssetImage(provider.userModel.image!)), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
+                                decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(provider.userModel.image!)), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
                               ),
                             ],
                           )
