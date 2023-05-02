@@ -29,7 +29,19 @@ class ServiceElement extends StatelessWidget {
             width: 100,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-              boxShadow: isSelected ? [BoxShadow(color: Colors.grey.shade500, blurRadius: 12, offset: Offset(0, 6))] : [BoxShadow(color: Colors.grey.shade300, blurRadius: 12, offset: Offset(0, 6))],
+              boxShadow: isSelected
+                  ? [
+                      BoxShadow(
+                          color: Colors.grey.shade500,
+                          blurRadius: 12,
+                          offset: const Offset(0, 6))
+                    ]
+                  : [
+                      BoxShadow(
+                          color: Colors.grey.shade300,
+                          blurRadius: 12,
+                          offset: const Offset(0, 6))
+                    ],
               color: isSelected ? Styles.darkBlueColor : Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
@@ -44,7 +56,11 @@ class ServiceElement extends StatelessWidget {
                 FittedBox(
                   child: Text(
                     name,
-                    style: isSelected ? Styles.textStyle.copyWith(color: Colors.white, fontSize: 14) : Styles.textStyle.copyWith(color: Colors.black, fontSize: 14),
+                    style: isSelected
+                        ? Styles.textStyle
+                            .copyWith(color: Colors.white, fontSize: 14)
+                        : Styles.textStyle
+                            .copyWith(color: Colors.black, fontSize: 14),
                   ),
                 )
               ],

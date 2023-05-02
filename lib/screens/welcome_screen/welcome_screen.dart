@@ -39,7 +39,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void didChangeDependencies() {
     myLocale = Localizations.localeOf(context);
-    print('my locale ${myLocale}');
+    debugPrint('my locale $myLocale');
     super.didChangeDependencies();
   }
 
