@@ -2,9 +2,9 @@ import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_booking.dart';
 import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/database/db_services.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/booking_model.dart';
 import 'package:barber_center/models/booking_time_model.dart';
-import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
@@ -22,7 +22,7 @@ class BookingProvider extends ChangeNotifier {
 
   final SalonServiceModel salonService;
   final SalonInformationModel salonInformationModel;
-  final EmployeeModel employeeModel;
+  final BarberModel barberModel;
 
   List<BookingModel> bookings = [];
   List<BookingTimeModel> bookingTimes = [];
@@ -38,7 +38,7 @@ class BookingProvider extends ChangeNotifier {
   BookingProvider(
     this.salonService,
     this.salonInformationModel,
-    this.employeeModel,
+    this.barberModel,
   ) {
     _init();
   }
@@ -54,10 +54,6 @@ class BookingProvider extends ChangeNotifier {
   Future<void> getServices() async {
     services = await _dbService.getServices();
   }
-
-  // String printServices() {
-  //   salonService.services.map((e) => e.name).toList();
-  // }
 
   void verifyStatus() {
     for (final booking in bookings) {
@@ -143,8 +139,8 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
-    bookings = await _dbBooking.getBookingFromSalonInDay(
-        salonService.salonId, dateTime);
+    bookings = await _dbBooking.getBookingFromSalonOfBarberInDay(
+        salonService.salonId, barberModel.barberId, dateTime);
     setBookingTimes();
     verifyStatus();
     notifyListeners();
@@ -167,8 +163,8 @@ class BookingProvider extends ChangeNotifier {
       salonName: salonInformationModel.salonName,
       userId: user.uid,
       salonId: salonService.salonId,
-      employeeId: employeeModel.id,
-      employeeName: employeeModel.name,
+      employeeId: barberModel.barberId,
+      employeeName: barberModel.barberName,
       createAt: now,
       date: selectedDate,
       services: salonService.selectedServices,

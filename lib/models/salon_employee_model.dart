@@ -1,21 +1,21 @@
-import 'package:barber_center/models/employee_model.dart';
+import 'package:barber_center/models/barber_model.dart';
 
 class SalonEmployeeModel {
   final String salonId;
-  List<EmployeeModel> employees;
+  List<BarberModel> employees;
 
   SalonEmployeeModel({required this.salonId, required this.employees});
 
   factory SalonEmployeeModel.fromJson(Map json) {
     return SalonEmployeeModel(
-      salonId: json['employerUid'],
-      employees: List<EmployeeModel>.from(
-          json['employees'].map((x) => EmployeeModel.fromJson(x))),
+      salonId: json['salonId'],
+      employees: List<BarberModel>.from(
+          json['employees'].map((x) => BarberModel.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'employerUid': salonId,
-        'employees': List<dynamic>.from(employees.map((x) => x.toJson())),
+        'salonId': salonId,
+        'employees': List<BarberModel>.from(employees.map((x) => x.toJson())),
       };
 }
