@@ -1,5 +1,7 @@
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
+import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -73,6 +75,7 @@ class SaloonProfileScreen extends StatelessWidget {
                               deleteFunction: provider.removeService,
                             ),
                             EmployeeSlider(
+                              userModel: provider.userModel,
                               employees: provider.employees,
                               deleteFunction: provider.removeEmployee,
                             ),
@@ -184,26 +187,29 @@ class ServiceSlider extends StatelessWidget {
         final ServiceModel? serviceModel =
             index != 0 ? (services?[index - 1]) : null;
 
-        if (serviceModel == null && index != 0) {
-          return const SizedBox.shrink();
+        if (serviceModel == null) {
+          if (index != 0) {
+            return const SizedBox.shrink();
+          } else {
+            return AddButton(
+              text: AppLocalizations.of(context)!.add_service,
+              onTap: () =>
+                  Routes.goTo(Routes.addServiceRoute, enableBack: true),
+              circle: true,
+            );
+          }
         }
 
-        final String text =
-            serviceModel?.name ?? AppLocalizations.of(context)!.add_service;
-        final String? image = serviceModel?.image;
+        final String text = serviceModel.name;
+        final String image = serviceModel.image;
 
-        final Function()? onTap = serviceModel == null
-            ? () => Routes.goTo(Routes.addServiceRoute, enableBack: true)
-            : null;
-
-        final Function()? onDelete =
-            serviceModel != null ? () => deleteFunction(serviceModel) : null;
+        dynamic onDelete() => deleteFunction(serviceModel);
 
         return ListItem(
           text: text,
           image: image,
-          onTap: onTap,
           onDelete: onDelete,
+          circle: true,
         );
       },
     );
@@ -212,13 +218,14 @@ class ServiceSlider extends StatelessWidget {
 
 class EmployeeSlider extends StatelessWidget {
   const EmployeeSlider({
+    required this.userModel,
     required this.employees,
     required this.deleteFunction,
     super.key,
   });
-
-  final List<EmployeeModel>? employees;
-  final Function(EmployeeModel) deleteFunction;
+  final UserModel userModel;
+  final List<BarberModel>? employees;
+  final Function(BarberModel) deleteFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -228,28 +235,32 @@ class EmployeeSlider extends StatelessWidget {
       itemCount: itemCount,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        final EmployeeModel? employeeModel =
+        final BarberModel? barberModel =
             index != 0 ? (employees?[index - 1]) : null;
 
-        if (employeeModel == null && index != 0) {
-          return const SizedBox.shrink();
+        if (barberModel == null) {
+          if (index != 0) {
+            return const SizedBox.shrink();
+          } else {
+            return AddButton(
+              text: AppLocalizations.of(context)!.add_employees,
+              onTap: () => Routes.goTo(
+                enableBack: true,
+                Routes.searchRoute,
+                args: userModel.kindOfUser,
+              ),
+            );
+          }
         }
 
-        final String text =
-            employeeModel?.name ?? AppLocalizations.of(context)!.add_employees;
-        final String? image = employeeModel?.image;
+        final String text = barberModel.barberName;
+        final String? image = barberModel.image;
 
-        final Function() onTap = employeeModel == null
-            ? () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true)
-            : () => Routes.goTo(Routes.addEmployeeRoute, enableBack: true);
-
-        final Function()? onDelete =
-            employeeModel != null ? () => deleteFunction(employeeModel) : null;
+        dynamic onDelete() => deleteFunction(barberModel);
 
         return ListItem(
           text: text,
           image: image,
-          onTap: onTap,
           onDelete: onDelete,
         );
       },
@@ -263,6 +274,7 @@ class ListItem extends StatelessWidget {
     this.image,
     this.onTap,
     this.onDelete,
+    this.circle = false,
     super.key,
   });
 
@@ -270,6 +282,7 @@ class ListItem extends StatelessWidget {
   final String? image;
   final Function()? onTap;
   final Function()? onDelete;
+  final bool circle;
 
   @override
   Widget build(BuildContext context) {
@@ -281,22 +294,19 @@ class ListItem extends StatelessWidget {
             aspectRatio: 1 / 1.6,
             child: Column(
               children: [
-                onDelete == null
-                    ? AddButton(onTap: onTap)
-                    : AspectRatio(
-                        aspectRatio: 1,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            image: image == null
-                                ? null
-                                : DecorationImage(
-                                    image: NetworkImage(image!),
-                                    fit: BoxFit.cover),
-                          ),
-                        ),
-                      ),
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(circle ? 100 : 16),
+                      image: image == null
+                          ? null
+                          : DecorationImage(
+                              image: NetworkImage(image!), fit: BoxFit.cover),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Flexible(
                   child: Text(
@@ -335,31 +345,54 @@ class ListItem extends StatelessWidget {
 
 class AddButton extends StatelessWidget {
   const AddButton({
-    this.onTap,
+    required this.text,
+    required this.onTap,
+    this.circle = false,
     super.key,
   });
 
-  final Function()? onTap;
+  final String text;
+  final Function() onTap;
+  final bool circle;
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      child: GestureDetector(
-        onTap: onTap,
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(16)),
-            child: const Center(
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 32,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: AspectRatio(
+        aspectRatio: 1 / 1.6,
+        child: Column(
+          children: [
+            Semantics(
+              button: true,
+              child: GestureDetector(
+                onTap: onTap,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(circle ? 100 : 16)),
+                    child: const Center(
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+            const SizedBox(height: 4),
+            Flexible(
+              child: Text(
+                text,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -17,6 +17,7 @@ import 'package:barber_center/screens/profile_salon_screen/add_service/add_servi
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
 import 'package:barber_center/screens/salon_details_screen/salon_details_screen.dart';
 import 'package:barber_center/screens/salon_options_screen/salon_options_screen.dart';
+import 'package:barber_center/screens/search_screen/search_screen.dart';
 import 'package:barber_center/screens/splash_screen/splash_screen.dart';
 import 'package:barber_center/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class Routes {
   static const String bookingRoute = '/booking';
   static const String allSalonsRoute = '/all_salons';
   static const String locationRoute = '/location';
+  static const String searchRoute = '/search';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -94,6 +96,9 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => LocationScreen(
                 salonInformationModel: args as SalonInformationModel));
+
+      case searchRoute:
+        return MaterialPageRoute(builder: (_) => const SearchScreen());
 
       default:
         return _errorRoute();

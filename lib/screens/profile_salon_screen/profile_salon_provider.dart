@@ -1,11 +1,11 @@
 import 'package:barber_center/database/database_image.dart';
 import 'package:barber_center/database/db_auth.dart';
-import 'package:barber_center/database/db_employees.dart';
+import 'package:barber_center/database/db_barber.dart';
 import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/database/db_salon_service.dart';
 import 'package:barber_center/database/db_services.dart';
-import 'package:barber_center/models/employee_model.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
@@ -19,7 +19,7 @@ import 'package:image_picker/image_picker.dart';
 class ProfileSalonProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseUser _dbUser = DatabaseUser();
-  final DatabaseEmployee _dbEmployee = DatabaseEmployee();
+  final DatabaseBarber _dbBarber = DatabaseBarber();
   final DatabaseService _dbService = DatabaseService();
   final DatabaseSalon _dbSalon = DatabaseSalon();
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
@@ -28,7 +28,7 @@ class ProfileSalonProvider with ChangeNotifier {
   late UserModel userModel;
   late SalonInformationModel? salonInformationModel;
   late SalonServiceModel salonServiceModel;
-  List<EmployeeModel> employees = [];
+  List<BarberModel> employees = [];
   List<ServiceModel> services = [];
   bool loading = true;
   late String uid;
@@ -52,7 +52,7 @@ class ProfileSalonProvider with ChangeNotifier {
   }
 
   Future<void> fetchEmployees() async {
-    employees = await _dbEmployee.getEmployees(uid);
+    employees = await _dbBarber.getBarbersFromSalonId(uid);
   }
 
   Future<void> fetchServices() async {
@@ -64,13 +64,16 @@ class ProfileSalonProvider with ChangeNotifier {
         !salonServiceModel.services.any((e) => e.serviceId == element.id));
   }
 
-  Future<void> removeEmployee(EmployeeModel employeeModel) async {
-    if (await Popup.removeEmployee(employeeModel.name)) {
+  Future<void> removeEmployee(BarberModel barberModel) async {
+    if (await Popup.removeEmployee(barberModel.barberName)) {
       loading = true;
       notifyListeners();
 
-      await _dbEmployee.deleteEmployee(employeeModel.id);
-      employees.removeWhere((element) => element.id == employeeModel.id);
+      barberModel.salonId = '';
+
+      await _dbBarber.updateBarber(barberModel);
+      employees
+          .removeWhere((element) => element.barberId == barberModel.barberId);
       showMessageSuccessful('Employee successfully removed');
 
       loading = false;

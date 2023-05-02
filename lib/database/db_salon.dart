@@ -1,3 +1,4 @@
+import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,19 @@ class DatabaseSalon {
 
   Future<List<SalonInformationModel>> getSalonsInformation() async {
     final QuerySnapshot snapshot = await _firestore.collection(_path).get();
+    final List<SalonInformationModel> list = [];
+    for (final doc in snapshot.docs) {
+      list.add(SalonInformationModel.fromJson(doc.data() as Map));
+    }
+    return list;
+  }
+
+  Future<List<SalonInformationModel>> searchSalons(String searchKey) async {
+    final QuerySnapshot snapshot = await _firestore
+        .collection(_path)
+        .orderBy('salonName')
+        .startAt([searchKey.capitalize()]).endAt(
+            ['${searchKey[0].toUpperCase()}\uf8ff']).get();
     final List<SalonInformationModel> list = [];
     for (final doc in snapshot.docs) {
       list.add(SalonInformationModel.fromJson(doc.data() as Map));

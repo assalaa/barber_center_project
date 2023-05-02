@@ -22,12 +22,20 @@ class BarberModel {
       barberId: json['barberId'],
       barberName: json['barberName'],
       salonId: json['salonId'],
-      image: json['barberPhoto'],
+      image: json['image'],
       phone: json['phone'],
       homeService: json['homeService'],
-      services: json['services'],
+      services: List<String>.from(json['services']),
     );
   }
 
-  Map<String, dynamic> toJson() => {'barberId': barberId, 'barberName': barberName, 'barberPhoto': image, 'phone': phone, 'homeService': homeService};
+  Map<String, dynamic> toJson() => {
+        'barberId': barberId,
+        'barberName': barberName,
+        'salonId': salonId,
+        'image': image,
+        'phone': phone,
+        'homeService': homeService,
+        'services': services
+      };
 }

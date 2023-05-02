@@ -3,6 +3,34 @@ import 'package:barber_center/services/routes.dart';
 import 'package:flutter/material.dart';
 
 class Popup {
+  static Future<bool> acceptInvitation(String userName, bool isSalon) async {
+    String title;
+    String content;
+    String buttonText;
+
+    if (isSalon) {
+      title = 'Employer Invitation';
+      content =
+          'If you continue, $userName will be your employee. Accept this invitation only if $userName is your employee.';
+      buttonText = '$userName is my employee';
+    } else {
+      title = 'Employee Invitation';
+      content =
+          'If you continue, you will be an employee in $userName. Accept this only if you work there.';
+      buttonText = 'I work in $userName';
+    }
+
+    final bool? approved = await show(
+      title: title,
+      content: content,
+      actions: [
+        ActionButton(
+            text: buttonText, onPressed: () => Routes.back(returnDialog: true)),
+      ],
+    );
+    return approved ?? false;
+  }
+
   static Future<bool> removeService(String serviceName) async {
     final bool? approved = await show(
       title: 'Remove $serviceName',
