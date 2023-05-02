@@ -4,7 +4,7 @@ import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
-import 'package:barber_center/screens/barber/home_barber_screen/home_barber_screen.dart';
+import 'package:barber_center/screens/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
 import 'package:barber_center/screens/first_page/first_page_customer/first_page_customer_user.dart';
@@ -17,6 +17,7 @@ import 'package:barber_center/screens/profile_salon_screen/add_service/add_servi
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
 import 'package:barber_center/screens/salon_details_screen/salon_details_screen.dart';
 import 'package:barber_center/screens/salon_options_screen/salon_options_screen.dart';
+import 'package:barber_center/screens/search_screen/search_screen.dart';
 import 'package:barber_center/screens/splash_screen/splash_screen.dart';
 import 'package:barber_center/screens/welcome_screen/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class Routes {
   static const String bookingRoute = '/booking';
   static const String allSalonsRoute = '/all_salons';
   static const String locationRoute = '/location';
+  static const String searchRoute = '/search';
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -94,6 +96,9 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => LocationScreen(
                 salonInformationModel: args as SalonInformationModel));
+
+      case searchRoute:
+        return MaterialPageRoute(builder: (_) => const SearchScreen());
 
       default:
         return _errorRoute();
