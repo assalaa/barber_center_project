@@ -1,5 +1,6 @@
 import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/models/barber_model.dart';
+import 'package:barber_center/models/salon_employee_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseBarber {
@@ -47,11 +48,21 @@ class DatabaseBarber {
     return list;
   }
 
-  Future<List<BarberModel>> getBarbers() async {
+  Future<List<SalonEmployeeModel>> getBarbers() async {
     final QuerySnapshot snapshot = await _firestore.collection(_path).get();
-    final List<BarberModel> list = [];
+    final List<SalonEmployeeModel> list = [];
     for (final doc in snapshot.docs) {
-      list.add(BarberModel.fromJson(doc.data() as Map));
+      final BarberModel barberModel = BarberModel.fromJson(doc.data() as Map);
+
+      if (list.any((element) => element.employees.contains(barberModel))) {
+        final int index = list.indexOf(list
+            .firstWhere((element) => element.salonId == barberModel.salonId));
+
+        list[index].employees.add(barberModel);
+      } else {
+        list.add(SalonEmployeeModel(
+            salonId: barberModel.salonId, employees: [barberModel]));
+      }
     }
     return list;
   }

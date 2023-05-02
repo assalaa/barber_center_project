@@ -1,5 +1,5 @@
 import 'package:barber_center/main.dart';
-import 'package:barber_center/models/employee_model.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
@@ -12,7 +12,6 @@ import 'package:barber_center/screens/first_page/first_page_salon/first_page_sal
 import 'package:barber_center/screens/location_screen/location_screen.dart';
 import 'package:barber_center/screens/login_screen/login_screen.dart';
 import 'package:barber_center/screens/profile_customer_screen/profile_customer_screen.dart';
-import 'package:barber_center/screens/profile_salon_screen/add_employee/add_employee_screen.dart';
 import 'package:barber_center/screens/profile_salon_screen/add_service/add_service_screen.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
 import 'package:barber_center/screens/salon_details_screen/salon_details_screen.dart';
@@ -58,8 +57,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const ProfileCustomerScreen());
       case saloonProfileRoute:
         return MaterialPageRoute(builder: (_) => const SaloonProfileScreen());
-      case addEmployeeRoute:
-        return MaterialPageRoute(builder: (_) => const AddEmployeePage());
+      // case addEmployeeRoute:
+      //   return MaterialPageRoute(builder: (_) => const AddEmployeePage());
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
@@ -84,7 +83,7 @@ class Routes {
             builder: (_) => BookingScreen(
                   salonService: (args as List)[0] as SalonServiceModel,
                   salonInformation: (args)[1] as SalonInformationModel,
-                  employeeModel: (args)[2] as EmployeeModel,
+                  barberModel: (args)[2] as BarberModel,
                 ));
       //ADMIN PAGES
       case homeAdminRoute:

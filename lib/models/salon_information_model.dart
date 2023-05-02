@@ -31,7 +31,7 @@ class SalonInformationModel {
       openTime: json['openTime'].toDate(),
       closeTime: json['closeTime'].toDate(),
       isAvailable: json['isAvailable'] ?? true,
-      location: json.containsKey('location')
+      location: json.containsKey('location') && json['location'] != null
           ? LocationModel.fromJson(json['location'])
           : null,
     );

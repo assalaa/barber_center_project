@@ -1,5 +1,5 @@
 import 'package:barber_center/database/db_auth.dart';
-import 'package:barber_center/database/db_employees.dart';
+import 'package:barber_center/database/db_barber.dart';
 import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/database/db_salon_service.dart';
@@ -16,8 +16,8 @@ class HomeScreenProvider with ChangeNotifier {
   final DatabaseUser _dbUsers = DatabaseUser();
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
-  final DatabaseEmployee _dbEmployee = DatabaseEmployee();
   final DatabaseSalon _dbSalon = DatabaseSalon();
+  final DatabaseBarber _dbBarber = DatabaseBarber();
   final DatabaseService _dbServices = DatabaseService();
   List<UserModel> salons = [];
   List<ServiceModel> services = [];
@@ -57,11 +57,14 @@ class HomeScreenProvider with ChangeNotifier {
       getUser(),
     ]);
     //remove salon where there is no services with same salonId
-    salons.removeWhere((element) => salonsServices.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) =>
+        salonsServices.indexWhere((e) => e.salonId == element.uid) == -1);
     //remove salon where there is no salonsInformation with same salonId
-    salons.removeWhere((element) => salonsInformation.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) =>
+        salonsInformation.indexWhere((e) => e.salonId == element.uid) == -1);
     //remove salon where there is no employees with same salonId
-    salons.removeWhere((element) => salonEmployees.indexWhere((e) => e.salonId == element.uid) == -1);
+    salons.removeWhere((element) =>
+        salonEmployees.indexWhere((e) => e.salonId == element.uid) == -1);
     myLocale = Localizations.localeOf(Routes.navigator.currentContext!);
 
     loading = false;
@@ -77,6 +80,6 @@ class HomeScreenProvider with ChangeNotifier {
   }
 
   Future<void> getSalonsEmployees() async {
-    salonEmployees = await _dbEmployee.getAllEmployees();
+    salonEmployees = await _dbBarber.getBarbers();
   }
 }

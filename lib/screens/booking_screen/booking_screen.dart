@@ -1,6 +1,6 @@
 import 'package:barber_center/helpers/extensions.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/booking_time_model.dart';
-import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
@@ -17,11 +17,11 @@ import 'package:provider/provider.dart';
 class BookingScreen extends StatelessWidget {
   final SalonServiceModel salonService;
   final SalonInformationModel salonInformation;
-  final EmployeeModel employeeModel;
+  final BarberModel barberModel;
   const BookingScreen({
     required this.salonService,
     required this.salonInformation,
-    required this.employeeModel,
+    required this.barberModel,
     Key? key,
   }) : super(key: key);
 
@@ -29,7 +29,7 @@ class BookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookingProvider>(
       create: (context) =>
-          BookingProvider(salonService, salonInformation, employeeModel),
+          BookingProvider(salonService, salonInformation, barberModel),
       child: Consumer<BookingProvider>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -39,7 +39,7 @@ class BookingScreen extends StatelessWidget {
               body: Column(
                 children: [
                   BarberInfo(
-                    employeeModel: employeeModel,
+                    barberModel: barberModel,
                     salonService: salonService,
                   ),
                   const Divider(),
@@ -67,12 +67,12 @@ class BookingScreen extends StatelessWidget {
 
 class BarberInfo extends StatelessWidget {
   const BarberInfo({
-    required this.employeeModel,
+    required this.barberModel,
     required this.salonService,
     super.key,
   });
 
-  final EmployeeModel employeeModel;
+  final BarberModel barberModel;
   final SalonServiceModel salonService;
 
   @override
@@ -82,22 +82,24 @@ class BarberInfo extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.black,
-            radius: 36,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(employeeModel.image),
-              radius: 34,
+          if (barberModel.image != null) ...[
+            CircleAvatar(
+              backgroundColor: Colors.black,
+              radius: 36,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(barberModel.image!),
+                radius: 34,
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
+            const SizedBox(width: 12),
+          ],
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 4),
                 Text(
-                  employeeModel.name,
+                  barberModel.barberName,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

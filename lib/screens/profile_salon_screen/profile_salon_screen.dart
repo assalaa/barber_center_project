@@ -1,5 +1,4 @@
 import 'package:barber_center/models/barber_model.dart';
-import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
@@ -256,12 +255,10 @@ class EmployeeSlider extends StatelessWidget {
         final String text = barberModel.barberName;
         final String? image = barberModel.image;
 
-        dynamic onDelete() => deleteFunction(barberModel);
-
         return ListItem(
           text: text,
           image: image,
-          onDelete: onDelete,
+          onDelete: () => deleteFunction(barberModel),
         );
       },
     );

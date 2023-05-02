@@ -1,4 +1,4 @@
-import 'package:barber_center/models/employee_model.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
 import 'package:barber_center/screens/salon_details_screen/salon_details_provider.dart';
 import 'package:barber_center/services/routes.dart';
@@ -101,7 +101,8 @@ class SalonDetailsScreen extends StatelessWidget {
                         top: AppLayout.getHeight(250),
                         child: Container(
                           width: AppLayout.getScreenWidth(),
-                          height: AppLayout.getHeight(900), // AppLayout.getScreenHeight(),
+                          height: AppLayout.getHeight(
+                              900), // AppLayout.getScreenHeight(),
                           decoration: const BoxDecoration(
                             color: Styles.backgroundColor,
                             borderRadius: BorderRadius.only(
@@ -121,12 +122,15 @@ class SalonDetailsScreen extends StatelessWidget {
                                 children: [
                                   FullName(
                                     userName: provider.salon.name,
-                                    salonName: provider.salonInformation?.salonName,
+                                    salonName:
+                                        provider.salonInformation?.salonName,
                                     center: false,
                                   ),
                                   Gap(AppLayout.getHeight(8)),
                                   LocationInfo(
-                                    location: provider.salonInformation?.location?.getAddress ?? provider.salonInformation?.address,
+                                    location: provider.salonInformation
+                                            ?.location?.getAddress ??
+                                        provider.salonInformation?.address,
                                     center: false,
                                   ),
                                   const SizedBox(height: 16),
@@ -313,16 +317,14 @@ class Barbers extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: provider.employees.length,
               itemBuilder: (context, index) {
-                final EmployeeModel employeeModel = provider.employees[index];
+                final BarberModel barberModel = provider.employees[index];
 
-                final bool showEmployee = provider.salonService.services.every((element) => (element.selected && employeeModel.servicesIds.contains(element.serviceId)) || (!element.selected));
-
-                if (showEmployee) {
+                if (provider.isEmployeeCapable(barberModel)) {
                   return ServiceElement(
-                    name: employeeModel.name,
-                    image: employeeModel.image,
-                    isSelected: provider.selectedEmployee == employeeModel,
-                    onTap: () => provider.selectEmployee(employeeModel),
+                    name: barberModel.barberName,
+                    image: barberModel.image,
+                    isSelected: provider.selectedEmployee == barberModel,
+                    onTap: () => provider.selectEmployee(barberModel),
                   );
                 } else {
                   return const SizedBox();

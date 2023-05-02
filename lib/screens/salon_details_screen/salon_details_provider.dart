@@ -1,8 +1,8 @@
-import 'package:barber_center/database/db_employees.dart';
+import 'package:barber_center/database/db_barber.dart';
 import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/database/db_salon_service.dart';
-import 'package:barber_center/models/employee_model.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/user_model.dart';
@@ -12,12 +12,12 @@ class SalonDetailsProvider with ChangeNotifier {
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseSalonService _dbSalonService = DatabaseSalonService();
   final DatabaseSalon _databaseSalon = DatabaseSalon();
-  final DatabaseEmployee _dbEmployee = DatabaseEmployee();
+  final DatabaseBarber _dbBarber = DatabaseBarber();
   late UserModel salon;
   late SalonServiceModel salonService;
   late SalonInformationModel? salonInformation;
-  late List<EmployeeModel> employees = [];
-  EmployeeModel? selectedEmployee;
+  late List<BarberModel> employees = [];
+  BarberModel? selectedEmployee;
 
   bool loading = true;
 
@@ -33,6 +33,10 @@ class SalonDetailsProvider with ChangeNotifier {
       _getEmployees(uid),
     ]);
 
+    /// Remove services that has no employees to do it
+    salonService.services.removeWhere((service) => !employees
+        .any((element) => element.services.contains(service.serviceId)));
+
     loading = false;
     notifyListeners();
   }
@@ -47,16 +51,14 @@ class SalonDetailsProvider with ChangeNotifier {
 
   Future<void> _getSalonInformation(String uid) async {
     salonInformation = await _databaseSalon.getSalonInformation(uid);
-    notifyListeners();
   }
 
   Future<void> _getEmployees(String uid) async {
-    employees = await _dbEmployee.getEmployees(uid);
-    notifyListeners();
+    employees = await _dbBarber.getBarbersFromSalonId(uid);
   }
 
-  void selectEmployee(EmployeeModel employeeModel) {
-    selectedEmployee = employeeModel;
+  void selectEmployee(BarberModel barberModel) {
+    selectedEmployee = barberModel;
     notifyListeners();
   }
 
@@ -72,7 +74,7 @@ class SalonDetailsProvider with ChangeNotifier {
 
   void checkEmployee(String serviceId) {
     if (selectedEmployee != null) {
-      if (!selectedEmployee!.servicesIds.contains(serviceId)) {
+      if (!selectedEmployee!.services.contains(serviceId)) {
         selectedEmployee = null;
       }
     }
@@ -86,6 +88,12 @@ class SalonDetailsProvider with ChangeNotifier {
   bool hasEmployeeSelected() {
     return selectedEmployee != null;
   }
+
+  bool isEmployeeCapable(BarberModel barberModel) =>
+      salonService.services.every((element) =>
+          (element.selected &&
+              barberModel.services.contains(element.serviceId)) ||
+          (!element.selected));
 
   bool canBook() {
     return salonInformation != null && employees.isNotEmpty;
