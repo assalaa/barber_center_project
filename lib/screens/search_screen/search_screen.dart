@@ -1,11 +1,7 @@
-import 'package:barber_center/main.dart';
 import 'package:barber_center/models/barber_model.dart';
-import 'package:barber_center/models/salon_employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/screens/search_screen/search_screen_provider.dart';
-import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/widgets/center_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
