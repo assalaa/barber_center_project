@@ -18,8 +18,7 @@ class LocationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LocationProvider>(
-      create: (context) =>
-          LocationProvider(salonInformationModel: salonInformationModel),
+      create: (context) => LocationProvider(salonInformationModel: salonInformationModel),
       child: Consumer<LocationProvider>(
         builder: (context, provider, _) {
           return Scaffold(
@@ -64,9 +63,7 @@ class LocationScreen extends StatelessWidget {
                       InkWell(
                         onTap: () => provider.changeShowMap(true),
                         child: AnimatedContainer(
-                          height: provider.showMap
-                              ? AppLayout.getScreenHeight() * 6.4 / 10
-                              : AppLayout.getScreenHeight() * 2 / 10,
+                          height: provider.showMap ? AppLayout.getScreenHeight() * 6.4 / 10 : AppLayout.getScreenHeight() * 2 / 10,
                           width: double.infinity,
                           duration: const Duration(milliseconds: 400),
                           decoration: BoxDecoration(border: Border.all()),
@@ -85,9 +82,7 @@ class LocationScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(32),
                             color: Colors.white,
                           ),
-                          child: provider.showMap
-                              ? ConfirmAddressSection(provider: provider)
-                              : ChangeAddressField(provider: provider),
+                          child: provider.showMap ? ConfirmAddressSection(provider: provider) : ChangeAddressField(provider: provider),
                         ),
                       ),
                     ],
@@ -131,8 +126,7 @@ class ConfirmAddressSection extends StatelessWidget {
                   vertical: 16,
                   horizontal: 12,
                 ),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32)),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
               ),
               child: const Text(
                 'Choose this location',
@@ -167,8 +161,7 @@ class ChangeAddressField extends StatelessWidget {
             children: [
               Text(
                 provider.locationModel?.getAddress ?? '',
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
               ),
               const Divider(),
               Expanded(
@@ -232,8 +225,7 @@ class ChangeAddressField extends StatelessWidget {
                       vertical: 16,
                       horizontal: 12,
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
                   ),
                   child: Visibility(
                     visible: !provider.loadingSave,

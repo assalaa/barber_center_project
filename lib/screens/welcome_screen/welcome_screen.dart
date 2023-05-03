@@ -116,16 +116,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         ),
                         Gap(AppLayout.getHeight(5)),
                         (myLocale == const Locale(ENGLISH, ''))
-                            ? Image.asset(
-                                height: 200,
-                                width: 200,
-                                Assets.logoNameEnglishBright,
+                            ? const Text(
+                                'El-Mezayen',
+                                style: TextStyle(fontFamily: 'DancingScript', fontSize: 52, color: Styles.brightTextColor),
                               )
-                            : Image.asset(
-                                height: 150,
-                                width: 150,
-                                Assets.logoNameArabicBright,
+                            : const Text(
+                                'المزين',
+                                style: TextStyle(fontFamily: 'decotype', fontSize: 52, color: Styles.brightTextColor),
                               ),
+                        Gap(AppLayout.getHeight(5)),
                         Text(
                           textAlign: TextAlign.center,
                           AppLocalizations.of(context)!.thanking,

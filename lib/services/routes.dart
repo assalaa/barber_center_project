@@ -4,11 +4,12 @@ import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/admin/create_service/create_service_screen.dart';
 import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
-import 'package:barber_center/screens/home_barber_screen/home_barber_screen.dart';
+import 'package:barber_center/screens/barber/options/barber_options_screen.dart';
 import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
 import 'package:barber_center/screens/first_page/first_page_customer/first_page_customer_user.dart';
 import 'package:barber_center/screens/first_page/first_page_salon/first_page_salon_user.dart';
+import 'package:barber_center/screens/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/location_screen/location_screen.dart';
 import 'package:barber_center/screens/login_screen/login_screen.dart';
 import 'package:barber_center/screens/profile_customer_screen/profile_customer_screen.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String welcomeRoute = '/';
   static const String createAccountRoute = '/create_account';
   static const String salonOptionsRoute = '/salon_options';
+  static const String barberOptionsRoute = '/barber_options';
   static const String loginRoute = '/login';
   static const String homeCustomerRoute = '/home_customer';
   static const String homeSalonRoute = '/home_salon';
@@ -51,8 +53,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
       case salonDetailsRoute:
-        return MaterialPageRoute(
-            builder: (_) => SalonDetailsScreen(uid: args as String));
+        return MaterialPageRoute(builder: (_) => SalonDetailsScreen(uid: args as String));
       case customerProfileRoute:
         return MaterialPageRoute(builder: (_) => const ProfileCustomerScreen());
       case saloonProfileRoute:
@@ -62,14 +63,13 @@ class Routes {
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
-        return MaterialPageRoute(
-            builder: (_) =>
-                CreateAccountScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
-        return MaterialPageRoute(
-            builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case salonOptionsRoute:
         return MaterialPageRoute(builder: (_) => const SalonOptionsScreen());
+      case barberOptionsRoute:
+        return MaterialPageRoute(builder: (_) => const BarberOptionsScreen());
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case homeCustomerRoute:
@@ -92,9 +92,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const CreateServicePage());
       // Location
       case locationRoute:
-        return MaterialPageRoute(
-            builder: (_) => LocationScreen(
-                salonInformationModel: args as SalonInformationModel));
+        return MaterialPageRoute(builder: (_) => LocationScreen(salonInformationModel: args as SalonInformationModel));
 
       case searchRoute:
         return MaterialPageRoute(builder: (_) => const SearchScreen());

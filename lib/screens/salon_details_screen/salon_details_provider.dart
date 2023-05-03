@@ -35,8 +35,7 @@ class SalonDetailsProvider with ChangeNotifier {
     ]);
 
     /// Remove services that has no employees to do it
-    salonService.services.removeWhere((service) => !employees
-        .any((element) => element.services.contains(service.serviceId)));
+    salonService.services.removeWhere((service) => !employees.any((element) => element.services.contains(service.serviceId)));
 
     loading = false;
     notifyListeners();
@@ -99,13 +98,7 @@ class SalonDetailsProvider with ChangeNotifier {
     return selectedEmployee != null;
   }
 
-  bool isEmployeeCapable(BarberModel barberModel) =>
-      (barberModel.homeService && homeService == true ||
-          homeService == false) &&
-      salonService.services.every((element) =>
-          (element.selected &&
-              barberModel.services.contains(element.serviceId)) ||
-          (!element.selected));
+  bool isEmployeeCapable(BarberModel barberModel) => (barberModel.homeService && homeService == true || homeService == false) && salonService.services.every((element) => (element.selected && barberModel.services.contains(element.serviceId)) || (!element.selected));
 
   bool canBook() {
     return salonInformation != null && employees.isNotEmpty;

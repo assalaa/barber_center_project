@@ -39,7 +39,18 @@
   "evening_time": "مساء",
   "opens_at": "يفتح في",
   "closes_at": "يغلق في",
-  "change_language": "اختر لغة"
+  "change_language": "اختر لغة",
+  "appointments": "المواعيد",
+  "address_info_field" : "العنوان",
+  "address_hint" : "عشية كليوباترا. 4/20 الاسكندرية",
+  "address_validation" : "الرجاء إدخال عنوانك",
+  "phone_info_field": "رقم التليفون",
+  "phone_hint": "0020 0000 0000",
+  "phone_validation": "يرجى إدخال رقم الهاتف الخاص بك",
+  "name_info_field": "الإسم",
+  "barber_name_hint": "أدخل اسمك الحقيقي",
+  "salon_name_hint": "أدخل اسم الصالون الخاص بك",
+  "name_validation": "الرجاء إدخال الاسم"
 
 
 }

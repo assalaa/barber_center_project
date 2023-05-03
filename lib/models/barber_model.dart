@@ -36,6 +36,16 @@ class BarberModel {
         'image': image,
         'phone': phone,
         'homeService': homeService,
-        'services': services
+        'services': services,
       };
+
+  static BarberModel emptyBarberInfo(String barberId) => BarberModel(
+        salonId: '',
+        barberId: barberId,
+        barberName: '',
+        image: '',
+        homeService: true,
+        services: [],
+        phone: '',
+      );
 }

@@ -60,8 +60,7 @@ class ProfileSalonProvider with ChangeNotifier {
 
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
-    services.removeWhere((element) =>
-        !salonServiceModel.services.any((e) => e.serviceId == element.id));
+    services.removeWhere((element) => !salonServiceModel.services.any((e) => e.serviceId == element.id));
   }
 
   Future<void> removeEmployee(BarberModel barberModel) async {
@@ -85,8 +84,7 @@ class ProfileSalonProvider with ChangeNotifier {
     if (await Popup.removeService(serviceModel.name)) {
       loading = true;
       notifyListeners();
-      salonServiceModel.services
-          .removeWhere((element) => element.serviceId == serviceModel.id);
+      salonServiceModel.services.removeWhere((element) => element.serviceId == serviceModel.id);
       services.removeWhere((element) => element.id == serviceModel.id);
 
       await _dbSalonService.updateService(salonServiceModel);
@@ -98,8 +96,7 @@ class ProfileSalonProvider with ChangeNotifier {
   }
 
   Future<void> updatePhoto(BuildContext context) async {
-    final XFile? imageFile =
-        await _dbImage.selectImage(ImageSource.gallery, context);
+    final XFile? imageFile = await _dbImage.selectImage(ImageSource.gallery, context);
     if (imageFile == null) {
       return;
     }

@@ -73,8 +73,7 @@ class LocationProvider with ChangeNotifier {
 
   Future<void> _getAddress() async {
     if (locationModel != null) {
-      locationModel!.placemark = await LocationService.getPlacemarkFromLatLng(
-          locationModel!.geoPoint.latitude, locationModel!.geoPoint.longitude);
+      locationModel!.placemark = await LocationService.getPlacemarkFromLatLng(locationModel!.geoPoint.latitude, locationModel!.geoPoint.longitude);
       _fillTextFields();
     }
   }
@@ -96,8 +95,7 @@ class LocationProvider with ChangeNotifier {
 
   void _fillTextFields() {
     country.text = locationModel?.placemark?.country ?? '';
-    administrativeArea.text =
-        locationModel?.placemark?.administrativeArea ?? '';
+    administrativeArea.text = locationModel?.placemark?.administrativeArea ?? '';
     locality.text = locationModel?.placemark?.locality ?? '';
     subLocality.text = locationModel?.placemark?.subLocality ?? '';
     street.text = locationModel?.placemark?.street ?? '';
