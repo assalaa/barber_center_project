@@ -178,26 +178,45 @@ class Services extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-          text: TextSpan(
-            text: 'Services',
-            style: Styles.headLineStyle3.copyWith(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-            children: [
-              TextSpan(
-                text: '    Choose Services',
-                style: Styles.textStyle.copyWith(
-                  fontSize: 17,
-                  color: Styles.greyColor,
-                  fontWeight: FontWeight.w400,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Services',
+                  style: Styles.headLineStyle3.copyWith(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),
                 ),
-              ),
-            ],
-          ),
+                Text(
+                  'Choose Services',
+                  style: Styles.textStyle.copyWith(
+                    fontSize: 16,
+                    color: Styles.greyColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              ],
+            ),
+            Column(
+              children: [
+                const Text('Home Service'),
+                SizedBox(
+                  height: 28,
+                  child: Switch(
+                    value: provider.homeService,
+                    onChanged: provider.changeHomeService,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-        const SizedBox(height: 6),
+        // const SizedBox(height: 6),
         SizedBox(
           height: 80,
           child: ListView.builder(
