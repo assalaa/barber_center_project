@@ -20,6 +20,7 @@ class SalonDetailsProvider with ChangeNotifier {
   BarberModel? selectedEmployee;
 
   bool loading = true;
+  bool homeService = false;
 
   SalonDetailsProvider(String uid) {
     init(uid);
@@ -57,8 +58,17 @@ class SalonDetailsProvider with ChangeNotifier {
     employees = await _dbBarber.getBarbersFromSalonId(uid);
   }
 
+  void changeHomeService(bool value) {
+    homeService = value;
+    if (selectedEmployee?.homeService != true && homeService) {
+      selectedEmployee = null;
+    }
+    notifyListeners();
+  }
+
   void selectEmployee(BarberModel barberModel) {
     selectedEmployee = barberModel;
+
     notifyListeners();
   }
 
@@ -90,6 +100,8 @@ class SalonDetailsProvider with ChangeNotifier {
   }
 
   bool isEmployeeCapable(BarberModel barberModel) =>
+      (barberModel.homeService && homeService == true ||
+          homeService == false) &&
       salonService.services.every((element) =>
           (element.selected &&
               barberModel.services.contains(element.serviceId)) ||
