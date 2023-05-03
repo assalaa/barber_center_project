@@ -1,7 +1,7 @@
 class BarberModel {
   final String barberId;
   String barberName;
-  String image;
+  String? image;
   String salonId;
   String phone;
   bool homeService;
@@ -25,10 +25,19 @@ class BarberModel {
       image: json['image'],
       phone: json['phone'],
       homeService: json['homeService'],
-      services: json['services'],
+      services: List<String>.from(json['services']),
     );
   }
 
+  Map<String, dynamic> toJson() => {
+        'barberId': barberId,
+        'barberName': barberName,
+        'salonId': salonId,
+        'image': image,
+        'phone': phone,
+        'homeService': homeService,
+        'services': services
+      };
   Map<String, dynamic> toJson() => {
         'barberId': barberId,
         'barberName': barberName,

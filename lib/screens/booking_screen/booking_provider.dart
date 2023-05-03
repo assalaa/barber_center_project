@@ -2,9 +2,9 @@ import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_booking.dart';
 import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/database/db_services.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/booking_model.dart';
 import 'package:barber_center/models/booking_time_model.dart';
-import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/service_model.dart';
@@ -22,7 +22,7 @@ class BookingProvider extends ChangeNotifier {
 
   final SalonServiceModel salonService;
   final SalonInformationModel salonInformationModel;
-  final EmployeeModel employeeModel;
+  final BarberModel barberModel;
 
   List<BookingModel> bookings = [];
   List<BookingTimeModel> bookingTimes = [];
@@ -38,7 +38,7 @@ class BookingProvider extends ChangeNotifier {
   BookingProvider(
     this.salonService,
     this.salonInformationModel,
-    this.employeeModel,
+    this.barberModel,
   ) {
     _init();
   }
@@ -55,16 +55,14 @@ class BookingProvider extends ChangeNotifier {
     services = await _dbService.getServices();
   }
 
-  // String printServices() {
-  //   salonService.services.map((e) => e.name).toList();
-  // }
-
   void verifyStatus() {
     for (final booking in bookings) {
       for (final element in bookingTimes) {
-        final String hour = '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
+        final String hour =
+            '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
 
-        final String hour2 = '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
+        final String hour2 =
+            '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
 
         final int minutesUsed = booking.getDurationInMinutes();
         int card = minutesUsed ~/ 30;
@@ -87,7 +85,8 @@ class BookingProvider extends ChangeNotifier {
       }
     }
 
-    final List<BookingTimeModel> availableBookingTimes = bookingTimes.where((element) => element.available).toList();
+    final List<BookingTimeModel> availableBookingTimes =
+        bookingTimes.where((element) => element.available).toList();
 
     final int serviceDuration = salonService.durationInMin;
 
@@ -105,7 +104,9 @@ class BookingProvider extends ChangeNotifier {
       if (bookingTimes.length - 1 < bookingTimeIndex + cardNeeded - 1) {
         durationFits = false;
       } else {
-        durationFits = List<BookingTimeModel>.generate(cardNeeded - 1, (index) => bookingTimes[bookingTimeIndex + index + 1]).every((element) => element.available);
+        durationFits = List<BookingTimeModel>.generate(cardNeeded - 1,
+                (index) => bookingTimes[bookingTimeIndex + index + 1])
+            .every((element) => element.available);
       }
 
       if (!durationFits) {
@@ -138,7 +139,8 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
-    bookings = await _dbBooking.getBookingFromSalonInDay(salonService.salonId, dateTime);
+    bookings = await _dbBooking.getBookingFromSalonOfBarberInDay(
+        salonService.salonId, barberModel.barberId, dateTime);
     setBookingTimes();
     verifyStatus();
     notifyListeners();
@@ -161,8 +163,8 @@ class BookingProvider extends ChangeNotifier {
       salonName: salonInformationModel.salonName,
       userId: user.uid,
       salonId: salonService.salonId,
-      employeeId: employeeModel.id,
-      employeeName: employeeModel.name,
+      employeeId: barberModel.barberId,
+      employeeName: barberModel.barberName,
       createAt: now,
       date: selectedDate,
       services: salonService.selectedServices,

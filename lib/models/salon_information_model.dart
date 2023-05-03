@@ -31,7 +31,9 @@ class SalonInformationModel {
       openTime: json['openTime'].toDate(),
       closeTime: json['closeTime'].toDate(),
       isAvailable: json['isAvailable'] ?? true,
-      location: json.containsKey('location') ? LocationModel.fromJson(json['location']) : null,
+      location: json.containsKey('location') && json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : null,
     );
   }
 
@@ -46,7 +48,8 @@ class SalonInformationModel {
         'location': location?.toJson(),
       };
 
-  static SalonInformationModel emptySalon(String salonId) => SalonInformationModel(
+  static SalonInformationModel emptySalon(String salonId) =>
+      SalonInformationModel(
         salonId: salonId,
         salonName: '',
         address: '',

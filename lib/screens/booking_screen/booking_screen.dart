@@ -1,6 +1,6 @@
 import 'package:barber_center/helpers/extensions.dart';
+import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/booking_time_model.dart';
-import 'package:barber_center/models/employee_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/screens/booking_screen/booking_provider.dart';
@@ -17,18 +17,19 @@ import 'package:provider/provider.dart';
 class BookingScreen extends StatelessWidget {
   final SalonServiceModel salonService;
   final SalonInformationModel salonInformation;
-  final EmployeeModel employeeModel;
+  final BarberModel barberModel;
   const BookingScreen({
     required this.salonService,
     required this.salonInformation,
-    required this.employeeModel,
+    required this.barberModel,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookingProvider>(
-      create: (context) => BookingProvider(salonService, salonInformation, employeeModel),
+      create: (context) =>
+          BookingProvider(salonService, salonInformation, barberModel),
       child: Consumer<BookingProvider>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -38,7 +39,7 @@ class BookingScreen extends StatelessWidget {
               body: Column(
                 children: [
                   BarberInfo(
-                    employeeModel: employeeModel,
+                    barberModel: barberModel,
                     salonService: salonService,
                   ),
                   const Divider(),
@@ -66,12 +67,12 @@ class BookingScreen extends StatelessWidget {
 
 class BarberInfo extends StatelessWidget {
   const BarberInfo({
-    required this.employeeModel,
+    required this.barberModel,
     required this.salonService,
     super.key,
   });
 
-  final EmployeeModel employeeModel;
+  final BarberModel barberModel;
   final SalonServiceModel salonService;
 
   @override
@@ -81,22 +82,24 @@ class BarberInfo extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.black,
-            radius: 36,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(employeeModel.image),
-              radius: 34,
+          if (barberModel.image != null) ...[
+            CircleAvatar(
+              backgroundColor: Colors.black,
+              radius: 36,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(barberModel.image!),
+                radius: 34,
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
+            const SizedBox(width: 12),
+          ],
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 4),
                 Text(
-                  employeeModel.name,
+                  barberModel.barberName,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -104,7 +107,11 @@ class BarberInfo extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  salonService.services.where((element) => element.selected).map((e) => e.name).toList().join(', '),
+                  salonService.services
+                      .where((element) => element.selected)
+                      .map((e) => e.name)
+                      .toList()
+                      .join(', '),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -211,11 +218,14 @@ class HoursList extends StatelessWidget {
                 itemCount: provider.bookingTimes.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final BookingTimeModel bookingTime = provider.bookingTimes[index];
+                  final BookingTimeModel bookingTime =
+                      provider.bookingTimes[index];
 
                   final DateTime? time = bookingTime.time.toDateTime();
 
-                  final bool isSelected = provider.selectedDate.hour == time?.hour && provider.selectedDate.minute == time?.minute;
+                  final bool isSelected =
+                      provider.selectedDate.hour == time?.hour &&
+                          provider.selectedDate.minute == time?.minute;
 
                   final bool isAvailable = bookingTime.available;
 
@@ -225,12 +235,14 @@ class HoursList extends StatelessWidget {
                     onTap: () {
                       if (isAvailable) {
                         if (!durationFits) {
-                          showMessageError('Duration of the services you chose doesn\'t fit in this time interval');
+                          showMessageError(
+                              'Duration of the services you chose doesn\'t fit in this time interval');
                         } else {
                           provider.onTimePressed(time);
                         }
                       } else {
-                        showMessageError(AppLocalizations.of(context)!.error_msg_booking_screen);
+                        showMessageError(AppLocalizations.of(context)!
+                            .error_msg_booking_screen);
                       }
                     },
                     child: Card(
@@ -239,10 +251,13 @@ class HoursList extends StatelessWidget {
                         title: Text(
                           provider.bookingTimes[index].time,
                           style: TextStyle(
-                            color: getColor(isSelected, isAvailable, durationFits, text: true),
+                            color: getColor(
+                                isSelected, isAvailable, durationFits,
+                                text: true),
                           ),
                         ),
-                        trailing: getIcon(isSelected, isAvailable, durationFits),
+                        trailing:
+                            getIcon(isSelected, isAvailable, durationFits),
                       ),
                     ),
                   );
@@ -268,7 +283,8 @@ class HoursList extends StatelessWidget {
     return null;
   }
 
-  Color getColor(bool isSelected, bool available, bool durationFits, {bool text = false}) {
+  Color getColor(bool isSelected, bool available, bool durationFits,
+      {bool text = false}) {
     if (available) {
       if (isSelected) {
         return text ? Colors.white : Styles.primaryColor;

@@ -28,14 +28,15 @@ class DatabaseBooking {
         .update(bookingModel.toJson());
   }
 
-  Future<List<BookingModel>> getBookingFromSalonInDay(
-      String salonId, DateTime day) async {
+  Future<List<BookingModel>> getBookingFromSalonOfBarberInDay(
+      String salonId, String employeeId, DateTime day) async {
     final List<BookingModel> booking = [];
     final DateTime start = DateTime(day.year, day.month, day.day);
     final DateTime end = DateTime(day.year, day.month, day.day, 23, 59, 59);
     try {
       final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firestore
           .collection(_path)
+          .where('employeeId', isEqualTo: employeeId)
           .where('date', isLessThanOrEqualTo: end)
           .where('date', isGreaterThanOrEqualTo: start)
           .get();
