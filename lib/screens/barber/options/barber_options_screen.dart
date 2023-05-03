@@ -1,32 +1,30 @@
-import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/helpers/validators.dart';
-import 'package:barber_center/screens/salon_options_screen/salon_options_provider.dart';
-import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/screens/barber/options/barber_options_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/dropdown_button.dart';
 import 'package:barber_center/widgets/labeled_text_field.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-class SalonOptionsScreen extends StatelessWidget {
-  const SalonOptionsScreen({super.key});
+class BarberOptionsScreen extends StatelessWidget {
+  const BarberOptionsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SalonOptionsProvider>(
-      create: (context) => SalonOptionsProvider(),
-      child: Consumer<SalonOptionsProvider>(
+    return ChangeNotifierProvider<BarberOptionsProvider>(
+      create: (context) => BarberOptionsProvider(),
+      child: Consumer<BarberOptionsProvider>(
         builder: (context, provider, _) {
           return Scaffold(
             backgroundColor: Styles.backgroundColor,
             appBar: AppBar(
               backgroundColor: Styles.backgroundColor,
               elevation: 0,
-              title: const Text('Salon Information'),
+              title: const Text('Barber Information'),
             ),
             body: CustomScrollView(
               slivers: [
@@ -45,79 +43,26 @@ class SalonOptionsScreen extends StatelessWidget {
                           if (provider.loading) ...[
                             const CenterLoading(bottomMargin: 200)
                           ] else ...[
+                            const Gap(32),
                             LabeledTextField(
                               controller: provider.tcName,
-                              title: 'Salon\'s Name',
-                              hintText: 'Class man barber shop',
-                              validatorText: 'Please enter your salon\'s name',
+                              title: AppLocalizations.of(context)!.name_info_field,
+                              hintText: AppLocalizations.of(context)!.barber_name_hint,
+                              validatorText: AppLocalizations.of(context)!.name_validation,
                             ),
                             const Gap(32),
                             LabeledTextField(
                               controller: provider.tcPhone,
-                              title: 'Salon\'s phone number',
+                              title: AppLocalizations.of(context)!.phone_info_field,
                               hintText: '0020 0000 0000',
-                              validatorText: 'Please enter your phone number',
+                              validatorText: AppLocalizations.of(context)!.phone_validation,
                               textInputType: TextInputType.phone,
                               validator: Validators.phoneNumberValidator,
-                            ),
-                            const Gap(32),
-                            LabeledTextField(
-                              controller: provider.tcAddress,
-                              title: 'Salon\'s address',
-                              hintText: 'Cleopatra eve. 4/20, Alexandria',
-                              validatorText: 'Please enter your address',
-                              textInputType: TextInputType.streetAddress,
-                            ),
-                            const Gap(32),
-                            InkWell(
-                              onTap: () => Routes.goTo(Routes.locationRoute, args: provider.salonInformationModel, enableBack: true),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.location_on_sharp,
-                                      color: Colors.white,
-                                      size: 32,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Flexible(
-                                      child: Text(
-                                        provider.salonInformationModel.location?.getAddress ?? 'Enter Location',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const Gap(32),
-                            SalonInfo(
-                              value: provider.salonInformationModel.openTime.toStringTime(),
-                              title: 'What time do you open your salon?',
-                              items: getHalfHourIntervals(),
-                              onChanged: provider.updateOpenTime,
-                            ),
-                            const Gap(22),
-                            SalonInfo(
-                              value: provider.salonInformationModel.closeTime.toStringTime(),
-                              title: 'What time do you close your salon?',
-                              items: getHalfHourIntervals(),
-                              onChanged: provider.updateCloseTime,
                             ),
                             const Gap(22),
                             LabeledCheckBox(
                               title: 'Open to bookings?',
-                              value: provider.salonInformationModel.isAvailable,
+                              value: provider.barberModel.homeService,
                               onChanged: provider.changeAvailability,
                             ),
                             const Spacer(),

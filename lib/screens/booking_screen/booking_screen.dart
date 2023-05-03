@@ -28,8 +28,7 @@ class BookingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<BookingProvider>(
-      create: (context) =>
-          BookingProvider(salonService, salonInformation, employeeModel),
+      create: (context) => BookingProvider(salonService, salonInformation, employeeModel),
       child: Consumer<BookingProvider>(
         builder: (context, provider, child) {
           return Scaffold(
@@ -105,11 +104,7 @@ class BarberInfo extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  salonService.services
-                      .where((element) => element.selected)
-                      .map((e) => e.name)
-                      .toList()
-                      .join(', '),
+                  salonService.services.where((element) => element.selected).map((e) => e.name).toList().join(', '),
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -216,14 +211,11 @@ class HoursList extends StatelessWidget {
                 itemCount: provider.bookingTimes.length,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
-                  final BookingTimeModel bookingTime =
-                      provider.bookingTimes[index];
+                  final BookingTimeModel bookingTime = provider.bookingTimes[index];
 
                   final DateTime? time = bookingTime.time.toDateTime();
 
-                  final bool isSelected =
-                      provider.selectedDate.hour == time?.hour &&
-                          provider.selectedDate.minute == time?.minute;
+                  final bool isSelected = provider.selectedDate.hour == time?.hour && provider.selectedDate.minute == time?.minute;
 
                   final bool isAvailable = bookingTime.available;
 
@@ -233,14 +225,12 @@ class HoursList extends StatelessWidget {
                     onTap: () {
                       if (isAvailable) {
                         if (!durationFits) {
-                          showMessageError(
-                              'Duration of the services you chose doesn\'t fit in this time interval');
+                          showMessageError('Duration of the services you chose doesn\'t fit in this time interval');
                         } else {
                           provider.onTimePressed(time);
                         }
                       } else {
-                        showMessageError(AppLocalizations.of(context)!
-                            .error_msg_booking_screen);
+                        showMessageError(AppLocalizations.of(context)!.error_msg_booking_screen);
                       }
                     },
                     child: Card(
@@ -249,13 +239,10 @@ class HoursList extends StatelessWidget {
                         title: Text(
                           provider.bookingTimes[index].time,
                           style: TextStyle(
-                            color: getColor(
-                                isSelected, isAvailable, durationFits,
-                                text: true),
+                            color: getColor(isSelected, isAvailable, durationFits, text: true),
                           ),
                         ),
-                        trailing:
-                            getIcon(isSelected, isAvailable, durationFits),
+                        trailing: getIcon(isSelected, isAvailable, durationFits),
                       ),
                     ),
                   );
@@ -281,8 +268,7 @@ class HoursList extends StatelessWidget {
     return null;
   }
 
-  Color getColor(bool isSelected, bool available, bool durationFits,
-      {bool text = false}) {
+  Color getColor(bool isSelected, bool available, bool durationFits, {bool text = false}) {
     if (available) {
       if (isSelected) {
         return text ? Colors.white : Styles.primaryColor;

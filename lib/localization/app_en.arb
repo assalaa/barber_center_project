@@ -43,7 +43,19 @@
   "evening_time": "PM",
   "opens_at": "Opens at",
   "closes_at": "Closes at",
-  "change_language": "Choose a language"
+  "change_language": "Choose a language",
+  "appointments": "Appointments",
+  "address_info_field" : "Address",
+  "address_hint" : "Cleopatra eve. 4/20, Alexandria",
+  "address_validation" : "Please enter your address",
+  "phone_info_field": "Phone number",
+  "phone_hint": "0020 0000 0000",
+  "phone_validation": "Please enter your phone number",
+  "name_info_field": "Name",
+  "barber_name_hint": "Enter your real name",
+  "salon_name_hint": "Enter your Salon name",
+  "name_validation": "Please enter name"
+
 
 
 }
