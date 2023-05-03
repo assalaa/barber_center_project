@@ -36,15 +36,6 @@ class BarberModel {
         'image': image,
         'phone': phone,
         'homeService': homeService,
-        'services': services
-      };
-  Map<String, dynamic> toJson() => {
-        'barberId': barberId,
-        'barberName': barberName,
-        'salonId': salonId,
-        'image': image,
-        'phone': phone,
-        'homeService': homeService,
         'services': services,
       };
 
