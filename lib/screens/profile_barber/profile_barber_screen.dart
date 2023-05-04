@@ -28,7 +28,7 @@ class BarberProfileScreen extends StatelessWidget {
               ),
               body: Column(children: [
                 if (provider.loading) ...[
-                  const CenterLoading()
+                  const CenterLoading(bottomMargin: 300)
                 ] else ...[
                   Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -60,7 +60,8 @@ class BarberProfileScreen extends StatelessWidget {
                               return ListTile(
                                   trailing: Text(
                                     provider.services[index].name,
-                                    style: const TextStyle(color: Colors.green, fontSize: 15),
+                                    style: const TextStyle(
+                                        color: Colors.green, fontSize: 15),
                                   ),
                                   title: Text(provider.services[index].name));
                             }),
