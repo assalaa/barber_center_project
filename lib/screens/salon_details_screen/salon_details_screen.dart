@@ -1,4 +1,5 @@
 import 'package:barber_center/models/barber_model.dart';
+import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
 import 'package:barber_center/screens/salon_details_screen/salon_details_provider.dart';
 import 'package:barber_center/services/routes.dart';
@@ -12,6 +13,7 @@ import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/service_element.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -139,12 +141,14 @@ class SalonDetailsScreen extends StatelessWidget {
                                   const SizedBox(height: 16),
                                   EstTimeAndTotalPrice(
                                     visible: provider.hasItemSelected(),
-                                    time: provider.salonService.durationInMin,
-                                    price: provider.salonService.price.toInt(),
+                                    time: provider
+                                        .salonService.stringDurationInMin,
+                                    price: provider.salonService.stringPrice,
                                   ),
                                   const SizedBox(height: 10),
                                   Barbers(provider: provider),
                                   const Divider(),
+                                  LocationButton(provider: provider),
                                   const SizedBox(height: 10),
                                   BookButton(provider: provider),
                                 ],
@@ -161,6 +165,42 @@ class SalonDetailsScreen extends StatelessWidget {
           ),
         );
       }),
+    );
+  }
+}
+
+class LocationButton extends StatelessWidget {
+  const LocationButton({
+    required this.provider,
+    super.key,
+  });
+
+  final SalonDetailsProvider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Visibility(
+      visible: provider.homeService && provider.hasItemSelected(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          LargeRoundedButton(
+            buttonName: provider.hasServiceLocation
+                ? provider.serviceLocation!.getAddress ?? ''
+                : 'Enter location',
+            buttonColor: Colors.blue,
+            iconData: Icons.location_on_rounded,
+            onTap: () async {
+              final LocationModel? locationModel =
+                  await Routes.goToAndBringValue(Routes.locationRoute);
+              if (locationModel != null) {
+                provider.serviceLocation = locationModel;
+              }
+            },
+          ),
+          const Divider(),
+        ],
+      ),
     );
   }
 }
@@ -202,17 +242,21 @@ class Services extends StatelessWidget {
                 )
               ],
             ),
-            Column(
-              children: [
-                const Text('Home Service'),
-                SizedBox(
-                  height: 28,
-                  child: Switch(
-                    value: provider.homeService,
-                    onChanged: provider.changeHomeService,
+            Visibility(
+              visible: provider.hasItemSelected(),
+              child: Column(
+                children: [
+                  const Text('Home Service'),
+                  SizedBox(
+                    height: 38,
+                    child: CupertinoSwitch(
+                      value: provider.homeService,
+                      onChanged: provider.changeHomeService,
+                      activeColor: Colors.blue,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -254,8 +298,8 @@ class EstTimeAndTotalPrice extends StatelessWidget {
   });
 
   final bool visible;
-  final int time;
-  final int price;
+  final String time;
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -271,18 +315,18 @@ class EstTimeAndTotalPrice extends StatelessWidget {
           ),
           children: [
             TextSpan(
-              text: '$time minutes',
+              text: time,
               style: Styles.textStyle.copyWith(
-                fontSize: 20,
+                fontSize: 18,
                 color: Styles.darkTextColor,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            const TextSpan(text: '\nTotal Price:'),
+            const TextSpan(text: '\nTotal Price: '),
             TextSpan(
-              text: ' $price EGP',
+              text: price,
               style: Styles.textStyle.copyWith(
-                fontSize: 20,
+                fontSize: 18,
                 color: Styles.darkTextColor,
                 fontWeight: FontWeight.w400,
               ),
@@ -373,19 +417,25 @@ class BookButton extends StatelessWidget {
         children: [
           Expanded(
             child: LargeRoundedButton(
-              buttonName: Strings.bookingBtn,
+              buttonName: provider.homeService
+                  ? Strings.bookingHomeServiceBtn
+                  : Strings.bookingBtn,
               onTap: () {
                 if (provider.hasItemSelected()) {
                   if (provider.hasEmployeeSelected()) {
-                    Routes.goTo(
-                      Routes.bookingRoute,
-                      args: [
-                        provider.salonService,
-                        provider.salonInformation,
-                        provider.selectedEmployee,
-                      ],
-                      enableBack: true,
-                    );
+                    if (provider.hasServiceLocation || !provider.homeService) {
+                      Routes.goTo(
+                        Routes.bookingRoute,
+                        args: [
+                          provider.salonService,
+                          provider.salonInformation,
+                          provider.selectedEmployee,
+                        ],
+                        enableBack: true,
+                      );
+                    } else {
+                      showMessageError('Please enter location');
+                    }
                   } else {
                     showMessageError('Please select a barber');
                   }

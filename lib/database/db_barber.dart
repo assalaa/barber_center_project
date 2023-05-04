@@ -89,7 +89,6 @@ class DatabaseBarber {
   }
 
   Future<void> updateBarberInformation(BarberModel barberModel) async {
-    print('id= ' + barberModel.barberId);
     try {
       await _firestore.collection(_path).doc(barberModel.barberId).update(barberModel.toJson());
     } catch (e) {

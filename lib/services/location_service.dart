@@ -1,4 +1,5 @@
 import 'package:barber_center/utils/app_strings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -54,7 +55,7 @@ class LocationService {
     await Geolocator.openLocationSettings();
   }
   static double calculateDistance(
-      Position startPosition, Position endPosition) {
+      GeoPoint startPosition, GeoPoint endPosition) {
     return Geolocator.distanceBetween(startPosition.latitude,
         startPosition.longitude, endPosition.latitude, endPosition.longitude);
   }
