@@ -53,7 +53,8 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
 
       case salonDetailsRoute:
-        return MaterialPageRoute(builder: (_) => SalonDetailsScreen(uid: args as String));
+        return MaterialPageRoute(
+            builder: (_) => SalonDetailsScreen(uid: args as String));
       case customerProfileRoute:
         return MaterialPageRoute(builder: (_) => const ProfileCustomerScreen());
       case saloonProfileRoute:
@@ -63,9 +64,12 @@ class Routes {
       case addServiceRoute:
         return MaterialPageRoute(builder: (_) => const AddServicePage());
       case createAccountRoute:
-        return MaterialPageRoute(builder: (_) => CreateAccountScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) =>
+                CreateAccountScreen(kindOfUser: args as KindOfUser));
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
+        return MaterialPageRoute(
+            builder: (_) => LoginScreen(kindOfUser: args as KindOfUser));
       case salonOptionsRoute:
         return MaterialPageRoute(builder: (_) => const SalonOptionsScreen());
       case barberOptionsRoute:
@@ -92,7 +96,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const CreateServicePage());
       // Location
       case locationRoute:
-        return MaterialPageRoute(builder: (_) => LocationScreen(salonInformationModel: args as SalonInformationModel));
+        return MaterialPageRoute(builder: (_) => const LocationScreen());
 
       case searchRoute:
         return MaterialPageRoute(builder: (_) => const SearchScreen());
@@ -124,6 +128,13 @@ class Routes {
       arguments: args,
       (route) => enableBack,
     );
+  }
+
+  static Future<dynamic> goToAndBringValue(String route) async {
+    debugPrint('GO TO $route to bring value');
+    return await Navigator.of(Routes.navigator.currentContext!)
+        .pushNamedAndRemoveUntil(route, (route) => true)
+        .then((value) => value);
   }
 
   static void back({bool returnDialog = false}) {

@@ -1,5 +1,6 @@
 import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/helpers/validators.dart';
+import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/screens/salon_options_screen/salon_options_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -69,47 +70,19 @@ class SalonOptionsScreen extends StatelessWidget {
                               textInputType: TextInputType.streetAddress,
                             ),
                             const Gap(32),
-                            InkWell(
-                              onTap: () => Routes.goTo(Routes.locationRoute, args: provider.salonInformationModel, enableBack: true),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.location_on_sharp,
-                                      color: Colors.white,
-                                      size: 32,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Flexible(
-                                      child: Text(
-                                        provider.salonInformationModel.location?.getAddress ?? 'Enter Location',
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            LocationButton(provider: provider),
                             const Gap(32),
                             SalonInfo(
-                              value: provider.salonInformationModel.openTime.toStringTime(),
+                              value: provider.salonInformationModel.openTime
+                                  .toStringTime(),
                               title: 'What time do you open your salon?',
                               items: getHalfHourIntervals(),
                               onChanged: provider.updateOpenTime,
                             ),
                             const Gap(22),
                             SalonInfo(
-                              value: provider.salonInformationModel.closeTime.toStringTime(),
+                              value: provider.salonInformationModel.closeTime
+                                  .toStringTime(),
                               title: 'What time do you close your salon?',
                               items: getHalfHourIntervals(),
                               onChanged: provider.updateCloseTime,
@@ -136,6 +109,57 @@ class SalonOptionsScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class LocationButton extends StatelessWidget {
+  const LocationButton({
+    required this.provider,
+    super.key,
+  });
+
+  final SalonOptionsProvider provider;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        final LocationModel? locationModel =
+            await Routes.goToAndBringValue(Routes.locationRoute);
+        if (locationModel != null) {
+          provider.updateSalonLocation(locationModel);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.location_on_sharp,
+              color: Colors.white,
+              size: 32,
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                provider.salonInformationModel.location?.getAddress ??
+                    'Enter Location',
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

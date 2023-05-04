@@ -58,9 +58,11 @@ class BookingProvider extends ChangeNotifier {
   void verifyStatus() {
     for (final booking in bookings) {
       for (final element in bookingTimes) {
-        final String hour = '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
+        final String hour =
+            '${booking.date.hour.toString().padLeft(2, '0')}:${booking.date.minute.toString().padLeft(2, '0')}';
 
-        final String hour2 = '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
+        final String hour2 =
+            '${element.time.split(':')[0]}:${element.time.split(':')[1]}';
 
         final int minutesUsed = booking.getDurationInMinutes();
         int card = minutesUsed ~/ 30;
@@ -83,7 +85,8 @@ class BookingProvider extends ChangeNotifier {
       }
     }
 
-    final List<BookingTimeModel> availableBookingTimes = bookingTimes.where((element) => element.available).toList();
+    final List<BookingTimeModel> availableBookingTimes =
+        bookingTimes.where((element) => element.available).toList();
 
     final int serviceDuration = salonService.durationInMin;
 
@@ -101,7 +104,9 @@ class BookingProvider extends ChangeNotifier {
       if (bookingTimes.length - 1 < bookingTimeIndex + cardNeeded - 1) {
         durationFits = false;
       } else {
-        durationFits = List<BookingTimeModel>.generate(cardNeeded - 1, (index) => bookingTimes[bookingTimeIndex + index + 1]).every((element) => element.available);
+        durationFits = List<BookingTimeModel>.generate(cardNeeded - 1,
+                (index) => bookingTimes[bookingTimeIndex + index + 1])
+            .every((element) => element.available);
       }
 
       if (!durationFits) {
@@ -134,7 +139,8 @@ class BookingProvider extends ChangeNotifier {
   }
 
   Future<void> getBookingsByDateTime(DateTime dateTime) async {
-    bookings = await _dbBooking.getBookingFromSalonOfBarberInDay(salonService.salonId, barberModel.barberId, dateTime);
+    bookings = await _dbBooking.getBookingFromSalonOfBarberInDay(
+        salonService.salonId, barberModel.barberId, dateTime);
     setBookingTimes();
     verifyStatus();
     notifyListeners();
@@ -162,14 +168,15 @@ class BookingProvider extends ChangeNotifier {
       createAt: now,
       date: selectedDate,
       services: salonService.selectedServices,
+      homeServiceLocation: salonService.serviceLocation,
     );
+    
     await _dbBooking.creatingBooking(bookingModel);
     showMessageSuccessful('Booking successful');
+    Routes.goTo(Routes.splashRoute);
 
     loading = false;
     notifyListeners();
-
-    Routes.goTo(Routes.splashRoute);
   }
 
   void onDatePressed(DateTime dateTime) {

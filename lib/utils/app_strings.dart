@@ -9,6 +9,7 @@ class Strings {
   static const String continueBtn = 'Continue';
   static const String seeMoreOption = 'See more';
   static const String bookingBtn = 'Book';
+  static const String bookingHomeServiceBtn = 'Book Home Service';
   static const String languageBtn = 'Language';
 
   //WELCOME PAGE

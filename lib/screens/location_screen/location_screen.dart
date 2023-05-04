@@ -1,5 +1,4 @@
 import 'package:barber_center/helpers/validators.dart';
-import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/screens/location_screen/location_screen_provider.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
@@ -11,14 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LocationScreen extends StatelessWidget {
-  const LocationScreen({required this.salonInformationModel, super.key});
-
-  final SalonInformationModel salonInformationModel;
+  const LocationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LocationProvider>(
-      create: (context) => LocationProvider(salonInformationModel: salonInformationModel),
+      create: (context) => LocationProvider(),
       child: Consumer<LocationProvider>(
         builder: (context, provider, _) {
           return Scaffold(
@@ -26,7 +23,7 @@ class LocationScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Styles.backgroundColor,
               elevation: 0,
-              title: const Text('Salon Location'),
+              title: const Text('Location'),
             ),
             body: Container(
               width: double.infinity,
@@ -43,7 +40,7 @@ class LocationScreen extends StatelessWidget {
                     ] else if (!provider.haveLocation) ...[
                       const Center(
                         child: Text(
-                          'We need your location permission to tell your clients exactly where your salon is',
+                          'We need your location permission to get your current location',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
@@ -63,7 +60,9 @@ class LocationScreen extends StatelessWidget {
                       InkWell(
                         onTap: () => provider.changeShowMap(true),
                         child: AnimatedContainer(
-                          height: provider.showMap ? AppLayout.getScreenHeight() * 6.4 / 10 : AppLayout.getScreenHeight() * 2 / 10,
+                          height: provider.showMap
+                              ? AppLayout.getScreenHeight() * 6.4 / 10
+                              : AppLayout.getScreenHeight() * 2 / 10,
                           width: double.infinity,
                           duration: const Duration(milliseconds: 400),
                           decoration: BoxDecoration(border: Border.all()),
@@ -82,7 +81,9 @@ class LocationScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(32),
                             color: Colors.white,
                           ),
-                          child: provider.showMap ? ConfirmAddressSection(provider: provider) : ChangeAddressField(provider: provider),
+                          child: provider.showMap
+                              ? ConfirmAddressSection(provider: provider)
+                              : ChangeAddressField(provider: provider),
                         ),
                       ),
                     ],
@@ -126,7 +127,8 @@ class ConfirmAddressSection extends StatelessWidget {
                   vertical: 16,
                   horizontal: 12,
                 ),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(32)),
               ),
               child: const Text(
                 'Choose this location',
@@ -161,7 +163,8 @@ class ChangeAddressField extends StatelessWidget {
             children: [
               Text(
                 provider.locationModel?.getAddress ?? '',
-                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
               ),
               const Divider(),
               Expanded(
@@ -219,19 +222,21 @@ class ChangeAddressField extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: provider.save,
+                  onPressed: () =>
+                      Navigator.pop(context, provider.locationModel),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                       vertical: 16,
                       horizontal: 12,
                     ),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32)),
                   ),
                   child: Visibility(
                     visible: !provider.loadingSave,
                     replacement: const CupertinoActivityIndicator(),
                     child: const Text(
-                      'Save',
+                      'This is my location',
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
