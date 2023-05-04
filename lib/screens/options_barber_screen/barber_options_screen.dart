@@ -1,5 +1,5 @@
 import 'package:barber_center/helpers/validators.dart';
-import 'package:barber_center/screens/barber/options/barber_options_provider.dart';
+import 'package:barber_center/screens/options_barber_screen/barber_options_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/dropdown_button.dart';
