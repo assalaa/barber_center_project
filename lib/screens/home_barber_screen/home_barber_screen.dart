@@ -1,17 +1,16 @@
 import 'package:barber_center/screens/barber/home_barber_screen/home_barber_provider.dart';
 import 'package:barber_center/services/language_constants.dart';
+import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/center_loading.dart';
+import 'package:barber_center/widgets/complete_profile_widget.dart';
 import 'package:barber_center/widgets/section_header.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-
-import '../../../services/routes.dart';
-import '../../../widgets/complete_profile_widget.dart';
 
 class HomeBarberScreen extends StatelessWidget {
   const HomeBarberScreen({Key? key}) : super(key: key);
