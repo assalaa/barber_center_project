@@ -1,3 +1,4 @@
+import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/models/saloon_service_details_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,6 +13,8 @@ class BookingModel {
   final DateTime createAt;
   final DateTime date;
   final List<ServiceDetailModel> services;
+  final LocationModel? homeServiceLocation;
+  final int totalPrice;
 
   BookingModel({
     required this.id,
@@ -24,7 +27,11 @@ class BookingModel {
     required this.createAt,
     required this.date,
     required this.services,
+    required this.totalPrice,
+    this.homeServiceLocation,
   });
+
+  bool get isHomeService => homeServiceLocation != null;
 
   factory BookingModel.fromJson(Map json) {
     return BookingModel(
@@ -37,7 +44,13 @@ class BookingModel {
       employeeName: json['employeeName'],
       createAt: json['createAt'].toDate().toLocal(),
       date: json['date'].toDate().toLocal(),
-      services: List<ServiceDetailModel>.from(json['services'].map((x) => ServiceDetailModel.fromJson(x))),
+      services: List<ServiceDetailModel>.from(
+          json['services'].map((x) => ServiceDetailModel.fromJson(x))),
+      totalPrice: json['totalPrice'] ?? 0,
+      homeServiceLocation: json.containsKey('homeServiceLocation') &&
+              json['homeServiceLocation'] != null
+          ? LocationModel.fromJson(json['homeServiceLocation'])
+          : null,
     );
   }
 
@@ -52,9 +65,15 @@ class BookingModel {
         'createAt': Timestamp.fromDate(createAt.toUtc()),
         'date': Timestamp.fromDate(date.toUtc()),
         'services': List<dynamic>.from(services.map((x) => x.toJson())),
+        'totalPrice': totalPrice,
+        'homeServiceLocation': homeServiceLocation?.toJson(),
       };
 
   double getTotalPrice() {
+    if (totalPrice > 0) {
+      return totalPrice.toDouble();
+    }
+    
     double price = 0;
     for (final element in services) {
       price += element.price;

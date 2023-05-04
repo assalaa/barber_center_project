@@ -50,7 +50,9 @@ class ServiceElement extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 32,
-                  backgroundImage: image != null ? NetworkImage(image!) : null,
+                  backgroundImage: image != null && image != ''
+                      ? NetworkImage(image!)
+                      : null,
                 ),
                 const SizedBox(height: 6),
                 FittedBox(

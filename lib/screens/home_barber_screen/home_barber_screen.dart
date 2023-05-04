@@ -10,8 +10,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../../services/routes.dart';
-import '../../../widgets/complete_profile_widget.dart';
+import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/widgets/complete_profile_widget.dart';
 
 class HomeBarberScreen extends StatelessWidget {
   const HomeBarberScreen({Key? key}) : super(key: key);
@@ -35,7 +35,8 @@ class HomeBarberScreen extends StatelessWidget {
                   CompleteProfileWidget(
                     titleText: 'Your profile isn\'t complete',
                     buttonText: 'Complete',
-                    onPressed: () => Routes.goTo(Routes.barberOptionsRoute, enableBack: true),
+                    onPressed: () => Routes.goTo(Routes.barberOptionsRoute,
+                        enableBack: true),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -46,11 +47,17 @@ class HomeBarberScreen extends StatelessWidget {
                         (provider.myLocale == const Locale(ENGLISH, ''))
                             ? const Text(
                                 'El-Mezayen',
-                                style: TextStyle(color: Colors.black, fontFamily: 'DancingScript', fontSize: 40),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'DancingScript',
+                                    fontSize: 40),
                               )
                             : const Text(
                                 'المزين',
-                                style: TextStyle(color: Colors.black, fontFamily: 'decotype', fontSize: 40),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'decotype',
+                                    fontSize: 40),
                               ),
 
                         //NOTIFICATION ICON
@@ -59,7 +66,12 @@ class HomeBarberScreen extends StatelessWidget {
                             Container(
                               width: AppLayout.getHeight(50),
                               height: AppLayout.getWidth(50),
-                              decoration: BoxDecoration(image: DecorationImage(image: NetworkImage('provider.userModel.image!')), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          'provider.userModel.image!')),
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Styles.greyColor.withOpacity(0.2)),
                             ),
                           ],
                         )
@@ -83,7 +95,7 @@ class HomeBarberScreen extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                       itemCount: 8,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (context, index) {
                         return const Padding(
                           padding: EdgeInsets.all(8),
                           child: AppointementCard(),
@@ -106,85 +118,94 @@ class AppointementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      Gap(AppLayout.getWidth(5)),
-      //Time section goes here
-      Row(
+    return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          DateListIndicator(),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              '11:00 AM',
-              style: TextStyle(color: Styles.darkBlueColor, fontSize: 15, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-      // Customer card details goes here
-      Expanded(
-        child: Container(
-          padding: const EdgeInsets.all(15),
-          width: 270,
-          height: 100,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 7,
-                offset: const Offset(0, 2), // changes position of shadow
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Gap(AppLayout.getWidth(5)),
+          //Time section goes here
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              DateListIndicator(),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  '11:00 AM',
+                  style: TextStyle(
+                      color: Styles.darkBlueColor,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
             ],
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //Customer Image
-              Row(
+          // Customer card details goes here
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              width: 270,
+              height: 100,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 3,
+                    blurRadius: 7,
+                    offset: const Offset(0, 2), // changes position of shadow
+                  ),
+                ],
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CircleAvatar(
-                      radius: 30.0,
-                      backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-                      )),
-                  Gap(AppLayout.getWidth(15)),
-                  //Customer name
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  //Customer Image
+                  Row(
                     children: [
-                      const Text(
-                        'Name last name',
-                        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Gap(AppLayout.getHeight(5)),
-                      Row(
-                        children: const [
-                          Icon(
-                            FluentSystemIcons.ic_fluent_location_filled,
-                            size: 20,
-                            color: Styles.primaryColor,
+                      const CircleAvatar(
+                          radius: 30.0,
+                          backgroundImage: NetworkImage(
+                            'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+                          )),
+                      Gap(AppLayout.getWidth(15)),
+                      //Customer name
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Name last name',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            'Customer address ',
-                            style: TextStyle(color: Colors.black),
+                          Gap(AppLayout.getHeight(5)),
+                          Row(
+                            children: const [
+                              Icon(
+                                FluentSystemIcons.ic_fluent_location_filled,
+                                size: 20,
+                                color: Styles.primaryColor,
+                              ),
+                              Text(
+                                'Customer address ',
+                                style: TextStyle(color: Colors.black),
+                              )
+                            ],
                           )
                         ],
-                      )
+                      ),
+
+                      //Address
                     ],
                   ),
-
-                  //Address
                 ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    ]);
+        ]);
   }
 }
 
@@ -199,7 +220,9 @@ class DateListIndicator extends StatelessWidget {
       Container(
         width: 10,
         height: 10,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: Styles.primaryColor),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Styles.primaryColor),
       ),
       Container(
         padding: const EdgeInsets.all(12),

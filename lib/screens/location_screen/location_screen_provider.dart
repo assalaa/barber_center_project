@@ -1,8 +1,5 @@
-import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/models/location_model.dart';
-import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/services/location_service.dart';
-import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/widgets/popup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,10 +17,6 @@ class LocationProvider with ChangeNotifier {
   final TextEditingController street = TextEditingController();
   final TextEditingController postalCode = TextEditingController();
 
-  final DatabaseSalon _dbSalon = DatabaseSalon();
-
-  SalonInformationModel salonInformationModel;
-
   LocationModel? locationModel;
   String address = '';
 
@@ -33,7 +26,7 @@ class LocationProvider with ChangeNotifier {
 
   bool showMap = true;
 
-  LocationProvider({required this.salonInformationModel}) {
+  LocationProvider() {
     _init();
   }
 
@@ -108,21 +101,21 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> save() async {
-    formKey.currentState!.save();
-    if (formKey.currentState!.validate() && locationModel != null) {
-      loadingSave = true;
-      notifyListeners();
+  // Future<void> save() async {
+  //   formKey.currentState!.save();
+  //   if (formKey.currentState!.validate() && locationModel != null) {
+  //     loadingSave = true;
+  //     notifyListeners();
 
-      salonInformationModel.address = locationModel!.getAddress ?? '';
-      salonInformationModel.location = locationModel;
+  //     salonInformationModel.address = locationModel!.getAddress ?? '';
+  //     salonInformationModel.location = locationModel;
 
-      await _dbSalon.updateSalonInformation(salonInformationModel);
+  //     await _dbSalon.updateSalonInformation(salonInformationModel);
 
-      loadingSave = false;
-      notifyListeners();
-      Routes.back();
-      Routes.back();
-    }
-  }
+  //     loadingSave = false;
+  //     notifyListeners();
+  //     Routes.back();
+  //     Routes.back();
+  //   }
+  // }
 }

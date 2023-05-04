@@ -59,143 +59,10 @@ class BookingStoryCustomerScreen extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: provider.bookings.length * 2,
                       itemBuilder: (context, index) {
-                        final BookingModel booking =
-                            provider.bookings[(index / 2).floor()];
+                        final BookingModel booking = provider.bookings.reversed
+                            .toList()[(index / 2).floor()];
 
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)),
-                            elevation: 4,
-                            child: Container(
-                              // height: AppLayout.getHeight(200),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  gradient: const LinearGradient(
-                                      colors: [
-                                        Styles.primaryColor,
-                                        Styles.orangeColor
-                                      ],
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.topRight),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Styles.primaryColor,
-                                        blurRadius: 12,
-                                        offset: Offset(0, 6)),
-                                  ]),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(24, 12, 24, 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        booking.date.showDateAndTime(),
-                                        style: Styles.textStyle.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24,
-                                            color: Colors.white),
-                                      ),
-                                    ),
-                                    Gap(AppLayout.getHeight(10)),
-                                    const Divider(
-                                      color: Colors.white,
-                                    ),
-                                    RichText(
-                                      text: TextSpan(
-                                        text: AppLocalizations.of(context)!
-                                            .booking_salon,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: booking.salonName,
-                                            style: Styles.textStyle.copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 24),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    RichText(
-                                      text: TextSpan(
-                                        text:
-                                            '${AppLocalizations.of(context)!.booking_price} : ',
-                                        style: Styles.textStyle.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '\$${booking.getTotalPrice()}',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    //RICHTXT DURATION
-                                    RichText(
-                                      text: TextSpan(
-                                        text:
-                                            '${AppLocalizations.of(context)!.booking_duration} : ',
-                                        style: Styles.textStyle.copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                        children: [
-                                          TextSpan(
-                                            text: minutesToHours(
-                                                booking.getDurationInMinutes()),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    //LISTVIEW BUILDER SERVICES
-                                    Text(
-                                      booking.services.length > 1
-                                          ? '${AppLocalizations.of(context)!.booking_services} : '
-                                          : '${AppLocalizations.of(context)!.booking_service} : ',
-                                      style: Styles.textStyle.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ),
-                                    ListView.builder(
-                                      itemCount: booking.services.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (context, index) {
-                                        final service = booking.services[index];
-                                        return RichText(
-                                          text: TextSpan(
-                                            text: '${service.name} ',
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: AppLayout.getHeight(10),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
+                        return BookingCard(booking: booking);
                       },
                     )
                   ]
@@ -204,6 +71,146 @@ class BookingStoryCustomerScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class BookingCard extends StatelessWidget {
+  const BookingCard({
+    required this.booking,
+    super.key,
+  });
+
+  final BookingModel booking;
+
+  @override
+  Widget build(BuildContext context) {
+    const TextStyle textStyle = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 16,
+    );
+    const TextStyle textSpanStyle = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.normal,
+      fontSize: 18,
+    );
+
+    final bool isHomeService = booking.isHomeService;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 4,
+        child: Container(
+          // height: AppLayout.getHeight(200),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: const LinearGradient(
+                colors: [Styles.primaryColor, Styles.orangeColor],
+                begin: Alignment.topLeft,
+                end: Alignment.topRight,
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  color: Styles.primaryColor,
+                  blurRadius: 12,
+                  offset: Offset(0, 6),
+                ),
+              ]),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Text(
+                    booking.date.showDateAndTime(),
+                    style: Styles.textStyle.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+                const Divider(color: Colors.white),
+                RichText(
+                  text: TextSpan(
+                    text: '${AppLocalizations.of(context)!.booking_salon}: ',
+                    style: textStyle,
+                    children: [
+                      TextSpan(
+                        text: booking.salonName,
+                        style: Styles.textStyle.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                RichText(
+                  text: TextSpan(
+                    text: '${AppLocalizations.of(context)!.booking_price} : ',
+                    style: Styles.textStyle.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '\$${booking.getTotalPrice()}',
+                        style: textSpanStyle,
+                      ),
+                    ],
+                  ),
+                ),
+                //RICHTXT DURATION
+                RichText(
+                  text: TextSpan(
+                    text:
+                        '${AppLocalizations.of(context)!.booking_duration} : ',
+                    style: textStyle,
+                    children: [
+                      TextSpan(
+                        text: minutesToHours(booking.getDurationInMinutes()),
+                        style: textSpanStyle,
+                      ),
+                    ],
+                  ),
+                ),
+                //LISTVIEW BUILDER SERVICES
+                Text(
+                  booking.services.length > 1
+                      ? '${AppLocalizations.of(context)!.booking_services} : '
+                      : '${AppLocalizations.of(context)!.booking_service} : ',
+                  style: textStyle,
+                ),
+                ListView.builder(
+                  itemCount: booking.services.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final service = booking.services[index];
+                    return RichText(
+                      text: TextSpan(
+                        text: '${service.name} ',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: AppLayout.getHeight(10),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

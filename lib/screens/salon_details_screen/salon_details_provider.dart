@@ -3,6 +3,7 @@ import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/database/db_salon_service.dart';
 import 'package:barber_center/models/barber_model.dart';
+import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/user_model.dart';
@@ -17,10 +18,29 @@ class SalonDetailsProvider with ChangeNotifier {
   late SalonServiceModel salonService;
   late SalonInformationModel? salonInformation;
   late List<BarberModel> employees = [];
-  BarberModel? selectedEmployee;
 
   bool loading = true;
-  bool homeService = false;
+
+  BarberModel? get selectedEmployee => salonService.selectedEmployee;
+  set selectedEmployee(BarberModel? value) =>
+      salonService.selectedEmployee = value;
+
+  bool get homeService => salonService.homeService;
+  set homeService(bool value) => salonService.homeService = value;
+
+  LocationModel? get serviceLocation => salonService.serviceLocation;
+
+  set serviceLocation(LocationModel? value) {
+    salonService.serviceLocation = value;
+    notifyListeners();
+  }
+
+  set salonLocation(LocationModel? value) {
+    salonService.salonLocation = value;
+    notifyListeners();
+  }
+
+  bool get hasServiceLocation => serviceLocation != null;
 
   SalonDetailsProvider(String uid) {
     init(uid);
@@ -29,13 +49,16 @@ class SalonDetailsProvider with ChangeNotifier {
   Future<void> init(String uid) async {
     await Future.wait([
       _getSalon(uid),
-      _getSalonService(uid),
       _getSalonInformation(uid),
+      _getSalonService(uid),
       _getEmployees(uid),
     ]);
 
+    salonService.salonLocation = salonInformation?.location;
+
     /// Remove services that has no employees to do it
-    salonService.services.removeWhere((service) => !employees.any((element) => element.services.contains(service.serviceId)));
+    salonService.services.removeWhere((service) => !employees
+        .any((element) => element.services.contains(service.serviceId)));
 
     loading = false;
     notifyListeners();
@@ -90,7 +113,6 @@ class SalonDetailsProvider with ChangeNotifier {
   }
 
   bool hasItemSelected() {
-    salonService.setPriceAndDuration();
     return salonService.services.any((element) => element.selected);
   }
 
@@ -98,7 +120,13 @@ class SalonDetailsProvider with ChangeNotifier {
     return selectedEmployee != null;
   }
 
-  bool isEmployeeCapable(BarberModel barberModel) => (barberModel.homeService && homeService == true || homeService == false) && salonService.services.every((element) => (element.selected && barberModel.services.contains(element.serviceId)) || (!element.selected));
+  bool isEmployeeCapable(BarberModel barberModel) =>
+      (barberModel.homeService && homeService == true ||
+          homeService == false) &&
+      salonService.services.every((element) =>
+          (element.selected &&
+              barberModel.services.contains(element.serviceId)) ||
+          (!element.selected));
 
   bool canBook() {
     return salonInformation != null && employees.isNotEmpty;
