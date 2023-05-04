@@ -1,4 +1,4 @@
-import 'package:barber_center/screens/barber/profile/profile_barber_screen.dart';
+import 'package:barber_center/screens/profile_barber/profile_barber_screen.dart';
 import 'package:barber_center/screens/booking_story/booking_story_page.dart';
 import 'package:barber_center/screens/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/utils/app_styles.dart';

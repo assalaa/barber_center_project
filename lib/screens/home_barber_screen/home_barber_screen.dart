@@ -1,4 +1,4 @@
-import 'package:barber_center/screens/barber/home_barber_screen/home_barber_provider.dart';
+import 'package:barber_center/screens/home_barber_screen/home_barber_provider.dart';
 import 'package:barber_center/services/language_constants.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_layout.dart';

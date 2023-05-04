@@ -1,4 +1,4 @@
-import 'package:barber_center/screens/barber/profile/profile_barber_provider.dart';
+import 'package:barber_center/screens/profile_barber/profile_barber_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/center_loading.dart';
@@ -14,7 +14,6 @@ class BarberProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSelected = false;
     return ChangeNotifierProvider<ProfileBarberProvider>(
       create: (context) => ProfileBarberProvider(),
       child: Consumer<ProfileBarberProvider>(
