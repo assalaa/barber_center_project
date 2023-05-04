@@ -1,8 +1,5 @@
-import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/models/location_model.dart';
-import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/services/location_service.dart';
-import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/widgets/popup.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

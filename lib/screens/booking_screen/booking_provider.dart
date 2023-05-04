@@ -168,9 +168,10 @@ class BookingProvider extends ChangeNotifier {
       createAt: now,
       date: selectedDate,
       services: salonService.selectedServices,
+      totalPrice: salonService.price,
       homeServiceLocation: salonService.serviceLocation,
     );
-    
+
     await _dbBooking.creatingBooking(bookingModel);
     showMessageSuccessful('Booking successful');
     Routes.goTo(Routes.splashRoute);

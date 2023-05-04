@@ -14,6 +14,7 @@ class BookingModel {
   final DateTime date;
   final List<ServiceDetailModel> services;
   final LocationModel? homeServiceLocation;
+  final int totalPrice;
 
   BookingModel({
     required this.id,
@@ -26,6 +27,7 @@ class BookingModel {
     required this.createAt,
     required this.date,
     required this.services,
+    required this.totalPrice,
     this.homeServiceLocation,
   });
 
@@ -44,6 +46,7 @@ class BookingModel {
       date: json['date'].toDate().toLocal(),
       services: List<ServiceDetailModel>.from(
           json['services'].map((x) => ServiceDetailModel.fromJson(x))),
+      totalPrice: json['totalPrice'] ?? 0,
       homeServiceLocation: json.containsKey('homeServiceLocation') &&
               json['homeServiceLocation'] != null
           ? LocationModel.fromJson(json['homeServiceLocation'])
@@ -62,10 +65,15 @@ class BookingModel {
         'createAt': Timestamp.fromDate(createAt.toUtc()),
         'date': Timestamp.fromDate(date.toUtc()),
         'services': List<dynamic>.from(services.map((x) => x.toJson())),
+        'totalPrice': totalPrice,
         'homeServiceLocation': homeServiceLocation?.toJson(),
       };
 
   double getTotalPrice() {
+    if (totalPrice > 0) {
+      return totalPrice.toDouble();
+    }
+    
     double price = 0;
     for (final element in services) {
       price += element.price;

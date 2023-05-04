@@ -3,14 +3,10 @@ import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/helpers/extensions.dart';
 import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
-import 'package:barber_center/services/location_service.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/popup.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 
 class SalonOptionsProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
