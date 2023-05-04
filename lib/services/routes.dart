@@ -7,9 +7,9 @@ import 'package:barber_center/screens/admin/home/home_admin_screen.dart';
 import 'package:barber_center/screens/barber/options/barber_options_screen.dart';
 import 'package:barber_center/screens/booking_screen/booking_screen.dart';
 import 'package:barber_center/screens/create_account_screen/create_account_screen.dart';
+import 'package:barber_center/screens/first_page/first_page_barber/first_page_barber_user.dart';
 import 'package:barber_center/screens/first_page/first_page_customer/first_page_customer_user.dart';
 import 'package:barber_center/screens/first_page/first_page_salon/first_page_salon_user.dart';
-import 'package:barber_center/screens/home_barber_screen/home_barber_screen.dart';
 import 'package:barber_center/screens/location_screen/location_screen.dart';
 import 'package:barber_center/screens/login_screen/login_screen.dart';
 import 'package:barber_center/screens/profile_customer_screen/profile_customer_screen.dart';
@@ -81,7 +81,7 @@ class Routes {
       case homeSalonRoute:
         return MaterialPageRoute(builder: (_) => const FirstPageSalonUser());
       case homeBarberRoute:
-        return MaterialPageRoute(builder: (_) => const HomeBarberScreen());
+        return MaterialPageRoute(builder: (_) => const FirstPageBarberUser());
       case bookingRoute:
         return MaterialPageRoute(
             builder: (_) => BookingScreen(

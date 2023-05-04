@@ -71,8 +71,7 @@ class ProfileSalonProvider with ChangeNotifier {
       barberModel.salonId = '';
 
       await _dbBarber.updateBarber(barberModel);
-      employees
-          .removeWhere((element) => element.barberId == barberModel.barberId);
+      employees.removeWhere((element) => element.barberId == barberModel.barberId);
       showMessageSuccessful('Employee successfully removed');
 
       loading = false;
