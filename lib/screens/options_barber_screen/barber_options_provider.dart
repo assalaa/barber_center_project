@@ -8,7 +8,6 @@ import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/popup.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class BarberOptionsProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
@@ -31,7 +30,6 @@ class BarberOptionsProvider with ChangeNotifier {
 
   Future<void> init() async {
     final String userId = _dbAuth.getCurrentUser()!.uid;
-
     barberModel = (await _dbBarber.getBarber(userId)) ?? BarberModel.emptyBarberInfo(userId);
     tcName.text = barberModel.barberName;
     tcPhone.text = barberModel.phone;
@@ -51,17 +49,6 @@ class BarberOptionsProvider with ChangeNotifier {
       }
       notifyListeners();
     }
-  }
-
-  Future<void> addPhoto(BuildContext context) async {
-    final XFile? imageFile = await _dbImage.selectImage(ImageSource.gallery, context);
-    if (imageFile == null) {
-      return;
-    }
-    final String image = await _dbImage.uploadImage(imageFile, 'images/user/');
-    userModel.image = image;
-    await _dbUser.updateUser(userModel);
-    notifyListeners();
   }
 
   bool check() {

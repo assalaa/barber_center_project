@@ -1,16 +1,15 @@
 import 'package:barber_center/models/barber_model.dart';
-import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
+import 'package:barber_center/widgets/service_slider.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class SaloonProfileScreen extends StatelessWidget {
@@ -64,14 +63,17 @@ class SaloonProfileScreen extends StatelessWidget {
                             location: provider.salonInformationModel?.location
                                     ?.getAddress ??
                                 provider.salonInformationModel?.address),
-                        const SizedBox(height: 60),
+                        const SizedBox(height: 32),
                         const TabBarWidget(),
-                        const Gap(64),
+                        const SizedBox(height: 48),
                         TabViewWidget(
                           children: [
                             ServiceSlider(
                               services: provider.services,
                               deleteFunction: provider.removeService,
+                              addFunction: () => Routes.goTo(
+                                  Routes.addServiceRoute,
+                                  enableBack: true),
                             ),
                             EmployeeSlider(
                               userModel: provider.userModel,
@@ -109,9 +111,7 @@ class EditButton extends StatelessWidget {
 }
 
 class TabBarWidget extends StatelessWidget {
-  const TabBarWidget({
-    super.key,
-  });
+  const TabBarWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -161,56 +161,6 @@ class TabViewWidget extends StatelessWidget {
     return SizedBox(
       height: 120,
       child: TabBarView(children: children),
-    );
-  }
-}
-
-class ServiceSlider extends StatelessWidget {
-  const ServiceSlider({
-    required this.services,
-    required this.deleteFunction,
-    super.key,
-  });
-
-  final List<ServiceModel>? services;
-  final Function(ServiceModel) deleteFunction;
-
-  @override
-  Widget build(BuildContext context) {
-    final itemCount = (services == null ? 0 : services!.length) + 1;
-
-    return ListView.builder(
-      itemCount: itemCount,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        final ServiceModel? serviceModel =
-            index != 0 ? (services?[index - 1]) : null;
-
-        if (serviceModel == null) {
-          if (index != 0) {
-            return const SizedBox.shrink();
-          } else {
-            return AddButton(
-              text: AppLocalizations.of(context)!.add_service,
-              onTap: () =>
-                  Routes.goTo(Routes.addServiceRoute, enableBack: true),
-              circle: true,
-            );
-          }
-        }
-
-        final String text = serviceModel.name;
-        final String image = serviceModel.image;
-
-        dynamic onDelete() => deleteFunction(serviceModel);
-
-        return ListItem(
-          text: text,
-          image: image,
-          onDelete: onDelete,
-          circle: true,
-        );
-      },
     );
   }
 }
@@ -416,7 +366,7 @@ class LocationInfo extends StatelessWidget {
 
     return Padding(
       padding:
-          center ? const EdgeInsets.symmetric(horizontal: 64) : EdgeInsets.zero,
+          center ? const EdgeInsets.symmetric(horizontal: 16) : EdgeInsets.zero,
       child: Row(
         mainAxisAlignment:
             center ? MainAxisAlignment.center : MainAxisAlignment.start,
@@ -432,6 +382,7 @@ class LocationInfo extends StatelessWidget {
             child: Text(
               location!,
               // textAlign: TextAlign.center,
+              maxLines: 2,
               style: const TextStyle(fontSize: 18, color: Styles.greyColor),
             ),
           ),

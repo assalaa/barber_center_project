@@ -1,10 +1,12 @@
 import 'package:barber_center/screens/profile_barber/profile_barber_provider.dart';
 import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
+import 'package:barber_center/widgets/service_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +46,7 @@ class BarberProfileScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 32),
                         ProfilePicture(
-                          image: provider.userModel.image,
+                          image: provider.barberModel.image,
                           updatePhoto: provider.updatePhoto,
                         ),
                         const SizedBox(height: 22),
@@ -53,18 +55,18 @@ class BarberProfileScreen extends StatelessWidget {
                           //salonName: provider.salonInformationModel?.salonName,
                         ),
                         const SizedBox(height: 10),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: provider.services.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-                                  trailing: Text(
-                                    provider.services[index].name,
-                                    style: const TextStyle(
-                                        color: Colors.green, fontSize: 15),
-                                  ),
-                                  title: Text(provider.services[index].name));
-                            }),
+                        const Text('Select a skill'),
+                        const SizedBox(height: 22),
+                        SizedBox(
+                          height: AppLayout.getHeight(100),
+                          child: ServiceSlider(
+                            services: provider.services,
+                            deleteFunction: provider.removeService,
+                            addFunction: () => Routes.goTo(
+                                Routes.addServiceRoute,
+                                enableBack: true),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -86,7 +88,7 @@ class EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
+      onPressed: () => Routes.goTo(Routes.barberOptionsRoute, enableBack: true),
       icon: const Icon(Icons.edit),
       color: Styles.primaryColor,
     );
