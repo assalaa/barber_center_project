@@ -27,9 +27,21 @@ class DatabaseBarber {
   }
 
   Future<bool> isProfileCompleted(String uid) async {
-    final DocumentSnapshot snapshot = await _firestore.collection(_path).doc(uid).get();
+    final DocumentSnapshot snapshot =
+        await _firestore.collection(_path).doc(uid).get();
     final Map map = (snapshot.data() ?? {}) as Map;
     return map.isNotEmpty;
+  }
+
+  Future<List<String>> getBarberServices(String barberId) async {
+    final DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await _firestore.collection(_path).doc(barberId).get();
+
+    final Map map = (snapshot.data() ?? {});
+
+    final BarberModel barberModel = BarberModel.fromJson(map);
+
+    return barberModel.services;
   }
 
   Future<BarberModel?> getBarber(String uid) {
@@ -90,7 +102,10 @@ class DatabaseBarber {
 
   Future<void> updateBarberInformation(BarberModel barberModel) async {
     try {
-      await _firestore.collection(_path).doc(barberModel.barberId).update(barberModel.toJson());
+      await _firestore
+          .collection(_path)
+          .doc(barberModel.barberId)
+          .update(barberModel.toJson());
     } catch (e) {
       debugPrint('Error: $e');
       await createBarberAccount(barberModel);

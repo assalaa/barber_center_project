@@ -1,10 +1,12 @@
 import 'package:barber_center/screens/profile_barber/profile_barber_provider.dart';
 import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/profile/logout_button.dart';
 import 'package:barber_center/widgets/profile/profile_picture.dart';
+import 'package:barber_center/widgets/service_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +46,7 @@ class BarberProfileScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 32),
                         ProfilePicture(
-                          image: provider.userModel.image,
+                          image: provider.barberModel.image,
                           updatePhoto: provider.updatePhoto,
                         ),
                         const SizedBox(height: 22),
@@ -53,26 +55,18 @@ class BarberProfileScreen extends StatelessWidget {
                           //salonName: provider.salonInformationModel?.salonName,
                         ),
                         const SizedBox(height: 10),
-                        Text('Select a skill'),
-                        ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: provider.services.length,
-                            itemBuilder: (context, index) {
-                              return ListTile(
-
-                                  //title: Text(provider.services[index].name));
-                                  title: Container(
-                                      alignment: Alignment.center,
-                                      child: ChoiceChip(
-                                        label: Text(provider.services[index].name),
-                                        selected: provider.isSkillSelected,
-                                        onSelected: (value) {
-                                          provider.chooseSkill(index);
-                                        },
-                                        pressElevation: 20,
-                                        backgroundColor: provider.isSkillSelected ? Styles.primaryColor : Styles.greyColor,
-                                      )));
-                            }),
+                        const Text('Select a skill'),
+                        const SizedBox(height: 22),
+                        SizedBox(
+                          height: AppLayout.getHeight(100),
+                          child: ServiceSlider(
+                            services: provider.services,
+                            deleteFunction: provider.removeService,
+                            addFunction: () => Routes.goTo(
+                                Routes.addServiceRoute,
+                                enableBack: true),
+                          ),
+                        ),
                       ],
                     ),
                   ),

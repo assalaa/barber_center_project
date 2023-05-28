@@ -8,6 +8,7 @@ import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
+import 'package:barber_center/widgets/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,7 +24,7 @@ class ProfileBarberProvider with ChangeNotifier {
   late ServiceModel serviceModel;
 
   late UserModel userModel;
-  late BarberModel? barberModel;
+  late BarberModel barberModel;
   bool loading = true;
   late String uid;
   late String skill;
@@ -37,9 +38,27 @@ class ProfileBarberProvider with ChangeNotifier {
 
     init();
   }
-
   Future<void> getServices() async {
     services = await _dbService.getServices();
+    //remove services where there is no in salonServiceModel
+    services.removeWhere(
+        (element) => !barberModel.services.any((e) => e == element.id));
+  }
+
+  Future<void> removeService(ServiceModel serviceModel) async {
+    if (await Popup.removeService(serviceModel.name)) {
+      loading = true;
+      notifyListeners();
+      if (barberModel.services.contains(serviceModel.id)) {
+        barberModel.services.remove(serviceModel.id);
+        await _dbBarber.updateBarber(barberModel);
+
+        services.removeWhere((element) => element.id == serviceModel.id);
+      }
+
+      loading = false;
+      notifyListeners();
+    }
   }
 
   void logout() {
@@ -51,17 +70,18 @@ class ProfileBarberProvider with ChangeNotifier {
   }
 
   Future<void> fetchBarberInformation() async {
-    barberModel = await _dbBarber.getBarber(uid);
+    barberModel = (await _dbBarber.getBarber(uid))!;
   }
 
   Future<void> updatePhoto(BuildContext context) async {
-    final XFile? imageFile = await _dbImage.selectImage(ImageSource.gallery, context);
+    final XFile? imageFile =
+        await _dbImage.selectImage(ImageSource.gallery, context);
     if (imageFile == null) {
       return;
     }
     final String image = await _dbImage.uploadImage(imageFile, 'images/user/');
-    userModel.image = image;
-    await _dbUser.updateUser(userModel);
+    barberModel.image = image;
+    await _dbBarber.updateBarber(barberModel);
     notifyListeners();
     showMessageSuccessful(' updated');
   }
@@ -72,8 +92,12 @@ class ProfileBarberProvider with ChangeNotifier {
   }
 
   Future<void> init() async {
-    await Future.wait([fetchMyProfile(), fetchBarberInformation(), getServices()]);
-    chooseSkill();
+    await Future.wait([
+      fetchMyProfile(),
+      fetchBarberInformation(),
+    ]);
+    await getServices();
+
     debugPrint(services.length.toString());
     debugPrint('{ services : $services}');
     loading = false;
