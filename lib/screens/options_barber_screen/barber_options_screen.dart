@@ -25,58 +25,48 @@ class BarberOptionsScreen extends StatelessWidget {
               elevation: 0,
               title: const Text('Barber Information'),
             ),
-            body: CustomScrollView(
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 22,
-                      vertical: 16,
-                    ),
-                    child: Form(
-                      key: provider.formKey,
-                      child: Column(
-                        children: [
-                          if (provider.loading) ...[
-                            const CenterLoading(bottomMargin: 200)
-                          ] else ...[
-                            const Gap(32),
-                            LabeledTextField(
-                              controller: provider.tcName,
-                              title: AppLocalizations.of(context)!.name_info_field,
-                              hintText: AppLocalizations.of(context)!.barber_name_hint,
-                              validatorText: AppLocalizations.of(context)!.name_validation,
-                            ),
-                            const Gap(32),
-                            LabeledTextField(
-                              controller: provider.tcPhone,
-                              title: AppLocalizations.of(context)!.phone_info_field,
-                              hintText: '0020 0000 0000',
-                              validatorText: AppLocalizations.of(context)!.phone_validation,
-                              textInputType: TextInputType.phone,
-                              validator: Validators.phoneNumberValidator,
-                            ),
-                            const Gap(22),
-                            LabeledCheckBox(
-                              title: 'Open to bookings?',
-                              value: provider.barberModel.homeService,
-                              onChanged: provider.changeAvailability,
-                            ),
-                            const Spacer(),
-                            LargeRoundedButton(
-                              buttonName: 'Save',
-                              onTap: provider.save,
-                            ),
-                            const Gap(22),
-                          ]
-                        ],
+            body: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 22,
+                vertical: 16,
+              ),
+              child: Form(
+                key: provider.formKey,
+                child: Column(
+                  children: [
+                    if (provider.loading) ...[
+                      const CenterLoading(bottomMargin: 200)
+                    ] else ...[
+                      const Gap(32),
+                      LabeledTextField(
+                        controller: provider.tcName,
+                        title: AppLocalizations.of(context)!.name_info_field,
+                        hintText:
+                            AppLocalizations.of(context)!.barber_name_hint,
+                        validatorText:
+                            AppLocalizations.of(context)!.name_validation,
                       ),
-                    ),
-                  ),
+                      const Gap(25),
+                      LabeledTextField(
+                        controller: provider.tcPhone,
+                        title: AppLocalizations.of(context)!.phone_info_field,
+                        hintText: '0020 0000 0000',
+                        validatorText:
+                            AppLocalizations.of(context)!.phone_validation,
+                        textInputType: TextInputType.phone,
+                        validator: Validators.phoneNumberValidator,
+                      ),
+                      const Spacer(),
+                      LargeRoundedButton(
+                        buttonName: 'Save',
+                        onTap: provider.save,
+                      ),
+                      const Gap(22),
+                    ]
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },
