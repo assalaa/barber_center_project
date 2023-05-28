@@ -51,8 +51,8 @@ class BarberProfileScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 22),
                         FullName(
-                          userName: provider.userModel.name,
-                          //salonName: provider.salonInformationModel?.salonName,
+                          userName: provider.barberModel.barberName,
+                          salonName: provider.salonModel?.salonName,
                         ),
                         const SizedBox(height: 10),
                         const Text('Select a skill'),
