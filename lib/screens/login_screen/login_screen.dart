@@ -28,11 +28,11 @@ class LoginScreen extends StatelessWidget {
               elevation: 0,
               title: RichText(
                 text: TextSpan(
-                  text: AppLocalizations.of(context)!.sign_in_as,
+                  text: '${AppLocalizations.of(context)!.sign_in_as} ',
                   style: Styles.headLineStyle1,
                   children: <TextSpan>[
                     TextSpan(
-                      text: kindOfUser == KindOfUser.SALON ? AppLocalizations.of(context)!.salon : AppLocalizations.of(context)!.customer,
+                      text: kindOfUser == KindOfUser.SALON ? AppLocalizations.of(context)!.salon : kindOfUser == KindOfUser.BARBER ? AppLocalizations.of(context)!.barber: AppLocalizations.of(context)!.customer,
                       style: Styles.headLineStyle1.copyWith(color: Styles.primaryColor),
                     ),
                   ],
