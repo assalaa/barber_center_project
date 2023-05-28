@@ -14,7 +14,6 @@ class BarberProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isSelected = false;
     return ChangeNotifierProvider<ProfileBarberProvider>(
       create: (context) => ProfileBarberProvider(),
       child: Consumer<ProfileBarberProvider>(
@@ -54,16 +53,25 @@ class BarberProfileScreen extends StatelessWidget {
                           //salonName: provider.salonInformationModel?.salonName,
                         ),
                         const SizedBox(height: 10),
+                        Text('Select a skill'),
                         ListView.builder(
                             shrinkWrap: true,
                             itemCount: provider.services.length,
                             itemBuilder: (context, index) {
                               return ListTile(
-                                  trailing: Text(
-                                    provider.services[index].name,
-                                    style: const TextStyle(color: Colors.green, fontSize: 15),
-                                  ),
-                                  title: Text(provider.services[index].name));
+
+                                  //title: Text(provider.services[index].name));
+                                  title: Container(
+                                      alignment: Alignment.center,
+                                      child: ChoiceChip(
+                                        label: Text(provider.services[index].name),
+                                        selected: provider.isSkillSelected,
+                                        onSelected: (value) {
+                                          provider.chooseSkill(index);
+                                        },
+                                        pressElevation: 20,
+                                        backgroundColor: provider.isSkillSelected ? Styles.primaryColor : Styles.greyColor,
+                                      )));
                             }),
                       ],
                     ),
@@ -86,7 +94,7 @@ class EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => Routes.goTo(Routes.salonOptionsRoute, enableBack: true),
+      onPressed: () => Routes.goTo(Routes.barberOptionsRoute, enableBack: true),
       icon: const Icon(Icons.edit),
       color: Styles.primaryColor,
     );

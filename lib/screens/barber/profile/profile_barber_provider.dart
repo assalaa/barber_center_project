@@ -19,11 +19,18 @@ class ProfileBarberProvider with ChangeNotifier {
 
   final DatabaseImage _dbImage = DatabaseImage();
   List<ServiceModel> services = [];
+  late ServiceModel service;
+  late ServiceModel serviceModel;
 
   late UserModel userModel;
-  late BarberModel barberModel;
+  late BarberModel? barberModel;
   bool loading = true;
   late String uid;
+  late String skill;
+
+  int selectedSkill = -1;
+
+  bool get isSkillSelected => selectedSkill != -1;
 
   ProfileBarberProvider() {
     uid = _dbAuth.getCurrentUser()!.uid;
@@ -44,7 +51,7 @@ class ProfileBarberProvider with ChangeNotifier {
   }
 
   Future<void> fetchBarberInformation() async {
-    barberModel = (await _dbBarber.getBarber(uid))!;
+    barberModel = await _dbBarber.getBarber(uid);
   }
 
   Future<void> updatePhoto(BuildContext context) async {
@@ -59,8 +66,14 @@ class ProfileBarberProvider with ChangeNotifier {
     showMessageSuccessful(' updated');
   }
 
+  void chooseSkill(int index) {
+    selectedSkill = index;
+    notifyListeners();
+  }
+
   Future<void> init() async {
     await Future.wait([fetchMyProfile(), fetchBarberInformation(), getServices()]);
+    chooseSkill();
     debugPrint(services.length.toString());
     debugPrint('{ services : $services}');
     loading = false;
