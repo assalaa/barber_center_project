@@ -30,7 +30,7 @@ class BarberProfileScreen extends StatelessWidget {
               ),
               body: Column(children: [
                 if (provider.loading) ...[
-                  const CenterLoading()
+                  const CenterLoading(bottomMargin: 300)
                 ] else ...[
                   Padding(
                     padding: const EdgeInsets.all(16.0),

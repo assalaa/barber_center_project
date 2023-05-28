@@ -1,8 +1,24 @@
 extension StringTime on DateTime {
-  String toStringTime() {
-    final int hours = hour;
+  String toStringTime({bool twelveHours = false}) {
+    int hours = hour;
     final int minutes = minute;
-    return '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes';
+
+    if (!twelveHours) {
+      return '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes';
+    } else {
+      String tag = 'AM';
+      if (hours > 12) {
+        hours = hours - 12;
+        tag = 'PM';
+      } else if (hours == 12) {
+        tag = 'PM';
+      } else if (hours == 0) {
+        hours = 12;
+        tag = 'AM';
+      }
+
+      return '${hours < 10 ? '0' : ''}$hours:${minutes < 10 ? '0' : ''}$minutes $tag';
+    }
   }
 }
 

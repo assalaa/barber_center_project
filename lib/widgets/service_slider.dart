@@ -30,7 +30,6 @@ class ServiceSlider extends StatelessWidget {
           if (index != 0) {
             return const SizedBox.shrink();
           } else {
-            print('refugees must go');
             return AddButton(
               text: AppLocalizations.of(context)!.add_service,
               onTap: addFunction,
