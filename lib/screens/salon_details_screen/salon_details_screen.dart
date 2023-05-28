@@ -99,24 +99,25 @@ class SalonDetailsScreen extends StatelessWidget {
                       ),
 
                       //BODY
-                      Positioned(
-                        top: AppLayout.getHeight(250),
-                        child: Container(
-                          width: AppLayout.getScreenWidth(),
-                          height: AppLayout.getHeight(
-                              900), // AppLayout.getScreenHeight(),
-                          decoration: const BoxDecoration(
-                            color: Styles.backgroundColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
+                      Container(
+                        width: AppLayout.getScreenWidth(),
+                        height: AppLayout.getHeight(
+                            900), // AppLayout.getScreenHeight(),
+                        decoration: const BoxDecoration(
+                          color: Styles.backgroundColor,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: AppLayout.getWidth(14),
-                              vertical: AppLayout.getWidth(14),
-                            ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppLayout.getWidth(14),
+                            vertical: AppLayout.getWidth(14),
+                          ),
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                                maxHeight: MediaQuery.of(context).size.height),
                             child: SingleChildScrollView(
                               physics: const AlwaysScrollableScrollPhysics(),
                               child: Column(
