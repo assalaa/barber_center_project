@@ -41,7 +41,13 @@ class BarberProfileScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             LogoutButton(onPressed: provider.logout),
-                            const EditButton(),
+                            EditButton(
+                              onTap: () => Routes.goTo(
+                                Routes.barberOptionsRoute,
+                                args: provider.salonModel,
+                                enableBack: true,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 32),
@@ -82,13 +88,16 @@ class BarberProfileScreen extends StatelessWidget {
 
 class EditButton extends StatelessWidget {
   const EditButton({
+    required this.onTap,
     super.key,
   });
+
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => Routes.goTo(Routes.barberOptionsRoute, enableBack: true),
+      onPressed: onTap,
       icon: const Icon(Icons.edit),
       color: Styles.primaryColor,
     );

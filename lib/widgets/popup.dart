@@ -3,6 +3,19 @@ import 'package:barber_center/services/routes.dart';
 import 'package:flutter/material.dart';
 
 class Popup {
+  static Future<bool> leaveWork(String salonName) async {
+    final bool? approved = await show(
+      title: 'Leave $salonName',
+      content:
+          'Are you sure you want to leave $salonName? If you are not working there anymore, click leave to continue.',
+      actions: [
+        ActionButton(
+            text: 'Leave', onPressed: () => Routes.back(returnDialog: true)),
+      ],
+    );
+    return approved ?? false;
+  }
+
   static Future<bool> acceptInvitation(String userName, bool isSalon) async {
     String title;
     String content;

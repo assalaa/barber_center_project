@@ -28,32 +28,30 @@ class LabeledTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: TextFormField(
-        enabled: enabled,
-        controller: controller,
-        keyboardType: textInputType,
-        textInputAction: TextInputAction.next,
-        inputFormatters: textInputFormatters ??
-            (textInputType == TextInputType.phone ||
-                    textInputType == TextInputType.number
-                ? TextInputFormatters.digitsOnly
-                : null),
-        validator: validator ??
-            (value) {
-              if (value!.isEmpty) {
-                return validatorText;
-              }
-              return null;
-            },
-        decoration: InputDecoration(
-          label: Text(title),
-          hintText: hintText,
-          hintStyle: const TextStyle(fontSize: 16),
-          labelStyle: const TextStyle(color: Colors.black),
-        ),
-        onChanged: onChanged,
+    return TextFormField(
+      enabled: enabled,
+      controller: controller,
+      keyboardType: textInputType,
+      textInputAction: TextInputAction.next,
+      inputFormatters: textInputFormatters ??
+          (textInputType == TextInputType.phone ||
+                  textInputType == TextInputType.number
+              ? TextInputFormatters.digitsOnly
+              : null),
+      validator: validator ??
+          (value) {
+            if (value!.isEmpty) {
+              return validatorText;
+            }
+            return null;
+          },
+      decoration: InputDecoration(
+        label: Text(title),
+        hintText: hintText,
+        hintStyle: const TextStyle(fontSize: 16),
+        labelStyle: const TextStyle(color: Colors.black),
       ),
+      onChanged: onChanged,
     );
   }
 }
