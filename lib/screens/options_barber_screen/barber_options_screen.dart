@@ -2,7 +2,6 @@ import 'package:barber_center/helpers/validators.dart';
 import 'package:barber_center/screens/options_barber_screen/barber_options_provider.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:barber_center/widgets/center_loading.dart';
-import 'package:barber_center/widgets/dropdown_button.dart';
 import 'package:barber_center/widgets/labeled_text_field.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
@@ -81,42 +80,6 @@ class BarberOptionsScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class SalonInfo extends StatelessWidget {
-  const SalonInfo({
-    required this.title,
-    required this.value,
-    required this.items,
-    required this.onChanged,
-    super.key,
-  });
-
-  final String title;
-  final String value;
-  final List<String> items;
-  final Function(String?) onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 16),
-          ),
-          const Gap(16),
-          DropdownWidget(
-            value: value,
-            items: items.toList().cast<String>(),
-            onChanged: onChanged,
-          ),
-        ],
       ),
     );
   }

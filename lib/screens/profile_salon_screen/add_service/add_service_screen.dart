@@ -24,47 +24,58 @@ class AddServicePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 children: [
-                  const Gap(32),
+                  if (provider.loading) ...[
+                    const CircularProgressIndicator()
+                  ] else ...[
+                    const Gap(32),
 
-                  /// Text
-                  const BodyTitle(),
-                  const Gap(36),
+                    /// Text
+                    const BodyTitle(),
+                    const Gap(36),
 
-                  /// Services
-                  AllServices(provider: provider),
-                  const Gap(48),
+                    /// Services
+                    AllServices(provider: provider),
+                    const Gap(48),
+                    Visibility(
+                      visible: provider.showSelectors,
+                      child: Column(
+                        children: [
+                          /// Price
+                          SelectWidget(
+                            title:
+                                '${provider.anyServiceSelected ? provider.services[provider.indexSelected].name : 'Service'} Price: ${provider.price} EGP',
+                            value: provider.price,
+                            maxValue: 300,
+                            divisions: 60,
+                            onChanged: provider.setPrice,
+                            visible: provider.anyServiceSelected,
+                          ),
+                          const Gap(32),
 
-                  /// Price
-                  SelectWidget(
-                    title:
-                        '${provider.anyServiceSelected ? provider.services[provider.indexSelected].name : 'Service'} Price: ${provider.price} EGP',
-                    value: provider.price,
-                    maxValue: 300,
-                    divisions: 60,
-                    onChanged: provider.setPrice,
-                    visible: provider.anyServiceSelected,
-                  ),
-                  const Gap(32),
+                          /// Avg. Time
+                          SelectWidget(
+                            title:
+                                'Average Time: ${minutesToHours(provider.avgTime)}',
+                            value: provider.avgTime,
+                            maxValue: 120,
+                            divisions: 24,
+                            onChanged: provider.setTime,
+                            visible: provider.anyServiceSelected,
+                          ),
+                          const Gap(64),
+                        ],
+                      ),
+                    ),
 
-                  /// Avg. Time
-                  SelectWidget(
-                    title: 'Average Time: ${minutesToHours(provider.avgTime)}',
-                    value: provider.avgTime,
-                    maxValue: 120,
-                    divisions: 24,
-                    onChanged: provider.setTime,
-                    visible: provider.anyServiceSelected,
-                  ),
-                  const Gap(64),
-
-                  /// Save Button
-                  LargeRoundedButton(
-                    loading: provider.loading,
-                    buttonName: provider.buttonText,
-                    onTap: () async {
-                      await provider.saveService();
-                    },
-                  ),
+                    /// Save Button
+                    LargeRoundedButton(
+                      loading: provider.loading,
+                      buttonName: provider.buttonText,
+                      onTap: () async {
+                        await provider.saveService();
+                      },
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -191,7 +202,8 @@ class AllServices extends StatelessWidget {
           child: Semantics(
             button: true,
             child: GestureDetector(
-              onTap: () => provider.selectService(provider.services.indexOf(serviceModel)),
+              onTap: () => provider
+                  .selectService(provider.services.indexOf(serviceModel)),
               child: SizedBox(
                 width: 72,
                 child: Column(
