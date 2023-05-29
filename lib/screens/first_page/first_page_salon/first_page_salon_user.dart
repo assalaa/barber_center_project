@@ -1,4 +1,5 @@
 import 'package:barber_center/screens/home_salon_screen/home_salon_screen.dart';
+import 'package:barber_center/screens/notifications_screen/notifications_screen.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
 import 'package:barber_center/utils/app_styles.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
@@ -15,6 +16,7 @@ class _BottomBarState extends State<FirstPageSalonUser> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
     const HomeSalonScreen(),
+    const NotificationsScreen(),
     const SaloonProfileScreen(),
   ];
 
@@ -43,6 +45,10 @@ class _BottomBarState extends State<FirstPageSalonUser> {
             activeIcon: Icon(FluentSystemIcons.ic_fluent_home_filled),
             label: 'Home',
           ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications_active_outlined),
+              activeIcon: Icon(Icons.notifications_active_rounded),
+              label: 'Notification'),
           BottomNavigationBarItem(
             icon: Icon(FluentSystemIcons.ic_fluent_person_regular),
             activeIcon: Icon(FluentSystemIcons.ic_fluent_person_filled),
