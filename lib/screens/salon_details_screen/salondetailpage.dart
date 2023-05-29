@@ -81,72 +81,69 @@ class SalonDetailPage extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
-            ],
-            //BODY
-            Expanded(
-              child: Container(
-                width: AppLayout.getScreenWidth(),
-                height:
-                    AppLayout.getHeight(900), // AppLayout.getScreenHeight(),
-                decoration: const BoxDecoration(
-                  color: Styles.backgroundColor,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+              ),
+
+              //BODY
+              Expanded(
+                child: Container(
+                  width: AppLayout.getScreenWidth(),
+                  // height: AppLayout.getHeight(
+                  //     900), // AppLayout.getScreenHeight(),
+                  decoration: const BoxDecoration(
+                    color: Styles.backgroundColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
                   ),
-                ),
-                child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: AppLayout.getWidth(14),
                     vertical: AppLayout.getWidth(14),
                   ),
-                  child: Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FullName(
-                          userName: provider.salon.name,
-                          salonName: provider.salonInformation?.salonName,
-                          center: false,
-                        ),
-                        Gap(AppLayout.getHeight(8)),
-                        LocationInfo(
-                          location:
-                              provider.salonInformation?.location?.getAddress ??
-                                  provider.salonInformation?.address,
-                          center: false,
-                        ),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 16),
-                                const Divider(),
-                                Services(provider: provider),
-                                const SizedBox(height: 16),
-                                EstTimeAndTotalPrice(
-                                  visible: provider.hasItemSelected(),
-                                  time:
-                                      provider.salonService.stringDurationInMin,
-                                  price: provider.salonService.stringPrice,
-                                ),
-                                const SizedBox(height: 10),
-                                Barbers(provider: provider),
-                                const Divider(),
-                                LocationButton(provider: provider),
-                              ],
-                            ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FullName(
+                        userName: provider.salon.name,
+                        salonName: provider.salonInformation?.salonName,
+                        center: false,
+                      ),
+                      Gap(AppLayout.getHeight(8)),
+                      LocationInfo(
+                        location:
+                            provider.salonInformation?.location?.getAddress ??
+                                provider.salonInformation?.address,
+                        center: false,
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 16),
+                              const Divider(),
+                              Services(provider: provider),
+                              const SizedBox(height: 16),
+                              EstTimeAndTotalPrice(
+                                visible: provider.hasItemSelected(),
+                                time:
+                                    provider.salonService.stringDurationInMin,
+                                price: provider.salonService.stringPrice,
+                              ),
+                              const SizedBox(height: 10),
+                              Barbers(provider: provider),
+                              const Divider(),
+                              LocationButton(provider: provider),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        BookButton(provider: provider),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 10),
+                      BookButton(provider: provider),
+                    ],
                   ),
                 ),
               ),
-            ),
+            ],
           ]));
         }));
   }

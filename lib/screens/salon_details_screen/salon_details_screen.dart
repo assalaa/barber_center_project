@@ -141,7 +141,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 16),
                                     const Divider(),
-                                    Services(provider: provider),
+                                    // Services(provider: provider),
                                     const SizedBox(height: 16),
                                     EstTimeAndTotalPrice(
                                       visible: provider.hasItemSelected(),
@@ -470,7 +470,7 @@ class BookButton extends StatelessWidget {
               onTap: () {
                 if (provider.hasItemSelected()) {
                   if (provider.hasEmployeeSelected()) {
-                    if (provider.hasServiceLocation || !provider.homeService) {
+                    if (provider.hasServiceLocation || !provider.homeService || true) {
                       Routes.goTo(
                         Routes.bookingRoute,
                         args: [
