@@ -13,6 +13,7 @@ import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:barber_center/widgets/profile/full_name.dart';
 import 'package:barber_center/widgets/service_element.dart';
+import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -42,7 +43,6 @@ class SalonDetailsScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       //IMAGE
-
                       if (provider.salon.image != null) ...[
                         Image.network(
                           provider.salon.image!,
@@ -99,60 +99,64 @@ class SalonDetailsScreen extends StatelessWidget {
                       ),
 
                       //BODY
-                      Container(
-                        width: AppLayout.getScreenWidth(),
-                        height: AppLayout.getHeight(
-                            900), // AppLayout.getScreenHeight(),
-                        decoration: const BoxDecoration(
-                          color: Styles.backgroundColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
+                      Positioned(
+                        top: AppLayout.getHeight(250),
+                        child: Container(
+                          width: AppLayout.getScreenWidth(),
+                          height: AppLayout.getHeight(
+                              900), // AppLayout.getScreenHeight(),
+                          decoration: const BoxDecoration(
+                            color: Styles.backgroundColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: AppLayout.getWidth(14),
-                            vertical: AppLayout.getWidth(14),
-                          ),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxHeight: MediaQuery.of(context).size.height),
-                            child: SingleChildScrollView(
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  FullName(
-                                    userName: provider.salon.name,
-                                    salonName:
-                                        provider.salonInformation?.salonName,
-                                    center: false,
-                                  ),
-                                  Gap(AppLayout.getHeight(8)),
-                                  LocationInfo(
-                                    location: provider.salonInformation
-                                            ?.location?.getAddress ??
-                                        provider.salonInformation?.address,
-                                    center: false,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  const Divider(),
-                                  Services(provider: provider),
-                                  const SizedBox(height: 16),
-                                  EstTimeAndTotalPrice(
-                                    visible: provider.hasItemSelected(),
-                                    time: provider
-                                        .salonService.stringDurationInMin,
-                                    price: provider.salonService.stringPrice,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Barbers(provider: provider),
-                                  const Divider(),
-                                  LocationButton(provider: provider),
-                                  const SizedBox(height: 10),
-                                  BookButton(provider: provider),
-                                ],
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppLayout.getWidth(14),
+                              vertical: AppLayout.getWidth(14),
+                            ),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                  maxHeight:
+                                      MediaQuery.of(context).size.height),
+                              child: SingleChildScrollView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    FullName(
+                                      userName: provider.salon.name,
+                                      salonName:
+                                          provider.salonInformation?.salonName,
+                                      center: false,
+                                    ),
+                                    Gap(AppLayout.getHeight(8)),
+                                    LocationInfo(
+                                      location: provider.salonInformation
+                                              ?.location?.getAddress ??
+                                          provider.salonInformation?.address,
+                                      center: false,
+                                    ),
+                                    const SizedBox(height: 16),
+                                    const Divider(),
+                                    Services(provider: provider),
+                                    const SizedBox(height: 16),
+                                    EstTimeAndTotalPrice(
+                                      visible: provider.hasItemSelected(),
+                                      time: provider
+                                          .salonService.stringDurationInMin,
+                                      price: provider.salonService.stringPrice,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Barbers(provider: provider),
+                                    const Divider(),
+                                    LocationButton(provider: provider),
+                                    const SizedBox(height: 10),
+                                    BookButton(provider: provider),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -229,9 +233,9 @@ class Services extends StatelessWidget {
                 Text(
                   'Services',
                   style: Styles.headLineStyle3.copyWith(
-                    color: Colors.black,
-                    fontSize: 18,
-                  ),
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 ),
                 Text(
                   'Choose Services',
@@ -253,7 +257,7 @@ class Services extends StatelessWidget {
                     child: CupertinoSwitch(
                       value: provider.homeService,
                       onChanged: provider.changeHomeService,
-                      activeColor: Colors.blue,
+                      activeColor: Colors.red,
                     ),
                   ),
                 ],
@@ -263,7 +267,7 @@ class Services extends StatelessWidget {
         ),
         // const SizedBox(height: 6),
         SizedBox(
-          height: 80,
+          height: 55,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: provider.salonService.services.length,
@@ -306,35 +310,74 @@ class EstTimeAndTotalPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: visible,
-      child: RichText(
-        text: TextSpan(
-          text: 'Duration: ',
-          style: Styles.textStyle.copyWith(
-            fontSize: 18,
-            color: Styles.darkTextColor,
-            fontWeight: FontWeight.w400,
+      child: Column(children: [
+        Row(children: [
+          const Icon(
+            FluentSystemIcons.ic_fluent_clock_regular,
+            size: 22,
           ),
-          children: [
-            TextSpan(
-              text: time,
-              style: Styles.textStyle.copyWith(
-                fontSize: 18,
-                color: Styles.darkTextColor,
-                fontWeight: FontWeight.w400,
-              ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            time,
+            style: Styles.textStyle.copyWith(
+              fontSize: 18,
+              color: Styles.darkTextColor.withOpacity(0.7),
+              fontWeight: FontWeight.w400,
             ),
-            const TextSpan(text: '\nTotal Price: '),
-            TextSpan(
-              text: price,
-              style: Styles.textStyle.copyWith(
-                fontSize: 18,
-                color: Styles.darkTextColor,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
+          )
+        ]),
+        const SizedBox(
+          height: 12,
         ),
-      ),
+        Row(children: [
+          const Icon(
+            Icons.price_change_outlined,
+            size: 22,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            price,
+            style: Styles.textStyle.copyWith(
+              fontSize: 18,
+              color: Styles.darkTextColor.withOpacity(0.7),
+              fontWeight: FontWeight.w400,
+            ),
+          )
+        ]),
+      ]),
+      // child: RichText(
+      //   text: TextSpan(
+      //     text: 'Duration: ',
+      //     style: Styles.textStyle.copyWith(
+      //       fontSize: 18,
+      //       color: Styles.darkTextColor,
+      //       fontWeight: FontWeight.w400,
+      //     ),
+      //     children: [
+      //       TextSpan(
+      //         text: time,
+      //         style: Styles.textStyle.copyWith(
+      //           fontSize: 18,
+      //           color: Styles.darkTextColor,
+      //           fontWeight: FontWeight.w400,
+      //         ),
+      //       ),
+      //       const TextSpan(text: '\nTotal Price: '),
+      //       TextSpan(
+      //         text: price,
+      //         style: Styles.textStyle.copyWith(
+      //           fontSize: 18,
+      //           color: Styles.darkTextColor,
+      //           fontWeight: FontWeight.w400,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
@@ -384,11 +427,14 @@ class Barbers extends StatelessWidget {
                 final BarberModel barberModel = provider.employees[index];
 
                 if (provider.isEmployeeCapable(barberModel)) {
-                  return ServiceElement(
-                    name: barberModel.barberName,
-                    image: barberModel.image,
-                    isSelected: provider.selectedEmployee == barberModel,
-                    onTap: () => provider.selectEmployee(barberModel),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ServiceElement(
+                      name: barberModel.barberName,
+                      image: barberModel.image,
+                      isSelected: provider.selectedEmployee == barberModel,
+                      onTap: () => provider.selectEmployee(barberModel),
+                    ),
                   );
                 } else {
                   return const SizedBox();
