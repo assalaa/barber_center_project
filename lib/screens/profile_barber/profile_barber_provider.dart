@@ -2,8 +2,10 @@ import 'package:barber_center/database/database_image.dart';
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_barber.dart';
 import 'package:barber_center/database/db_profile.dart';
+import 'package:barber_center/database/db_salon.dart';
 import 'package:barber_center/database/db_services.dart';
 import 'package:barber_center/models/barber_model.dart';
+import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/service_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
@@ -17,6 +19,7 @@ class ProfileBarberProvider with ChangeNotifier {
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseBarber _dbBarber = DatabaseBarber();
   final DatabaseService _dbService = DatabaseService();
+  final DatabaseSalon _dbSalon = DatabaseSalon();
 
   final DatabaseImage _dbImage = DatabaseImage();
   List<ServiceModel> services = [];
@@ -25,6 +28,7 @@ class ProfileBarberProvider with ChangeNotifier {
 
   late UserModel userModel;
   late BarberModel barberModel;
+  SalonInformationModel? salonModel;
   bool loading = true;
   late String uid;
   late String skill;
@@ -36,8 +40,14 @@ class ProfileBarberProvider with ChangeNotifier {
   ProfileBarberProvider() {
     uid = _dbAuth.getCurrentUser()!.uid;
 
-    init();
+    _init();
   }
+  Future<void> getSalonInfo() async {
+    if (barberModel.salonId.isNotEmpty) {
+      salonModel = await _dbSalon.getSalonInformation(barberModel.salonId);
+    }
+  }
+
   Future<void> getServices() async {
     services = await _dbService.getServices();
     //remove services where there is no in salonServiceModel
@@ -91,12 +101,13 @@ class ProfileBarberProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> init() async {
+  Future<void> _init() async {
     await Future.wait([
       fetchMyProfile(),
       fetchBarberInformation(),
     ]);
     await getServices();
+    await getSalonInfo();
 
     debugPrint(services.length.toString());
     debugPrint('{ services : $services}');

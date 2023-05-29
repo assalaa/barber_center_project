@@ -247,7 +247,7 @@ class ListItem extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(circle ? 100 : 16),
-                      image: image == null
+                      image: image == null || image == ''
                           ? null
                           : DecorationImage(
                               image: NetworkImage(image!), fit: BoxFit.cover),

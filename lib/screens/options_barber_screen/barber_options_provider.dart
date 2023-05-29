@@ -1,8 +1,7 @@
-import 'package:barber_center/database/database_image.dart';
 import 'package:barber_center/database/db_auth.dart';
 import 'package:barber_center/database/db_barber.dart';
-import 'package:barber_center/database/db_profile.dart';
 import 'package:barber_center/models/barber_model.dart';
+import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
@@ -12,10 +11,9 @@ import 'package:flutter/material.dart';
 class BarberOptionsProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseBarber _dbBarber = DatabaseBarber();
-  final DatabaseUser _dbUser = DatabaseUser();
   late BarberModel barberModel;
-  final DatabaseImage _dbImage = DatabaseImage();
   late UserModel userModel;
+  SalonInformationModel? salonInformationModel;
 
   final TextEditingController tcAddress = TextEditingController();
   final TextEditingController tcName = TextEditingController();
@@ -24,18 +22,28 @@ class BarberOptionsProvider with ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   bool loading = true;
 
-  BarberOptionsProvider() {
+  BarberOptionsProvider(SalonInformationModel? salon) {
+    salonInformationModel = salon;
     init();
   }
 
   Future<void> init() async {
     final String userId = _dbAuth.getCurrentUser()!.uid;
-    barberModel = (await _dbBarber.getBarber(userId)) ?? BarberModel.emptyBarberInfo(userId);
+    barberModel = (await _dbBarber.getBarber(userId)) ??
+        BarberModel.emptyBarberInfo(userId);
     tcName.text = barberModel.barberName;
     tcPhone.text = barberModel.phone;
 
     loading = false;
     notifyListeners();
+  }
+
+  Future<void> leaveWork() async {
+    if ((await Popup.leaveWork(salonInformationModel!.salonName))) {
+      barberModel.salonId = '';
+      await _dbBarber.updateBarber(barberModel);
+      Routes.goTo(Routes.splashRoute);
+    }
   }
 
   Future<void> changeAvailability(bool? value) async {
