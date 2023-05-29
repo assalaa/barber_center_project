@@ -48,7 +48,7 @@ class _BottomBarState extends State<FirstPageBarberUser> {
           BottomNavigationBarItem(
               icon: Icon(Icons.notifications_active_outlined),
               activeIcon: Icon(Icons.notifications_active_rounded),
-              label: 'Book'),
+              label: 'Notification'),
           // BottomNavigationBarItem(
           //     icon: Icon(FluentSystemIcons.ic_fluent_premium_regular),
           //     activeIcon: Icon(FluentSystemIcons.ic_fluent_premium_filled),
