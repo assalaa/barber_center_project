@@ -21,17 +21,31 @@ class DatabaseInvitation {
     }
   }
 
+  Future<List<InvitationModel>> getInvitations(String userId) async {
+    final List<InvitationModel> invitations = [];
+
+    final QuerySnapshot snapshot1 = await _firestore
+        .collection(_path)
+        .where('invitedId', isEqualTo: userId)
+        .get();
+
+    for (final doc in snapshot1.docs) {
+      invitations.add(InvitationModel.fromJson(doc.data() as Map));
+    }
+    return invitations;
+  }
+
   Future<List<InvitationModel>> getInvolvedInvitations(String userId) async {
     final List<InvitationModel> invitations = [];
 
     final QuerySnapshot snapshot0 = await _firestore
         .collection(_path)
-        .where('inviter', isEqualTo: userId)
+        .where('inviterId', isEqualTo: userId)
         .get();
 
     final QuerySnapshot snapshot1 = await _firestore
         .collection(_path)
-        .where('invited', isEqualTo: userId)
+        .where('invitedId', isEqualTo: userId)
         .get();
 
     for (final doc in snapshot0.docs + snapshot1.docs) {
