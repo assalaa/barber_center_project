@@ -49,11 +49,17 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                           (provider.myLocale == const Locale(ENGLISH, ''))
                               ? const Text(
                                   'El-Mezayen',
-                                  style: TextStyle(color: Colors.black, fontFamily: 'DancingScript', fontSize: 40),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'DancingScript',
+                                      fontSize: 40),
                                 )
                               : const Text(
                                   'المزين',
-                                  style: TextStyle(color: Colors.black, fontFamily: 'decotype', fontSize: 40),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'decotype',
+                                      fontSize: 40),
                                 ),
 
                           //NOTIFICATION ICON
@@ -63,7 +69,12 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                               Container(
                                 width: AppLayout.getHeight(50),
                                 height: AppLayout.getWidth(50),
-                                decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(provider.userModel.image!)), borderRadius: BorderRadius.circular(100), color: Styles.greyColor.withOpacity(0.2)),
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            provider.userModel.image!)),
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Styles.greyColor.withOpacity(0.2)),
                               ),
                             ],
                           )
@@ -89,8 +100,11 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                                   width: AppLayout.getWidth(80),
                                   height: AppLayout.getHeight(80),
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(image: NetworkImage(service.image), fit: BoxFit.cover),
-                                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                    image: DecorationImage(
+                                        image: NetworkImage(service.image),
+                                        fit: BoxFit.cover),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(50)),
                                   ),
                                 ),
                                 Gap(AppLayout.getHeight(5)),
@@ -109,7 +123,8 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                         horizontal: 24,
                       ),
                       child: SectionHeader(
-                        sectionTitle: AppLocalizations.of(context)!.featured_salons,
+                        sectionTitle:
+                            AppLocalizations.of(context)!.featured_salons,
                         sectionSeeMore: '',
                       ),
                     ),
@@ -124,11 +139,12 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                           final salon = provider.salons[index];
                           final salonInfo = provider.salonsInformation[index];
                           return Padding(
-                            padding: const EdgeInsets.only(left: 24, top: 4, bottom: 4, right: 24),
+                            padding: const EdgeInsets.only(
+                                left: 24, top: 4, bottom: 4, right: 24),
                             child: GestureDetector(
                               onTap: () {
                                 Routes.goTo(
-                                  Routes.salonDetailsRoute,
+                                  Routes.salonDetailRoute,
                                   args: salon.uid,
                                   enableBack: true,
                                 );
@@ -136,7 +152,8 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                               child: FeaturedSalons(
                                 name: salon.name,
                                 image: salon.image,
-                                location: salonInfo.location?.getAddress ?? salonInfo.address,
+                                location: salonInfo.location?.getAddress ??
+                                    salonInfo.address,
                                 timeOpen: salonInfo.openTime.hour,
                                 timeClose: salonInfo.closeTime.hour,
                               ),
