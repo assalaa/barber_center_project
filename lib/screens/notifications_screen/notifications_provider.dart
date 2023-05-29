@@ -11,9 +11,10 @@ import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/popup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class SearchScreenProvider with ChangeNotifier {
+class NotificationsProvider with ChangeNotifier {
   final DatabaseAuth _dbAuth = DatabaseAuth();
   final DatabaseUser _dbUser = DatabaseUser();
   final DatabaseBarber _dbBarber = DatabaseBarber();
@@ -21,23 +22,24 @@ class SearchScreenProvider with ChangeNotifier {
   final DatabaseInvitation _dbInvitation = DatabaseInvitation();
 
   List<dynamic> searchResultList = [];
-  List<InvitationModel> involvedInvitations = [];
+  List<InvitationModel> invitations = [];
 
+  late String userId;
   UserModel? userModel;
   bool loading = true;
 
-  final TextEditingController tcSearch = TextEditingController();
-
-  SearchScreenProvider() {
+  NotificationsProvider() {
     _init();
   }
+
+  bool get isSalon => userModel?.kindOfUser == KindOfUser.SALON;
 
   Future<void> _init() async {
     final String userId = _dbAuth.getCurrentUser()!.uid;
 
     await Future.wait([
       _getUser(userId),
-      _getInvolvedInvitations(userId),
+      _getInvitations(userId),
     ]);
 
     loading = false;
@@ -48,59 +50,8 @@ class SearchScreenProvider with ChangeNotifier {
     userModel = (await _dbUser.getUserByUid(userId))!;
   }
 
-  bool get isSalon => userModel?.kindOfUser == KindOfUser.SALON;
-
-  Future<void> _getInvolvedInvitations(String userId) async {
-    involvedInvitations = await _dbInvitation.getInvolvedInvitations(userId);
-  }
-
-  Future<void> search() async {
-    if (tcSearch.text.isNotEmpty) {
-      if (isSalon) {
-        await _searchBarbers();
-      } else {
-        await _searchSalons();
-      }
-
-      notifyListeners();
-      debugPrint(searchResultList.length.toString());
-    }
-  }
-
-  Future<void> _searchBarbers() async {
-    searchResultList = await _dbBarber.searchUnemployedBarbers(tcSearch.text);
-  }
-
-  Future<void> _searchSalons() async {
-    searchResultList = await _dbSalon.searchSalons(tcSearch.text);
-  }
-
-  Future<void> inviteUser(String userId, String invitedName) async {
-    String? inviterName;
-
-    if (isSalon) {
-      inviterName =
-          (await _dbSalon.getSalonInformation(userModel!.uid))?.salonName;
-    } else {
-      inviterName = (await _dbBarber.getBarber(userModel!.uid))?.barberName;
-    }
-    if (inviterName != null) {
-      final DateTime now = DateTime.now();
-
-      final InvitationModel invitationModel = InvitationModel(
-        id: dateToId(now),
-        createAt: now,
-        inviter: inviterName,
-        invited: invitedName,
-        inviterId: userModel!.uid,
-        invitedId: userId,
-      );
-
-      involvedInvitations.add(invitationModel);
-      notifyListeners();
-
-      await _dbInvitation.createInvitation(invitationModel);
-    }
+  Future<void> _getInvitations(String userId) async {
+    invitations = await _dbInvitation.getInvitations(userId);
   }
 
   Future<void> acceptInvitation(String userId) async {
@@ -137,17 +88,12 @@ class SearchScreenProvider with ChangeNotifier {
   }
 
   Future<void> removeInvitation(String userId) async {
-    final String invitationId = involvedInvitations
-        .firstWhere((element) => element.inviterId == userId)
-        .id;
+    final String invitationId =
+        invitations.firstWhere((element) => element.inviterId == userId).id;
 
     await _dbInvitation.deleteInvitation(invitationId.trim());
 
-    involvedInvitations.removeWhere((element) => element.inviterId == userId);
+    invitations.removeWhere((element) => element.inviterId == userId);
     notifyListeners();
   }
-
-  String get getTitle => userModel == null
-      ? 'Search'
-      : 'Search for ${isSalon ? 'Barbers' : userModel!.kindOfUser == KindOfUser.BARBER ? 'Salons' : 'Barbers & Salons'}';
 }

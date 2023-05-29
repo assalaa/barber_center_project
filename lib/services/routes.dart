@@ -73,7 +73,10 @@ class Routes {
       case salonOptionsRoute:
         return MaterialPageRoute(builder: (_) => const SalonOptionsScreen());
       case barberOptionsRoute:
-        return MaterialPageRoute(builder: (_) => const BarberOptionsScreen());
+        return MaterialPageRoute(
+            builder: (_) => BarberOptionsScreen(
+                  salonInformationModel: args as SalonInformationModel?,
+                ));
       case splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case homeCustomerRoute:

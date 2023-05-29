@@ -92,10 +92,10 @@ class ResultList extends StatelessWidget {
           }
 
           final bool invited = provider.involvedInvitations
-              .any((element) => element.invited == userId);
+              .any((element) => element.invitedId == userId);
 
           final bool inviter = provider.involvedInvitations
-              .any((element) => element.inviter == userId);
+              .any((element) => element.inviterId == userId);
 
           if (provider.isSalon) {
             inviteButtonText = 'Add as Employee';
@@ -113,7 +113,7 @@ class ResultList extends StatelessWidget {
             image: image,
             bannerText: bannerText,
             inviteButtonText: inviteButtonText,
-            onPressedInvite: () => provider.inviteUser(userId),
+            onPressedInvite: () => provider.inviteUser(userId, name),
             onPressedAccept: () => provider.acceptInvitation(userId),
             onPressedReject: () => provider.removeInvitation(userId),
             onPressedProfile: () {},
