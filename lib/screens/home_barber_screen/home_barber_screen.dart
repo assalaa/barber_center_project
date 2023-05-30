@@ -134,150 +134,164 @@ class AppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Gap(AppLayout.getWidth(5)),
-          //Time section goes here
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: Stack(children: [
+        Positioned(
+          top: 0,
+          bottom: 0,
+          child: Column(
             children: [
-              const DateListIndicator(),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  bookingModel.date.toStringTime(twelveHours: true),
-                  style: const TextStyle(
-                      color: Styles.darkBlueColor,
-                      fontSize: 14.5,
-                      fontWeight: FontWeight.bold),
+              Container(
+                width: 10,
+                height: 10,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Styles.primaryColor),
+              ),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  width: 1,
+                  height: double.infinity,
+                  color: Colors.grey,
                 ),
               ),
             ],
           ),
-          // Customer card details goes here
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(15),
-              margin: const EdgeInsets.symmetric(horizontal: 6),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 3,
-                    blurRadius: 7,
-                    offset: const Offset(-4, 4), // changes position of shadow
-                  ),
-                ],
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    bookingModel.userName,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  if (bookingModel.isHomeService) ...[
-                    const SizedBox(height: 6),
-                    Container(
-                      width: 120,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4, vertical: 4),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Styles.primaryColor),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'HOME SERVICE',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Styles.orangeColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.place_outlined,
-                          size: 20,
-                          color: Styles.primaryColor,
-                        ),
-                        const SizedBox(width: 4),
-                        Flexible(
-                          child: Text(
-                            bookingModel.homeServiceLocation?.getAddress ??
-                                bookingModel.salonName,
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                        )
-                      ],
-                    ),
-                  ] else ...[
-                    Gap(AppLayout.getHeight(5)),
-                    Row(
-                      children: [
-                        const Icon(
-                          FluentSystemIcons.ic_fluent_location_filled,
-                          size: 20,
-                          color: Styles.primaryColor,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          bookingModel.salonName,
-                          style: const TextStyle(color: Colors.black),
-                        )
-                      ],
-                    ),
-                  ],
-                  Divider(),
-                  Wrap(
-                    children: List.generate(
-                        bookingModel.services.length,
-                        (index) => Text(bookingModel.services[index].name +
-                            (index < bookingModel.services.length - 1
-                                ? ','
-                                : ''))),
-                  ),
-                ],
-              ),
-            ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            bookingModel.date.toStringTime(twelveHours: true),
+            style: const TextStyle(
+                color: Styles.darkBlueColor,
+                fontSize: 14.5,
+                fontWeight: FontWeight.bold),
           ),
-        ]);
+        ),
+
+        // Customer card details goes here
+        Container(
+          padding: const EdgeInsets.all(15),
+          margin: const EdgeInsets.only(left: 90),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 3,
+                blurRadius: 7,
+                offset: const Offset(-4, 4), // changes position of shadow
+              ),
+            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                bookingModel.userName,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              if (bookingModel.isHomeService) ...[
+                const SizedBox(height: 6),
+                Container(
+                  width: 120,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Styles.primaryColor),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'HOME SERVICE',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Styles.orangeColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.place_outlined,
+                      size: 20,
+                      color: Styles.primaryColor,
+                    ),
+                    const SizedBox(width: 4),
+                    Flexible(
+                      child: Text(
+                        bookingModel.homeServiceLocation?.getAddress ??
+                            bookingModel.salonName,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                    )
+                  ],
+                ),
+              ] else ...[
+                Gap(AppLayout.getHeight(5)),
+                Row(
+                  children: [
+                    const Icon(
+                      FluentSystemIcons.ic_fluent_location_filled,
+                      size: 20,
+                      color: Styles.primaryColor,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      bookingModel.salonName,
+                      style: const TextStyle(color: Colors.black),
+                    )
+                  ],
+                ),
+              ],
+              const Divider(),
+              Wrap(
+                children: List.generate(
+                    bookingModel.services.length,
+                    (index) => Text(bookingModel.services[index].name +
+                        (index < bookingModel.services.length - 1 ? ',' : ''))),
+              ),
+            ],
+          ),
+        ),
+      ]),
+    );
   }
 }
 
 class DateListIndicator extends StatelessWidget {
   const DateListIndicator({
+    this.height = 0,
     super.key,
   });
 
+  final double height;
+
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      child: Column(children: [
+    return Column(
+      children: [
         Container(
           width: 10,
           height: 10,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Styles.primaryColor),
+          decoration: const BoxDecoration(
+              shape: BoxShape.circle, color: Styles.primaryColor),
         ),
         Container(
           padding: const EdgeInsets.all(12),
           width: 1,
-          height: 100,
+          height: height,
           color: Colors.grey,
-        )
-      ]),
+        ),
+      ],
     );
   }
 }
