@@ -144,7 +144,7 @@ class SalonDetailsScreen extends StatelessWidget {
                                     // Services(provider: provider),
                                     const SizedBox(height: 16),
                                     EstTimeAndTotalPrice(
-                                      visible: provider.hasItemSelected(),
+                                      visible: provider.hasItemSelected,
                                       time: provider
                                           .salonService.stringDurationInMin,
                                       price: provider.salonService.stringPrice,
@@ -185,7 +185,7 @@ class LocationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: provider.homeService && provider.hasItemSelected(),
+      visible: provider.homeService && provider.hasItemSelected,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -248,7 +248,7 @@ class Services extends StatelessWidget {
               ],
             ),
             Visibility(
-              visible: provider.hasItemSelected(),
+              visible: provider.hasItemSelected,
               child: Column(
                 children: [
                   const Text('Home Service'),
@@ -393,7 +393,7 @@ class Barbers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: provider.hasItemSelected(),
+      visible: provider.hasItemSelected,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -458,42 +458,18 @@ class BookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: provider.canBook(),
-      child: Row(
-        children: [
-          Expanded(
-            child: LargeRoundedButton(
-              buttonName: provider.homeService
-                  ? Strings.bookingHomeServiceBtn
-                  : Strings.bookingBtn,
-              onTap: () {
-                if (provider.hasItemSelected()) {
-                  if (provider.hasEmployeeSelected()) {
-                    if (provider.hasServiceLocation || !provider.homeService || true) {
-                      Routes.goTo(
-                        Routes.bookingRoute,
-                        args: [
-                          provider.salonService,
-                          provider.salonInformation,
-                          provider.selectedEmployee,
-                        ],
-                        enableBack: true,
-                      );
-                    } else {
-                      showMessageError('Please enter location');
-                    }
-                  } else {
-                    showMessageError('Please select a barber');
-                  }
-                } else {
-                  showMessageError('Please select a service');
-                }
-              },
-            ),
+    return Row(
+      children: [
+        Expanded(
+          child: LargeRoundedButton(
+            onTap: provider.goToBooking,
+            enabled: provider.canBook,
+            buttonName: provider.homeService
+                ? Strings.bookingHomeServiceBtn
+                : Strings.bookingBtn,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

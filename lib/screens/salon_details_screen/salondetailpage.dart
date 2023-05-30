@@ -124,7 +124,7 @@ class SalonDetailPage extends StatelessWidget {
                               Services(provider: provider),
                               const SizedBox(height: 16),
                               EstTimeAndTotalPrice(
-                                visible: provider.hasItemSelected(),
+                                visible: provider.hasItemSelected,
                                 time:
                                     provider.salonService.stringDurationInMin,
                                 price: provider.salonService.stringPrice,

@@ -272,12 +272,12 @@ class WidgetPacker extends StatelessWidget {
           child: index + 1 < children.length
               ? Row(
                   children: [
-                    children[index],
+                    Expanded(child: children[index]),
                     const SizedBox(width: 12),
-                    children[index + 1],
+                    Expanded(child: children[index + 1]),
                   ],
                 )
-              : children[index],
+              : Expanded(child: children[index]),
         );
       }),
     );
