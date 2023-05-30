@@ -10,6 +10,7 @@ import 'package:barber_center/widgets/service_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BarberProfileScreen extends StatelessWidget {
   const BarberProfileScreen({super.key});
@@ -61,7 +62,7 @@ class BarberProfileScreen extends StatelessWidget {
                           salonName: provider.salonModel?.salonName,
                         ),
                         const SizedBox(height: 10),
-                        const Text('Select a skill'),
+                        Text(AppLocalizations.of(context)!.select_skill),
                         const SizedBox(height: 22),
                         SizedBox(
                           height: AppLayout.getHeight(100),

@@ -3,6 +3,7 @@ import 'package:barber_center/screens/notifications_screen/notifications_provide
 import 'package:barber_center/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -15,7 +16,7 @@ class NotificationsScreen extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Notifications'),
+              title: Text(AppLocalizations.of(context)!.notification_title),
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
@@ -52,7 +53,7 @@ class InvitationList extends StatelessWidget {
     final int itemCount = provider.invitations.length;
 
     if (itemCount < 1) {
-      return const Text('Nothing yet');
+      return Text(AppLocalizations.of(context)!.no_invitation);
     }
     return Expanded(
       child: ListView.builder(
@@ -87,8 +88,8 @@ class InvitationList extends StatelessWidget {
                       ),
                       TextSpan(
                         text: provider.isSalon
-                            ? ' added your salon as their workplace.'
-                            : ' added your account as an employee.',
+                            ? AppLocalizations.of(context)!.added_as_workplace
+                            : AppLocalizations.of(context)!.added_as_employee,
                       ),
                     ],
                   ),
@@ -100,12 +101,12 @@ class InvitationList extends StatelessWidget {
                     SmallButton(
                       onPressed: () =>
                           provider.acceptInvitation(invitationModel.inviterId),
-                      text: 'Accept',
+                      text: AppLocalizations.of(context)!.invitation_accept,
                     ),
                     SmallButton(
                       onPressed: () =>
                           provider.removeInvitation(invitationModel.id),
-                      text: 'Reject',
+                      text: AppLocalizations.of(context)!.invitation_reject,
                       buttonColor: Colors.red,
                     ),
                   ],

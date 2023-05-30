@@ -34,14 +34,16 @@ class HomeBarberScreen extends StatelessWidget {
               ] else ...[
                 if (!provider.isProfileCompleted) ...[
                   CompleteProfileWidget(
-                    titleText: 'Your profile isn\'t complete',
-                    buttonText: 'Complete',
+                    titleText: AppLocalizations.of(context)!.no_booking,
+                    buttonText:
+                        AppLocalizations.of(context)!.complete_profile_btn,
                     onPressed: () => Routes.goTo(Routes.barberOptionsRoute,
                         enableBack: true),
                   ),
                 ],
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -87,8 +89,8 @@ class HomeBarberScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (provider.barberBookings.isEmpty) ...[
-                        const Center(
-                          child: Text('No bookings'),
+                        Center(
+                          child: Text(AppLocalizations.of(context)!.no_booking),
                         )
                       ] else ...[
                         Gap(AppLayout.getHeight(25)),
@@ -205,10 +207,10 @@ class AppointmentCard extends StatelessWidget {
                       decoration: BoxDecoration(
                         border: Border.all(color: Styles.primaryColor),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'HOME SERVICE',
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.home_service,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Styles.orangeColor,
                           ),

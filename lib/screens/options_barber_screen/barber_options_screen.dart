@@ -65,7 +65,7 @@ class BarberOptionsScreen extends StatelessWidget {
                       WorkingPlace(provider: provider),
                       const Spacer(),
                       LargeRoundedButton(
-                        buttonName: 'Save',
+                        buttonName: AppLocalizations.of(context)!.save_btn,
                         onTap: provider.save,
                       ),
                       const Gap(22),
@@ -93,7 +93,7 @@ class WorkingPlace extends StatelessWidget {
   Widget build(BuildContext context) {
     if (provider.salonInformationModel == null) {
       return LargeRoundedButton(
-        buttonName: 'Add Working Place',
+        buttonName: AppLocalizations.of(context)!.add_workplace,
         buttonTextColor: Colors.black,
         buttonColor: Colors.white,
         iconData: Icons.add,
@@ -128,7 +128,7 @@ class WorkingPlace extends StatelessWidget {
           ElevatedButton(
             onPressed: provider.leaveWork,
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Leave Workplace'),
+            child: Text(AppLocalizations.of(context)!.leave_workplace),
           ),
         ],
       ),

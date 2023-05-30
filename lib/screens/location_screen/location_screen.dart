@@ -8,6 +8,7 @@ import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocationScreen extends StatelessWidget {
   const LocationScreen({super.key});
@@ -23,7 +24,7 @@ class LocationScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Styles.backgroundColor,
               elevation: 0,
-              title: const Text('Location'),
+              title: Text(AppLocalizations.of(context)!.location),
             ),
             body: Container(
               width: double.infinity,
@@ -38,9 +39,9 @@ class LocationScreen extends StatelessWidget {
                     if (provider.loading) ...[
                       const CenterLoading(bottomMargin: 200)
                     ] else if (!provider.haveLocation) ...[
-                      const Center(
+                      Center(
                         child: Text(
-                          'We need your location permission to get your current location',
+                          AppLocalizations.of(context)!.location_permission,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
@@ -50,7 +51,8 @@ class LocationScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 32),
                       LargeRoundedButton(
-                        buttonName: 'Allow Location',
+                        buttonName:
+                            AppLocalizations.of(context)!.allow_permission,
                         onTap: () async {
                           await provider.getLocation();
                         },
@@ -130,9 +132,9 @@ class ConfirmAddressSection extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32)),
               ),
-              child: const Text(
-                'Choose this location',
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.choose_location,
+                style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
                 ),
@@ -175,42 +177,44 @@ class ChangeAddressField extends StatelessWidget {
                       LabeledTextField(
                         enabled: false,
                         controller: provider.country,
-                        title: 'Country',
-                        hintText: 'Egypt',
+                        title: AppLocalizations.of(context)!.country_title,
+                        hintText: AppLocalizations.of(context)!.country_hint,
                         validator: Validators.cannotBeEmptyValidator,
                       ),
                       LabeledTextField(
                         controller: provider.administrativeArea,
-                        title: 'Administrative Area',
-                        hintText: 'Administrative Area',
+                        title:
+                            AppLocalizations.of(context)!.administrative_area,
+                        hintText:
+                            AppLocalizations.of(context)!.administrative_area,
                         validator: Validators.cannotBeEmptyValidator,
                         onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
                         controller: provider.locality,
-                        title: 'Locality',
-                        hintText: 'Alexandria',
+                        title: AppLocalizations.of(context)!.locality,
+                        hintText: AppLocalizations.of(context)!.locality_hint,
                         validator: Validators.cannotBeEmptyValidator,
                         onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
                         controller: provider.subLocality,
-                        title: 'Sub Locality',
-                        hintText: 'Sub Locality',
+                        title: AppLocalizations.of(context)!.sub_locality,
+                        hintText: AppLocalizations.of(context)!.sub_locality,
                         validator: Validators.cannotBeEmptyValidator,
                         onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
                         controller: provider.street,
-                        title: 'Street',
-                        hintText: 'Street',
+                        title: AppLocalizations.of(context)!.street,
+                        hintText: AppLocalizations.of(context)!.street,
                         validator: Validators.cannotBeEmptyValidator,
                         onChanged: provider.updatePlacemark,
                       ),
                       LabeledTextField(
                         controller: provider.postalCode,
-                        title: 'Postal Code',
-                        hintText: 'Postal Code',
+                        title: AppLocalizations.of(context)!.postal_code,
+                        hintText: AppLocalizations.of(context)!.postal_code,
                         validator: Validators.cannotBeEmptyValidator,
                         textInputType: TextInputType.number,
                         onChanged: provider.updatePlacemark,
@@ -235,8 +239,8 @@ class ChangeAddressField extends StatelessWidget {
                   child: Visibility(
                     visible: !provider.loadingSave,
                     replacement: const CupertinoActivityIndicator(),
-                    child: const Text(
-                      'This is my location',
+                    child: Text(
+                      AppLocalizations.of(context)!.my_location,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,

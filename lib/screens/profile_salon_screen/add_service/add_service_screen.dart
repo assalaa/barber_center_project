@@ -6,6 +6,7 @@ import 'package:barber_center/widgets/large_rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddServicePage extends StatelessWidget {
   const AddServicePage({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class AddServicePage extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Add Service'),
+              title: Text(AppLocalizations.of(context)!.add_service),
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),

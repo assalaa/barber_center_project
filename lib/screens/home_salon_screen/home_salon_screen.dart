@@ -47,34 +47,38 @@ class HomeSalonScreen extends StatelessWidget {
                   ] else ...[
                     if (!provider.hasServices()) ...[
                       CompleteProfileWidget(
-                        titleText: 'You haven\'t added services',
-                        buttonText: 'Add',
+                        titleText:
+                            AppLocalizations.of(context)!.complete_add_services,
+                        buttonText: AppLocalizations.of(context)!.add_btn,
                         onPressed: () => Routes.goTo(Routes.addServiceRoute,
                             enableBack: true),
                       ),
                     ],
                     if (!provider.hasEmployees()) ...[
                       CompleteProfileWidget(
-                        titleText: 'Your haven\'t added employees',
-                        buttonText: 'Add',
+                        titleText: AppLocalizations.of(context)!
+                            .complete_add_employees,
+                        buttonText: AppLocalizations.of(context)!.add_btn,
                         onPressed: () =>
                             Routes.goTo(Routes.searchRoute, enableBack: true),
                       ),
                     ],
                     if (!provider.isProfileCompleted) ...[
                       CompleteProfileWidget(
-                        titleText: 'Your profile isn\'t complete',
-                        buttonText: 'Complete',
+                        titleText:
+                            AppLocalizations.of(context)!.complete_profile,
+                        buttonText:
+                            AppLocalizations.of(context)!.complete_profile_btn,
                         onPressed: () => Routes.goTo(Routes.salonOptionsRoute,
                             enableBack: true),
                       ),
                     ],
                     if (provider.bookings.isEmpty) ...[
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(top: 88.0),
                         child: Center(
                           child: Text(
-                            'No bookings',
+                            AppLocalizations.of(context)!.no_booking,
                             style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
