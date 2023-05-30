@@ -7,6 +7,8 @@ import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/models/salon_information_model.dart';
 import 'package:barber_center/models/saloon_service_model.dart';
 import 'package:barber_center/models/user_model.dart';
+import 'package:barber_center/services/routes.dart';
+import 'package:barber_center/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 
 class SalonDetailsProvider with ChangeNotifier {
@@ -104,6 +106,30 @@ class SalonDetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void goToBooking() {
+    if (hasItemSelected) {
+      if (hasEmployeeSelected) {
+        if (hasServiceLocation || !homeService) {
+          Routes.goTo(
+            Routes.bookingRoute,
+            args: [
+              salonService,
+              salonInformation,
+              selectedEmployee,
+            ],
+            enableBack: true,
+          );
+        } else {
+          showMessageError('Please enter location');
+        }
+      } else {
+        showMessageError('Please select a barber');
+      }
+    } else {
+      showMessageError('Please select a service');
+    }
+  }
+
   void checkEmployee(String serviceId) {
     if (selectedEmployee != null) {
       if (!selectedEmployee!.services.contains(serviceId)) {
@@ -112,13 +138,10 @@ class SalonDetailsProvider with ChangeNotifier {
     }
   }
 
-  bool hasItemSelected() {
-    return salonService.services.any((element) => element.selected);
-  }
+  bool get hasItemSelected =>
+      salonService.services.any((element) => element.selected);
 
-  bool hasEmployeeSelected() {
-    return selectedEmployee != null;
-  }
+  bool get hasEmployeeSelected => selectedEmployee != null;
 
   bool isEmployeeCapable(BarberModel barberModel) =>
       (barberModel.homeService && homeService == true ||
@@ -128,7 +151,5 @@ class SalonDetailsProvider with ChangeNotifier {
               barberModel.services.contains(element.serviceId)) ||
           (!element.selected));
 
-  bool canBook() {
-    return salonInformation != null && employees.isNotEmpty;
-  }
+  bool get canBook => salonInformation != null && employees.isNotEmpty;
 }

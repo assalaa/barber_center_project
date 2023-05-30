@@ -6,6 +6,7 @@ class LargeRoundedButton extends StatelessWidget {
   const LargeRoundedButton({
     required this.buttonName,
     required this.onTap,
+    this.enabled = true,
     this.buttonColor = Styles.primaryColor,
     this.buttonTextColor = Styles.brightTextColor,
     this.loading = false,
@@ -18,12 +19,13 @@ class LargeRoundedButton extends StatelessWidget {
   final Color buttonTextColor;
   final IconData? iconData;
   final bool loading;
+  final bool enabled;
   final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onTap,
+      onPressed: enabled ? onTap : null,
       style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
