@@ -23,11 +23,21 @@ class HomeBarberProvider with ChangeNotifier {
 
   bool get isProfileCompleted => barberModel != null;
 
-  bool get userHasPhoto => userModel.image != null;
+  bool get userHasPhoto => barberModel?.image != null;
+
+  final GlobalKey cardContainerKey = GlobalKey();
+  late Size cardSize;
 
   HomeBarberProvider() {
     init();
   }
+
+  // Size getCardSize(GlobalKey key) {
+  //   final RenderBox cardBox =
+  //       key.currentContext?.findRenderObject()!;
+  //   cardSize = cardBox.size;
+  //   return cardBox.size;
+  // }
 
   Future<void> init() async {
     user = _dbAuth.getCurrentUser()!;
@@ -37,6 +47,7 @@ class HomeBarberProvider with ChangeNotifier {
       getBarberBookings(),
     ]);
     myLocale = Localizations.localeOf(Routes.navigator.currentContext!);
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) => getCardSize());
     loading = false;
     notifyListeners();
   }

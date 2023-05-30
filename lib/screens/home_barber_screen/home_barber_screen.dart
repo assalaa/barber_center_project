@@ -110,6 +110,7 @@ class HomeBarberScreen extends StatelessWidget {
                                 return Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: AppointmentCard(
+                                        provider: provider,
                                         bookingModel:
                                             provider.barberBookings[index]));
                               }),
@@ -128,12 +129,23 @@ class HomeBarberScreen extends StatelessWidget {
 }
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({required this.bookingModel, super.key});
+  const AppointmentCard({
+    required this.bookingModel,
+    required this.provider,
+    super.key,
+  });
 
   final BookingModel bookingModel;
+  final HomeBarberProvider provider;
 
   @override
   Widget build(BuildContext context) {
+    // GlobalKey key = GlobalKey();
+
+    // Size size = provider.getCardSize(key);
+
+    // print("CARD SIZE: " + size.toString());
+
     return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -159,6 +171,7 @@ class AppointmentCard extends StatelessWidget {
           // Customer card details goes here
           Expanded(
             child: Container(
+              // key: provider.cardContainerKey,
               padding: const EdgeInsets.all(15),
               margin: const EdgeInsets.symmetric(horizontal: 6),
               decoration: BoxDecoration(
@@ -238,7 +251,7 @@ class AppointmentCard extends StatelessWidget {
                       ],
                     ),
                   ],
-                  Divider(),
+                  const Divider(),
                   Wrap(
                     children: List.generate(
                         bookingModel.services.length,
@@ -262,22 +275,43 @@ class DateListIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      child: Column(children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Styles.primaryColor),
-        ),
-        Container(
-          padding: const EdgeInsets.all(12),
-          width: 1,
-          height: 100,
-          color: Colors.grey,
-        )
-      ]),
-    );
+    return ChangeNotifierProvider<HomeBarberProvider>(
+        create: (context) => HomeBarberProvider(),
+        child: Consumer<HomeBarberProvider>(builder: (context, provider, _) {
+          return FittedBox(
+            child: Column(children: [
+              Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Styles.primaryColor),
+              ),
+              // LayoutBuilder(
+              //     builder: (BuildContext context, BoxConstraints constraints) {
+              //   print("the height is ${provider.cardSize.height}");
+              //   return Flex(
+              //     direction: Axis.vertical,
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: List.generate(
+              //         40,
+              //         (index) => const SizedBox(
+              //               width: 1,
+              //               height: 3,
+              //               child: DecoratedBox(
+              //                 decoration: BoxDecoration(color: Colors.red),
+              //               ),
+              //             )),
+              //   );
+              // }),
+              Container(
+                padding: const EdgeInsets.all(12),
+                width: 1,
+                height: 100,
+                color: Colors.grey,
+              )
+            ]),
+          );
+        }));
   }
 }
