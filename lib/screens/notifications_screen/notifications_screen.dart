@@ -2,6 +2,7 @@ import 'package:barber_center/models/invitation_model.dart';
 import 'package:barber_center/screens/notifications_screen/notifications_provider.dart';
 import 'package:barber_center/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -15,7 +16,9 @@ class NotificationsScreen extends StatelessWidget {
         builder: (context, provider, _) {
           return Scaffold(
             appBar: AppBar(
+              elevation: 0,
               title: const Text('Notifications'),
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
