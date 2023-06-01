@@ -11,7 +11,6 @@ import 'package:barber_center/models/user_model.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/popup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsProvider with ChangeNotifier {

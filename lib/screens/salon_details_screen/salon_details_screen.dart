@@ -1,13 +1,11 @@
 import 'package:barber_center/models/barber_model.dart';
 import 'package:barber_center/models/location_model.dart';
 import 'package:barber_center/screens/profile_salon_screen/profile_salon_screen.dart';
-import 'package:barber_center/screens/salon_details_screen/salon_details_provider.dart';
 import 'package:barber_center/services/routes.dart';
 import 'package:barber_center/utils/app_assets.dart';
 import 'package:barber_center/utils/app_layout.dart';
 import 'package:barber_center/utils/app_strings.dart';
 import 'package:barber_center/utils/app_styles.dart';
-import 'package:barber_center/utils/utils.dart';
 import 'package:barber_center/widgets/category_button.dart';
 import 'package:barber_center/widgets/center_loading.dart';
 import 'package:barber_center/widgets/large_rounded_button.dart';
@@ -16,161 +14,159 @@ import 'package:barber_center/widgets/service_element.dart';
 import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+import 'package:barber_center/screens/salon_details_screen/salon_details_provider.dart';
+
 class SalonDetailsScreen extends StatelessWidget {
   final String uid;
-  const SalonDetailsScreen({
-    required this.uid,
-    Key? key,
-  }) : super(key: key);
+  const SalonDetailsScreen({required this.uid, super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SalonDetailsProvider>(
-      create: (context) => SalonDetailsProvider(uid),
-      child: Consumer<SalonDetailsProvider>(builder: (context, provider, _) {
-        return Scaffold(
-          backgroundColor: Styles.backgroundColor,
-          body: Column(
-            children: [
-              if (provider.loading) ...[
-                const CenterLoading()
-              ] else ...[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Stack(
-                    children: [
-                      //IMAGE
-                      if (provider.salon.image != null) ...[
-                        Image.network(
-                          provider.salon.image!,
-                          width: AppLayout.getScreenWidth(),
-                          height: AppLayout.getHeight(300),
-                          fit: BoxFit.cover,
-                        ),
-                      ] else ...[
-                        Image.asset(
-                          Assets.welcomeBg,
-                          width: AppLayout.getScreenWidth(),
-                          height: AppLayout.getHeight(300),
-                          fit: BoxFit.cover,
-                          color: const Color(0xff141212).withOpacity(0.6),
-                          colorBlendMode: BlendMode.darken,
-                        ),
-                      ],
+        create: (context) => SalonDetailsProvider(uid),
+        child: Consumer<SalonDetailsProvider>(builder: (context, provider, _) {
+          return Scaffold(
+              appBar: AppBar(
+                elevation: 0,
+                title: const Text('Salon Profile'),
+                systemOverlayStyle: SystemUiOverlayStyle.dark,
+              ),
+              body: Column(children: [
+                if (provider.loading) ...[
+                  const CenterLoading()
+                ] else ...[
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        if (provider.salon.image != null) ...[
+                          Image.network(
+                            provider.salon.image!,
+                            width: AppLayout.getScreenWidth(),
+                            height: AppLayout.getHeight(300),
+                            fit: BoxFit.cover,
+                          ),
+                        ] else ...[
+                          Image.asset(
+                            Assets.welcomeBg,
+                            width: AppLayout.getScreenWidth(),
+                            height: AppLayout.getHeight(300),
+                            fit: BoxFit.cover,
+                            color: const Color(0xff141212).withOpacity(0.6),
+                            colorBlendMode: BlendMode.darken,
+                          ),
+                        ],
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 24),
+                        //   child: SafeArea(
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //       children: [
+                        //         Material(
+                        //           color: Styles.greyColor.withOpacity(0.4),
+                        //           borderRadius: BorderRadius.circular(100),
+                        //           child: InkWell(
+                        //             borderRadius: BorderRadius.circular(100),
+                        //             onTap: () {
+                        //               Routes.back();
+                        //             },
+                        //             child: Container(
+                        //               width: AppLayout.getHeight(50),
+                        //               height: AppLayout.getWidth(50),
+                        //               alignment: Alignment.center,
+                        //               decoration: BoxDecoration(
+                        //                 borderRadius:
+                        //                     BorderRadius.circular(100),
+                        //               ),
+                        //               child: const Padding(
+                        //                 padding: EdgeInsets.only(left: 8.0),
+                        //                 child: Icon(
+                        //                   Icons.arrow_back_ios,
+                        //                   color: Styles.brightTextColor,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
 
-                      //ICONS BACK AND FAVORITE
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: SafeArea(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Material(
-                                color: Styles.greyColor.withOpacity(0.4),
-                                borderRadius: BorderRadius.circular(100),
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(100),
-                                  onTap: () {
-                                    Routes.back();
-                                  },
-                                  child: Container(
-                                    width: AppLayout.getHeight(50),
-                                    height: AppLayout.getWidth(50),
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.only(left: 8.0),
-                                      child: Icon(
-                                        Icons.arrow_back_ios,
-                                        color: Styles.brightTextColor,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                        //BODY
+                        Positioned(
+                          bottom: 0,
+                          child: Container(
+                            width: AppLayout.getScreenWidth(),
+                            height: AppLayout.getHeight(550),
+                            // height: AppLayout.getHeight(
+                            //     900), // AppLayout.getScreenHeight(),
+                            decoration: const BoxDecoration(
+                              color: Styles.backgroundColor,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      //BODY
-                      Positioned(
-                        top: AppLayout.getHeight(250),
-                        child: Container(
-                          width: AppLayout.getScreenWidth(),
-                          height: AppLayout.getHeight(
-                              900), // AppLayout.getScreenHeight(),
-                          decoration: const BoxDecoration(
-                            color: Styles.backgroundColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
                             ),
-                          ),
-                          child: Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: AppLayout.getWidth(14),
                               vertical: AppLayout.getWidth(14),
                             ),
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(
-                                  maxHeight:
-                                      MediaQuery.of(context).size.height),
-                              child: SingleChildScrollView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    FullName(
-                                      userName: provider.salon.name,
-                                      salonName:
-                                          provider.salonInformation?.salonName,
-                                      center: false,
-                                    ),
-                                    Gap(AppLayout.getHeight(8)),
-                                    LocationInfo(
-                                      location: provider.salonInformation
-                                              ?.location?.getAddress ??
-                                          provider.salonInformation?.address,
-                                      center: false,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    const Divider(),
-                                    // Services(provider: provider),
-                                    const SizedBox(height: 16),
-                                    EstTimeAndTotalPrice(
-                                      visible: provider.hasItemSelected,
-                                      time: provider
-                                          .salonService.stringDurationInMin,
-                                      price: provider.salonService.stringPrice,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Barbers(provider: provider),
-                                    const Divider(),
-                                    LocationButton(provider: provider),
-                                    const SizedBox(height: 10),
-                                    BookButton(provider: provider),
-                                  ],
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                FullName(
+                                  userName: provider.salon.name,
+                                  salonName:
+                                      provider.salonInformation?.salonName,
+                                  center: false,
                                 ),
-                              ),
+                                Gap(AppLayout.getHeight(8)),
+                                LocationInfo(
+                                  location: provider.salonInformation?.location
+                                          ?.getAddress ??
+                                      provider.salonInformation?.address,
+                                  center: false,
+                                ),
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 16),
+                                        const Divider(),
+                                        Services(provider: provider),
+                                        const SizedBox(height: 16),
+                                        EstTimeAndTotalPrice(
+                                          visible: provider.hasItemSelected,
+                                          time: provider
+                                              .salonService.stringDurationInMin,
+                                          price:
+                                              provider.salonService.stringPrice,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        Barbers(provider: provider),
+                                        const Divider(),
+                                        LocationButton(provider: provider),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                BookButton(provider: provider),
+                                const SizedBox(height: 10),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ]
-            ],
-          ),
-        );
-      }),
-    );
+                ],
+              ]));
+        }));
   }
 }
 

@@ -97,8 +97,6 @@ class BookingCard extends StatelessWidget {
       fontSize: 18,
     );
 
-    final bool isHomeService = booking.isHomeService;
-
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
       child: Card(
