@@ -144,7 +144,7 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                             child: GestureDetector(
                               onTap: () {
                                 Routes.goTo(
-                                  Routes.salonDetailRoute,
+                                  Routes.salonDetailsRoute,
                                   args: salon.uid,
                                   enableBack: true,
                                 );

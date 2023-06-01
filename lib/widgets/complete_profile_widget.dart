@@ -32,12 +32,16 @@ class CompleteProfileWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 6),
                 child: Text(
                   titleText,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red, onPrimary: Colors.white),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
               onPressed: onPressed,
               child: Text(buttonText),
             ),
