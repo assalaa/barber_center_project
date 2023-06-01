@@ -71,9 +71,8 @@ class ProfileCustomerScreen extends StatelessWidget {
                                       ),
                                     )
                                     .toList(),
-                                onChanged: (
-                                  Language? language,
-                                ) async {
+                                // ignore: avoid_types_on_closure_parameters
+                                onChanged: (Language? language) async {
                                   if (language != null) {
                                     final Locale locale =
                                         await setLocale(language.languageCode);
